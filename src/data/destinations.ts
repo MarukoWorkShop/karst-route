@@ -1,4 +1,5 @@
 import type { PlaceId, RouteId, Tx } from "@/types";
+import { asset } from "@/lib/asset";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
 
@@ -20,7 +21,7 @@ export const places: Record<PlaceId, Place> = {
   nanning: {
     id: "nanning",
     tagline: L("Garden city, before the border", "绿城，过关前夜"),
-    photo: "/destinations/nanning.jpg",
+    photo: asset("/destinations/nanning.jpg"),
     experience: {
       title: L("Night market wander", "夜市慢走"),
       body: L(
@@ -41,13 +42,13 @@ export const places: Record<PlaceId, Place> = {
         "A quiet room by the Yong River so Day 2’s early border run is a drive, not a scramble.",
         "邕江边安静的房间，第二天早过关是出车，不是赶路。",
       ),
-      photo: "/destinations/hotel-a.jpg",
+      photo: asset("/destinations/hotel-a.jpg"),
     },
   },
   chongzuo: {
     id: "chongzuo",
     tagline: L("Waterfall wonder", "瀑布边的田园"),
-    photo: "/destinations/chongzuo.jpg",
+    photo: asset("/destinations/chongzuo.jpg"),
     experience: {
       title: L("Detian boat, both banks", "德天游船，两岸"),
       body: L(
@@ -68,13 +69,13 @@ export const places: Record<PlaceId, Place> = {
         "A simple lodge facing the peaks. We don’t sleep in the tourist strip; we sleep where the road goes quiet.",
         "对着山的简单住宿。不住游客街，住路静下来的地方。",
       ),
-      photo: "/destinations/hotel-b.jpg",
+      photo: asset("/destinations/hotel-b.jpg"),
     },
   },
   catba: {
     id: "catba",
     tagline: L("Limestone, ferry, night on the island", "石灰岩、轮渡、岛上过夜"),
-    photo: "/destinations/catba.jpg",
+    photo: asset("/destinations/catba.jpg"),
     experience: {
       title: L("Mong Cai crossing, then the water", "芒街过关，再下海"),
       body: L(
@@ -95,13 +96,13 @@ export const places: Record<PlaceId, Place> = {
         "A small hotel above the bay, not a mega-resort. Morning is limestone, not a lobby.",
         "湾上的小酒店，不是大体量度假村。早晨是石灰岩，不是大堂。",
       ),
-      photo: "/destinations/hotel-c.jpg",
+      photo: asset("/destinations/hotel-c.jpg"),
     },
   },
   hanoi: {
     id: "hanoi",
     tagline: L("Old Quarter, two nights", "古城，连住两晚"),
-    photo: "/destinations/hanoi.jpg",
+    photo: asset("/destinations/hanoi.jpg"),
     experience: {
       title: L("Cyclo, Train Street, West Lake after dark", "三轮车、火车街、夜西湖"),
       body: L(
@@ -122,13 +123,13 @@ export const places: Record<PlaceId, Place> = {
         "A restored house near the lake. Two nights so you are not packing every morning.",
         "湖边一栋修好的老房子。连住两晚，不是天天收行李。",
       ),
-      photo: "/destinations/hotel-a.jpg",
+      photo: asset("/destinations/hotel-a.jpg"),
     },
   },
   sapa: {
     id: "sapa",
     tagline: L("Terraces and Cat Cat", "梯田与猫猫村"),
-    photo: "/destinations/sapa.jpg",
+    photo: asset("/destinations/sapa.jpg"),
     experience: {
       title: L("Walk the terraces, not just the viewpoint", "走进梯田，不只是观景台"),
       body: L(
@@ -149,13 +150,13 @@ export const places: Record<PlaceId, Place> = {
         "Wood, mist, a window on the paddies. We leave the town-centre karaoke behind.",
         "木头、雾、一扇对着田的窗。把镇中心的卡拉OK留在后面。",
       ),
-      photo: "/destinations/hotel-b.jpg",
+      photo: asset("/destinations/hotel-b.jpg"),
     },
   },
   train: {
     id: "train",
     tagline: L("Fansipan, then the rails", "番西邦，然后上轨"),
-    photo: "/destinations/train.jpg",
+    photo: asset("/destinations/train.jpg"),
     experience: {
       title: L("Cable, Muong Hoa, sleep on the meter-gauge", "缆车、芒花、米轨过夜"),
       body: L(
@@ -176,13 +177,13 @@ export const places: Record<PlaceId, Place> = {
         "A four-berth cabin we book as a private. Sheets, a bottle of water, the border in the morning.",
         "四人软卧我们包下。床单、一瓶水，早晨就是边境。",
       ),
-      photo: "/destinations/hotel-c.jpg",
+      photo: asset("/destinations/hotel-c.jpg"),
     },
   },
   jianshui: {
     id: "jianshui",
     tagline: L("Hekou in, old town dust", "河口入境，古城的土"),
-    photo: "/destinations/jianshui.jpg",
+    photo: asset("/destinations/jianshui.jpg"),
     experience: {
       title: L("Mini-train and Tuanshan", "小火车与团山"),
       body: L(
@@ -203,13 +204,13 @@ export const places: Record<PlaceId, Place> = {
         "A courtyard inn inside the old town wall. You hear the street, not a ring road.",
         "古城墙里的院子客栈。听见的是街，不是环路。",
       ),
-      photo: "/destinations/hotel-d.jpg",
+      photo: asset("/destinations/hotel-d.jpg"),
     },
   },
   puzhehei: {
     id: "puzhehei",
     tagline: L("Karst lakes, sleep inside the park", "喀斯特湖，住在园里"),
-    photo: "/destinations/puzhehei.jpg",
+    photo: asset("/destinations/puzhehei.jpg"),
     experience: {
       title: L("Willow-leaf boat at first light", "晨光里的柳叶舟"),
       body: L(
@@ -230,13 +231,13 @@ export const places: Record<PlaceId, Place> = {
         "Stay inside the scenic area so dawn is a walk, not a ticket line.",
         "住在景区里，黎明是散步，不是检票。",
       ),
-      photo: "/destinations/hotel-a.jpg",
+      photo: asset("/destinations/hotel-a.jpg"),
     },
   },
   mile: {
     id: "mile",
     tagline: L("Dongfengyun, then the spring", "东风韵，然后温泉"),
-    photo: "/destinations/mile.jpg",
+    photo: asset("/destinations/mile.jpg"),
     experience: {
       title: L("Colour-block town at dusk", "黄昏的色块小镇"),
       body: L(
@@ -257,13 +258,13 @@ export const places: Record<PlaceId, Place> = {
         "A room with a private spring if the budget allows; otherwise the communal pool still does the work.",
         "预算够就私人汤屋；不够，公共池也够用。",
       ),
-      photo: "/destinations/hotel-b.jpg",
+      photo: asset("/destinations/hotel-b.jpg"),
     },
   },
   kunming: {
     id: "kunming",
     tagline: L("Green Lake, then the airport", "翠湖，然后机场"),
-    photo: "/destinations/kunming.jpg",
+    photo: asset("/destinations/kunming.jpg"),
     experience: {
       title: L("Green Lake and the old street", "翠湖与老街"),
       body: L(
@@ -284,13 +285,13 @@ export const places: Record<PlaceId, Place> = {
         "Green Lake if you want a last evening; near the airport if the flight is cruel. We book either.",
         "想把晚上留下就翠湖；航班狠就住机场附近。两种我们都能订。",
       ),
-      photo: "/destinations/hotel-c.jpg",
+      photo: asset("/destinations/hotel-c.jpg"),
     },
   },
   guantang: {
     id: "guantang",
     tagline: L("Two nights, Tianqin, cane sea", "连住，天琴，蔗海"),
-    photo: "/destinations/guantang.jpg",
+    photo: asset("/destinations/guantang.jpg"),
     experience: {
       title: L("Tianqin village and a bicycle in the cane", "天琴寨，蔗海里骑行"),
       body: L(
@@ -311,7 +312,7 @@ export const places: Record<PlaceId, Place> = {
         "A two-night base. Same bed, same cook, no suitcase between the village and the cane.",
         "两晚的基地。同一张床、同一个灶，村子和蔗海之间不用拎箱子。",
       ),
-      photo: "/destinations/hotel-d.jpg",
+      photo: asset("/destinations/hotel-d.jpg"),
     },
   },
 };
@@ -329,77 +330,77 @@ export const placeStories: Record<PlaceId, { culture: Tx; slides: string[] }> = 
       "Nanning is a garden city on the Yong, the last Chinese night before a border morning. Zhuang and Cantonese kitchens sit side by side; the river walk is for locals, not a show.",
       "南宁是邕江边的绿城，过关前最后一个中国夜晚。壮味和粤厨并排，江边是当地人在走，不是表演。",
     ),
-    slides: ["/destinations/nanning.jpg", "/destinations/hotel-a.jpg", "/destinations/kunming.jpg"],
+    slides: [asset("/destinations/nanning.jpg"), asset("/destinations/hotel-a.jpg"), asset("/destinations/kunming.jpg")],
   },
   chongzuo: {
     culture: L(
       "Detian sits on the line itself — the spray is Chinese and Vietnamese at once. Mingshi’s karst road is the quieter twin: fields, peaks, almost no coaches if you time it.",
       "德天就在国境线上，水花同时属于两边。名仕是更安静的孪生：田、峰、只要赶对时间就几乎没有大巴。",
     ),
-    slides: ["/destinations/chongzuo.jpg", "/destinations/hotel-b.jpg", "/destinations/puzhehei.jpg"],
+    slides: [asset("/destinations/chongzuo.jpg"), asset("/destinations/hotel-b.jpg"), asset("/destinations/puzhehei.jpg")],
   },
   catba: {
     culture: L(
       "Cat Ba is limestone and harbour, not a cruise pier. The island still fishes. We cross at Mong Cai so the first Vietnamese night is water, not a highway hotel.",
       "吉婆是石灰岩和渔港，不是邮轮码头。岛上还在打渔。从芒街过关，越南的第一夜是水，不是高速边的酒店。",
     ),
-    slides: ["/destinations/catba.jpg", "/destinations/hotel-c.jpg", "/destinations/mile.jpg"],
+    slides: [asset("/destinations/catba.jpg"), asset("/destinations/hotel-c.jpg"), asset("/destinations/mile.jpg")],
   },
   hanoi: {
     culture: L(
       "The Old Quarter is a living grid: trade streets, French shade, a lake the city walks around after dark. Two nights so it can be a city, not a transfer.",
       "古城是还在运转的网格：行业街、法式树荫、夜里绕着走的湖。连住两晚，它才是城，不是中转。",
     ),
-    slides: ["/destinations/hanoi.jpg", "/destinations/hotel-a.jpg", "/destinations/sapa.jpg"],
+    slides: [asset("/destinations/hanoi.jpg"), asset("/destinations/hotel-a.jpg"), asset("/destinations/sapa.jpg")],
   },
   sapa: {
     culture: L(
       "The terraces are a Hmong and Dao working landscape, not a viewpoint franchise. Cat Cat is a village you walk with someone who lives there.",
       "梯田是苗族、瑶族还在种的地，不是观景台连锁。猫猫村要跟住在这里的人一起走。",
     ),
-    slides: ["/destinations/sapa.jpg", "/destinations/hotel-b.jpg", "/destinations/guantang.jpg"],
+    slides: [asset("/destinations/sapa.jpg"), asset("/destinations/hotel-b.jpg"), asset("/destinations/guantang.jpg")],
   },
   train: {
     culture: L(
       "The meter-gauge is a leftover of the Yunnan–Vietnam railway. Sleeping on it is the border in slow motion — not a gimmick, a way the geography still works.",
       "米轨是滇越铁路留下的。睡在上面，边境是慢动作，不是噱头，是地理还在运转的方式。",
     ),
-    slides: ["/destinations/train.jpg", "/destinations/hotel-c.jpg", "/destinations/jianshui.jpg"],
+    slides: [asset("/destinations/train.jpg"), asset("/destinations/hotel-c.jpg"), asset("/destinations/jianshui.jpg")],
   },
   jianshui: {
     culture: L(
       "Jianshui is a Confucian town that kept its wall and its tofu. After Hekou, Yunnan starts as lanes and a courtyard, not a highway plaza.",
       "建水是还留着城墙和豆腐的儒城。河口之后，云南先是巷子和院子，不是高速服务区。",
     ),
-    slides: ["/destinations/jianshui.jpg", "/destinations/hotel-d.jpg", "/destinations/kunming.jpg"],
+    slides: [asset("/destinations/jianshui.jpg"), asset("/destinations/hotel-d.jpg"), asset("/destinations/kunming.jpg")],
   },
   puzhehei: {
     culture: L(
       "Puzhehei is karst water you sleep beside. The Yi and Zhuang villages around the lakes still farm; the boat is how you enter, not a ticketed loop.",
       "普者黑是睡在边上的喀斯特水。湖边的彝寨、壮寨还在种地；船是进去的方式，不是套票环线。",
     ),
-    slides: ["/destinations/puzhehei.jpg", "/destinations/hotel-a.jpg", "/destinations/chongzuo.jpg"],
+    slides: [asset("/destinations/puzhehei.jpg"), asset("/destinations/hotel-a.jpg"), asset("/destinations/chongzuo.jpg")],
   },
   mile: {
     culture: L(
       "Mile’s Dongfengyun is a painted set on red earth. We treat it as dusk theatre, then the hot spring as the actual night — Yunnan’s slower register.",
       "弥勒东风韵是红土上的布景。我们把它当黄昏剧场，温泉才是真正的夜——云南更慢的那个音区。",
     ),
-    slides: ["/destinations/mile.jpg", "/destinations/hotel-b.jpg", "/destinations/puzhehei.jpg"],
+    slides: [asset("/destinations/mile.jpg"), asset("/destinations/hotel-b.jpg"), asset("/destinations/puzhehei.jpg")],
   },
   kunming: {
     culture: L(
       "Kunming is the spring city: willows on Green Lake, a market if the flight is late. It is an exit, but it can still be a last walk.",
       "昆明是春城：翠湖的柳，航班晚就去花市。它是出口，但还可以是最后一走。",
     ),
-    slides: ["/destinations/kunming.jpg", "/destinations/hotel-c.jpg", "/destinations/jianshui.jpg"],
+    slides: [asset("/destinations/kunming.jpg"), asset("/destinations/hotel-c.jpg"), asset("/destinations/jianshui.jpg")],
   },
   guantang: {
     culture: L(
       "Longzhou and Guantang sit behind Friendship Pass. Tianqin is a living Zhuang music, not a stage show. Two nights so the cane sea is a morning, not a photo stop.",
       "龙州、观堂在友谊关背后。天琴是还在弹的壮族音乐，不是舞台。连住两晚，蔗海才是早晨，不是拍照站。",
     ),
-    slides: ["/destinations/guantang.jpg", "/destinations/hotel-d.jpg", "/destinations/sapa.jpg"],
+    slides: [asset("/destinations/guantang.jpg"), asset("/destinations/hotel-d.jpg"), asset("/destinations/sapa.jpg")],
   },
 };
 

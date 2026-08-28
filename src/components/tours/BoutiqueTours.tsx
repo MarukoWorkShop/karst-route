@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { RouteId } from "@/types";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
+import { asset } from "@/lib/asset";
 import {
   IconClock,
   IconLanding,
@@ -34,7 +35,7 @@ export function BoutiqueTours({
       </div>
       <div className="mx-auto mt-8 grid max-w-5xl gap-6 px-4 md:grid-cols-2 md:gap-8">
         <RouteCard
-          src="/tours/r1-kunming-exit.jpg"
+          src={asset("/tours/r1-kunming-exit.jpg")}
           title={t(copy.tours.r1Title)}
           days={t(copy.tours.r1Days)}
           entry={t(copy.tours.r1Entry)}
@@ -44,7 +45,7 @@ export function BoutiqueTours({
           onView={() => onPick("r1")}
         />
         <RouteCard
-          src="/tours/r2-nanning-loop.jpg"
+          src={asset("/tours/r2-nanning-loop.jpg")}
           title={t(copy.tours.r2Title)}
           days={t(copy.tours.r2Days)}
           entry={t(copy.tours.r2Entry)}
