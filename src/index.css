@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #1e3329;
+  --color-ink-soft: #5e7368;
+  --color-paper: #f5f2ea;
+  --color-surface: #faf8f2;
+  --color-sage: #e7ebe6;
+  --color-night: #16241e;
+  --color-cta: #2f5344;
+  --color-cta-press: #244338;
+  --color-teal: #2f5344;
+  --color-gold: #8f8458;
+  --color-line: #d9d6cc;
+  --color-bone: #e8e5dc;
+  --color-bone-2: #f0ede5;
+  --color-ok: #3d6b52;
+  --color-danger: #b42318;
+  --font-sans: "PingFang SC", "PingFang TC", "Hiragino Sans GB", "Heiti SC",
+    "Noto Sans SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "PingFang SC", "PingFang TC", "Hiragino Sans GB", "Heiti SC",
+    "Noto Sans SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
+  --radius-lg: 0.5rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.68;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+.snap-x-mandatory {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.region-map-land {
+  fill: var(--color-bone);
+  stroke: var(--color-ink-soft);
+  stroke-opacity: 0.28;
+}
+
+.region-map-core {
+  fill: color-mix(in srgb, var(--color-cta) 16%, var(--color-paper));
+  stroke: color-mix(in srgb, var(--color-cta) 48%, transparent);
+}
+
+.tour-card {
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--color-ink) 7%, transparent);
+}
+
+@media (max-width: 767px) {
+  .region-map-city-2 {
+    display: none;
+  }
+}
+
+.place-card {
+  scroll-margin-block: 18vh;
+  transition:
+    transform 180ms ease-out,
+    box-shadow 180ms ease-out,
+    border-color 180ms ease-out;
+  transform-origin: center;
+}
+[data-place-node] {
+  scroll-margin-block: 22vh;
+}
+.place-card.is-focus {
+  z-index: 2;
+  border-color: var(--color-cta);
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--color-ink) 14%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .place-card.is-focus {
+    transform: scale(1.04);
+  }
+}
+
+.place-drawer {
+  transform: translateX(100%);
+}
+.place-drawer.is-open {
+  transform: translateX(0);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .place-drawer {
+    transition: transform 240ms ease-out;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sk-pulse {
+    animation: sk-pulse 1.35s ease-in-out infinite;
+  }
+  @keyframes sk-pulse {
+    50% {
+      opacity: 0.52;
+    }
+  }
+  .ai-glow {
+    animation: ai-glow 2.2s ease-in-out infinite;
+  }
+  @keyframes ai-glow {
+    50% {
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-cta) 12%, transparent);
+    }
+  }
+}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#F5F2EA" />
+    <title>Karst Route — Two ways in</title>
+    <script>
+      (function () {
+        var zh = /(?:^|\/)zh(?:\/|$)/.test(location.pathname);
+        if (zh) {
+          document.documentElement.lang = "zh-Hans";
+          document.title = "喀斯特之路 — 两种走法";
+        }
+      })();
+    </script>
+    <style>
+      html,body{margin:0;background:#F5F2EA;color:#1E3329;font-family:"PingFang SC","Hiragino Sans GB","Heiti SC","Noto Sans SC",ui-sans-serif,system-ui,sans-serif;font-weight:400;line-height:1.68}
+      #root{min-height:100svh}
+      @media (prefers-reduced-motion: no-preference){
+        .sk{animation:sk 1.2s ease infinite}
+        @keyframes sk{50%{opacity:.55}}
+      }
+      .sk{background:#E8E5DC;border-radius:8px}
+      #sk-header{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#F5F2EA}
+      #sk-hero{min-height:100svh;background:#F5F2EA;display:flex;flex-direction:column;justify-content:flex-start;padding:88px 16px 48px}
+      #sk-days{padding:16px;background:#F5F2EA}
+      .sk-day{height:56px;border-radius:8px;margin-bottom:8px}
+      #sk-dock{position:fixed;left:0;right:0;bottom:0;height:calc(56px + env(safe-area-inset-bottom));background:#FAF8F2;border-top:1px solid #D9D6CC;display:flex}
+      #sk-dock span{flex:1}
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div id="sk-header" aria-hidden="true">
+        <div class="sk" style="width:120px;height:16px"></div>
+        <div class="sk" style="width:32px;height:32px;border-radius:999px"></div>
+      </div>
+      <div id="sk-hero" aria-hidden="true">
+        <div class="sk" style="width:80%;height:36px;margin-bottom:12px;background:#1e3329"></div>
+        <div class="sk" style="width:60%;height:16px;margin-bottom:24px;background:#1e3329"></div>
+        <div class="sk" style="width:200px;height:48px;border-radius:8px;background:#2f5344"></div>
+      </div>
+      <div id="sk-days" aria-hidden="true">
+        <div class="sk sk-day"></div>
+        <div class="sk sk-day"></div>
+        <div class="sk sk-day"></div>
+      </div>
+      <div id="sk-dock" aria-hidden="true"><span></span><span></span><span></span></div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
