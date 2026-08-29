@@ -4,14 +4,14 @@
 |---|---|
 | 对外品牌 | 南境拾遗 / The Southern Curations |
 | 产品工作名 | Karst Route（仓库：`karst-route`；本地目录名 Travel in Guilin） |
-| 版本 | v1.2 |
+| 版本 | v1.3 |
 | 日期 | 2026-08-29 |
 | 形态 | 单页落地站；**官方中英 1:1 语言版**（`/` 英文、`/zh/` 简体中文）；询盘表单；页内 FAQ；抽屉式旅行工具箱 |
 | 主视口 | 手机 375px；桌面为同一套组件的加宽布局 |
 | 技术 | Vite + React + TypeScript + Tailwind CSS；GitHub；GitHub Pages 子目录 `/karst-route/` |
-| 后端 | 询盘走 Web3Forms。路径 B 生成走 `/api/craft`（仅在支持 serverless 的环境可用；Pages 静态托管时前端走本地兜底草稿）。无业务 CMS。AI 翻译 API **不是**官方语言站 |
+| 后端 | 询盘走 Web3Forms。`#plan` 两套向导（预定现成路线 / 自己设计路线）在前端整理摘要后提交。无业务 CMS。AI 翻译 API **不是**官方语言站 |
 
-本文是实现与验收的唯一产品依据。视觉、密度与手势见 [DESIGN.md](./DESIGN.md)。语言 URL / `hreflang` 细则以 DESIGN §12 为准，产品范围以本文为准。
+本文是实现与验收的唯一产品依据。视觉、密度与手势见 [DESIGN.md](./DESIGN.md)。栏目文案与图片怎么改、怎么发布见 [CONTENT.md](./CONTENT.md)。语言 URL / `hreflang` 细则以 DESIGN §12 为准，产品范围以本文为准。
 
 **内容密度（产品约束，不只是视觉）：** 面向手机与年轻节奏。日程默认全折叠，同时只展开一天；展开最多 3 条短 bullet。不把国泰画册式长文搬进页面。审美（雾、奶油纸、灯笼红、电影感图）可用，版式不可用。
 
@@ -27,7 +27,7 @@
 
 1. 手机 Slow 3G 下，首字节即可看到与真页面同结构的骨架，而不是长时间白屏。
 2. 两条完整路线可切换；375px 折叠态约 1.5 屏能扫完 12 日；同时只展开一天。
-3. 本地与生产各成功提交一封询盘（精品表单或 AI 草稿留资）。
+3. 本地与生产各成功提交一封询盘（预定现成路线或自己设计路线）。
 4. Header **EN | 中文** 切换：URL 变为 `/` 或 `/zh/`，保留当前 hash；`<html lang>`、`canonical`、`hreflang`（`en` / `zh-Hans` / `x-default`）与可见文案一致。
 5. 首屏满幅轮播可读出主题气质与双 CTA；两条精品卡能读出路线名、天数、出入口、适合人群。
 
@@ -55,7 +55,7 @@
 - `#itinerary`：12 日 / 10 日折叠时间轴、旅客评论、路线地图动画
 - `#experience`：四主题体验卡（过滤时间轴；点开故事抽屉）
 - `#explore`：目的地影像（YouTube）+ 文艺推荐；首页各 3 条，「查看全部」右侧抽屉
-- `#plan`：路径 B 为 **Wanderful AI 四步问卷**（日期人数 → 节奏 → 偏好排序 → 预算）+ 生成等待 + 英文路书草稿；路径 A 精品询盘仍为固定表单
+- `#plan`：双 Tab **预定现成路线 / Book a Route**（默认）与 **自己设计路线 / Design the Route**。前者 3 步（路线与时间、同行成员、增值服务）→ 确认单摘要；后者 5 步（基础路线、额外目的地、住宿、交通、特殊体验）→ 按天数裁剪现有日程。两套均可下载摘要、留资请管家联系。留资走 Web3Forms。
 - `#faq`：出行前问答（签证 / 季节 / 交通等）；旧 hash `#tool-visa` 等仍可打开对应条目
 - `#partners`：实地考察过的当地合作商家
 - 官方中英 1:1：`src/i18n/copy.ts` + 行程 `{en,zh}`；Header 语言切换必须改 URL 路径；SPA `/zh/` 回退
@@ -83,12 +83,12 @@
 ## 4. 信息架构（一页，从上到下）
 
 1. Sticky Header：Logo **KARST ROUTE** → `#top`。一级 **Boutique Tours / 精品路线**、**Plan Your Route / 行程定制**（带 AI 胶囊）；二级 **Explore / 探索**（目的地影像、文艺推荐）、**Q&A / 问答**（越南签证、最佳季节、旅途交通）。汉堡打开旅行工具箱。右上 **EN | 中文**
-2. Hero `#top`：满幅轮播；主题芯片滚到 `#experience`；实心 CTA → `#tours`；幽灵 CTA **自己设计游玩主题和线路** → `#plan`（intent=custom，进入 AI 问卷）
+2. Hero `#top`：满幅轮播；主题芯片滚到 `#experience` 并打开对应文章（不筛选行程）；实心 CTA → `#tours`；幽灵 CTA **自己设计游玩主题和线路** → `#plan`（intent=custom，打开「自己设计路线」）
 3. `#tours` 精品两卡 + 卡下「咨询这条路线」
 4. `#itinerary` 行程时间轴（仅此区内）
 5. `#experience` 四主题体验
 6. `#explore` 目的地影像 + 文艺推荐（`#explore-films` / `#explore-lit`）
-7. `#plan` 双 Tab：AI 智能规划 | 咨询精品路线
+7. `#plan` 双 Tab：预定现成路线（默认）| 自己设计路线
 8. `#faq` 出行前问答
 9. `#partners` 当地合作商家
 10. Footer：品牌 **南境拾遗 / The Southern Curations**
@@ -181,9 +181,9 @@
 ### 6.1 Hero 轮播
 
 - 满幅照片轮播（`src/data/heroPanels.ts`），约 5.5s 自动切；底部分段指示器可点。
-- 每张：主题芯片（点芯片滚到 `#experience` 并打开该主题）、标题、导语、双 CTA。
+- 每张：主题芯片（文案与 `#experience` 四卡同一套 `themes.ts`；点芯片滚到该栏并打开对应文章，**不筛选行程**）、标题、导语、双 CTA。
 - CTA A 实心酒红 → `#tours`（文案：备受赞誉的深度人文精品路线）
-- CTA B 幽灵按钮，带 sparkles → `#plan` 且 intent=custom（文案：自己设计游玩主题和线路）
+- CTA B 幽灵按钮，带 sparkles → `#plan` 且 intent=custom（打开「自己设计路线」）
 - 区域地图不出现在首屏；`regionMap.ts` 仅给行程内 `RoutePlayer` 用。
 - 顶栏 Logo 仍为 **KARST ROUTE**；页脚品牌为 **南境拾遗**。
 
@@ -206,7 +206,7 @@
 
 组件 `Experience`。四张主题卡，文案来自 `src/data/themes.ts`（Wild Fun / Great Flavors / Green Villages / Friendly Locals）。点选过滤 `#itinerary` 时间轴（未匹配日 opacity 0.35）；再点取消过滤。点卡打开故事抽屉（`src/data/experiences.ts` 封面、亮点、真实故事）。
 
-Hero 轮播芯片与此四主题同一套 `ThemeId`。性格轨 `ThemeRail` / 素材槽 `ThemeMaterials` **不再出现在首页**。
+Hero 轮播芯片与此四主题同一套 `ThemeId` 与名称；点芯片只打开文章，不筛选 `#itinerary`。性格轨 `ThemeRail` / 素材槽 `ThemeMaterials` **不再出现在首页**。
 
 ### 6.4 时间轴（`#itinerary`）
 
@@ -217,34 +217,41 @@ Hero 轮播芯片与此四主题同一套 `ThemeId`。性格轨 `ThemeRail` / �
 - 区块内：旅客评论折叠、`RoutePlayer` 路线动画（SVG 来自 `regionMap.ts`）。
 - 375px 无横滚。建水仅路线一；德天在路线一 Day 2、路线二 Day 9。
 
-### 6.5 询盘：路径 A 精品表单 / 路径 B AI 定制
+### 6.5 询盘：预定现成路线 / 自己设计路线
 
-**路径 A**（精品卡「咨询报价」）：Web3Forms 固定表单。文案随语言。
+对齐 Figma Make `#plan`。两套向导共用圆角 10 的 Tab（左预定、右设计；选中 cta 底白字，未选 ink-soft）。进度为金色步骤名 + 3px 分段条。Chip 选中 `border-cta` + `bg-cta/8`。按钮高 48、圆角 8。选项文案在 `src/data/planOptions.ts`，UI 句在 `copy.plan`。
 
-| 字段 | 规则 |
+**入口**
+
+| 入口 | Tab |
 |---|---|
-| Full name | 必填，2–80 字符 |
-| WhatsApp 或 Email | 至少填一项；填了 Email 则校验格式 |
-| Travelers | 1–12+ |
-| Preferred dates | 必填；允许文本 “flexible” |
-| I want | 精品 12 日昆明出境 / 精品 10 日南宁闭环 |
-| Notes | 选填，≤1000 |
-| honeypot `_gotcha` | 隐藏，有值则静默丢弃 |
+| 默认落到 `#plan` | 预定现成路线（`intent=boutique`） |
+| 精品卡「咨询这条路线」 | 预定现成路线，并带上当前路线 |
+| Hero 幽灵钮 / Header Plan（AI 胶囊）/ 底栏 Plan | 自己设计路线（`intent=custom`） |
 
-**路径 B**（Hero 幽灵钮 / Header Plan / 底栏 Plan）：`CustomPlanFlow`，**不是**同一张固定表。
+**预定现成路线（3 步）**  
+引导句：走现有路线、不改顺序，只报时间 / 人数 / 需求。
 
-1. 基础信息：出发日或「日期灵活」+ 天数滑杆 + 人数滑杆  
-2. 旅行节奏：单选 特种兵 / 慢游  
-3. 核心偏好：文化 / 自然 / 美食 / 摄影，多选 + 拖拽排序  
-4. 预算：人均 USD 滑杆  
-5. 魔法等待：骨架屏 +「正在为您匹配 Wanderful 专属当地向导资源…」  
-6. 英文路书草稿（headline / pitch / 逐日 ≤3 beat）+ 留资把草稿发给规划师  
+1. 选路线（三境溯游 12 日 / 南疆回环 10 日，圆点 radio）+ 出发时间三种模式（选具体日期 / 大致时间 / 先看看；选日期则按路线天数自动算结束日）+ 人数滑杆 1–20  
+2. 同行成员类型多选 chips  
+3. 增值服务多选 chips + 选填备注  
 
-前端把 brief JSON `POST /api/craft`。服务端封装系统提示词，调用 OpenAI 兼容接口；Key 仅服务端（`OPENAI_API_KEY`，禁止 `VITE_`）。无 Key 或模型失败时，用目录内真实停站做 fallback 草稿，等待态仍完整播放。隐性数据（刚浏览的精品线、性格主题）随 JSON 提交，只作提示。
+最后钮「生成行程确认单」→ 骨架等待 → **预定摘要**。可下载 **PDF**（含问卷全部字段 + 该路线逐日交通 / 住宿 / 餐饮 / 安排）。「请管家联系我」填姓名 + 微信 / WhatsApp / Email，经 Web3Forms 发出。
 
-成功留资：焦点陷阱弹窗。失败：不清空。邮件主题：`New Karst Route AI draft — {routeHint}`。
+**自己设计路线（5 步）**  
+引导句：以现有路线为底，按偏好生成新行程单。
 
-环境变量：`VITE_WEB3FORMS_ACCESS_KEY`（仅此 Key 允许 `VITE_`）。`OPENAI_API_KEY` / `OPENAI_BASE_URL` / `CRAFT_MODEL` 仅服务端。
+1. 基础路线 + 总天数滑杆 8–18（点选路线会重置为 12 / 10）  
+2. 额外目的地多选（每处约 1–2 天）  
+3. 住宿三档：精选舒适 / 精品民宿 / 高端度假  
+4. 交通偏好多选  
+5. 特殊体验多选 + 选填想法  
+
+最后钮「AI 生成新行程单」→ 带日条骨架 → 可展开的定制日程（从 `itinerary.ts` 按天数 slice）→ 确认行程 → 下载 **PDF**（问卷全部字段 + 逐日明细）+ 管家联系。
+
+成功留资：区块内绿条「管家将在 24 小时内联系」。失败：不清空。邮件主题：`New Karst Route booking — {route}` 或 `New Karst Route custom itinerary — {route}`。
+
+环境变量：`VITE_WEB3FORMS_ACCESS_KEY`（仅此 Key 允许 `VITE_`）。首页不再调用 `/api/craft`；仓库里的 craft 入口仅作后续备用。
 
 ### 6.6 官方中英切换
 
@@ -281,6 +288,7 @@ Hero 轮播芯片与此四主题同一套 `ThemeId`。性格轨 `ThemeRail` / �
 以下组件或接口可以留在仓库，但**不作为首页主键、不作为发布门禁**：
 
 - 手工艺人橱窗、真实天气 API、火车外链抽屉
+- `POST /api/craft` / `OPENAI_API_KEY`（首页已改为本地裁剪日程，不再调用）
 - `POST /api/translate`（仅草稿；不得生成可收录语言 URL）
 - 其它语言路径 `/vi/` `/fr/` `/ja/` `/ko/`
 
@@ -305,7 +313,7 @@ Hero 轮播芯片与此四主题同一套 `ThemeId`。性格轨 `ThemeRail` / �
 ## 9. 其它非功能
 
 - 点按 ≥44px；`viewport-fit=cover` + `safe-area-inset-bottom`
-- 表单有可见 `label`；弹窗 `role="dialog"`，Esc 关闭
+- 表单有可见 `label`；抽屉 / 工具箱 `role="dialog"`，Esc 关闭；定制留资成功为页内绿条
 - 路线动画图 `role="img"` + 短 `aria-label`；精品卡 `aria-pressed`
 - 无障碍：骨架用装饰性动画，不向读屏循环播报
 - 密钥：AI Key 仅服务端；`.env.example` 只列变量名
@@ -323,12 +331,11 @@ src/components/tours/      BoutiqueTours
 src/components/itinerary/  Timeline, ReviewsFold, RoutePlayer
 src/components/experience/ Experience
 src/components/explore/    Explore
-src/components/plan/       PlanSection, CustomPlanFlow, PlanSteps, PlanMagic, PlanResult
-src/components/form/       QuoteForm（路径 A 精品）
+src/components/plan/       PlanSection, BookRouteFlow, DesignRouteFlow, PlanUi
 src/components/faq/        Faq
 src/components/partners/   Partners
-src/lib/                   craft.ts, craftClient.ts, asset.ts
-src/data/                  itinerary, themes, experiences, videos, literature,
+src/lib/                   enquiry.ts, asset.ts
+src/data/                  itinerary, planOptions, themes, experiences, videos, literature,
                            faqs, partners, destinations, regionMap, heroPanels, reviews
 server/runCraft.ts         系统提示词 + 模型调用
 api/craft.ts               serverless 入口（Pages 上不部署）
@@ -338,7 +345,7 @@ index.html                 含 #root 内联骨架
 .github/workflows/pages.yml  GitHub Pages
 ```
 
-部署：GitHub `main` → Actions 发布 Pages，站点根为 `/karst-route/`。Secrets：`VITE_WEB3FORMS_ACCESS_KEY`。`OPENAI_API_KEY` 仅在有 `/api/craft` 的环境生效；Pages 静态站路径 B 用 `craftClient` 本地兜底。
+部署：GitHub `main` → Actions 发布 Pages，站点根为 `/karst-route/`。Secrets：`VITE_WEB3FORMS_ACCESS_KEY`。
 
 ---
 
@@ -372,7 +379,7 @@ index.html                 含 #root 内联骨架
 - [ ] 路线一切换路线二，越南段内容一致、德天日期不同
 - [ ] `/` 为英文，`/zh/` 为中文；切语言保留 `#tours` 等 hash
 - [ ] `<html lang>` 为 `en` 或 `zh-Hans`；canonical 指向本语言；hreflang 含 `en`、`zh-Hans`、`x-default`，不含未上线语言
-- [ ] 路径 B：幽灵钮进入四步问卷（非固定表），有 AI 标志；生成有骨架等待；出英文草稿
+- [ ] `#plan`：默认「预定现成路线」3 步可出摘要并留资；「自己设计路线」5 步可出日程并留资；Hero / Header / 底栏进设计 Tab，精品卡咨询进预定 Tab
 - [ ] `#explore` 影像 / 文艺可读；`#faq` 可展开；顶栏问答下拉能滚到对应条目
 - [ ] `#partners` 可见当地商家
 - [ ] 底栏只有 Tours | Plan，没有 Tools / Lang 主键

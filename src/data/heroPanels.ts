@@ -10,7 +10,6 @@ export type HeroSlide = {
   pos: string;
   alt: Tx;
   themeId: ThemeId;
-  tag: Tx;
   title: Tx;
   intro: Tx;
 };
@@ -22,7 +21,6 @@ export const heroSlides: HeroSlide[] = [
     pos: "center 55%",
     alt: L("Morning market and city streets", "早市与城市街巷"),
     themeId: "flavors",
-    tag: L("CULTURAL STUDY TOUR", "人文研学"),
     title: L("Explore the morning market", "走进南方早市"),
     intro: L(
       "Heritage travellers discover a living city through the sights, smells and stories of the market — not a museum corridor.",
@@ -35,7 +33,6 @@ export const heroSlides: HeroSlide[] = [
     pos: "center 40%",
     alt: L("Detian karst at the Guangxi border", "广西边境德天喀斯特"),
     themeId: "wild",
-    tag: L("MOUNTAINS & RIVERS", "山河探险"),
     title: L("Explore the border falls", "走进德天边境瀑布"),
     intro: L(
       "Detian spills across two countries. We take the raft in, not just up to the viewpoint.",
@@ -48,7 +45,6 @@ export const heroSlides: HeroSlide[] = [
     pos: "center 50%",
     alt: L("Sapa rice terraces in mist", "沙坝云雾梯田"),
     themeId: "villages",
-    tag: L("HERITAGE CRAFTS", "非遗手作"),
     title: L("Explore the terrace villages", "走进梯田与织布"),
     intro: L(
       "Black Hmong weaving in Cat Cat — heritage as hands at work, not a glass case.",
@@ -61,7 +57,6 @@ export const heroSlides: HeroSlide[] = [
     pos: "center 55%",
     alt: L("Cat Ba limestone and harbour", "吉婆岛石灰岩与海湾"),
     themeId: "wild",
-    tag: L("MOUNTAINS & RIVERS", "山河探险"),
     title: L("Explore Cat Ba's wild island", "走进吉婆岛"),
     intro: L(
       "The last wild island of Ha Long — kayak a cave that only opens at low tide.",
@@ -74,7 +69,6 @@ export const heroSlides: HeroSlide[] = [
     pos: "center 45%",
     alt: L("Jianshui old town", "建水古城"),
     themeId: "villages",
-    tag: L("HERITAGE CRAFTS", "非遗手作"),
     title: L("Explore Jianshui at dawn", "走进建水清晨"),
     intro: L(
       "Charcoal tofu before the tour buses. The old town is still a town.",
@@ -87,7 +81,6 @@ export const heroSlides: HeroSlide[] = [
     pos: "center 50%",
     alt: L("Puzhehei karst water", "普者黑喀斯特水域"),
     themeId: "wild",
-    tag: L("MOUNTAINS & RIVERS", "山河探险"),
     title: L("Explore the karst lakes", "走进普者黑峰丛"),
     intro: L(
       "A lake that grew inside a forest of peaks. Bamboo raft, then a Yi path.",
@@ -100,7 +93,6 @@ export const heroSlides: HeroSlide[] = [
     pos: "center 45%",
     alt: L("Nanning at dusk", "南宁黄昏"),
     themeId: "flavors",
-    tag: L("CITY WALKS", "城市漫步"),
     title: L("Explore the garden city", "走进绿城市井"),
     intro: L(
       "Zhongshan Road after dark: snail noodles, fruit stalls, a city not performing yet.",
@@ -113,7 +105,6 @@ export const heroSlides: HeroSlide[] = [
     pos: "center top",
     alt: L("Highland dusk", "高原黄昏"),
     themeId: "locals",
-    tag: L("LOCAL FRIENDS", "探访本地朋友"),
     title: L("Travel changes with people", "旅行因人而变"),
     intro: L(
       "Guides who remember the street from thirty years ago — and still take you there.",

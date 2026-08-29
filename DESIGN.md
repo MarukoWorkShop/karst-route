@@ -166,12 +166,12 @@ Hero：浅米白底、墨绿字、PingFang H1；主钮森林绿。性格卡仍�
 ```
 Header：一级 Boutique Tours / 精品路线 · Plan Your Route / 行程定制；二级 Explore / 探索 ▾ · Q&A / 问答 ▾
   手机：KARST ROUTE + 汉堡工具箱 + 地球仪切语言
-Hero：满幅轮播；主题芯片 → #experience；实心 → #tours；幽灵 Plan（AI）→ #plan
+Hero：满幅轮播；主题芯片 → #experience 打开对应文章（不筛选行程）；实心 → #tours；幽灵 Plan → #plan 自己设计路线
 #tours：两张精品卡
 #itinerary：折叠行程 + 评论 + 路线动画
 #experience：四主题体验卡
 #explore：目的地影像 + 文艺推荐
-#plan：路径 B 四步问卷 | 路径 A 精品询盘
+#plan：预定现成路线（3 步）| 自己设计路线（5 步）
 #faq：出行前问答
 #partners：当地合作商家
 Footer：南境拾遗 / The Southern Curations
@@ -191,7 +191,7 @@ Dock：Tours / 路线 | Plan / 定制
 | 点 Day 行 | 互斥展开；再点收起 |
 | 顶栏汉堡 | 打开旅行工具箱 |
 | 底栏 Tours | 滚到 `#tours` |
-| 底栏 Plan | 滚到 `#plan` 并进入 AI 问卷 |
+| 底栏 Plan | 滚到 `#plan` 并打开「自己设计路线」 |
 | Header EN \| 中文 | 改 URL 路径，保留 hash |
 | Esc / 遮罩 | 关闭抽屉与弹层 |
 
@@ -239,11 +239,9 @@ Dock：Tours / 路线 | Plan / 定制
 
 卡宽 `72vw`，snap，图 **3:4 竖图**（学画册竖片，但一次只露一张多一点）。标题一行，按钮一行。
 
-### 表单 / 路径 B 问卷
+### 表单 / 定制向导
 
-路径 A 输入高 48。Submit = Hero CTA。成功小弹窗，一句 + Close。
-
-路径 B：一屏一问。进度 4 段墨绿条。选项卡选中 8px 圆角 + 浅绿洗。偏好可拖排序。预算为滑杆。生成后先骨架五行 Day，主句「正在为您匹配 Wanderful 专属当地向导资源…」。AI 标志为 sparkles + `WANDERFUL AI` 胶囊，不要大机器人插画。
+Tab 高 48、圆角 10；选中 cta 底白字，未选透明 + ink-soft。进度金色小写步骤名 + 3px 分段条。Chip 选中描边 cta、底 `cta/8`。输入高 48、圆角 8、`border-line`。最后钮与 Hero CTA 同色。预定生成后出摘要卡，不弹窗。设计生成后出可展开日程，确认后再留资。下载钮描边 cta；成功留资绿条，不挡表单重填。
 
 ### 底栏
 
@@ -358,7 +356,7 @@ label；地球仪 `aria-label="Choose language"`；sheet `dialog` + 焦点循环
 | 天气失败 | 工具内一行 |
 | 无翻译 Key | 面板说明 |
 | 表单错 | 字段红 |
-| 表单成 | 弹窗 |
+| 表单成 | 绿条确认 |
 | 手工艺无链 | Request intro |
 
 ---

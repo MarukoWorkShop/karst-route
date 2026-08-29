@@ -18,7 +18,7 @@ function go(id: string) {
 
 export default function App() {
   const [route, setRoute] = useState<RouteId>("r1");
-  const [intent, setIntent] = useState<"boutique" | "custom">("custom");
+  const [intent, setIntent] = useState<"boutique" | "custom">("boutique");
   const [theme, setTheme] = useState<ThemeId>("wild");
   const [filterOn, setFilterOn] = useState(false);
   const [experienceOpen, setExperienceOpen] = useState<ThemeId | null>(null);
@@ -33,8 +33,6 @@ export default function App() {
   }
 
   function openExperienceArticle(id: ThemeId) {
-    setTheme(id);
-    setFilterOn(true);
     setExperienceOpen(id);
   }
 
@@ -74,13 +72,7 @@ export default function App() {
           onPickTheme={onTheme}
         />
         <Explore />
-        <PlanSection
-          tab={intent}
-          onTab={setIntent}
-          route={route}
-          browsedTheme={theme}
-          themeFilterOn={filterOn}
-        />
+        <PlanSection tab={intent} onTab={setIntent} route={route} />
         <Faq />
         <Partners />
       </main>

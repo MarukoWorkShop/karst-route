@@ -3,6 +3,7 @@ import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { IconSparkles } from "@/components/icons";
 import { heroSlides } from "@/data/heroPanels";
+import { themes } from "@/data/themes";
 import type { ThemeId } from "@/types";
 
 export function Hero({
@@ -16,6 +17,8 @@ export function Hero({
   const [idx, setIdx] = useState(0);
   const slide = heroSlides[idx];
   const zh = locale === "zh";
+  const theme = themes.find((item) => item.id === slide.themeId);
+  const chip = theme ? (zh ? theme.zh.split("・")[0] : theme.en) : "";
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -62,9 +65,9 @@ export function Hero({
               href="#experience"
               aria-label={t(copy.hero.themesAria)}
               onClick={() => onOpenTheme?.(slide.themeId)}
-              className="inline-flex rounded-full border border-[#C5A059]/70 bg-night/35 px-3 py-[5px] text-[10px] font-medium tracking-[0.16em] text-[#C5A059] uppercase backdrop-blur-[2px] md:text-[11px]"
+              className="inline-flex rounded-full border border-[#C5A059]/70 bg-night/35 px-3 py-[5px] text-[10px] font-medium tracking-[0.14em] text-[#C5A059] backdrop-blur-[2px] md:text-[11px]"
             >
-              {t(slide.tag)}
+              {chip}
             </a>
 
             <h1
