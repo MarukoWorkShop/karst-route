@@ -5,13 +5,12 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileDock } from "@/components/layout/MobileDock";
 import { Hero } from "@/components/hero/Hero";
 import { BoutiqueTours } from "@/components/tours/BoutiqueTours";
-import { ThemeRail } from "@/components/themes/ThemeRail";
-import { ThemeMaterials } from "@/components/themes/ThemeMaterials";
 import { Timeline } from "@/components/itinerary/Timeline";
+import { Experience } from "@/components/experience/Experience";
 import { Explore } from "@/components/explore/Explore";
-import { QuoteForm } from "@/components/form/QuoteForm";
-import { CustomPlanFlow } from "@/components/plan/CustomPlanFlow";
+import { PlanSection } from "@/components/plan/PlanSection";
 import { TravelTools } from "@/components/tools/TravelTools";
+import { Partners } from "@/components/partners/Partners";
 
 function go(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -22,6 +21,7 @@ export default function App() {
   const [intent, setIntent] = useState<"boutique" | "custom">("custom");
   const [theme, setTheme] = useState<ThemeId>("wild");
   const [filterOn, setFilterOn] = useState(false);
+  const [experienceOpen, setExperienceOpen] = useState<ThemeId | null>(null);
 
   function onTheme(id: ThemeId) {
     if (id === theme && filterOn) {
@@ -30,6 +30,12 @@ export default function App() {
     }
     setTheme(id);
     setFilterOn(true);
+  }
+
+  function openExperienceArticle(id: ThemeId) {
+    setTheme(id);
+    setFilterOn(true);
+    setExperienceOpen(id);
   }
 
   function pickRoute(id: RouteId) {
@@ -46,37 +52,39 @@ export default function App() {
   return (
     <>
       <Header onPlan={() => setIntent("custom")} />
-      <main className="pb-[calc(72px+env(safe-area-inset-bottom))] md:pb-0">
+      <main className="bg-paper">
         <Hero
           onPlanOwn={() => {
             setIntent("custom");
           }}
+          onOpenTheme={openExperienceArticle}
         />
-        <BoutiqueTours route={route} onPick={pickRoute} onQuote={quoteBoutique}>
-          <ThemeRail selected={theme} onSelect={onTheme} />
-          <ThemeMaterials themeId={theme} />
-          <Timeline
-            routeId={route}
-            onRoute={(id) => {
-              setRoute(id);
-            }}
-            themeId={theme}
-            filterOn={filterOn}
-          />
-        </BoutiqueTours>
+        <BoutiqueTours route={route} onPick={pickRoute} onQuote={quoteBoutique} />
+        <Timeline
+          routeId={route}
+          onRoute={(id) => {
+            setRoute(id);
+          }}
+          themeId={theme}
+          filterOn={filterOn}
+        />
+        <Experience
+          openId={experienceOpen}
+          onOpenId={setExperienceOpen}
+          onPickTheme={onTheme}
+        />
         <Explore />
-        {intent === "custom" ? (
-          <CustomPlanFlow
-            browsedRoute={route}
-            browsedTheme={theme}
-            themeFilterOn={filterOn}
-          />
-        ) : (
-          <QuoteForm route={route} presetNotes="" />
-        )}
+        <PlanSection
+          tab={intent}
+          onTab={setIntent}
+          route={route}
+          browsedTheme={theme}
+          themeFilterOn={filterOn}
+        />
         <TravelTools />
-        <Footer />
+        <Partners />
       </main>
+      <Footer />
       <MobileDock
         onTours={() => go("tours")}
         onPlan={() => {

@@ -14,64 +14,66 @@ export function BoutiqueTours({
   route,
   onPick,
   onQuote,
-  children,
 }: {
   route: RouteId;
   onPick: (id: RouteId) => void;
   onQuote: (id: RouteId) => void;
-  children: ReactNode;
 }) {
   const { t } = useLocale();
   return (
-    <section id="tours" className="scroll-mt-24 py-16">
-      <div className="mx-auto max-w-xl px-4">
-        <p className="text-[13px] font-medium tracking-[0.16em] text-cta">
-          {t(copy.tours.kicker)}
-        </p>
-        <h2 className="mt-2 text-[22px] leading-8 font-medium md:text-[28px] md:leading-9">
-          {t(copy.tours.h2)}
-        </h2>
-        <p className="mt-2 text-[16px] leading-7 text-ink-soft">{t(copy.tours.sub)}</p>
+    <section id="tours" className="scroll-mt-24 py-12 md:py-16">
+      <div className="page-col">
+        <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+          <RouteCard
+            src={asset("/tours/r1-kunming-exit.jpg")}
+            badge={t(copy.tours.r1Badge)}
+            name={t(copy.tours.r1Name)}
+            tagline={t(copy.tours.r1Tagline)}
+            regions={t(copy.tours.r1Regions)}
+            feature={t(copy.tours.r1Feature)}
+            days={t(copy.tours.r1Days)}
+            entry={t(copy.tours.r1Entry)}
+            exit={t(copy.tours.r1Exit)}
+            audience={t(copy.tours.r1For)}
+            active={route === "r1"}
+            onView={() => onPick("r1")}
+          />
+          <RouteCard
+            src={asset("/tours/r2-nanning-loop.jpg")}
+            badge={t(copy.tours.r2Badge)}
+            name={t(copy.tours.r2Name)}
+            tagline={t(copy.tours.r2Tagline)}
+            regions={t(copy.tours.r2Regions)}
+            feature={t(copy.tours.r2Feature)}
+            days={t(copy.tours.r2Days)}
+            entry={t(copy.tours.r2Entry)}
+            exit={t(copy.tours.r2Exit)}
+            audience={t(copy.tours.r2For)}
+            active={route === "r2"}
+            onView={() => onPick("r2")}
+          />
+        </div>
+        <div className="mt-4 text-center">
+          <button
+            type="button"
+            onClick={() => onQuote(route)}
+            className="text-[14px] font-medium text-cta underline underline-offset-[3px]"
+          >
+            {t(copy.tours.inquire)}
+          </button>
+        </div>
       </div>
-      <div className="mx-auto mt-8 grid max-w-5xl gap-6 px-4 md:grid-cols-2 md:gap-8">
-        <RouteCard
-          src={asset("/tours/r1-kunming-exit.jpg")}
-          title={t(copy.tours.r1Title)}
-          days={t(copy.tours.r1Days)}
-          entry={t(copy.tours.r1Entry)}
-          exit={t(copy.tours.r1Exit)}
-          audience={t(copy.tours.r1For)}
-          active={route === "r1"}
-          onView={() => onPick("r1")}
-        />
-        <RouteCard
-          src={asset("/tours/r2-nanning-loop.jpg")}
-          title={t(copy.tours.r2Title)}
-          days={t(copy.tours.r2Days)}
-          entry={t(copy.tours.r2Entry)}
-          exit={t(copy.tours.r2Exit)}
-          audience={t(copy.tours.r2For)}
-          active={route === "r2"}
-          onView={() => onPick("r2")}
-        />
-      </div>
-      <div className="mx-auto mt-8 max-w-xl px-4">
-        <button
-          type="button"
-          onClick={() => onQuote(route)}
-          className="inline-flex h-12 w-full items-center justify-center rounded-lg bg-cta text-[16px] font-medium text-white active:bg-cta-press"
-        >
-          {t(copy.tours.quote)}
-        </button>
-      </div>
-      {children}
     </section>
   );
 }
 
 function RouteCard({
   src,
-  title,
+  badge,
+  name,
+  tagline,
+  regions,
+  feature,
   days,
   entry,
   exit,
@@ -80,7 +82,11 @@ function RouteCard({
   onView,
 }: {
   src: string;
-  title: string;
+  badge: string;
+  name: string;
+  tagline: string;
+  regions: string;
+  feature: string;
   days: string;
   entry: string;
   exit: string;
@@ -90,30 +96,53 @@ function RouteCard({
 }) {
   const { t } = useLocale();
   return (
-    <button
-      type="button"
-      onClick={onView}
-      aria-pressed={active}
-      className={`tour-card overflow-hidden rounded-lg bg-surface text-left ring-1 transition duration-200 md:hover:-translate-y-0.5 ${
-        active ? "ring-cta" : "ring-line"
+    <article
+      className={`overflow-hidden rounded-xl bg-surface text-left ${
+        active ? "ring-2 ring-cta" : "ring-1 ring-line"
       }`}
     >
-      <span className="relative block aspect-[16/10] overflow-hidden bg-bone">
-        <img src={src} alt={title} className="h-full w-full object-cover" />
-        <span className="absolute inset-0 bg-night/15" />
-      </span>
-      <span className="block px-6 py-6">
-        <span className="block text-[22px] leading-8 font-medium text-ink md:text-[24px] md:leading-9">
-          {title}
+      <button
+        type="button"
+        onClick={onView}
+        aria-pressed={active}
+        className="block w-full text-left"
+      >
+        <span className="relative block aspect-[4/3] overflow-hidden bg-bone">
+          <img src={src} alt={name} className="h-full w-full object-cover" />
+          <span className="absolute top-3 left-3 rounded-md bg-paper/92 px-2.5 py-1 text-[10px] font-bold tracking-[0.1em] text-cta backdrop-blur-sm">
+            {badge}
+          </span>
+          <span className="pointer-events-none absolute inset-0 bg-linear-to-t from-night/75 via-night/10 to-transparent" />
+          <span className="absolute right-3.5 bottom-3.5 left-3.5">
+            <span className="block text-[20px] leading-tight font-medium text-paper md:text-2xl">
+              {name}
+            </span>
+            <span className="mt-1 block text-[11px] leading-4 text-paper/80">
+              {tagline}
+            </span>
+          </span>
         </span>
-        <span className="mt-5 flex flex-col gap-3">
-          <Meta icon={<IconClock className="h-[18px] w-[18px]" />} label={t(copy.tours.duration)} value={days} />
-          <Meta icon={<IconTakeoff className="h-[18px] w-[18px]" />} label={t(copy.tours.entry)} value={entry} />
-          <Meta icon={<IconLanding className="h-[18px] w-[18px]" />} label={t(copy.tours.exit)} value={exit} />
-          <Meta icon={<IconUsers className="h-[18px] w-[18px]" />} label={t(copy.tours.for)} value={audience} />
+        <span className="flex flex-wrap gap-1.5 px-3.5 pt-3 pb-1">
+          {regions.split(" · ").map((seg, i) => (
+            <span
+              key={`${seg}-${i}`}
+              className="rounded-full bg-cta/8 px-2.5 py-0.5 text-[11px] font-medium tracking-[0.03em] text-cta"
+            >
+              {seg}
+            </span>
+          ))}
         </span>
-      </span>
-    </button>
+      </button>
+      <div className="mt-1 grid grid-cols-2 gap-px border-t border-line bg-line">
+        <Meta icon={<IconClock className="h-4 w-4" />} label={t(copy.tours.duration)} value={days} />
+        <Meta icon={<IconTakeoff className="h-4 w-4" />} label={t(copy.tours.entry)} value={entry} />
+        <Meta icon={<IconLanding className="h-4 w-4" />} label={t(copy.tours.exit)} value={exit} />
+        <Meta icon={<IconUsers className="h-4 w-4" />} label={t(copy.tours.for)} value={audience} />
+      </div>
+      <p className="border-t border-line bg-paper px-4 py-4 text-[12.5px] leading-[22px] text-ink-soft">
+        {feature}
+      </p>
+    </article>
   );
 }
 
@@ -127,12 +156,16 @@ function Meta({
   value: string;
 }) {
   return (
-    <span className="flex items-center gap-3 text-[15px] leading-6 text-ink">
-      <span className="text-ink-soft" aria-hidden>
+    <span className="flex items-center gap-2 bg-surface px-3.5 py-2.5">
+      <span className="shrink-0 text-ink-soft" aria-hidden>
         {icon}
       </span>
-      <span className="sr-only">{label}</span>
-      {value}
+      <span>
+        <span className="block text-[9.5px] tracking-[0.07em] text-ink-soft uppercase">
+          {label}
+        </span>
+        <span className="block text-[12px] font-medium text-ink">{value}</span>
+      </span>
     </span>
   );
 }

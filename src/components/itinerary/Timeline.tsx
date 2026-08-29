@@ -1,48 +1,12 @@
-import { useState } from "react";
-import type { DayStop, PlaceId, RouteId, StayKind, ThemeId } from "@/types";
+import { useState, type ReactNode } from "react";
+import type { DayStop, RouteId, ThemeId } from "@/types";
 import { routes } from "@/data/itinerary";
-import { defaultTweak, places, type PlaceTweak } from "@/data/destinations";
-import { IconChevron } from "@/components/icons";
-import { copy, type Tx } from "@/i18n/copy";
+import { places, placeStories } from "@/data/destinations";
+import { IconBoat, IconChevron, IconDining, IconLodge, IconVan } from "@/components/icons";
+import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { DestinationCard } from "@/components/itinerary/DestinationCard";
-import { PlaceDrawer } from "@/components/itinerary/PlaceDrawer";
-import { RouteAside } from "@/components/itinerary/RouteAside";
+import { ReviewsFold } from "@/components/itinerary/ReviewsFold";
 import { RoutePlayer } from "@/components/itinerary/RoutePlayer";
-
-const stayCopy: Record<StayKind, Tx> = {
-  hotel: copy.tours.stayHotel,
-  train: copy.tours.stayTrain,
-  park: copy.tours.stayPark,
-  base: copy.tours.stayBase,
-};
-
-function afterLayout(fn: () => void) {
-  window.requestAnimationFrame(() => window.requestAnimationFrame(fn));
-}
-
-function scrollCenter(sel: string) {
-  const el = document.querySelector(sel);
-  if (!(el instanceof HTMLElement)) return;
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const strip = el.closest(".overflow-x-auto");
-  if (strip) {
-    el.scrollIntoView({
-      behavior: reduce ? "auto" : "smooth",
-      block: "nearest",
-      inline: "center",
-    });
-    return;
-  }
-  const rect = el.getBoundingClientRect();
-  const top = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
-  window.scrollTo({ top: Math.max(0, top), behavior: reduce ? "auto" : "smooth" });
-}
-
-function cardSel(id: PlaceId) {
-  const desktop = window.matchMedia("(min-width: 1024px)").matches;
-  return desktop ? `[data-place-card-desktop="${id}"]` : `[data-place-card-mobile="${id}"]`;
-}
 
 export function Timeline({
   routeId,
@@ -57,56 +21,19 @@ export function Timeline({
 }) {
   const { t } = useLocale();
   const route = routes[routeId];
+  const stopCount = new Set(route.days.map((d) => d.placeId).filter(Boolean)).size;
   const [open, setOpen] = useState<number | null>(null);
-  const [focus, setFocus] = useState<PlaceId | null>(null);
-  const [drawer, setDrawer] = useState<PlaceId | null>(null);
   const [playing, setPlaying] = useState(false);
-  const [tweaks, setTweaks] = useState<Partial<Record<PlaceId, PlaceTweak>>>({});
-
-  const seen = new Set<PlaceId>();
-  const rows = route.days.map((day, i) => {
-    const featured = Boolean(day.placeId && !seen.has(day.placeId));
-    if (day.placeId) seen.add(day.placeId);
-    return { day, featured, side: (i % 2 === 0 ? "left" : "right") as "left" | "right" };
-  });
-  const featuredRows = rows.filter((r) => r.featured && r.day.placeId);
-
-  function firstDayOf(id: PlaceId) {
-    return route.days.find((d) => d.placeId === id)?.day ?? null;
-  }
-
-  function focusFromNode(day: DayStop) {
-    setOpen(day.day);
-    if (!day.placeId) {
-      setFocus(null);
-      return;
-    }
-    setFocus(day.placeId);
-    afterLayout(() => scrollCenter(cardSel(day.placeId!)));
-  }
-
-  function selectCard(id: PlaceId) {
-    setFocus(id);
-    setDrawer(id);
-    const dayNum = firstDayOf(id);
-    if (dayNum != null) setOpen(dayNum);
-    afterLayout(() => {
-      const day = dayNum ?? route.days.find((d) => d.placeId === id)?.day;
-      if (day != null) scrollCenter(`[data-place-node="${day}"]`);
-    });
-  }
-
-  const drawerPlace = drawer ? places[drawer] : null;
-  const drawerDay = drawer ? route.days.find((d) => d.placeId === drawer) : undefined;
-  const drawerCity = drawerDay ? t(drawerDay.city) : "";
 
   return (
-    <section id="itinerary" className="pt-10">
-      <p className="px-4 text-[13px] font-medium tracking-[0.16em] text-cta">
-        {t(copy.tours.days)}
-      </p>
-      <div className="sticky top-24 z-30 flex bg-paper px-4 py-2 md:top-14">
-        <div role="tablist" className="mx-auto flex h-11 w-full max-w-xl overflow-hidden rounded-full bg-bone">
+    <section id="itinerary" className="scroll-mt-24 py-12">
+      <div className="page-col">
+        <p className="text-[13px] font-medium tracking-[0.12em] text-cta uppercase">
+          {t(copy.tours.days)}
+        </p>
+      </div>
+      <div className="sticky top-[52px] z-30 border-b border-line bg-paper md:top-[60px]">
+        <div role="tablist" className="page-col flex">
           {(["r1", "r2"] as RouteId[]).map((id) => (
             <button
               key={id}
@@ -116,11 +43,11 @@ export function Timeline({
               onClick={() => {
                 onRoute(id);
                 setOpen(null);
-                setFocus(null);
-                setDrawer(null);
               }}
-              className={`flex-1 text-[13px] font-medium ${
-                routeId === id ? "rounded-full bg-cta text-white" : "text-ink-soft"
+              className={`h-11 flex-1 text-[14px] font-medium ${
+                routeId === id
+                  ? "border-b-2 border-cta text-cta"
+                  : "border-b-2 border-transparent text-ink-soft"
               }`}
             >
               {id === "r1" ? t(copy.tours.r1Tab) : t(copy.tours.r2Tab)}
@@ -129,169 +56,223 @@ export function Timeline({
         </div>
       </div>
       {filterOn ? (
-        <p className="px-4 pt-2 text-[12px] text-cta">
+        <p className="page-col pt-3 text-[12px] text-cta">
           {t(copy.tours.filtered)} {t(copy.tours.themeNames[themeId])}
         </p>
       ) : null}
 
-      <div className="mx-auto mt-4 max-w-6xl px-4 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(260px,320px)] lg:gap-10">
-        <div>
-          <div className="mb-6 flex gap-3 overflow-x-auto pb-2 snap-x-mandatory lg:hidden">
-            {featuredRows.map(({ day }) => {
-              const place = day.placeId ? places[day.placeId] : null;
-              if (!place || !day.placeId) return null;
-              return (
-                <div key={day.placeId} className="w-[78vw] shrink-0 snap-start">
-                  <DestinationCard
-                    place={place}
-                    city={t(day.city)}
-                    active={focus === day.placeId}
-                    mark="mobile"
-                    onSelect={() => selectCard(day.placeId!)}
-                  />
-                </div>
-              );
-            })}
-          </div>
-
-          <ol className="relative">
-            <span className="pointer-events-none absolute top-6 bottom-6 left-[35px] w-px bg-cta/25 lg:left-1/2 lg:-translate-x-px" />
-            {rows.map(({ day, featured, side }) => (
-              <DayBlock
-                key={`${routeId}-${day.day}`}
-                day={day}
-                featured={featured}
-                side={side}
-                dim={filterOn && !day.themes.includes(themeId)}
-                open={open === day.day}
-                focused={Boolean(day.placeId && focus === day.placeId)}
-                onToggle={() => focusFromNode(day)}
-                onSelectCard={() => day.placeId && selectCard(day.placeId)}
-              />
-            ))}
-          </ol>
-        </div>
-        <div className="mt-12 lg:mt-0">
-          <RouteAside routeId={routeId} onPlay={() => setPlaying(true)} />
+      <div className={playing ? "bg-cta" : "border-b border-line bg-bone"}>
+        <div className="page-col">
+          <button
+            type="button"
+            onClick={() => setPlaying((p) => !p)}
+            className="flex w-full items-center gap-3 py-[11px]"
+          >
+            <span
+              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
+                playing
+                  ? "border-[1.5px] border-paper/35 bg-paper/18 text-paper"
+                  : "bg-cta text-paper"
+              }`}
+            >
+              {playing ? <CloseMark /> : <PlayMark />}
+            </span>
+            <span
+              className={`flex-1 text-left text-[13px] font-medium ${
+                playing ? "text-paper" : "text-cta"
+              }`}
+            >
+              {t(copy.tours.book.viewMap)}
+            </span>
+            {playing ? null : (
+              <span className="text-[11px] text-ink-soft">
+                {stopCount} {t(copy.tours.book.mapStops)}
+              </span>
+            )}
+          </button>
         </div>
       </div>
 
-      {drawerPlace ? (
-        <PlaceDrawer
-          key={drawerPlace.id}
-          place={drawerPlace}
-          city={drawerCity}
-          tweak={tweaks[drawerPlace.id] ?? defaultTweak()}
-          onTweak={(patch) =>
-            setTweaks((cur) => {
-              const prev = cur[drawerPlace.id] ?? defaultTweak();
-              return { ...cur, [drawerPlace.id]: { ...prev, ...patch } };
-            })
-          }
-          onClose={() => setDrawer(null)}
-        />
-      ) : null}
+      <div className="page-col mt-2">
+        <ol className="mx-auto max-w-[640px]">
+          {route.days.map((day) => (
+            <DayRow
+              key={`${routeId}-${day.day}`}
+              day={day}
+              dim={filterOn && !day.themes.includes(themeId)}
+              open={open === day.day}
+              onToggle={() => setOpen((cur) => (cur === day.day ? null : day.day))}
+            />
+          ))}
+        </ol>
+        <ReviewsFold />
+      </div>
+
       {playing ? <RoutePlayer routeId={routeId} onClose={() => setPlaying(false)} /> : null}
     </section>
   );
 }
 
-function DayBlock({
-  day,
-  featured,
-  side,
-  dim,
-  open,
-  focused,
-  onToggle,
-  onSelectCard,
-}: {
-  day: DayStop;
-  featured: boolean;
-  side: "left" | "right";
-  dim: boolean;
-  open: boolean;
-  focused: boolean;
-  onToggle: () => void;
-  onSelectCard: () => void;
-}) {
-  const { t } = useLocale();
-  const place = day.placeId && featured ? places[day.placeId] : null;
-  const card = place ? (
-    <DestinationCard
-      place={place}
-      city={t(day.city)}
-      active={focused}
-      mark="desktop"
-      onSelect={onSelectCard}
-    />
-  ) : null;
-
-  return (
-    <li className={`relative pb-4 transition-opacity ${dim && !focused ? "opacity-35" : ""}`}>
-      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_220px_minmax(0,1fr)] lg:items-start lg:gap-4">
-        <div className="hidden lg:block">{side === "left" ? card : null}</div>
-        <DayRow day={day} open={open} focused={focused} onToggle={onToggle} />
-        <div className="hidden lg:block">{side === "right" ? card : null}</div>
-      </div>
-    </li>
-  );
-}
-
 function DayRow({
   day,
+  dim,
   open,
-  focused,
   onToggle,
 }: {
   day: DayStop;
+  dim: boolean;
   open: boolean;
-  focused: boolean;
   onToggle: () => void;
 }) {
   const { t } = useLocale();
   const n = String(day.day).padStart(2, "0");
+  const place = day.placeId ? places[day.placeId] : null;
+  const story = day.placeId ? placeStories[day.placeId] : null;
+  const city = t(day.city);
+  const stay = t(day.stay);
+  const subtitle = stay === city && place ? t(place.tagline) : stay;
+  const photos = (day.photos ?? story?.slides ?? (place ? [place.photo] : [])).slice(0, 3);
+  const blurb = day.blurb ?? story?.culture;
+  const transport = day.transport ?? day.drive;
+  const lodging = day.lodging ?? place?.hotel.title;
+  const dining = day.dining ?? (place ? [place.cuisine.title] : undefined);
+
   return (
-    <div>
+    <li
+      className={`border-b border-line transition-opacity duration-150 ${dim ? "opacity-35" : ""}`}
+    >
       <button
         type="button"
         data-place-node={day.day}
-        aria-pressed={focused}
+        aria-expanded={open}
         onClick={onToggle}
-        className="flex min-h-14 w-full items-center gap-3 py-2 text-left"
+        className="flex min-h-14 w-full items-center gap-3 px-4 py-3 text-left"
       >
-        <span
-          className={`relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[15px] font-medium ring-2 ${
-            focused
-              ? "bg-cta text-white ring-cta"
-              : "bg-paper text-cta ring-cta/25"
-          }`}
-        >
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cta text-[13px] font-medium text-cta">
           {n}
         </span>
-        <span className="min-w-0 flex-1">
-          <span className={`block text-[16px] leading-7 ${focused ? "font-medium" : "font-normal"}`}>
-            {t(day.city)}
-          </span>
-          <span className="text-[12px] text-ink-soft">{t(stayCopy[day.stayKind])}</span>
+        <span className="min-w-0 flex-1 text-[17px] font-medium text-ink">{city}</span>
+        <span className="max-w-[46%] shrink-0 truncate text-right text-[13px] text-ink-soft">
+          {subtitle}
         </span>
         <IconChevron
-          className={`h-5 w-5 shrink-0 text-ink-soft transition ${open ? "rotate-180" : ""}`}
+          className={`h-4 w-4 shrink-0 text-ink-soft transition ${open ? "rotate-180" : ""}`}
         />
       </button>
       {open ? (
-        <div className="ml-[52px] mb-2 rounded-lg bg-surface p-4 lg:ml-0">
-          <p className="text-[12px] text-ink-soft">
-            {t(day.city)} · {t(day.stay)}
-            {day.drive ? ` · ${day.drive} ${t(copy.tours.drive)}` : ""}
-          </p>
-          <ul className="mt-2 space-y-1.5 text-[15px] leading-7">
-            {day.bullets.slice(0, 3).map((b) => (
-              <li key={b.en}>{t(b)}</li>
-            ))}
-          </ul>
+        <div className="px-4 pb-5">
+          {photos.length > 0 ? (
+            <div
+              className={`grid gap-1.5 ${
+                photos.length === 1
+                  ? "grid-cols-1"
+                  : photos.length === 2
+                    ? "grid-cols-2"
+                    : "grid-cols-3"
+              }`}
+            >
+              {photos.map((src) => (
+                <img
+                  key={src}
+                  src={src}
+                  alt=""
+                  className="aspect-[4/3] w-full rounded-xl object-cover"
+                />
+              ))}
+            </div>
+          ) : null}
+
+          {blurb ? (
+            <p className="mt-4 border-l-2 border-gold pl-3 text-[14px] leading-6 text-ink">
+              {t(blurb)}
+            </p>
+          ) : null}
+
+          {day.bullets.length > 0 ? (
+            <ul className="mt-3.5 flex flex-col gap-2">
+              {day.bullets.map((b) => (
+                <li key={b.en} className="flex gap-2.5 text-[14px] leading-[22px] text-ink">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+                  {t(b)}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          {transport || lodging || dining ? (
+            <div className="mt-4 divide-y divide-paper overflow-hidden rounded-2xl bg-sage">
+              {transport ? (
+                <LogRow
+                  icons={
+                    <>
+                      <IconVan className="h-4 w-4" />
+                      <IconBoat className="h-4 w-4" />
+                    </>
+                  }
+                  label={t(copy.tours.book.transport)}
+                  lines={[t(transport)]}
+                />
+              ) : null}
+              {lodging ? (
+                <LogRow
+                  icons={<IconLodge className="h-4 w-4" />}
+                  label={t(copy.tours.book.stay)}
+                  lines={[t(lodging)]}
+                />
+              ) : null}
+              {dining && dining.length > 0 ? (
+                <LogRow
+                  icons={<IconDining className="h-4 w-4" />}
+                  label={t(copy.tours.book.dining)}
+                  lines={dining.map((line) => t(line))}
+                />
+              ) : null}
+            </div>
+          ) : null}
         </div>
       ) : null}
+    </li>
+  );
+}
+
+function LogRow({
+  icons,
+  label,
+  lines,
+}: {
+  icons: ReactNode;
+  label: string;
+  lines: string[];
+}) {
+  return (
+    <div className="flex items-start gap-3 px-4 py-3.5">
+      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center gap-0.5 text-ink" aria-hidden>
+        {icons}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block text-[14px] font-medium text-ink">{label}</span>
+        {lines.map((line) => (
+          <span key={line} className="mt-0.5 block text-[13px] leading-5 text-ink-soft">
+            {line}
+          </span>
+        ))}
+      </span>
     </div>
+  );
+}
+
+function PlayMark() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 11 11" fill="currentColor" aria-hidden className="ml-0.5">
+      <path d="M2.5 1.5 9.5 5.5 2.5 9.5z" />
+    </svg>
+  );
+}
+
+function CloseMark() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+      <path d="M2 2l8 8M10 2l-8 8" />
+    </svg>
   );
 }

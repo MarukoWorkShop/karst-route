@@ -17,6 +17,11 @@ function I(props: P) {
   );
 }
 
+export const IconMenu = (p: P) => (
+  <I {...p} strokeWidth={1.5}>
+    <path d="M3 6h18M3 12h18M3 18h18" />
+  </I>
+);
 export const IconGlobe = (p: P) => (
   <I {...p}>
     <circle cx="12" cy="12" r="9" />
@@ -131,6 +136,34 @@ export const IconBed = (p: P) => (
   <I {...p}>
     <path d="M3 18V9h7a4 4 0 0 1 4 4v5" />
     <path d="M3 14h18v4M14 9h7v5" />
+  </I>
+);
+export const IconVan = (p: P) => (
+  <I {...p}>
+    <rect x="1" y="4" width="14" height="11" rx="2" />
+    <path d="M15 9h4l3 3v3h-7V9Z" />
+    <circle cx="5.5" cy="17.5" r="2" />
+    <circle cx="18" cy="17.5" r="2" />
+  </I>
+);
+export const IconBoat = (p: P) => (
+  <I {...p}>
+    <path d="M3 15s2.5 3 9 3 9-3 9-3H3Z" />
+    <path d="M12 4v11M8 8h8" />
+  </I>
+);
+export const IconLodge = (p: P) => (
+  <I {...p}>
+    <path d="M4 11 12 4l8 7" />
+    <path d="M6 10.5V19h12v-8.5" />
+    <path d="M10 19v-5h4v5" />
+    <path d="M18.5 19v-4.5l2-.8V19" />
+  </I>
+);
+export const IconDining = (p: P) => (
+  <I {...p}>
+    <circle cx="12" cy="13" r="6.5" />
+    <path d="M8.5 6.5V4M12 6.5V3.5M15.5 6.5V4" />
   </I>
 );
 export const IconPlay = (p: P) => (

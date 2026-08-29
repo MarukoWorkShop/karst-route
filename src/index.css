@@ -1,16 +1,19 @@
 @import "tailwindcss";
 
+/* Karst Route tokens — match Figma Make src/index.css */
+
 @theme {
   --color-ink: #1e3329;
   --color-ink-soft: #5e7368;
-  --color-paper: #f5f2ea;
-  --color-surface: #faf8f2;
+  --color-paper: #faf8f2;
+  --color-surface: #fdfbf6;
   --color-sage: #e7ebe6;
   --color-night: #16241e;
   --color-cta: #2f5344;
-  --color-cta-press: #244338;
+  --color-cta-press: #1e3329;
   --color-teal: #2f5344;
-  --color-gold: #8f8458;
+  --color-gold: #a88c56;
+  --color-gold-line: #8f8458;
   --color-line: #d9d6cc;
   --color-bone: #e8e5dc;
   --color-bone-2: #f0ede5;
@@ -36,10 +39,18 @@ html {
 body {
   font-family: var(--font-sans);
   font-weight: 400;
-  line-height: 1.68;
+  line-height: 1.65;
   background: var(--color-paper);
   color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
+}
+
+:root {
+  --color-paper: #faf8f2;
+  --color-surface: #fdfbf6;
+  --color-cta-press: #1e3329;
+  --color-gold: #a88c56;
+  --color-gold-line: #8f8458;
 }
 
 #root {
@@ -68,6 +79,18 @@ body {
 .region-map-core {
   fill: color-mix(in srgb, var(--color-cta) 16%, var(--color-paper));
   stroke: color-mix(in srgb, var(--color-cta) 48%, transparent);
+}
+
+.page-col {
+  width: 100%;
+  max-width: 1060px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+@media (min-width: 768px) {
+  .page-col {
+    padding-inline: 32px;
+  }
 }
 
 .tour-card {
@@ -102,6 +125,44 @@ body {
   }
 }
 
+.hero-slide-off {
+  opacity: 0;
+  transform: scale(1.06);
+}
+.hero-slide-on {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-slide-off {
+    transition: opacity 1100ms ease-in-out;
+  }
+  .hero-slide-on {
+    animation: hero-ken 7s ease-out forwards;
+    transition: opacity 1100ms ease-in-out;
+  }
+  .hero-copy {
+    animation: hero-copy-in 700ms ease-out both;
+  }
+}
+@keyframes hero-ken {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+@keyframes hero-copy-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .place-drawer {
   transform: translateX(100%);
 }
@@ -131,4 +192,33 @@ body {
       box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-cta) 12%, transparent);
     }
   }
+}
+
+.range-forest {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-line);
+  outline: none;
+}
+.range-forest::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-cta);
+  border: 2px solid var(--color-paper);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--color-ink) 18%, transparent);
+  cursor: pointer;
+}
+.range-forest::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-cta);
+  border: 2px solid var(--color-paper);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--color-ink) 18%, transparent);
+  cursor: pointer;
 }

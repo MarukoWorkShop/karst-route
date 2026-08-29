@@ -376,10 +376,14 @@ export const placeStories: Record<PlaceId, { culture: Tx; slides: string[] }> = 
   },
   puzhehei: {
     culture: L(
-      "Puzhehei is karst water you sleep beside. The Yi and Zhuang villages around the lakes still farm; the boat is how you enter, not a ticketed loop.",
-      "普者黑是睡在边上的喀斯特水。湖边的彝寨、壮寨还在种地；船是进去的方式，不是套票环线。",
+      "Puzhehei is a lake that grew inside a karst forest. Lotus flowers between the peaks, bamboo raft threading between them — this is the kind of landscape that makes you question whether it's real. Trek with a Yi guide in the afternoon; they call this place 'where fish and shrimp overflow.'",
+      "普者黑是长在喀斯特森林里的一湖水。峰丛之间开着荷花，竹筏从中间穿过去——这种风景会让人怀疑是不是真的。下午跟彝族向导进山；他们管这里叫「鱼虾满出来的地方」。",
     ),
-    slides: [asset("/destinations/puzhehei.jpg"), asset("/destinations/hotel-a.jpg"), asset("/destinations/chongzuo.jpg")],
+    slides: [
+      asset("/destinations/chongzuo.jpg"),
+      asset("/destinations/catba.jpg"),
+      asset("/destinations/puzhehei.jpg"),
+    ],
   },
   mile: {
     culture: L(

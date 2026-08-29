@@ -1,29 +1,42 @@
 import type { DayStop, RouteId, Tx } from "@/types";
+import { asset } from "@/lib/asset";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
 
 const vietnamBlock: DayStop[] = [
   {
     day: 0,
-    city: L("Cat Ba", "吉婆岛"),
-    stay: L("Cat Ba", "吉婆岛"),
+    city: L("Cat Ba Island", "吉婆岛"),
+    stay: L("Harbour night on the island", "岛上港边过夜"),
     stayKind: "hotel",
     placeId: "catba",
+    drive: L("Full day transit", "全天交通"),
+    transport: L("Border at Mong Cai + ferry to Cat Ba", "芒街通关 + 轮渡至吉婆岛"),
+    lodging: L("Bay-facing island hotel", "看湾的小岛酒店"),
+    dining: [
+      L("Lunch: border-town noodles on the way", "午餐：途中口岸小城的一碗面"),
+      L("Dinner: seafood on the harbour", "晚餐：港边海鲜"),
+    ],
     bullets: [
-      L("Mong Cai border", "芒街过关"),
-      L("Ferry to Cat Ba Island", "轮渡过吉婆岛"),
-      L("Night on the island", "住吉婆岛"),
+      L("Cross into Vietnam at Mong Cai", "芒街口岸进入越南"),
+      L("Ferry from Mong Cai to Cat Ba Island", "芒街轮渡至吉婆岛"),
+      L("Arrive evening; seafood dinner on the harbour", "傍晚抵达，港边海鲜晚餐"),
     ],
     themes: ["wild"],
   },
   {
     day: 0,
     city: L("Hanoi", "河内"),
-    stay: L("Hanoi", "河内"),
+    stay: L("Old Quarter, first night", "古城，第一夜"),
     stayKind: "hotel",
     placeId: "hanoi",
+    transport: L("Road from Hai Phong / Cat Ba", "海防 / 吉婆岛公路进城"),
+    lodging: L("French-quarter hide near the lake", "湖边法租界小住"),
+    dining: [
+      L("Lunch: on the road into the city", "午餐：进城途中"),
+      L("Dinner: Old Quarter street table", "晚餐：古城街头一桌"),
+    ],
     bullets: [
-      L("Cable car to Hai Phong — VN coffee while you wait", "缆车过海防，等候赠越南咖啡"),
       L("36 Streets + cyclo, Train Street", "三十六鼓街含三轮车，打卡火车街"),
       L("West Lake night bus", "观光巴士夜游西湖"),
     ],
@@ -32,9 +45,15 @@ const vietnamBlock: DayStop[] = [
   {
     day: 0,
     city: L("Hanoi", "河内"),
-    stay: L("Hanoi", "河内"),
+    stay: L("Old Quarter, second night", "古城，第二夜"),
     stayKind: "hotel",
     placeId: "hanoi",
+    transport: L("On foot and cyclo in the Old Quarter", "古城步行 + 三轮车"),
+    lodging: L("Same restored house — no packing", "同一栋修好的老房子，不用收行李"),
+    dining: [
+      L("Lunch: lotus buffet", "午餐：莲花自助餐"),
+      L("Dinner: egg coffee, then a stall you pick", "晚餐：蛋咖啡，再选一摊"),
+    ],
     bullets: [
       L("Ho Chi Minh & Ba Dinh", "胡志明纪念堂、巴亭广场"),
       L("Lotus buffet", "莲花自助餐"),
@@ -45,9 +64,16 @@ const vietnamBlock: DayStop[] = [
   {
     day: 0,
     city: L("Sapa", "沙坝"),
-    stay: L("Sapa", "沙坝"),
+    stay: L("Terraces above the town", "镇上看田"),
     stayKind: "hotel",
     placeId: "sapa",
+    drive: L("Road · 5–6 h", "公路约 5–6 小时"),
+    transport: L("Private car Hanoi → Sapa, 5–6 h", "专车河内至沙坝，约 5–6 小时"),
+    lodging: L("Terrace-facing mountain lodge", "看田的山居"),
+    dining: [
+      L("Lunch: on the mountain road", "午餐：山路途中"),
+      L("Dinner: highland hot pot", "晚餐：高地热锅"),
+    ],
     bullets: [
       L("Hanoi to Sapa", "河内前往沙坝"),
       L("Rice terraces", "沙坝梯田"),
@@ -58,9 +84,16 @@ const vietnamBlock: DayStop[] = [
   {
     day: 0,
     city: L("Overnight train", "米轨过夜"),
-    stay: L("Meter-gauge overnight", "住米轨"),
+    stay: L("Sleep on the metre-gauge", "住在米轨上"),
     stayKind: "train",
     placeId: "train",
+    drive: L("Overnight metre-gauge", "米轨过夜列车"),
+    transport: L("Fansipan cable, then overnight metre-gauge", "番西邦缆车，晚上米轨发车"),
+    lodging: L("Soft sleeper on the Yunnan–Vietnam line", "滇越米轨软卧"),
+    dining: [
+      L("Lunch: Sapa before the cable", "午餐：上山前在沙坝"),
+      L("Dinner: simple meal before boarding", "晚餐：上车前简单一顿"),
+    ],
     bullets: [
       L("Fansipan cable + Muong Hoa train", "番西邦缆车 + 芒花小火车"),
       L("Evening meter-gauge departure", "晚上米轨发车"),
@@ -74,19 +107,22 @@ function stamp(block: DayStop[], startDay: number): DayStop[] {
   return block.map((d, i) => ({ ...d, day: startDay + i }));
 }
 
-export const routes: Record<
-  RouteId,
-  { id: RouteId; days: DayStop[] }
-> = {
+export const routes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
   r1: {
     id: "r1",
     days: [
       {
         day: 1,
         city: L("Nanning", "南宁"),
-        stay: L("Nanning", "南宁"),
+        stay: L("Yong River, before the border", "邕江边，过关前夜"),
         stayKind: "hotel",
         placeId: "nanning",
+        transport: L("Airport pickup, then a slow city night", "接机，然后一个慢的城市夜"),
+        lodging: L("Riverside garden stay", "江景花园酒店"),
+        dining: [
+          L("Lunch: depending on arrival", "午餐：看抵达时间"),
+          L("Dinner: snail noodles on Zhongshan Road", "晚餐：中山路螺蛳粉"),
+        ],
         bullets: [
           L("Arrive Nanning", "抵达南宁"),
           L("City orientation", "城市适应"),
@@ -97,9 +133,16 @@ export const routes: Record<
       {
         day: 2,
         city: L("Chongzuo", "崇左"),
-        stay: L("Chongzuo", "崇左"),
+        stay: L("Karst road, after the falls", "看山，瀑布之后"),
         stayKind: "hotel",
         placeId: "chongzuo",
+        drive: L("Private car · Detian", "专车前往德天"),
+        transport: L("Private car to Detian + bamboo raft at the falls", "专车至德天 + 瀑布下竹筏"),
+        lodging: L("Karst-view lodge", "看山的小住"),
+        dining: [
+          L("Lunch: river fish near the falls", "午餐：瀑布附近的河鱼"),
+          L("Dinner: Chongzuo sticky rice table", "晚餐：崇左糯米一桌"),
+        ],
         bullets: [
           L("Detian Waterfall", "德天瀑布"),
           L("Mingshi Pastoral", "名仕田园"),
@@ -111,10 +154,16 @@ export const routes: Record<
       {
         day: 8,
         city: L("Jianshui", "建水"),
-        stay: L("Jianshui", "建水"),
+        stay: L("Inside the old town wall", "古城墙里"),
         stayKind: "hotel",
         placeId: "jianshui",
-        drive: "3h",
+        drive: L("Private car · 3 h", "专车约 3 小时"),
+        transport: L("Hekou crossing, then private car to Jianshui ~3 h", "河口通关，专车至建水约 3 小时"),
+        lodging: L("Courtyard inn inside the wall", "城墙里的院子客栈"),
+        dining: [
+          L("Lunch: after the crossing", "午餐：过关之后"),
+          L("Dinner: grilled tofu in the courtyard", "晚餐：天井里的烤豆腐"),
+        ],
         bullets: [
           L("Exit toward Hekou", "出境前往河口"),
           L("Enter China", "河口入境中国"),
@@ -125,24 +174,47 @@ export const routes: Record<
       {
         day: 9,
         city: L("Puzhehei", "普者黑"),
-        stay: L("Inside the park", "景区内"),
+        stay: L("Inside Puzhehei scenic area", "普者黑景区内"),
         stayKind: "park",
         placeId: "puzhehei",
-        drive: "4h",
+        drive: L("Private car · ~4 h", "专车约 4 小时"),
+        blurb: L(
+          "Puzhehei is a lake that grew inside a karst forest. Lotus flowers between the peaks, bamboo raft threading between them — this is the kind of landscape that makes you question whether it's real. Trek with a Yi guide in the afternoon; they call this place 'where fish and shrimp overflow.'",
+          "普者黑是长在喀斯特森林里的一湖水。峰丛之间开着荷花，竹筏从中间穿过去——这种风景会让人怀疑是不是真的。下午跟彝族向导进山；他们管这里叫「鱼虾满出来的地方」。",
+        ),
+        photos: [
+          asset("/destinations/chongzuo.jpg"),
+          asset("/destinations/catba.jpg"),
+          asset("/destinations/puzhehei.jpg"),
+        ],
+        transport: L("Minibus to Puzhehei + bamboo raft on lake", "中巴前往普者黑 + 湖上竹筏"),
+        lodging: L("Yi minority lakeside guesthouse", "彝族湖畔民宿"),
+        dining: [
+          L("Lunch: Lakeside Yi-style stone-pot fish", "午餐：湖边彝族石锅鱼"),
+          L("Dinner: Innkeeper's home-style cooking", "晚餐：房东家常菜"),
+        ],
         bullets: [
-          L("Jianshui old town mini-train", "建水古城小火车"),
-          L("Tuanshan residences", "团山民居"),
-          L("On to Puzhehei", "前往普者黑"),
+          L(
+            "Jianshui: Zhu Family Garden, narrow-gauge train (Twin Dragon Bridge, Tuanshan Village)",
+            "建水：朱家花园、米轨小火车（双龙桥、团山村）",
+          ),
+          L("Afternoon: drive to Puzhehei, ~4 h", "下午：驱车前往普者黑，约 4 小时"),
         ],
         themes: ["villages", "wild"],
       },
       {
         day: 10,
         city: L("Mile", "弥勒"),
-        stay: L("Mile", "弥勒"),
+        stay: L("Dongfengyun, then the spring", "东风韵，然后温泉"),
         stayKind: "hotel",
         placeId: "mile",
-        drive: "3h",
+        drive: L("Private car · 3 h", "专车约 3 小时"),
+        transport: L("Willow-leaf boat, then car to Mile ~3 h", "柳叶舟游湖，专车至弥勒约 3 小时"),
+        lodging: L("Hot-spring room", "温泉房"),
+        dining: [
+          L("Lunch: lake fish before leaving Puzhehei", "午餐：离开普者黑前的湖鱼"),
+          L("Dinner: Yunnan table, then the spring", "晚餐：云南菜，然后泡汤"),
+        ],
         bullets: [
           L("Willow-leaf boat", "柳叶舟游湖"),
           L("Dongfengyun", "东风韵"),
@@ -153,10 +225,16 @@ export const routes: Record<
       {
         day: 11,
         city: L("Kunming", "昆明"),
-        stay: L("Kunming", "昆明"),
+        stay: L("Green Lake, last city night", "翠湖，最后一城"),
         stayKind: "hotel",
         placeId: "kunming",
-        drive: "2h",
+        drive: L("Private car · 2 h", "专车约 2 小时"),
+        transport: L("Private car Mile → Kunming ~2 h", "专车弥勒至昆明约 2 小时"),
+        lodging: L("Green Lake or near the airport", "翠湖或机场附近"),
+        dining: [
+          L("Lunch: crossing-the-bridge noodles", "午餐：过桥米线"),
+          L("Dinner: old street, if you still have legs", "晚餐：还有腿就去老街"),
+        ],
         bullets: [
           L("Mile → Kunming", "弥勒至昆明"),
           L("Green Lake", "翠湖公园"),
@@ -169,6 +247,9 @@ export const routes: Record<
         city: L("Depart", "送机"),
         stay: L("Airport", "机场"),
         stayKind: "hotel",
+        transport: L("Hotel to Kunming Changshui", "酒店送至长水机场"),
+        lodging: L("Morning checkout", "早晨退房"),
+        dining: [L("Breakfast at the hotel, or Dounan if the flight is late", "酒店早餐；晚班机可加斗南")],
         bullets: [
           L("Airport transfer", "昆明送机"),
           L("Afternoon flight? Dounan flowers", "晚班机可加斗南花市"),
@@ -184,9 +265,15 @@ export const routes: Record<
       {
         day: 1,
         city: L("Nanning", "南宁"),
-        stay: L("Nanning", "南宁"),
+        stay: L("Yong River, before the border", "邕江边，过关前夜"),
         stayKind: "hotel",
         placeId: "nanning",
+        transport: L("Airport pickup, then a brief city night", "接机，然后一个短的城市夜"),
+        lodging: L("Riverside garden stay", "江景花园酒店"),
+        dining: [
+          L("Lunch: depending on arrival", "午餐：看抵达时间"),
+          L("Dinner: snail noodles on Zhongshan Road", "晚餐：中山路螺蛳粉"),
+        ],
         bullets: [
           L("Arrive Nanning", "抵达南宁"),
           L("Brief city night", "南宁夜"),
@@ -198,9 +285,15 @@ export const routes: Record<
       {
         day: 7,
         city: L("Guantang", "观堂"),
-        stay: L("Guantang", "观堂"),
+        stay: L("Two-night village base", "村里连住的第一晚"),
         stayKind: "base",
         placeId: "guantang",
+        transport: L("Friendship Pass crossing, then Longzhou", "友谊关出境，再去龙州"),
+        lodging: L("Guantang courtyard", "观堂的院子"),
+        dining: [
+          L("Lunch: after the pass", "午餐：过关之后"),
+          L("Dinner: Zhuang table at the courtyard", "晚餐：院子里的壮家饭"),
+        ],
         bullets: [
           L("Lang Son & Dong Dang fair", "谅山、同登庙会"),
           L("Youyiguan (Friendship Pass)", "友谊关出境"),
@@ -211,9 +304,15 @@ export const routes: Record<
       {
         day: 8,
         city: L("Guantang", "观堂"),
-        stay: L("Guantang", "观堂"),
+        stay: L("Same courtyard, no suitcase", "同一院子，不拎箱子"),
         stayKind: "base",
         placeId: "guantang",
+        transport: L("Bicycle in the cane, walk to Tianqin village", "蔗海骑行，步行去天琴寨"),
+        lodging: L("Guantang courtyard — second night", "观堂的院子 · 第二晚"),
+        dining: [
+          L("Lunch: village kitchen", "午餐：村里的厨房"),
+          L("Dinner: oil tea and whatever came from the field", "晚餐：油茶，和当天地里来的东西"),
+        ],
         bullets: [
           L("Tianqin Zhuang village", "天琴壮寨"),
           L("Cycle the cane fields", "骑行蔗海"),
@@ -224,9 +323,15 @@ export const routes: Record<
       {
         day: 9,
         city: L("Nanning", "南宁"),
-        stay: L("Nanning", "南宁"),
+        stay: L("Back in the garden city", "回到绿城"),
         stayKind: "hotel",
         placeId: "chongzuo",
+        transport: L("Detian by car, then return to Nanning", "专车德天，再回南宁"),
+        lodging: L("Nanning riverside hotel", "南宁江景酒店"),
+        dining: [
+          L("Lunch: river fish at Detian", "午餐：德天河鱼"),
+          L("Dinner: Nanning, whatever you still want", "晚餐：南宁，想吃什么吃什么"),
+        ],
         bullets: [
           L("Detian Waterfall", "德天瀑布"),
           L("Mingshi Pastoral", "名仕田园"),
@@ -239,6 +344,9 @@ export const routes: Record<
         city: L("Depart", "结束"),
         stay: L("Nanning", "南宁"),
         stayKind: "hotel",
+        transport: L("Hotel to Nanning Wuxu Airport", "酒店送至吴圩机场"),
+        lodging: L("Morning checkout", "早晨退房"),
+        dining: [L("Breakfast at the hotel", "酒店早餐")],
         bullets: [
           L("Return in Nanning", "返南宁"),
           L("Trip ends", "行程结束"),

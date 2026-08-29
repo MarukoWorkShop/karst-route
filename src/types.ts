@@ -18,6 +18,7 @@ export type Theme = {
   en: string;
   zh: string;
   wash: string;
+  cover: string;
   materials: ThemeMaterial[];
 };
 
@@ -27,7 +28,13 @@ export type DayStop = {
   stay: Tx;
   stayKind: StayKind;
   placeId?: PlaceId;
-  drive?: string;
+  drive?: Tx;
+  /** Longer place note shown with the gold rule when the day is open. */
+  blurb?: Tx;
+  photos?: string[];
+  transport?: Tx;
+  lodging?: Tx;
+  dining?: Tx[];
   bullets: Tx[];
   themes: ThemeId[];
 };

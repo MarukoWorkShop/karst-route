@@ -111,14 +111,15 @@ Tailwind `@theme` / CSS 变量。
 |---|---|---|
 | `--color-ink` | `#1E3329` | 正文（森林墨） |
 | `--color-ink-soft` | `#5E7368` | meta |
-| `--color-paper` | `#F5F2EA` | **浅米白页底**（不是纯白、不是冷灰） |
-| `--color-surface` | `#FAF8F2` | 展开卡、输入、底栏 |
+| `--color-paper` | `#FAF8F2` | **浅米白页底** |
+| `--color-surface` | `#FDFBF6` | 卡片、输入、底栏 |
 | `--color-sage` | `#E7EBE6` | 工具箱极浅洗底 |
-| `--color-night` | `#16241E` | 仅性格卡图上遮罩、弹层遮罩；不上大面积页底 |
+| `--color-night` | `#16241E` | 仅性格卡图上遮罩、弹层遮罩、页脚；不上大面积页底 |
 | `--color-cta` | `#2F5344` | 森林绿：Quote、DAY 序号、选中轨、区块名 |
-| `--color-cta-press` | `#244338` | :active |
+| `--color-cta-press` | `#1E3329` | :active / :hover |
 | `--color-teal` | `#2F5344` | 与 CTA 同色，兼容旧类名 |
-| `--color-gold` | `#8F8458` | 苔金短线，少用 |
+| `--color-gold` | `#A88C56` | 苔金短线，少用 |
+| `--color-gold-line` | `#8F8458` | 苔金描边 |
 | `--color-line` | `#D9D6CC` | 分割、输入边 |
 | `--color-bone` | `#E8E5DC` | 骨架、空素材槽 |
 | `--color-bone-2` | `#F0EDE5` | 骨架高光 |
@@ -386,7 +387,7 @@ label；地球仪 `aria-label="Choose language"`；sheet `dialog` + 焦点循环
 - [ ] 选性格后下方 3 槽换成对应素材；无图时骨位不塌、有 `Wild Fun · 1` 类标注
 - [ ] 没有大社四宫格 Trust 与主题同级
 - [ ] 展开日 ≤ 3 bullet
-- [ ] 森林绿只出现在 Quote/Submit、DAY、选中与区块名；页底为浅米白 `#F5F2EA`；卡片圆角 8px；PingFang；标题字重 500；正文行距 ≥ 1.65
+- [ ] 森林绿只出现在 Quote/Submit、DAY、选中与区块名；页底为浅米白 `#FAF8F2`；卡片圆角 8px；PingFang；标题字重 500；正文行距 ≥ 1.65
 - [ ] 桌面没有变回三栏画册
 - [ ] 骨架与真布局偏差 ≤ 8px
 - [ ] 减动效模式下无脉冲、无平滑滚
