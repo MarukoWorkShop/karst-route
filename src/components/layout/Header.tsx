@@ -9,11 +9,10 @@ export function Header({ onPlan }: { onPlan: () => void }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [solid, setSolid] = useState(false);
   const exploreLinks = [
-    { href: "#explore-culture", label: t(copy.nav.culture) },
-    { href: "#explore-voices", label: t(copy.nav.voices) },
-    { href: "#explore-guide", label: t(copy.nav.guide) },
+    { href: "#explore-films", label: t(copy.nav.films) },
+    { href: "#explore-lit", label: t(copy.nav.literature) },
   ];
-  const toolLinks = [
+  const faqLinks = [
     { href: "#tool-visa", label: t(copy.nav.visa) },
     { href: "#tool-season", label: t(copy.nav.season) },
     { href: "#tool-transit", label: t(copy.nav.transit) },
@@ -74,7 +73,7 @@ export function Header({ onPlan }: { onPlan: () => void }) {
             </a>
             <span className={`h-4 w-px ${solid ? "bg-line" : "bg-paper/25"}`} aria-hidden />
             <SubMenu label={t(copy.nav.explore)} links={exploreLinks} muted={muted} solid={solid} />
-            <SubMenu label={t(copy.nav.tools)} links={toolLinks} muted={muted} solid={solid} />
+            <SubMenu label={t(copy.nav.faq)} links={faqLinks} muted={muted} solid={solid} />
           </nav>
           <div className="flex items-center justify-end gap-1">
             <MenuButton onClick={() => setDrawerOpen(true)} className={muted} />

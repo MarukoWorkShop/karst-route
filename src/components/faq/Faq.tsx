@@ -3,7 +3,7 @@ import { faqs } from "@/data/faqs";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 
-export function TravelTools() {
+export function Faq() {
   const { t } = useLocale();
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
@@ -19,7 +19,7 @@ export function TravelTools() {
   }, []);
 
   return (
-    <section id="tools" className="scroll-mt-24 bg-sage py-12 md:py-14">
+    <section id="faq" className="scroll-mt-24 bg-sage py-12 md:py-14">
       <div className="page-col">
         <div className="mx-auto max-w-[640px]">
           <h2 className="mt-2 mb-7 text-[22px] leading-[1.3] font-medium text-cta">

@@ -9,7 +9,7 @@ import { Timeline } from "@/components/itinerary/Timeline";
 import { Experience } from "@/components/experience/Experience";
 import { Explore } from "@/components/explore/Explore";
 import { PlanSection } from "@/components/plan/PlanSection";
-import { TravelTools } from "@/components/tools/TravelTools";
+import { Faq } from "@/components/faq/Faq";
 import { Partners } from "@/components/partners/Partners";
 
 function go(id: string) {
@@ -81,7 +81,7 @@ export default function App() {
           browsedTheme={theme}
           themeFilterOn={filterOn}
         />
-        <TravelTools />
+        <Faq />
         <Partners />
       </main>
       <Footer />

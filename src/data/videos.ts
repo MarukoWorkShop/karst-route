@@ -3,6 +3,7 @@ import { asset } from "@/lib/asset";
 
 export const destinationVideos: {
   id: string;
+  youtubeId: string;
   src: string;
   duration: string;
   location: Tx;
@@ -11,6 +12,7 @@ export const destinationVideos: {
 }[] = [
   {
     id: "explore-culture",
+    youtubeId: "q9FVpVcJD-U",
     src: asset("/destinations/chongzuo.jpg"),
     duration: "4:32",
     location: { en: "Guangxi · Guilin", zh: "广西 · 桂林" },
@@ -22,6 +24,7 @@ export const destinationVideos: {
   },
   {
     id: "explore-halong",
+    youtubeId: "K3MQAB0AAUI",
     src: asset("/destinations/catba.jpg"),
     duration: "6:18",
     location: { en: "Vietnam · Quảng Ninh", zh: "越南 · 广宁省" },
@@ -33,6 +36,7 @@ export const destinationVideos: {
   },
   {
     id: "explore-voices",
+    youtubeId: "bSrjl2qI2UU",
     src: asset("/destinations/sapa.jpg"),
     duration: "5:04",
     location: { en: "Vietnam · Sapa", zh: "越南 · 沙坝" },
@@ -44,6 +48,7 @@ export const destinationVideos: {
   },
   {
     id: "explore-guide",
+    youtubeId: "nEfmIpMlCgU",
     src: asset("/destinations/jianshui.jpg"),
     duration: "7:41",
     location: { en: "China · Yunnan", zh: "中国 · 云南" },
@@ -55,6 +60,7 @@ export const destinationVideos: {
   },
   {
     id: "explore-ninhbinh",
+    youtubeId: "I8mG_cOxVAc",
     src: asset("/destinations/puzhehei.jpg"),
     duration: "3:55",
     location: { en: "Vietnam · Ninh Bình", zh: "越南 · 宁平" },
@@ -66,6 +72,7 @@ export const destinationVideos: {
   },
   {
     id: "explore-hanoi",
+    youtubeId: "TH9vH7pXO_I",
     src: asset("/destinations/hanoi.jpg"),
     duration: "8:20",
     location: { en: "Vietnam · Hanoi", zh: "越南 · 河内" },
