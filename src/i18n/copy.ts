@@ -40,16 +40,16 @@ export const copy = {
       zh: "南中国与越南北部的人文深度体验",
     },
     ctaA: {
-      en: "View study tour routes",
-      zh: "查看研学路线",
+      en: "Award-winning deep cultural boutique routes",
+      zh: "备受赞誉的深度人文精品路线",
     },
     ctaAHint: {
       en: "Two private itineraries. Border, bed and boat already solved.",
       zh: "两条私团成线。通关、住宿、水路都已排好。",
     },
     ctaB: {
-      en: "Plan my trip",
-      zh: "规划行程",
+      en: "Design your own themes and routes",
+      zh: "自己设计游玩主题和线路",
     },
     ctaBHint: {
       en: "AI brief. Four questions, then a draft in English.",
