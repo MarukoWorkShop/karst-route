@@ -400,6 +400,7 @@ export const copy = {
   },
   faq: {
     h2: { en: "Things you might want to know", zh: "出行前，您可能想知道" },
+    filterAll: { en: "All topics", zh: "全部分类" },
     more: {
       en: "Have a question we didn't cover? Just ask.",
       zh: "还有其他疑问？直接告诉我们。",

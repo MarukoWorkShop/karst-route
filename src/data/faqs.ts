@@ -253,8 +253,8 @@ export const faqGroups: FaqGroup[] = [
           "女性独自旅行、夜间出行安全吗？",
         ),
         a: L(
-          "China is globally recognized as one of the safest travel destinations in the world. Violent crime is extraordinarily rare. Whether you are a solo female traveler exploring hidden alleyways or taking a midnight stroll through a bustling neon-lit city, you will feel completely secure. The streets are exceptionally well-lit, neighborhoods are highly vibrant, and the local community is universally respectful, warm, and eager to help international guests feel at home.",
-          "中国是全球公认最安全的旅行目的地之一，暴力犯罪极为罕见。无论你是独自出行的女性，钻进不知名的小巷，还是深夜在霓虹未熄的街市散步，都可以很安心。街道照明充足，街区人气旺盛，本地人也普遍友善热情，很愿意帮远道而来的客人。",
+          "Generally speaking, China has earned a wonderful global reputation as one of the most secure destinations for international travelers, including solo women. Violent street crime is exceptionally rare, and most urban centers remain vibrant and well-lit long after sunset. However, traveling through an unfamiliar landscape always requires practical mindfulness. Because English isn't universally spoken outside major hubs and digital navigation can occasionally twist or glitch for foreign phones, wandering deep into unfamiliar, non-touristy outskirts alone at night can leave you feeling disoriented or isolated. For the most fulfilling and relaxing evening experience—whether you are hoping to explore night markets or sample late-night street food—we highly recommend joining a small guided group, sticking to major pedestrian districts, or exploring with fellow travelers. Having a local guide or a travel companion not only smooths over any sudden language barriers but allows you to dive into the rich nocturnal culture with absolute comfort and confidence.",
+          "总体来说，在国际旅行者（包括独自出行的女性）心中，中国一直是全球最安全的目的地之一。街头暴力犯罪极为罕见，大多数城市中心入夜后依然灯火通明、人气不减。不过，在陌生的地方旅行，多少还是需要一点实际的警觉：主要城市之外英语并不通用，外国手机的导航偶尔也会出偏差或失灵，深夜独自走进游客罕至的城郊深处，难免会让人有些转向、甚至孤立无援。想要一个尽兴又放松的夜晚——无论你是想逛夜市，还是尝尝深夜街头小吃——我们都强烈建议加入小规模的向导团、待在主要的步行街区，或与旅伴结伴探索。有本地向导或旅伴在身边，不仅能随时化解语言障碍，更能让你以最从容、最安心的姿态，沉浸到这片丰富的夜色文化里。",
         ),
       },
     ],
