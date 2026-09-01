@@ -19,7 +19,7 @@ const cosUrl = (file: string) =>
 
 /** Full-bleed video slide. Poster holds the first paint; video URL comes from COS. */
 export type HeroSlide = {
-  id: ThemeId;
+  id: string;
   video: string;
   poster: string;
   pos: string;
@@ -45,7 +45,8 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     id: "flavors",
-    video: cosUrl("videos/2.mp4"),
+    // 首页轮播只播前 10 秒(CLIP_MAX_S)，用 12 秒精简版(9.3M)代替完整版(90.5M)，避免首页加载过慢
+    video: cosUrl("videos/2-hero.mp4"),
     poster: asset("/destinations/hanoi.jpg"),
     pos: "center 55%",
     alt: L("Morning market and city streets", "早市与城市街巷"),
@@ -54,6 +55,32 @@ export const heroSlides: HeroSlide[] = [
     intro: L(
       "Heritage travellers discover a living city through the sights, smells and stories of the market — not a museum corridor.",
       "在还在运转的早市里认一座城：声音、气味、摊主的一句话，比展柜更像故乡。",
+    ),
+  },
+  {
+    id: "wild-air",
+    video: cosUrl("videos/3.mp4"),
+    poster: asset("/destinations/hero-shot-3.jpg"),
+    pos: "center 50%",
+    alt: L("Aerial view of karst peaks", "航拍喀斯特峰丛"),
+    themeId: "wild",
+    title: L("Above the Karst", "峰丛之上"),
+    intro: L(
+      "The drone climbs and the range opens up — fold after fold of green, and no road in sight.",
+      "无人机拉高，山一层层展开：满眼是绿，看不见路。",
+    ),
+  },
+  {
+    id: "wild-ridge",
+    video: cosUrl("videos/4.mp4"),
+    poster: asset("/destinations/hero-shot-4.jpg"),
+    pos: "center 50%",
+    alt: L("Mountain ridges fading into cloud", "山脊没入云海"),
+    themeId: "wild",
+    title: L("Ridges in Cloud", "云上山脊"),
+    intro: L(
+      "Late light on the ridges, cloud pooling in the valleys — the south, unhurried and wild.",
+      "暮色压上山脊，云在谷底积水。南方的野，是不着急的那一面。",
     ),
   },
 ];

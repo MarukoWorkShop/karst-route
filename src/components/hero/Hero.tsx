@@ -372,7 +372,7 @@ export function Hero({
           <div className="mt-8 flex items-center gap-1.5 md:mt-10">
             {heroSlides.map((item, i) => (
               <button
-                key={item.id}
+                key={`${item.id}-${i}`}
                 type="button"
                 aria-label={t(item.alt)}
                 aria-current={i === active ? true : undefined}
