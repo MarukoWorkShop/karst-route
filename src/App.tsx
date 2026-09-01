@@ -22,10 +22,6 @@ export default function App() {
   const [intent, setIntent] = useState<"boutique" | "custom">("boutique");
   const [experienceOpen, setExperienceOpen] = useState<ThemeId | null>(null);
 
-  function openExperienceArticle(id: ThemeId) {
-    setExperienceOpen(id);
-  }
-
   function pickRoute(id: RouteId) {
     setRoute(id);
     go("itinerary");
@@ -39,7 +35,6 @@ export default function App() {
           onPlanOwn={() => {
             setIntent("custom");
           }}
-          onOpenTheme={openExperienceArticle}
         />
         <BoutiqueTours route={route} onPick={pickRoute} />
         <Timeline

@@ -44,17 +44,18 @@ export const heroSlides: HeroSlide[] = [
     ),
   },
   {
-    id: "flavors",
+    id: "wild-raft",
     // 首页轮播只播前 10 秒(CLIP_MAX_S)，用 12 秒精简版(9.3M)代替完整版(90.5M)，避免首页加载过慢
     video: cosUrl("videos/2-hero.mp4"),
-    poster: asset("/destinations/hanoi.jpg"),
+    poster: asset("/destinations/hero-shot-2.jpg"),
     pos: "center 55%",
-    alt: L("Morning market and city streets", "早市与城市街巷"),
-    themeId: "flavors",
-    title: L("Explore the morning market", "走进南方早市"),
+    alt: L("A bamboo raft drifting down the Li River", "竹筏顺漓江而下"),
+    // 素材实为漓江竹筏（原 2.MOV），归 wild 纵情山野，而非 flavors 地道风味
+    themeId: "wild",
+    title: L("Drifting the Li River", "漓江竹筏"),
     intro: L(
-      "Heritage travellers discover a living city through the sights, smells and stories of the market — not a museum corridor.",
-      "在还在运转的早市里认一座城：声音、气味、摊主的一句话，比展柜更像故乡。",
+      "A raft slips downstream between karst peaks — you don't have to find the way, the river already knows it.",
+      "竹筏顺流而下，两岸峰丛替你指路。不用找路，水知道该怎么走。",
     ),
   },
   {

@@ -4,13 +4,11 @@ import { useLocale } from "@/i18n/LocaleProvider";
 import { IconChevron, IconSparkles, IconVolume, IconVolumeOff } from "@/components/icons";
 import { heroBgm, heroSlides } from "@/data/heroPanels";
 import { themes } from "@/data/themes";
-import type { ThemeId } from "@/types";
 
 const FADE_MS = 1200;
 const CLIP_MAX_S = 10;
 const POSTER_HOLD_MS = 10_000;
 const SWIPE_PX = 48;
-const TAP_PX = 12;
 
 type Layer = "a" | "b";
 
@@ -38,13 +36,7 @@ function playSafe(el: HTMLVideoElement | null) {
   void el.play().catch(() => {});
 }
 
-export function Hero({
-  onPlanOwn,
-  onOpenTheme,
-}: {
-  onPlanOwn: () => void;
-  onOpenTheme?: (id: ThemeId) => void;
-}) {
+export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
   const { t, locale } = useLocale();
   const count = heroSlides.length;
   const [active, setActive] = useState(0);
@@ -186,9 +178,9 @@ export function Hero({
     }
   }
 
-  function openArticle() {
-    onOpenTheme?.(slide.themeId);
-    document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" });
+  /** 上滑（页面下滚）时柔和滚入路线说明页，不再跳转到主题文章 */
+  function scrollToItinerary() {
+    document.getElementById("itinerary")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function onPointerDown(e: PointerEvent<HTMLElement>) {
@@ -204,11 +196,16 @@ export function Hero({
     if ((e.target as HTMLElement).closest("a, button")) return;
     const dx = e.clientX - start.x;
     const dy = e.clientY - start.y;
+    // 左右滑动：切换上/下一个视频
     if (Math.abs(dx) >= SWIPE_PX && Math.abs(dx) > Math.abs(dy)) {
       go(dx < 0 ? 1 : -1);
       return;
     }
-    if (Math.abs(dx) < TAP_PX && Math.abs(dy) < TAP_PX) openArticle();
+    // 上滑（页面下滚）：柔和滚入路线说明页。仅触摸设备生效，避免鼠标拖拽误触
+    if (e.pointerType !== "mouse" && dy <= -SWIPE_PX && Math.abs(dy) > Math.abs(dx)) {
+      scrollToItinerary();
+    }
+    // 轻点不再触发跳转
   }
 
   const aSlide = heroSlides[aIdx];
@@ -328,14 +325,10 @@ export function Hero({
         <div className="page-col pb-[calc(96px+env(safe-area-inset-bottom))] md:pb-14">
           {/* key 用索引而非 slide.id：多个 slide 可共用一个主题，用 id 会导致切换时动画不触发 */}
           <div key={active} className="hero-copy max-w-[640px]">
-            <a
-              href="#experience"
-              aria-label={t(copy.hero.themesAria)}
-              onClick={() => onOpenTheme?.(slide.themeId)}
-              className="pointer-events-auto inline-flex rounded-full border border-[#C5A059]/70 bg-night/35 px-3 py-[5px] text-[10px] font-medium tracking-[0.14em] text-[#C5A059] backdrop-blur-[2px] md:text-[11px]"
-            >
+            {/* 主题标签保留展示，但不再作为可点击的跳转入口 */}
+            <span className="inline-flex rounded-full border border-[#C5A059]/70 bg-night/35 px-3 py-[5px] text-[10px] font-medium tracking-[0.14em] text-[#C5A059] backdrop-blur-[2px] md:text-[11px]">
               {chip}
-            </a>
+            </span>
 
             <h1
               className={`mt-4 font-bold tracking-[-0.02em] text-white md:mt-5 ${
