@@ -21,6 +21,18 @@ export function Timeline({
   const [open, setOpen] = useState<number | null>(null);
   const [playing, setPlaying] = useState(false);
 
+  // 同一目的地连住多晚时，只在抵达当天展开完整讲解，后续日期不再重复
+  const firstVisitDays = (() => {
+    const seen = new Set<string>();
+    const days = new Set<number>();
+    for (const d of route.days) {
+      if (!d.placeId || seen.has(d.placeId)) continue;
+      seen.add(d.placeId);
+      days.add(d.day);
+    }
+    return days;
+  })();
+
   return (
     <section id="itinerary" className="scroll-mt-24 py-12">
       <div className="page-col">
@@ -90,6 +102,7 @@ export function Timeline({
               key={`${routeId}-${day.day}`}
               day={day}
               open={open === day.day}
+              showDetail={firstVisitDays.has(day.day)}
               onToggle={() => setOpen((cur) => (cur === day.day ? null : day.day))}
             />
           ))}
@@ -105,10 +118,13 @@ export function Timeline({
 function DayRow({
   day,
   open,
+  showDetail,
   onToggle,
 }: {
   day: DayStop;
   open: boolean;
+  /** 抵达当天才展开完整讲解；连住的第二晚起不再重复 */
+  showDetail?: boolean;
   onToggle: () => void;
 }) {
   const { t } = useLocale();
@@ -123,6 +139,20 @@ function DayRow({
   const transport = day.transport ?? day.drive;
   const lodging = day.lodging ?? place?.hotel.title;
   const dining = day.dining ?? (place ? [place.cuisine.title] : undefined);
+
+  // 深度讲解词：体验 / 餐饮 / 住宿 —— 连住多晚时只在抵达当天出现
+  const detail =
+    showDetail && place
+      ? [
+          {
+            label: copy.tours.book.experience,
+            title: place.experience.title,
+            body: place.experience.body,
+          },
+          { label: copy.tours.book.dining, title: place.cuisine.title, body: place.cuisine.body },
+          { label: copy.tours.book.stay, title: place.hotel.title, body: place.hotel.body },
+        ]
+      : [];
 
   return (
     <li
@@ -173,6 +203,20 @@ function DayRow({
             <p className="mt-4 border-l-2 border-gold pl-3 text-[14px] leading-6 text-ink">
               {t(blurb)}
             </p>
+          ) : null}
+
+          {detail.length > 0 ? (
+            <div className="mt-4 flex flex-col gap-3.5">
+              {detail.map((d) => (
+                <div key={d.label.en}>
+                  <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-cta">
+                    {t(d.label)}
+                  </p>
+                  <p className="mt-1 text-[14px] font-medium text-ink">{t(d.title)}</p>
+                  <p className="mt-1.5 text-[13.5px] leading-[22px] text-ink-soft">{t(d.body)}</p>
+                </div>
+              ))}
+            </div>
           ) : null}
 
           {day.bullets.length > 0 ? (

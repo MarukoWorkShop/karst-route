@@ -97,6 +97,7 @@ export const copy = {
       tripPhotos: { en: "Trip Photos", zh: "旅途照片" },
       viewMap: { en: "View the complete route on map", zh: "点击在地图上查看完整路线" },
       mapStops: { en: "stops", zh: "个目的地" },
+      experience: { en: "Experience", zh: "体验" },
       transport: { en: "Transport", zh: "交通" },
       stay: { en: "Stay", zh: "住宿" },
       dining: { en: "Dining", zh: "餐饮" },
