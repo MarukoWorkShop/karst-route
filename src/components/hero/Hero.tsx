@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { IconChevron, IconSparkles, IconVolume, IconVolumeOff } from "@/components/icons";
+import { IconSparkles, IconVolume, IconVolumeOff } from "@/components/icons";
 import { heroBgm, heroSlides } from "@/data/heroPanels";
 import { themes } from "@/data/themes";
 
@@ -278,7 +278,7 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "linear-gradient(to top, rgba(8,12,10,0.88) 0%, rgba(8,12,10,0.55) 28%, rgba(8,12,10,0.18) 52%, rgba(8,12,10,0.08) 72%, transparent 100%)",
+              "linear-gradient(to top, rgba(8,12,10,0.85) 0%, rgba(8,12,10,0.5) 20%, rgba(8,12,10,0.16) 40%, rgba(8,12,10,0.04) 58%, transparent 74%)",
           }}
         />
         <div
@@ -289,22 +289,7 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
         />
       </div>
 
-      <button
-        type="button"
-        aria-label={t(copy.hero.prev)}
-        onClick={() => go(-1)}
-        className="pointer-events-auto absolute top-1/2 left-3 z-[2] flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-night/35 text-white backdrop-blur-sm md:left-6 md:h-12 md:w-12"
-      >
-        <IconChevron className="h-5 w-5 rotate-90" />
-      </button>
-      <button
-        type="button"
-        aria-label={t(copy.hero.next)}
-        onClick={() => go(1)}
-        className="pointer-events-auto absolute top-1/2 right-3 z-[2] flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-night/35 text-white backdrop-blur-sm md:right-6 md:h-12 md:w-12"
-      >
-        <IconChevron className="h-5 w-5 -rotate-90" />
-      </button>
+      {/* 左右切换箭头已移除：移动端靠左右滑动，桌面端靠自动轮播（每 10 秒） */}
 
       {heroBgm ? (
         <>
@@ -322,7 +307,7 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
       ) : null}
 
       <div className="pointer-events-none relative z-[1] flex min-h-[100svh] flex-col justify-end">
-        <div className="page-col pb-[calc(96px+env(safe-area-inset-bottom))] md:pb-14">
+        <div className="page-col pb-[calc(74px+env(safe-area-inset-bottom))] md:pb-9">
           {/* key 用索引而非 slide.id：多个 slide 可共用一个主题，用 id 会导致切换时动画不触发 */}
           <div key={active} className="hero-copy max-w-[640px]">
             {/* 主题标签保留展示，但不再作为可点击的跳转入口 */}
@@ -331,16 +316,16 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
             </span>
 
             <h1
-              className={`mt-4 font-bold tracking-[-0.02em] text-white md:mt-5 ${
+              className={`mt-3 font-bold tracking-[-0.02em] text-white md:mt-4 ${
                 zh
-                  ? "text-[34px] leading-[42px] md:text-[56px] md:leading-[66px]"
-                  : "text-[32px] leading-[38px] md:text-[52px] md:leading-[60px]"
+                  ? "text-[28px] leading-[36px] md:text-[44px] md:leading-[54px]"
+                  : "text-[26px] leading-[33px] md:text-[40px] md:leading-[50px]"
               }`}
             >
               {t(slide.title)}
             </h1>
 
-            <p className="mt-3.5 max-w-[520px] text-[15px] leading-[24px] text-white/90 md:mt-4 md:text-[18px] md:leading-[28px]">
+            <p className="mt-2.5 max-w-[480px] text-[13px] leading-[21px] text-white/90 md:mt-3 md:text-[15px] md:leading-[25px]">
               {t(slide.intro)}
             </p>
 
