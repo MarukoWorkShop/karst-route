@@ -4,15 +4,21 @@ import { useLocale } from "@/i18n/LocaleProvider";
 export function MobileDock({
   onTours,
   onPlan,
+  hidden,
 }: {
   onTours: () => void;
   onPlan: () => void;
+  /** 首屏（Hero 可见）时收起，让画面整屏呈现；滚离首屏后滑出 */
+  hidden?: boolean;
 }) {
   const { t } = useLocale();
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 flex border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] md:hidden"
+      className={`fixed bottom-0 left-0 right-0 z-40 flex border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] transition-transform duration-300 ease-out md:hidden ${
+        hidden ? "pointer-events-none translate-y-full" : "translate-y-0"
+      }`}
       aria-label="Main navigation"
+      aria-hidden={hidden ? true : undefined}
     >
       <button
         type="button"

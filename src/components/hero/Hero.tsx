@@ -6,7 +6,7 @@ import { heroBgm, heroSlides } from "@/data/heroPanels";
 import { themes } from "@/data/themes";
 
 const FADE_MS = 700;
-const CLIP_MAX_S = 10;
+const CLIP_MAX_S = 30;
 const POSTER_HOLD_MS = 10_000;
 const SWIPE_PX = 28;
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { RouteId, ThemeId } from "@/types";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -21,6 +21,20 @@ export default function App() {
   const [route, setRoute] = useState<RouteId>("r1");
   const [intent, setIntent] = useState<"boutique" | "custom">("boutique");
   const [experienceOpen, setExperienceOpen] = useState<ThemeId | null>(null);
+
+  // 首屏（Hero）占据视野时收起底部导航，让画面整屏呈现
+  const [heroInView, setHeroInView] = useState(true);
+
+  useEffect(() => {
+    const el = document.getElementById("top");
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setHeroInView(entry.isIntersecting),
+      { threshold: 0.35 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   function pickRoute(id: RouteId) {
     setRoute(id);
@@ -48,6 +62,7 @@ export default function App() {
       </main>
       <Footer />
       <MobileDock
+        hidden={heroInView}
         onTours={() => go("tours")}
         onPlan={() => {
           setIntent("custom");
