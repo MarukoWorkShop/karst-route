@@ -15,9 +15,6 @@ import {
   todayIso,
   type BriefDay,
 } from "@/lib/briefPdf";
-import { requestBookDraft } from "@/lib/bookCraftClient";
-import type { BookDraft } from "@/lib/bookCraft";
-import { IconSparkles } from "@/components/icons";
 import { ItinDays } from "@/components/plan/ItinDays";
 import {
   Chip,
@@ -64,15 +61,13 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   const [notes, setNotes] = useState("");
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
-  const [phase, setPhase] = useState<"ask" | "wait" | "ready">("ask");
+  const [phase, setPhase] = useState<"ask" | "ready">("ask");
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(false);
   const [pdfBusy, setPdfBusy] = useState(false);
   const [pdfErr, setPdfErr] = useState(false);
-  const [draft, setDraft] = useState<BookDraft | null>(null);
   const [tweak, setTweak] = useState("");
-  const [waitKind, setWaitKind] = useState<"first" | "tweak">("first");
   const dateInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -126,6 +121,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
       { label: t(copy.plan.rowGroup), value: listOrDash(groups) },
       { label: t(copy.plan.rowAddons), value: extras.length ? extras.join(locale === "zh" ? "、" : ", ") : t(copy.plan.none) },
       { label: t(copy.plan.rowNotes), value: notes.trim() || t(copy.plan.none) },
+      { label: t(copy.plan.rowTweak), value: tweak.trim() || t(copy.plan.none) },
       { label: t(copy.plan.rowName), value: name.trim() || t(copy.plan.dash) },
       { label: t(copy.plan.rowContact), value: contact.trim() || t(copy.plan.dash) },
     ];
@@ -142,12 +138,11 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   }
 
   function pdfDays(): BriefDay[] {
-    return stampDays(draft?.days?.length ? draft.days : catalogDays(), startIso(), locale);
+    return stampDays(catalogDays(), startIso(), locale);
   }
 
   function briefBody() {
     const lines = briefRows().map((r) => `${r.label}: ${r.value}`);
-    if (draft?.note) lines.push(`${locale === "zh" ? "规划说明" : "Planner note"}: ${draft.note}`);
     lines.push("");
     pdfDays().forEach((d) => {
       lines.push(`Day ${d.num}${d.date ? ` · ${d.date}` : ""} · ${d.city}`);
@@ -186,30 +181,6 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
     }
   }
 
-  async function generate(nextTweak?: string) {
-    const rid = baseRoute === "r2" ? "r2" : "r1";
-    const isTweak = Boolean(nextTweak?.trim());
-    setWaitKind(isTweak ? "tweak" : "first");
-    setPhase("wait");
-    const catalog = catalogDays();
-    const out = await requestBookDraft({
-      locale,
-      routeId: rid,
-      routeTitle: routeLabel(false),
-      dates: dateDisplay(),
-      travelers,
-      groupTypes: labelsOf(groupTypes, GROUP_TYPES, locale),
-      addOns: labelsOf(addOns, ADD_ONS, locale),
-      notes: notes.trim(),
-      catalog,
-      tweak: nextTweak?.trim() || undefined,
-      previous: isTweak ? draft?.days : undefined,
-    });
-    setDraft(out);
-    if (isTweak) setTweak("");
-    setPhase("ready");
-  }
-
   async function submit() {
     if (name.trim().length < 2 || !contact.trim()) {
       setError(true);
@@ -228,29 +199,12 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
       groupTypes: labelsOf(groupTypes, GROUP_TYPES, "en").join(", "),
       addOns: labelsOf(addOns, ADD_ONS, "en").join(", "),
       notes: notes.trim(),
+      tweak: tweak.trim(),
       brief: briefBody(),
     });
     setSending(false);
     if (ok) setSent(true);
     else setError(true);
-  }
-
-  if (phase === "wait") {
-    return (
-      <div className="py-12 text-center">
-        <div className="mb-3 text-[32px]" aria-hidden>
-          ⏳
-        </div>
-        <p className="text-[14px] leading-[22px] text-ink-soft">
-          {t(waitKind === "tweak" ? copy.plan.aiTweaking : copy.plan.aiTailoring)}
-        </p>
-        <div className="mx-auto mt-6 flex max-w-[320px] flex-col gap-2.5" aria-hidden>
-          {[100, 80, 92, 65].map((w, i) => (
-            <div key={i} className="sk-pulse h-3.5 rounded bg-bone" style={{ width: `${w}%` }} />
-          ))}
-        </div>
-      </div>
-    );
   }
 
   if (phase === "ready") {
@@ -293,32 +247,15 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
           <div className="h-3" />
         </div>
 
-        {draft?.days?.length ? (
-          <div className="mt-5">
-            <div className="mb-2 flex items-center gap-2">
-              <span
-                className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-[3px] text-[11px] font-medium tracking-[0.08em] ${
-                  draft.source === "ai" ? "border-ok text-ok" : "border-line text-ink-soft"
-                }`}
-              >
-                {draft.source === "ai" ? <IconSparkles className="h-3 w-3" /> : null}
-                {draft.source === "ai" ? t(copy.plan.bookAiBadge) : t(copy.plan.bookCatalogBadge)}
-              </span>
-            </div>
-            {draft.note ? (
-              <p className="mb-3 text-[13px] leading-5 text-ink-soft">{draft.note}</p>
-            ) : draft.source !== "ai" ? (
-              <p className="mb-3 text-[13px] leading-5 text-ink-soft">{t(copy.plan.aiFallback)}</p>
-            ) : null}
-            <ItinDays days={pdfDays()} />
-          </div>
-        ) : null}
+        <div className="mt-5">
+          <ItinDays days={pdfDays()} />
+        </div>
 
         <div className="mt-4 overflow-hidden rounded-[10px] border border-line">
           <div className="bg-surface px-4 py-3.5">
             <p className="text-[14px] font-medium leading-[1.55] text-ink">{t(copy.plan.tweakLabel)}</p>
           </div>
-          <div className="flex flex-col gap-3 p-4">
+          <div className="flex flex-col gap-2 p-4">
             <textarea
               rows={3}
               value={tweak}
@@ -326,15 +263,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
               onChange={(e) => setTweak(e.target.value)}
               className="w-full resize-y rounded-lg border-[1.5px] border-line bg-surface px-3.5 py-3 text-[15px] leading-[1.6] text-ink placeholder:text-ink-soft/70 outline-none"
             />
-            <button
-              type="button"
-              disabled={!tweak.trim()}
-              onClick={() => void generate(tweak)}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-cta text-[15px] font-medium text-paper disabled:opacity-40"
-            >
-              <IconSparkles className="h-4 w-4" />
-              {t(copy.plan.tweakBtn)}
-            </button>
+            <p className="text-[12px] leading-5 text-ink-soft">{t(copy.plan.tweakHint)}</p>
           </div>
         </div>
 
@@ -348,9 +277,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
             <IconDownload />
             {pdfBusy
               ? t(copy.plan.pdfPreparing)
-              : draft?.source === "ai"
-                ? t(copy.plan.pdfAgain)
-                : t(copy.plan.downloadPdf)}
+              : t(copy.plan.downloadPdf)}
           </button>
           {pdfErr ? <p className="text-[13px] text-danger">{t(copy.plan.pdfFailed)}</p> : null}
           {sent ? (
@@ -373,7 +300,6 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
             setSent(false);
             setStep(0);
             setError(false);
-            setDraft(null);
             setTweak("");
           }}
         />
@@ -569,7 +495,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
         onBack={() => setStep((s) => s - 1)}
         onNext={() => {
           if (step < 2) setStep((s) => s + 1);
-          else void generate();
+          else setPhase("ready");
         }}
       />
     </div>

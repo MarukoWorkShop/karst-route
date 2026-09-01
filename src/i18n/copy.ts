@@ -234,7 +234,7 @@ export const copy = {
       en: "Dietary restrictions, mobility needs, anniversary to celebrate…",
       zh: "饮食禁忌、行动不便、特别纪念日……",
     },
-    genBook: { en: "✦ Generate booking PDF", zh: "✦ 生成行程确认单" },
+    genBook: { en: "Review booking brief", zh: "查看行程确认单" },
     compiling: { en: "Compiling your booking brief…", zh: "正在整理您的行程确认单…" },
     aiTailoring: {
       en: "Tailoring this boutique route to your party. About a minute…",
@@ -251,14 +251,18 @@ export const copy = {
       zh: "未能连上规划模型，先给出原路线。你仍可写下微调意见再试。",
     },
     tweakLabel: {
-      en: "Days are fixed on this route, but you can still reshape a specific day — slower walks, no early starts, a sunrise, and so on.",
-      zh: "虽然天数是固定的，但可以对具体某天的行程提出一些想法，比如少走路、不想早起、想看日出。",
+      en: "Days stay as designed. Leave any day-by-day notes — fewer walks, no early starts, a sunrise — and our concierge will handle them.",
+      zh: "天数保持原路线。如需调整某一天（少走路、不想早起、想看日出等），请留给管家处理。",
     },
     tweakPh: {
       en: "e.g. fewer walks, no early starts, catch a sunrise…",
       zh: "如：少走路、不想早起、想看日出…",
     },
-    tweakBtn: { en: "Regenerate with this note", zh: "按这个意见重新生成" },
+    tweakHint: {
+      en: "These notes are sent to our travel concierge with your booking. We do not regenerate a new route here.",
+      zh: "这些意见会随预定一起发给旅游管家，不会在站内重新生成路线。",
+    },
+    rowTweak: { en: "Route notes", zh: "行程调整意见" },
     pdfAgain: { en: "Download updated PDF", zh: "下载更新后的 PDF" },
     summary: { en: "BOOKING SUMMARY", zh: "预定摘要" },
     rowRoute: { en: "Route", zh: "选择路线" },
