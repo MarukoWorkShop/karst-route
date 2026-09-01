@@ -76,6 +76,19 @@ export const IconSparkles = (p: P) => (
     <path d="M6.2 14.8 6.7 16.4 8.3 16.9 6.7 17.4 6.2 19 5.7 17.4 4.1 16.9 5.7 16.4Z" />
   </I>
 );
+export const IconVolume = (p: P) => (
+  <I {...p}>
+    <path d="M4 10v4h3.2L12 18V6L7.2 10H4Z" />
+    <path d="M15.2 8.6a4.2 4.2 0 0 1 0 6.8" />
+    <path d="M17.4 6.2a7.2 7.2 0 0 1 0 11.6" />
+  </I>
+);
+export const IconVolumeOff = (p: P) => (
+  <I {...p}>
+    <path d="M4 10v4h3.2L12 18V6L7.2 10H4Z" />
+    <path d="M16 9.5 20.5 14.5M20.5 9.5 16 14.5" />
+  </I>
+);
 export const IconVan = (p: P) => (
   <I {...p}>
     <rect x="1" y="4" width="14" height="11" rx="2" />

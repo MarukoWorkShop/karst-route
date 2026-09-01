@@ -172,7 +172,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
 
   return (
     <div>
-      <p className="mb-5 text-[13px] leading-5 text-ink-soft">{t(copy.plan.designLead)}</p>
+      <p className="mb-5 text-[13px] leading-[22px] text-ink-soft">{t(copy.plan.designLead)}</p>
       <Progress step={step} total={5} />
       <StepKicker>{copy.plan.designSteps[step] ? t(copy.plan.designSteps[step]) : null}</StepKicker>
 

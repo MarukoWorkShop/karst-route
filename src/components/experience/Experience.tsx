@@ -7,11 +7,9 @@ import { useLocale } from "@/i18n/LocaleProvider";
 import { IconClose } from "@/components/icons";
 
 export function Experience({
-  onPickTheme,
   openId,
   onOpenId,
 }: {
-  onPickTheme?: (id: ThemeId) => void;
   openId?: ThemeId | null;
   onOpenId?: (id: ThemeId | null) => void;
 }) {
@@ -52,7 +50,6 @@ export function Experience({
                 type="button"
                 onClick={() => {
                   setActiveId(item.id);
-                  onPickTheme?.(item.id);
                 }}
                 className="relative aspect-[3/4] overflow-hidden rounded-[10px] text-left"
               >

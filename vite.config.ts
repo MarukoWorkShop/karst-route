@@ -120,5 +120,17 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
     },
+    server: {
+      proxy: {
+        "/hero-media": {
+          target: "https://youxian-travel-1412422924.cos.ap-guangzhou.myqcloud.com",
+          changeOrigin: true,
+          rewrite: (p) => p.replace(/^\/hero-media/, ""),
+          headers: {
+            Referer: "https://marukoworkshop.github.io/karst-route/",
+          },
+        },
+      },
+    },
   };
 });

@@ -9,7 +9,7 @@ export const copy = {
     explore: { en: "Explore", zh: "探索" },
     about: { en: "About Us", zh: "关于我们" },
     faq: { en: "Q&A", zh: "问答" },
-    films: { en: "Destination Films", zh: "目的地影像" },
+    films: { en: "What's the scenery like, and what can you do?", zh: "这里风景如何，能玩些什么？" },
     literature: { en: "Arts & Literature", zh: "文艺推荐" },
     visa: { en: "Vietnam visa", zh: "越南签证" },
     season: { en: "Best season", zh: "最佳季节" },
@@ -45,6 +45,8 @@ export const copy = {
     },
     prev: { en: "Previous slide", zh: "上一张" },
     next: { en: "Next slide", zh: "下一张" },
+    soundOn: { en: "Sound on", zh: "开启音效" },
+    soundOff: { en: "Sound off", zh: "关闭音效" },
   },
   tours: {
     r1Badge: { en: "ROUTE 01", zh: "路线一" },
@@ -81,11 +83,13 @@ export const copy = {
     r2Entry: { en: "Nanning", zh: "南宁" },
     r2Exit: { en: "Nanning", zh: "南宁" },
     r2For: { en: "Families · All", zh: "家庭 · 全部" },
-    inquire: { en: "Enquire about this route", zh: "咨询这条路线" },
+    playVideoIntro: {
+      en: "Play the full-route video introduction",
+      zh: "播放整条路线的视频介绍",
+    },
     days: { en: "ITINERARY", zh: "行程" },
     r1Tab: { en: "Route 1 · 14 Days", zh: "路线一 · 14日" },
     r2Tab: { en: "Route 2 · 10 Days", zh: "路线二 · 10日" },
-    filtered: { en: "Filtered by", zh: "按主题筛选" },
     book: {
       readReviews: { en: "Read real traveller reviews", zh: "查看客户的真实评价" },
       readFull: { en: "Read full review →", zh: "阅读完整评价 →" },
@@ -101,12 +105,6 @@ export const copy = {
       replay: { en: "Replay", zh: "再播一次" },
       nowAt: { en: "Now at", zh: "正在经过" },
       mapCredit: { en: "© OpenStreetMap contributors · Natural Earth", zh: "© OpenStreetMap contributors · Natural Earth" },
-    },
-    themeNames: {
-      wild: { en: "Wild Fun", zh: "纵情山野" },
-      flavors: { en: "Great Flavors", zh: "地道风味" },
-      villages: { en: "Green Villages", zh: "村落生态" },
-      locals: { en: "Friendly Locals", zh: "够朋友" },
     },
   },
   experience: {
@@ -151,25 +149,42 @@ export const copy = {
   },
   explore: {
     h2: { en: "Feel the land before you arrive", zh: "在出发前，先感受这片土地" },
-    films: { en: "Destination Films", zh: "目的地影像" },
+    films: { en: "What's the scenery like, and what can you do?", zh: "这里风景如何，能玩些什么？" },
     literature: { en: "Arts & Literature", zh: "文艺推荐" },
     viewAll: { en: "View all", zh: "查看全部" },
-    allFilms: { en: "All Destination Films", zh: "目的地影像 · 全部" },
+    allFilms: {
+      en: "What's the scenery like, and what can you do? · All",
+      zh: "这里风景如何，能玩些什么？ · 全部",
+    },
     allLit: { en: "All Arts & Literature", zh: "文艺推荐 · 全部" },
     searchGoogle: { en: "Search on Google", zh: "在 Google 搜索" },
+    source: {
+      en: "Video source: YouTube @{channel}. Click to watch on the original channel.",
+      zh: "视频来源：YouTube @{channel}，点击可跳转原频道观看",
+    },
+    sourceVideo: {
+      en: "Video source: YouTube. Click to watch the original video.",
+      zh: "视频来源：YouTube，点击可跳转原片观看",
+    },
     book: { en: "BOOK", zh: "书" },
     film: { en: "FILM", zh: "电影" },
   },
   plan: {
-    tabBook: { en: "Book a Route", zh: "预定现成路线" },
-    tabDesign: { en: "Design the Route", zh: "自己设计路线" },
+    tabBook: {
+      en: "Book our boutique routes directly",
+      zh: "直接预订我们的精品线路",
+    },
+    tabDesign: {
+      en: "Enquire about a deeper custom itinerary",
+      zh: "我想咨询更深度的定制方案",
+    },
     bookLead: {
       en: "Travel one of our curated routes as designed — just tell us when, who and any special requests.",
       zh: "选择现有路线出发，不改行程顺序，只告诉我们时间、人数与特别需求。",
     },
     designLead: {
-      en: "Start from one of our routes and tell us your preferences. Submit the request — our travel concierge will reply in detail within 24 hours.",
-      zh: "以我们的现有路线为基础，告诉我们您的偏好。提交后，旅游管家会在 24 小时内给您详细回复。",
+      en: "Build on an existing route: add or drop destinations, or combine it with your other travel. Please tell us what this journey means to you — a wedding anniversary, a return to a familiar place, a short stay, a business study trip, rest and recovery, and so on. Our travel concierge will reply within 24 hours, marshall our best resources, and tailor an experience you will remember for life.",
+      zh: "以现有路线为基础，增减目的地，或与您的其他行程结合，支持深度定制。请务必告诉我们这趟旅程对您的特殊意义（结婚纪念，故地重游，短期旅居，商务考察，疗愈与放松，等等）。旅游管家会在 24 小时内给您回复，调度我们的精华资源，为您定制终身难忘的体验。",
     },
     designSubmitLead: {
       en: "Leave your name and a way to reach you. Our travel concierge will reply in detail within 24 hours.",

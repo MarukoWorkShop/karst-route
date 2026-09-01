@@ -6,6 +6,7 @@ import { asset } from "@/lib/asset";
 import {
   IconClock,
   IconLanding,
+  IconPlay,
   IconTakeoff,
   IconUsers,
 } from "@/components/icons";
@@ -13,11 +14,9 @@ import {
 export function BoutiqueTours({
   route,
   onPick,
-  onQuote,
 }: {
   route: RouteId;
   onPick: (id: RouteId) => void;
-  onQuote: (id: RouteId) => void;
 }) {
   const { t } = useLocale();
   return (
@@ -52,15 +51,6 @@ export function BoutiqueTours({
             active={route === "r2"}
             onView={() => onPick("r2")}
           />
-        </div>
-        <div className="mt-4 text-center">
-          <button
-            type="button"
-            onClick={() => onQuote(route)}
-            className="text-[14px] font-medium text-cta underline underline-offset-[3px]"
-          >
-            {t(copy.tours.inquire)}
-          </button>
         </div>
       </div>
     </section>
@@ -139,9 +129,17 @@ function RouteCard({
         <Meta icon={<IconLanding className="h-4 w-4" />} label={t(copy.tours.exit)} value={exit} />
         <Meta icon={<IconUsers className="h-4 w-4" />} label={t(copy.tours.for)} value={audience} />
       </div>
-      <p className="border-t border-line bg-paper px-4 py-4 text-[12.5px] leading-[22px] text-ink-soft">
-        {feature}
-      </p>
+      <div className="border-t border-line bg-paper px-4 py-4">
+        <p className="text-[12.5px] leading-[22px] text-ink-soft">{feature}</p>
+        <a
+          href="#"
+          onClick={(e) => e.preventDefault()}
+          className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-cta underline-offset-[3px] hover:underline"
+        >
+          <IconPlay className="h-4 w-4" />
+          {t(copy.tours.playVideoIntro)}
+        </a>
+      </div>
     </article>
   );
 }

@@ -25,12 +25,12 @@ v1 没有运营后台。更新栏目 = 改仓库里的数据文件 → 本地预
 
 | 页面栏目 | 文件 | 常见操作 |
 |---|---|---|
-| Hero 轮播 | `src/data/heroPanels.ts` | 改 `title` / `intro`；换图改 `src`；`themeId` 必须对应体验四卡（`wild` / `flavors` / `villages` / `locals`），芯片文案读 `themes.ts` |
+| Hero 轮播 | `src/data/heroPanels.ts` | 两段视频：改 `title` / `intro`；poster 用 `asset()`；成片现为 COS `videos/1.mp4` / `videos/2.mp4`。BGM 仍用 `VITE_HERO_MEDIA_BASE` + `hero/bgm.mp3`。`themeId` 对应体验四卡 |
 | Hero / 顶栏按钮 | `copy.ts` 的 `hero`、`nav` | CTA、导航名 |
 | 精品两卡 | `copy.ts` 的 `tours`（`r1Name`、`r1Feature` 等）+ 封面 `public/tours/` | 路线名、副题、天数 / 出入境；封面路径在 `BoutiqueTours.tsx` |
 | 行程 | `src/data/itinerary.ts` | 每天 `city` / `stay` / `bullets`（最多 3 条）；越南段在 `vietnamBlock`，两条线共用 |
 | 体验四主题 | `src/data/themes.ts` + `src/data/experiences.ts` | 卡上名字 vs 抽屉故事；`id` 不要随便改 |
-| 探索影像 | `src/data/videos.ts` | `youtubeId`、标题、封面 |
+| 探索影像 | `src/data/videos.ts` | 换片：只改对应条目的 `youtubeId` / `title` / `desc` / 封面 / 时长 / `channel` / `channelUrl`；**引用原片标题、简介和频道名**，不要另编。细则见 [DESIGN.md §探索影像](./DESIGN.md) |
 | 文艺推荐 | `src/data/literature.ts` | 书 / 电影条目、`googleQuery` |
 | 问答 | `src/data/faqs.ts` | 增删问答；顶栏用的 `tool-visa` / `tool-season` / `tool-transit` 不要改 id |
 | 合作商家 | `src/data/partners.ts` | 名称、介绍、地图 / 官网链接 |

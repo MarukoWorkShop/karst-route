@@ -53,7 +53,7 @@
 - Hero `#top`：满幅轮播（主题芯片 + 标题 + 导语）+ 双 CTA
 - `#tours`：两张精品路线卡（封面、路线名、副题、区域、特色长文、天数 / 入境 / 出境 / 适合人群）
 - `#itinerary`：14 日 / 10 日折叠时间轴、旅客评论、路线地图动画
-- `#experience`：四主题体验卡（过滤时间轴；点开故事抽屉）
+- `#experience`：四主题体验卡（点开故事抽屉）
 - `#explore`：目的地影像（YouTube）+ 文艺推荐；首页各 3 条，「查看全部」右侧抽屉
 - `#plan`：双 Tab **预定现成路线 / Book a Route**（默认）与 **自己设计路线 / Design the Route**。前者 3 步（路线与时间、同行成员、增值服务）→ 确认单摘要；后者 5 步（基础路线、额外目的地、住宿、交通、特殊体验）→ 按天数裁剪现有日程。两套均可下载摘要、留资请管家联系。留资走 Web3Forms。
 - `#faq`：出行前问答（签证 / 季节 / 交通等）；旧 hash `#tool-visa` 等仍可打开对应条目
@@ -149,9 +149,9 @@
 
 车程（2h / 3h / 4h）写在对应日展开行。
 
-### 5.4 主题标签（性格过滤）
+### 5.4 主题标签
 
-每日 `themes[]`。点主题卡时，不含该标签的日子降低存在感，仍可点开。
+每日 `themes[]` 仍写在日程数据里（给路书和日后筛选留钩子）。首页点主题卡**只打开文章**，不再过滤时间轴。
 
 | 主题 | 路线一（大致） | 路线二额外 |
 |---|---|---|
@@ -160,7 +160,7 @@
 | Green Villages | D8–9 沙坝梯田/猫猫村、D11 团山/建水 | D8 天琴壮寨 |
 | Friendly Locals | D1 南宁、D6–7 河内 | 观堂两晚 |
 
-抵达/送机日可以不打标签，过滤时最淡。
+抵达/送机日可以不打标签。
 
 ### 5.5 精品卡物流字段（必须印在 `#tours` 卡上）
 
@@ -182,8 +182,9 @@
 
 ### 6.1 Hero 轮播
 
-- 满幅照片轮播（`src/data/heroPanels.ts`），约 5.5s 自动切；底部分段指示器可点。
-- 每张：主题芯片（文案与 `#experience` 四卡同一套 `themes.ts`；点芯片滚到该栏并打开对应文章，**不筛选行程**）、标题、导语、双 CTA。
+- 满幅 **4 段主题视频**（`src/data/heroPanels.ts`：wild / flavors / villages / locals）。双 `<video>` 节点，当前片 `onEnded`（或满约 10s）后 1200ms 淡入下一片。成片与循环 BGM 托管腾讯云 COS（`VITE_HERO_MEDIA_BASE`），仓库只放 poster。
+- 静音 + `autoPlay` + `playsInline`。右下角喇叭默认关，点开后播独立循环 BGM（无旁白）。
+- 左右键、圆点、滑动与自动切共用淡入。点画面或芯片滚到 `#experience` 并打开对应文章，**不筛选行程**。标题、导语、双 CTA 叠在视频上；`poster` 挡住首屏空白。
 - CTA A 实心酒红 → `#tours`（文案：备受赞誉的深度人文精品路线）
 - CTA B 幽灵按钮，带 sparkles → `#plan` 且 intent=custom（打开「自己设计路线」）
 - 区域地图不出现在首屏；行程内 `RoutePlayer` 用 `osmBasemap.json` 离线矢量（见 DESIGN §8.1）。
@@ -206,13 +207,13 @@
 
 ### 6.3 体验主题（`#experience`）
 
-组件 `Experience`。四张主题卡，文案来自 `src/data/themes.ts`（Wild Fun / Great Flavors / Green Villages / Friendly Locals）。点选过滤 `#itinerary` 时间轴（未匹配日 opacity 0.35）；再点取消过滤。点卡打开故事抽屉（`src/data/experiences.ts` 封面、亮点、真实故事）。
+组件 `Experience`。四张主题卡，文案来自 `src/data/themes.ts`（Wild Fun / Great Flavors / Green Villages / Friendly Locals）。点卡打开故事抽屉（`src/data/experiences.ts` 封面、亮点、真实故事），**不筛选** `#itinerary`。
 
-Hero 轮播芯片与此四主题同一套 `ThemeId` 与名称；点芯片只打开文章，不筛选 `#itinerary`。性格轨 `ThemeRail` / 素材槽 `ThemeMaterials` **不再出现在首页**。
+Hero 轮播芯片与此四主题同一套 `ThemeId` 与名称。性格轨 `ThemeRail` / 素材槽 `ThemeMaterials` **不再出现在首页**。
 
 ### 6.4 时间轴（`#itinerary`）
 
-- 14 日 / 10 日分段器；受当前 `theme` 过滤。
+- 14 日 / 10 日分段器。
 - 默认折叠，互斥展开；≤ 3 bullet；住宿与车程随语言。
 - 每日带 `themes[]` 与可选 `placeId`（展开时用 `places` / `placeStories` 补图与导读）。
 - 展开日：照片、导读、交通 / 住宿 / 餐饮行。

@@ -28,7 +28,7 @@ export function PlanSection({
               role="tab"
               aria-selected={tab === "boutique"}
               onClick={() => onTab("boutique")}
-              className={`inline-flex h-12 flex-1 items-center justify-center gap-1.5 px-2 text-[13px] font-medium md:text-[14px] ${
+              className={`inline-flex min-h-12 flex-1 items-center justify-center gap-1.5 px-2 py-2 text-center text-[12.5px] leading-[1.3] font-medium md:text-[14px] ${
                 tab === "boutique" ? "bg-cta text-paper" : "bg-transparent text-ink-soft"
               }`}
             >
@@ -39,7 +39,7 @@ export function PlanSection({
               role="tab"
               aria-selected={tab === "custom"}
               onClick={() => onTab("custom")}
-              className={`inline-flex h-12 flex-1 items-center justify-center gap-1.5 px-2 text-[13px] font-medium md:text-[14px] ${
+              className={`inline-flex min-h-12 flex-1 items-center justify-center gap-1.5 px-2 py-2 text-center text-[12.5px] leading-[1.3] font-medium md:text-[14px] ${
                 tab === "custom" ? "bg-cta text-paper" : "bg-transparent text-ink-soft"
               }`}
             >

@@ -1,6 +1,11 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { destinationVideos } from "@/data/videos";
-import { literaryWorks, type LitWork } from "@/data/literature";
+import {
+  homeLiteraryWorks,
+  literaryWorks,
+  restLiteraryWorksShuffled,
+  type LitWork,
+} from "@/data/literature";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { IconClose } from "@/components/icons";
@@ -44,6 +49,12 @@ export function Explore() {
     };
   }, [drawer, activeVideo]);
 
+  const homeLit = useMemo(() => homeLiteraryWorks(), []);
+  const drawerLit = useMemo(
+    () => [...homeLiteraryWorks(), ...restLiteraryWorksShuffled()],
+    [],
+  );
+
   const drawerTitle = drawer === "videos" ? t(copy.explore.allFilms) : t(copy.explore.allLit);
 
   return (
@@ -73,7 +84,7 @@ export function Explore() {
           viewAll={t(copy.explore.viewAll)}
           className="mt-11"
         >
-          {literaryWorks.slice(0, PREVIEW).map((w) => (
+          {homeLit.map((w) => (
             <LitCard key={w.id} work={w} />
           ))}
         </Block>
@@ -118,7 +129,7 @@ export function Explore() {
                 ? destinationVideos.map((v) => (
                     <VideoCard key={v.id} item={v} onOpen={() => setActiveVideo(v)} />
                   ))
-                : literaryWorks.map((w) => (
+                : drawerLit.map((w) => (
                     <div key={w.id}>
                       <LitCard work={w} />
                       <div className="-mt-2.5 rounded-b-[10px] border-x border-b border-line bg-sage px-3.5 pt-3.5 pb-3.5">
@@ -162,6 +173,9 @@ export function Explore() {
                 allowFullScreen
                 className="h-full w-full border-0"
               />
+            </div>
+            <div className="border-t border-paper/10 px-3.5 py-2.5">
+              <VideoSource item={activeVideo} onDark />
             </div>
           </div>
         </div>
@@ -210,6 +224,26 @@ function Block({
   );
 }
 
+function VideoSource({ item, onDark }: { item: VideoItem; onDark?: boolean }) {
+  const { t } = useLocale();
+  const href = item.channelUrl ?? `https://www.youtube.com/watch?v=${item.youtubeId}`;
+  const label = item.channel
+    ? t(copy.explore.source).replace("{channel}", item.channel)
+    : t(copy.explore.sourceVideo);
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`block text-[11px] leading-[16px] underline-offset-2 hover:underline ${
+        onDark ? "text-paper/70 hover:text-paper" : "text-ink-soft"
+      }`}
+    >
+      {label}
+    </a>
+  );
+}
+
 function VideoCard({
   item,
   onOpen,
@@ -221,32 +255,36 @@ function VideoCard({
 }) {
   const { t } = useLocale();
   return (
-    <button
-      id={named ? item.id : undefined}
-      type="button"
-      onClick={onOpen}
-      className="flex w-full overflow-hidden rounded-[10px] border border-line bg-surface text-left scroll-mt-28"
-    >
-      <div className="relative w-[110px] min-h-[108px] shrink-0 self-stretch bg-bone">
-        <img src={item.src} alt="" className="absolute inset-0 h-full w-full object-cover" />
-        <span className="absolute inset-0 bg-[rgba(16,28,22,0.32)]" />
-        <span className="absolute inset-0 flex items-center justify-center">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[rgba(250,248,242,0.92)] pl-0.5 text-cta">
-            <PlayMark />
+    <div id={named ? item.id : undefined} className={named ? "scroll-mt-28" : undefined}>
+      <button
+        type="button"
+        onClick={onOpen}
+        className="flex w-full overflow-hidden rounded-[10px] border border-line bg-surface text-left"
+      >
+        <div className="relative w-[110px] min-h-[108px] shrink-0 self-stretch bg-bone">
+          <img src={item.src} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          <span className="absolute inset-0 bg-[rgba(16,28,22,0.32)]" />
+          <span className="absolute inset-0 flex items-center justify-center">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[rgba(250,248,242,0.92)] pl-0.5 text-cta">
+              <PlayMark />
+            </span>
           </span>
-        </span>
-        <span className="absolute right-1.5 bottom-1.5 rounded-[3px] bg-[rgba(16,28,22,0.75)] px-[5px] py-px text-[10px] text-paper tabular-nums">
-          {item.duration}
-        </span>
+          <span className="absolute right-1.5 bottom-1.5 rounded-[3px] bg-[rgba(16,28,22,0.75)] px-[5px] py-px text-[10px] text-paper tabular-nums">
+            {item.duration}
+          </span>
+        </div>
+        <div className="min-w-0 flex-1 px-[13px] py-3">
+          <p className="mb-1 text-[10px] font-medium tracking-[0.08em] text-gold">{t(item.location)}</p>
+          <h3 className="mb-1.5 line-clamp-2 text-[13.5px] leading-[1.35] font-medium text-ink">
+            {t(item.title)}
+          </h3>
+          <p className="line-clamp-2 text-[11.5px] leading-[17px] text-ink-soft">{t(item.desc)}</p>
+        </div>
+      </button>
+      <div className="px-0.5 pt-1.5">
+        <VideoSource item={item} />
       </div>
-      <div className="min-w-0 flex-1 px-[13px] py-3">
-        <p className="mb-1 text-[10px] font-medium tracking-[0.08em] text-gold">{t(item.location)}</p>
-        <h3 className="mb-1.5 line-clamp-2 text-[13.5px] leading-[1.35] font-medium text-ink">
-          {t(item.title)}
-        </h3>
-        <p className="line-clamp-2 text-[11.5px] leading-[17px] text-ink-soft">{t(item.desc)}</p>
-      </div>
-    </button>
+    </div>
   );
 }
 
@@ -268,7 +306,8 @@ function LitCard({ work }: { work: LitWork }) {
       <div className="flex min-w-0 flex-1 flex-col justify-between px-[13px] py-3">
         <div>
           <p className="mb-0.5 text-[10px] font-medium tracking-[0.06em] text-gold">
-            {t(work.location)} · {work.year}
+            {t(work.location)}
+            {work.year ? ` · ${work.year}` : ""}
           </p>
           <p className="mb-0.5 text-[13.5px] leading-[1.3] font-medium text-ink">{t(work.title)}</p>
           <p className="mb-1.5 text-[11.5px] text-ink-soft">{t(work.creator)}</p>

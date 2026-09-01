@@ -65,8 +65,7 @@ v1 可用占位图，但间距、热区、骨架几何按真稿执行。
 - 手机：横滑 snap，**主卡约 82vw × 72vw**，一次只露 1.1 张。不要 2×2 小图标。
 - 当前语言几乎撑满卡宽，字号约 40–48，字重 500，左下；另一语言一行 15px 叠在下面。
 - 图满铺 + `night` 35% 遮罩。四张图性格要能分清，不要四张都是雾山。
-- 选中：底边强调 + 时间轴过滤（未匹配日 0.35）。
-- 再点同一张 = 取消日程过滤。
+- 选中：打开对应主题文章抽屉。
 - 桌面：四卡横排。
 
 ### 2.2 性格对应素材（已下线）
@@ -166,7 +165,7 @@ Hero：浅米白底、墨绿字、PingFang H1；主钮森林绿。性格卡仍�
 ```
 Header：一级 Boutique Tours / 精品路线 · Plan Your Route / 行程定制；二级 Explore / 探索 ▾ · Q&A / 问答 ▾
   手机：KARST ROUTE + 汉堡工具箱 + 地球仪切语言
-Hero：满幅轮播；主题芯片 → #experience 打开对应文章（不筛选行程）；实心 → #tours；幽灵 Plan → #plan 自己设计路线
+Hero：满幅 4 段主题视频（双节点 1.2s 淡入）；点画面或芯片 → #experience 打开对应文章（不筛选行程）；实心 → #tours；幽灵 Plan → #plan 自己设计路线
 #tours：两张精品卡
 #itinerary：折叠行程 + 评论 + 离线矢量路线动画
 #experience：四主题体验卡
@@ -186,8 +185,9 @@ Dock：Tours / 路线 | Plan / 定制
 
 | 手势 | 行为 |
 |---|---|
-| 点体验主题卡 | 过滤时间轴；再点取消；可打开故事抽屉 |
-| 点精品卡 / 时间轴分段器 | 切 Route 1/2；过滤保留 |
+| 点体验主题卡 | 打开故事抽屉 |
+| 点精品卡 / 时间轴分段器 | 切 Route 1/2 |
+| 点 Hero 画面 / 芯片 | 打开对应主题文章 |
 | 点 Day 行 | 互斥展开；再点收起 |
 | 顶栏汉堡 | 打开旅行工具箱 |
 | 底栏 Tours | 滚到 `#tours` |
@@ -207,17 +207,17 @@ Dock：Tours / 路线 | Plan / 定制
 
 ### Hero
 
-满幅轮播、白字叠在夜色遮罩上。主题芯片滚到 `#experience`。主钮全宽约 48，森林绿，圆角 8。区域地图不进首屏。
+满幅 4 段主题视频（COS 托管、poster 占首屏）、白字叠在夜色遮罩上。双 `<video>` 节点，`onEnded` 后 1200ms 淡入。画面静音自播；右下角喇叭打开循环 BGM。主题芯片或点画面滚到 `#experience`。主钮全宽约 48，森林绿，圆角 8。区域地图不进首屏。
 
 ### Experience（四主题，取代首页性格轨）
 
-见 PRD §6.3。`Experience` + `src/data/themes.ts` + `src/data/experiences.ts`。点选过滤时间轴；抽屉讲故事。`ThemeRail` / `ThemeMaterials` 已下线。
+见 PRD §6.3。`Experience` + `src/data/themes.ts` + `src/data/experiences.ts`。点卡打开故事抽屉，不筛选行程。`ThemeRail` / `ThemeMaterials` 已下线。
 
 ### 时间轴（互动路书）
 
 折叠日程 + 展开后勤条（交通 / 住宿 / 餐饮）+ 旅客评论 + 路线动画。圆角 8px，字重 500。
 
-- 分段器高 44。选中森林绿底白字。过滤芯片绿字。
+- 分段器高 44。选中森林绿底白字。
 - 折叠行高 56：左 `01` 森林绿，右城市。
 - 展开：后勤条；≤ 3 bullet；最多三张图。日数据含 `themes: ('wild'|'flavors'|'villages'|'locals')[]`。
 - 同时只开一天；默认全折叠。
@@ -260,6 +260,21 @@ npm run map:basemap
 ### 翻译（入口，不是语言站）
 
 芯片与地球仪只做**已发布语言版之间的跳转**，或未发布语言的「即将推出」。细则见 §12。Loading 只脉冲被替换的那几行。无 Key / 无该语言版：面板说明，不挡询盘。禁止整页自动翻译。
+
+### 探索影像（换片）
+
+`#explore-films` 的片源、封面、中英标题和简介都在 `src/data/videos.ts`。一条 YouTube 链接只替换**对应那一条**（看 `id`，如下龙湾是 `explore-halong`），不要改 `id`、不要改排序、不要误换其它条。
+
+以后每次换片按这个做：
+
+1. 打开原片，记下 **标题、简介、时长**（播放器显示的时长，不是片头广告）。
+2. 封面用该片官方题图，不要另找风景图、不要 Unsplash。优先 `https://i.ytimg.com/vi/{youtubeId}/maxresdefault.jpg`，没有再用 `hqdefault.jpg`。存进 `public/destinations/`，数据里写成 `src: asset("/destinations/文件名.jpg")`。
+3. `youtubeId` 取链接里的 `v=`（如 `watch?v=SpOWgms2uto` → `SpOWgms2uto`）。
+4. `title` / `desc` **引用原片**：英文尽量用原标题和简介原文（可去掉订阅 CTA、外链）；中文是忠实翻译，不要另编一套风景文案。
+5. 记下 **频道名** 和 **频道主页**（YouTube 上的显示名 + `@handle` 链接，oembed 的 `author_name` / `author_url`）。写入 `channel` / `channelUrl`。卡片下方会显示「视频来源：YouTube @频道名，点击可跳转原频道观看」，中英各一条，不要编造博主名。
+6. 中英一起改。本地打开 `/` 和 `/zh/`，点开该条确认 iframe 是新 id、封面、文案和来源行都对。
+
+栏目按钮文案仍走 `copy.ts`；换片本身只动 `videos.ts` 和封面文件。
 
 ### 手工艺
 
@@ -392,7 +407,7 @@ label；地球仪 `aria-label="Choose language"`；sheet `dialog` + 焦点循环
 - [ ] 375 无横向溢出；折叠 14 日可在约 1.5 屏内扫完
 - [ ] 同时只开一天
 - [ ] 底栏两键 Tours | Plan；工具箱在 Header 汉堡
-- [ ] 四主题在 `#experience`；点选可过滤行程
+- [ ] 四主题在 `#experience`；点卡打开文章，不筛选行程
 - [ ] 没有大社四宫格 Trust 与主题同级
 - [ ] 展开日 ≤ 3 bullet
 - [ ] 森林绿只出现在 Quote/Submit、DAY、选中与区块名；页底为浅米白 `#FAF8F2`；卡片圆角 8px；PingFang；标题字重 500；正文行距 ≥ 1.65

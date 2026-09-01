@@ -6,3 +6,8 @@ dist
 .ref-pdfs
 .verify
 *.log
+# Hero source media — host on Tencent COS, not GitHub Pages
+*.mp4
+*.mov
+*.webm
+*.m4v

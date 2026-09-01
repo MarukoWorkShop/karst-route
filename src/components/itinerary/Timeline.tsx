@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import type { DayStop, RouteId, ThemeId } from "@/types";
+import type { DayStop, RouteId } from "@/types";
 import { routes } from "@/data/itinerary";
 import { places, placeStories } from "@/data/destinations";
 import { IconBoat, IconChevron, IconDining, IconLodge, IconVan } from "@/components/icons";
@@ -11,13 +11,9 @@ import { RoutePlayer } from "@/components/itinerary/RoutePlayer";
 export function Timeline({
   routeId,
   onRoute,
-  themeId,
-  filterOn,
 }: {
   routeId: RouteId;
   onRoute: (id: RouteId) => void;
-  themeId: ThemeId;
-  filterOn: boolean;
 }) {
   const { t } = useLocale();
   const route = routes[routeId];
@@ -55,12 +51,6 @@ export function Timeline({
           ))}
         </div>
       </div>
-      {filterOn ? (
-        <p className="page-col pt-3 text-[12px] text-cta">
-          {t(copy.tours.filtered)} {t(copy.tours.themeNames[themeId])}
-        </p>
-      ) : null}
-
       <div className={playing ? "bg-cta" : "border-b border-line bg-bone"}>
         <div className="page-col">
           <button
@@ -99,7 +89,6 @@ export function Timeline({
             <DayRow
               key={`${routeId}-${day.day}`}
               day={day}
-              dim={filterOn && !day.themes.includes(themeId)}
               open={open === day.day}
               onToggle={() => setOpen((cur) => (cur === day.day ? null : day.day))}
             />
@@ -115,12 +104,10 @@ export function Timeline({
 
 function DayRow({
   day,
-  dim,
   open,
   onToggle,
 }: {
   day: DayStop;
-  dim: boolean;
   open: boolean;
   onToggle: () => void;
 }) {
@@ -139,7 +126,7 @@ function DayRow({
 
   return (
     <li
-      className={`border-b border-line transition-opacity duration-150 ${dim ? "opacity-35" : ""}`}
+      className="border-b border-line"
     >
       <button
         type="button"

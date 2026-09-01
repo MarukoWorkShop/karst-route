@@ -20,18 +20,7 @@ function go(id: string) {
 export default function App() {
   const [route, setRoute] = useState<RouteId>("r1");
   const [intent, setIntent] = useState<"boutique" | "custom">("boutique");
-  const [theme, setTheme] = useState<ThemeId>("wild");
-  const [filterOn, setFilterOn] = useState(false);
   const [experienceOpen, setExperienceOpen] = useState<ThemeId | null>(null);
-
-  function onTheme(id: ThemeId) {
-    if (id === theme && filterOn) {
-      setFilterOn(false);
-      return;
-    }
-    setTheme(id);
-    setFilterOn(true);
-  }
 
   function openExperienceArticle(id: ThemeId) {
     setExperienceOpen(id);
@@ -40,12 +29,6 @@ export default function App() {
   function pickRoute(id: RouteId) {
     setRoute(id);
     go("itinerary");
-  }
-
-  function quoteBoutique(id: RouteId) {
-    setRoute(id);
-    setIntent("boutique");
-    go("plan");
   }
 
   return (
@@ -58,20 +41,14 @@ export default function App() {
           }}
           onOpenTheme={openExperienceArticle}
         />
-        <BoutiqueTours route={route} onPick={pickRoute} onQuote={quoteBoutique} />
+        <BoutiqueTours route={route} onPick={pickRoute} />
         <Timeline
           routeId={route}
           onRoute={(id) => {
             setRoute(id);
           }}
-          themeId={theme}
-          filterOn={filterOn}
         />
-        <Experience
-          openId={experienceOpen}
-          onOpenId={setExperienceOpen}
-          onPickTheme={onTheme}
-        />
+        <Experience openId={experienceOpen} onOpenId={setExperienceOpen} />
         <About />
         <Explore />
         <PlanSection tab={intent} onTab={setIntent} route={route} />

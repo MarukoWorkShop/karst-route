@@ -150,31 +150,12 @@ body {
   }
 }
 
-.hero-slide-off {
-  opacity: 0;
-  transform: scale(1.06);
-}
-.hero-slide-on {
-  opacity: 1;
-}
 @media (prefers-reduced-motion: no-preference) {
-  .hero-slide-off {
-    transition: opacity 1100ms ease-in-out;
-  }
-  .hero-slide-on {
-    animation: hero-ken 7s ease-out forwards;
-    transition: opacity 1100ms ease-in-out;
+  .hero-video {
+    transition: opacity 1200ms ease-in-out;
   }
   .hero-copy {
     animation: hero-copy-in 700ms ease-out both;
-  }
-}
-@keyframes hero-ken {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.08);
   }
 }
 @keyframes hero-copy-in {
