@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
-import { faqs } from "@/data/faqs";
+import { faqGroups, faqs } from "@/data/faqs";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 
 export function Faq() {
   const { t } = useLocale();
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [openId, setOpenId] = useState<string | null>(null);
 
   useEffect(() => {
     function applyHash() {
       const id = window.location.hash.replace(/^#/, "");
-      const i = faqs.findIndex((f) => f.id === id);
-      if (i >= 0) setOpenIdx(i);
+      if (faqs.some((f) => f.id === id)) setOpenId(id);
     }
     applyHash();
     window.addEventListener("hashchange", applyHash);
@@ -21,54 +20,63 @@ export function Faq() {
   return (
     <section id="faq" className="scroll-mt-24 bg-sage py-12 md:py-14">
       <div className="page-col">
-        <div className="mx-auto max-w-[640px]">
-          <h2 className="mt-2 mb-7 text-[22px] leading-[1.3] font-medium text-cta">
+        <div className="mx-auto max-w-[680px]">
+          <h2 className="mt-2 mb-8 text-[22px] leading-[1.3] font-medium text-cta">
             {t(copy.faq.h2)}
           </h2>
-          <div>
-            {faqs.map((faq, i) => {
-              const isOpen = openIdx === i;
-              return (
-                <div
-                  key={faq.id}
-                  id={faq.id}
-                  className={`scroll-mt-28 border-t border-line ${
-                    i === faqs.length - 1 ? "border-b" : ""
-                  }`}
-                >
-                  <button
-                    type="button"
-                    aria-expanded={isOpen}
-                    onClick={() => setOpenIdx(isOpen ? null : i)}
-                    className="flex w-full items-start justify-between gap-4 py-[18px] text-left"
-                  >
-                    <span
-                      className={`flex-1 text-[15px] leading-snug font-medium ${
-                        isOpen ? "text-cta" : "text-ink"
-                      }`}
+
+          {faqGroups.map((group) => (
+            <div key={group.id} className="mb-9 last:mb-0">
+              <p className="mb-1 text-[11px] font-medium tracking-[0.16em] text-gold uppercase">
+                {t(group.label)}
+              </p>
+              <div>
+                {group.items.map((faq) => {
+                  const isOpen = openId === faq.id;
+                  return (
+                    <div
+                      key={faq.id}
+                      id={faq.id}
+                      className="scroll-mt-28 border-t border-line last:border-b"
                     >
-                      {t(faq.q)}
-                    </span>
-                    <span
-                      className={`mt-0.5 flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full text-[16px] leading-none ${
-                        isOpen
-                          ? "border-[1.5px] border-cta bg-cta text-paper"
-                          : "border-[1.5px] border-line text-ink-soft"
-                      }`}
-                    >
-                      {isOpen ? "−" : "+"}
-                    </span>
-                  </button>
-                  {isOpen ? (
-                    <p className="pb-[18px] text-[13.5px] leading-6 text-ink-soft">
-                      {t(faq.a)}
-                    </p>
-                  ) : null}
-                </div>
-              );
-            })}
-          </div>
-          <div className="mt-8 rounded-[10px] bg-paper px-5 py-5 text-center">
+                      <button
+                        type="button"
+                        aria-expanded={isOpen}
+                        onClick={() => setOpenId(isOpen ? null : faq.id)}
+                        className="flex w-full items-start justify-between gap-4 py-[18px] text-left"
+                      >
+                        {/* 问题：衬线体 + 加粗 + 放大，衬出沉稳的高奢感 */}
+                        <span
+                          className={`flex-1 font-serif text-[16.5px] leading-snug font-semibold ${
+                            isOpen ? "text-cta" : "text-ink"
+                          }`}
+                        >
+                          {t(faq.q)}
+                        </span>
+                        <span
+                          className={`mt-0.5 flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full text-[16px] leading-none ${
+                            isOpen
+                              ? "border-[1.5px] border-cta bg-cta text-paper"
+                              : "border-[1.5px] border-line text-ink-soft"
+                          }`}
+                        >
+                          {isOpen ? "−" : "+"}
+                        </span>
+                      </button>
+                      {isOpen ? (
+                        // 回答：墨色转淡 + 放宽行高，展开后读起来不压眼
+                        <p className="pr-8 pb-[18px] text-[14px] leading-[26px] text-ink-soft">
+                          {t(faq.a)}
+                        </p>
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+
+          <div className="mt-9 rounded-[10px] bg-paper px-5 py-5 text-center">
             <p className="text-[14px] text-ink-soft">{t(copy.faq.more)}</p>
             <a
               href="#plan"

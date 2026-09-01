@@ -14,9 +14,9 @@ export function Header({ onPlan }: { onPlan: () => void }) {
     { href: "#explore-lit", label: t(copy.nav.literature) },
   ];
   const faqLinks = [
-    { href: "#tool-visa", label: t(copy.nav.visa) },
-    { href: "#tool-season", label: t(copy.nav.season) },
-    { href: "#tool-transit", label: t(copy.nav.transit) },
+    { href: "#faq-transit", label: t(copy.nav.visa) },
+    { href: "#faq-holidays", label: t(copy.nav.season) },
+    { href: "#faq-train", label: t(copy.nav.transit) },
   ];
 
   useEffect(() => {

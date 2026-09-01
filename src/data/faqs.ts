@@ -2,88 +2,264 @@ import type { Tx } from "@/types";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
 
-export const faqs: { id: string; q: Tx; a: Tx }[] = [
+export type FaqItem = { id: string; q: Tx; a: Tx };
+export type FaqGroup = { id: string; label: Tx; items: FaqItem[] };
+
+export const faqGroups: FaqGroup[] = [
   {
-    id: "tool-visa",
-    q: L(
-      "Do I need to arrange a visa for Vietnam in advance?",
-      "去越南需要提前办理签证吗？",
-    ),
-    a: L(
-      "Most passport holders can apply for a Vietnamese 45-day e-visa online — it covers all entry points including Mong Cai and Lao Cai, and typically processes within 3 business days. Chinese passport holders enjoy visa-free entry for up to 30–45 days. We verify current requirements for every traveller before departure.",
-      "大多数护照持有人可申请越南 45 天电子签证（e-visa），可在线自助办理，覆盖芒街、老街口岸等全部入境点，一般 3 个工作日内下签。中国护照持有人免签入境越南，停留期为 30 天（部分护照可至 45 天）。我们会在出发前为每位成员核实最新签证政策。",
-    ),
+    id: "money",
+    label: L("Payment & Money", "支付与货币"),
+    items: [
+      {
+        id: "faq-cards",
+        q: L(
+          "Can I use my foreign credit cards (Visa/Mastercard) or cash in China?",
+          "在中国可以用境外信用卡（Visa / Mastercard）或现金吗？",
+        ),
+        a: L(
+          "While cash is legally accepted everywhere, China has practically transitioned into a cashless, mobile-first society. Many small vendors, street food stalls, and taxis simply do not carry physical change anymore. Standard international plastic cards (Visa/Mastercard/Amex) are generally welcome at luxury hotels and high-end restaurants, but will not work at local scenic spots or boutiques. To travel with absolute peace of mind, we highly recommend setting up mobile payments before you arrive.",
+          "现金在法律上当然能花，但今天的中国早已是「一部手机走天下」的社会——小摊贩、街边小吃和出租车，很多时候真的找不开零钱。国际信用卡（Visa、Mastercard、Amex）在高端酒店和讲究的餐厅基本都收，但到了本地景区、小店铺就刷不了了。想全程省心，建议出发前先把手机支付开通好。",
+        ),
+      },
+      {
+        id: "faq-alipay",
+        q: L(
+          "How can I set up Alipay or WeChat Pay without a Chinese bank account?",
+          "没有中国银行卡，怎么开通支付宝或微信支付？",
+        ),
+        a: L(
+          "Don't worry, the process is incredibly straightforward nowadays! Both Alipay and WeChat have tailored international versions. All you need to do is download the app, sign up with your international phone number, and complete the quick Real-name Verification using your passport. From there, you can seamlessly link your foreign credit or debit cards. When buying something, the vendor will simply scan your app's QR code, or you can scan theirs. Bonus tip: Transaction fees are completely waived for amounts under 200 RMB!",
+          "放心，现在这件事比想象中简单得多。支付宝和微信都做了国际版：下载 App，用境外手机号注册，再拿护照做一次快速实名认证，就能直接绑定你的境外信用卡或借记卡。付钱时，让商家扫你的付款码，或者你扫商家的收款码，都可以。顺便一提：单笔 200 元以下的交易是免手续费的。",
+        ),
+      },
+      {
+        id: "faq-tipping",
+        q: L(
+          "Is tipping customary or expected in restaurants and taxis?",
+          "在餐厅和出租车上需要给小费吗？",
+        ),
+        a: L(
+          "No, there is absolutely no tipping culture in China. Whether you are dining at a cozy noodle stall or taking a taxi across the city, the price listed is exactly what you pay. In fact, leaving extra cash on the table might actually cause gentle confusion, as polite servers will likely run after you to return the money you \"accidentally forgot.\" Relax and enjoy the authentic hospitality without worrying about math at the end of your meal!",
+          "不需要——中国没有小费文化。无论是在街边小面馆，还是打车横穿半座城，标价多少就付多少。反而你若把零钱留在桌上，服务员多半会追出来，以为你「不小心落了钱」。所以吃完饭不必算数，安心受用这份待客之道就好。",
+        ),
+      },
+    ],
   },
   {
-    id: "tool-china-visa",
-    q: L("Is a Chinese visa required on these routes?", "路线中需要办理中国签证吗？"),
-    a: L(
-      "Route 1 includes re-entering China via Yunnan, which requires a valid Chinese tourist visa (L-type) for most non-Chinese passports. We recommend applying 4–8 weeks ahead at your nearest Chinese consulate — we'll provide a full document checklist and support.",
-      "路线一包含从越南重新入境中国（云南）的环节，非中国护照持有人需持有有效的中国签证（旅游签 L 类）。建议出发前 4–8 周在所在地中国领事馆办理，我们会提供详细的材料清单与协助。",
-    ),
+    id: "digital",
+    label: L("Digital Connectivity & Apps", "网络、应用与沟通"),
+    items: [
+      {
+        id: "faq-firewall",
+        q: L(
+          "Will my standard social media, Google Maps, and Gmail work in China?",
+          "我常用的社交软件、谷歌地图和 Gmail 在中国能用吗？",
+        ),
+        a: L(
+          "Mainland China utilizes a network firewall that temporarily restricts access to certain international platforms like Google, WhatsApp, Instagram, and Gmail when you connect through local Wi-Fi. The most seamless remedy is purchasing a travel eSIM or an international roaming plan before you depart. Cellular roaming data automatically bypasses these network blocks, keeping you smoothly connected to your family and friends back home without needing to fiddle with a separate VPN.",
+          "连本地 Wi-Fi 时，部分国际平台（Google、WhatsApp、Instagram、Gmail 等）会受限。最省事的办法是出发前买一张旅行 eSIM 或开通国际漫游——走手机蜂窝数据就不受这些限制，和家里人联系一路顺畅，也不用再折腾 VPN。",
+        ),
+      },
+      {
+        id: "faq-esim",
+        q: L(
+          "eSIM vs. Local Physical SIM Card: Which option is better for my trip?",
+          "eSIM 和当地实体卡，哪个更适合我的行程？",
+        ),
+        a: L(
+          "It truly depends on your travel style, but eSIMs are usually the favorite choice for short-term holidaymakers because they allow you to keep your WhatsApp active instantly upon landing. However, if you plan to stay a bit longer, order local food deliveries, or use certain domestic apps that require verification codes, picking up a local physical SIM card at the airport arrival hall is a fantastic alternative. It grants you a local number and data at an incredibly budget-friendly rate.",
+          "看你怎么玩。短期度假一般更推荐 eSIM——落地就能用，WhatsApp 立刻在线。但如果你打算待久一点、要点外卖、或注册一些需要短信验证码的本地 App，那就在机场到达厅办一张本地实体卡，有个本地号码加流量，价格也相当实惠。",
+        ),
+      },
+      {
+        id: "faq-language",
+        q: L(
+          "How can I communicate if I do not speak or read any Chinese?",
+          "完全不懂中文，沟通怎么办？",
+        ),
+        a: L(
+          "While English is widely understood by staff at international hotels, high-speed train stations, and younger generations in major cities, you might run into language gaps with local cab drivers or market vendors. We warmly recommend downloading a translation app with live voice-to-voice translation and camera scanning features. Simply pointing your camera at a traditional menu or a street sign will instantly translate it, turning a potential barrier into a fun, interactive part of your journey!",
+          "国际酒店、高铁站和大城市的年轻人，英语基本都通；但碰到本地司机或菜市场的摊主，偶尔还是会卡住。建议装一个带实时语音对话和拍照翻译的 App——把镜头对准菜单或路牌，意思立刻就出来了。原本的障碍，反而会变成旅途中挺好玩的一件事。",
+        ),
+      },
+      {
+        id: "faq-apps",
+        q: L(
+          "What essential applications should I install on my phone before landing?",
+          "落地前，手机上该装好哪些应用？",
+        ),
+        a: L(
+          "To make your trip feel incredibly smooth and effortless, we suggest downloading the \"Big Four\" travel bundle: Alipay & WeChat for all your daily shopping, dining, and coffee runs; Trip.com, the ultimate lifesaver for managing your hotel bookings, bullet train tickets, and attraction entry passes in English; Apple Maps or Metro apps for flawless navigation; and a translation app as your digital companion for warm daily conversations.",
+          "想让整趟旅程顺顺当当，建议先装好「四件套」：支付宝和微信（日常购物、吃饭、买咖啡都靠它们）；Trip.com（英文界面搞定酒店、高铁票和景区门票，非常好用）；苹果地图或地铁类 App（导航不迷路）；再一个翻译 App，日常沟通就都有了着落。",
+        ),
+      },
+    ],
   },
   {
-    id: "tool-season",
-    q: L("What is the best time of year to travel?", "什么季节最适合出行？"),
-    a: L(
-      "November to March (cool-dry season) is ideal: pleasant temperatures, minimal rain, and perfect conditions for trekking and border crossings. April and October offer lush scenery with fewer crowds. May to September is rainy season — Detian Falls peaks dramatically, though some mountain roads may be affected.",
-      "最佳出行窗口为 11 月至次年 3 月（凉季）：气温宜人，降水少，是徒步梯田、过境通关的黄金时期。4 月与 10 月属肩季，植被葱郁、人流较少。5 月至 9 月为雨季，德天瀑布最为壮观，但需注意部分山路可能受影响，行程需提前规划。",
-    ),
+    id: "transport",
+    label: L("Getting Around & Navigation", "交通出行与导航"),
+    items: [
+      {
+        id: "faq-train",
+        q: L(
+          "Is it easy for foreign tourists to navigate and ride the High-Speed Trains?",
+          "外国游客搭乘高铁方便吗？",
+        ),
+        a: L(
+          "Absolutely! China's high-speed rail network is world-class, pristine, and incredibly efficient. Booking is effortless through English platforms like Trip.com using your passport details. The best part? China has gone completely paperless. You do not need to queue up to collect physical tickets anymore. When you arrive at the station, simply walk through the designated manual gate or automated passport reader, present your physical passport, and you are ready to board!",
+          "非常方便。中国的高铁网是世界级的——干净、准点、效率极高。用护照信息在 Trip.com 这类英文平台就能轻松订票。还有个好消息：现在已经全面电子客票，不用排队取纸质票了。到站后走人工通道或自助验护照的闸机，递上护照即可上车。",
+        ),
+      },
+      {
+        id: "faq-taxi",
+        q: L("How do I hail a taxi safely if I can't speak the language?", "语言不通，怎么安全打车？"),
+        a: L(
+          "You never have to worry about waving down a cab on the street or dealing with language confusion. Right inside your Alipay app, you will find \"DiDi\" — China's premier ride-hailing service (similar to Uber). The entire interface is in English, you can type your destination in English, and it features a built-in real-time translation chat so you can easily message your driver. Best of all, payments are automatically processed online through your linked card, so you can just step out when you arrive.",
+          "完全不必在路边招手、也不必跟司机比划。支付宝里就有「滴滴」——中国的网约车平台（类似 Uber）。界面是英文的，目的地可以直接用英文输入，还内置实时翻译，能和司机顺畅沟通。车费从绑定的卡里自动扣，到站直接下车走人。",
+        ),
+      },
+      {
+        id: "faq-maps",
+        q: L(
+          "Does Google Maps provide accurate routing and schedules in China?",
+          "谷歌地图在中国导航准吗？",
+        ),
+        a: L(
+          "Because of local mapping regulations, Google Maps can sometimes show a slight coordinate shift or outdated transit schedules within the country. If you are using an iPhone, Apple Maps works beautifully because it sources data from native mapping giants and displays everything in crisp English. For Android users, combining translator tools with native apps or utilizing English-friendly travel map portals will ensure you never lose your way.",
+          "受本地地图测绘规定影响，谷歌地图在国内有时会有些坐标偏移，公交信息也可能不够新。用 iPhone 的话，苹果地图体验很好——数据来自本地图商，界面也是清爽的英文。安卓用户可以把翻译工具和本地地图搭配着用，或选择对英文友好的旅行地图站点，一样不会迷路。",
+        ),
+      },
+    ],
   },
   {
-    id: "faq-group",
-    q: L("How large are the groups? What does \"private\" mean?", "团队规模是多少？私团是什么意思？"),
-    a: L(
-      "These are fully private tours — you'll never be merged with strangers. Group size is typically 2–8 people travelling together. A dedicated guide and private vehicle are yours throughout. Your pace, preferences, and decisions are entirely your own.",
-      "我们的路线为纯私家团，不与陌生人拼团。一行人数通常为 2–8 人，全程配专属向导与专车。您的节奏、偏好与决策不受任何干扰——这正是「精品」的核心所在。",
-    ),
+    id: "visa",
+    label: L("Visas, Customs & Hotel Rules", "签证、政策与通关"),
+    items: [
+      {
+        id: "faq-transit",
+        q: L(
+          "How does the 144-Hour Visa-Free Transit work for international travelers?",
+          "144 小时过境免签怎么使用？",
+        ),
+        a: L(
+          "It is a wonderful option if you are planning a brief stopover! Travelers from over 50 eligible countries can enter designated Chinese regions for up to 6 days without a visa, provided they are transiting to a third country or region (for example: London → Shanghai → Hanoi). All you need to do is show your confirmed onward ticket at the airport's special transit counter. It is a fantastic, stress-free way to sample the country's rich culture on your way to another destination.",
+          "如果只是中途短暂停留，这个政策非常实用：符合条件的 50 多个国家的旅客，可在指定区域免签停留最多 6 天，前提是你要继续前往第三国或地区（例如：伦敦 → 上海 → 河内）。只要在机场的专用过境柜台出示已确认的联程机票即可。借道中国、顺手看一眼这里的文化，是很划算的走法。",
+        ),
+      },
+      {
+        id: "faq-hotel",
+        q: L(
+          "Can foreign passports check into any hotel or boutique guesthouse?",
+          "持外国护照可以入住任何酒店或精品民宿吗？",
+        ),
+        a: L(
+          "Recent guidelines have significantly encouraged all hotels to warmly welcome international friends. However, to ensure an absolutely seamless check-in experience and guarantee proper local registration, we always advise booking your stays through established global platforms like Trip.com or checking with our bespoke concierge service. We manually verify each property in our itineraries to ensure they are fully prepared to host you with open arms.",
+          "近来的政策明确鼓励各类住宿接待境外旅客。不过为了让入住真正顺畅、也确保临时住宿登记办妥，我们建议通过 Trip.com 这类成熟平台预订，或交由我们的专属顾问安排。行程里的每一处住宿，我们都会逐一核实，确认它们能妥妥当当地接待你。",
+        ),
+      },
+      {
+        id: "faq-passport",
+        q: L(
+          "Do I need to carry my actual physical passport with me during day trips?",
+          "白天出门游玩，需要随身带护照原件吗？",
+        ),
+        a: L(
+          "Yes, please keep your physical passport safely in your daypack. In China, your passport acts as your universal key. It is required not just for boarding bullet trains and checking into hotels, but also for entering prestigious national museums, purchasing tickets at major landmarks (like the Forbidden City), and occasionally passing standard security checkpoints. Think of it as your essential travel companion!",
+          "需要，请把护照原件随身放好。在中国，护照几乎是一把万能钥匙——不只坐高铁、住酒店要用，进国家级博物馆、在故宫这类重点景区买票，甚至偶尔过安检时，都要出示。把它当成旅途中最重要的那件行李就对了。",
+        ),
+      },
+    ],
   },
   {
-    id: "faq-border",
-    q: L("How does crossing the China-Vietnam border work?", "跨越中越边境的流程是怎样的？"),
-    a: L(
-      "Route 1 enters Vietnam at Dongxing–Mong Cai and returns to China at Lao Cai–Hekou. Our guide accompanies you through customs on both sides — handling declarations, luggage through the scanner, and passport checks. A single crossing typically takes 30–60 minutes. Local transport picks up seamlessly on the other side.",
-      "路线一在东兴↔芒街入境越南，回程在老街↔河口入境中国。我们的向导全程陪同，协助完成两国海关申报、行李过机、护照核验等所有手续，通常单次过境耗时 30–60 分钟。边境通关后直接与当地司机衔接，无缝续程。",
-    ),
+    id: "timing",
+    label: L("Crowds & Smart Timing", "人流控制与时间规划"),
+    items: [
+      {
+        id: "faq-holidays",
+        q: L(
+          "When should I plan my trip to avoid the biggest national holiday crowds?",
+          "想避开人潮，应该避开哪些时段？",
+        ),
+        a: L(
+          "To enjoy a serene and relaxed exploration, we highly recommend avoiding the two grand national holidays: Chinese New Year (usually in January or February) and Golden Week (October 1st to 7th). During these festival periods, hundreds of millions of locals travel to reunite with family, causing flights, hotels, and bullet trains to book out months in advance. Choosing the shoulder seasons guarantees you lovely weather and much quieter scenic walks.",
+          "想走得从容，建议避开两个全国性长假：春节（通常在 1 月或 2 月）和国庆黄金周（10 月 1 日至 7 日）。这两个时段有几亿人返乡或出行，机票、酒店和高铁往往提前几个月就售罄。选在肩季出行，天气舒服，景区也安静得多。",
+        ),
+      },
+      {
+        id: "faq-weekday",
+        q: L(
+          "Are famous tourist attractions heavily crowded on regular weekdays?",
+          "平日里热门景点也会很挤吗？",
+        ),
+        a: L(
+          "Regular weekdays offer a much more intimate and quiet experience! To ensure historical monuments and natural parks remain well-preserved, China utilizes a strict real-name advanced reservation system for almost all popular landmarks. This means ticket numbers are capped daily. Don't worry about the logistics, though — our curated roadbooks are designed to automatically lock in your entry time-slots days in advance so you can walk straight in.",
+          "平日里会清静很多。为了保护文物和自然环境，国内绝大多数热门景点都实行实名制分时段预约，每天的门票总量是限定的。流程上的事你不用操心——我们的定制路书会提前数天把入场的时段锁定好，你到点直接进去就行。",
+        ),
+      },
+      {
+        id: "faq-duration",
+        q: L(
+          "How many days do you recommend for a beautiful, unhurried first trip?",
+          "第一次来，安排多少天比较从容？",
+        ),
+        a: L(
+          "To truly absorb the landscape without feeling rushed, a duration of 10 to 14 days is the golden window. For an epic cross-border route like the Yunnan-Guangxi-Vietnam triangle, this timeframe gives you the perfect rhythm. It balances the thrilling speeds of the high-speed rail with deep, slow-paced days spent wandering ancient towns, sipping coffee by pristine rivers, and discovering misty mountain paths.",
+          "想把风景真正看进去又不赶，10 到 14 天是最舒服的区间。像滇—桂—越这样的跨境大环线，这个时长刚好能把节奏铺开：既有高铁飞驰的畅快，也留出大把慢日子——在古城里闲逛、在清亮的河边喝杯咖啡、或者走进雾气未散的山路。",
+        ),
+      },
+    ],
   },
   {
-    id: "tool-transit",
-    q: L("What transport is used throughout?", "整段旅途的交通方式是什么？"),
-    a: L(
-      "Comfortable private minivans are used for all road legs, including Hanoi to Sapa (5.5–6 h). Route 1 adds a Ha Long Bay day cruise, the ferry to Cat Ba, and a vintage metre-gauge run from Hai Phong at 18:40 into Hanoi. Route 2 still uses the overnight metre-gauge toward the Friendship Pass.",
-      "全程以舒适型商务车为主，含跨省长途（如河内→沙坝约 5.5–6 小时）。路线一另有下龙湾一日游轮、轮渡吉婆岛，以及海防 18:40 百年米轨驶入河内。路线二仍保留米轨过夜，再经友谊关回国。",
-    ),
-  },
-  {
-    id: "faq-language",
-    q: L("Will language be a barrier?", "语言沟通有障碍吗？"),
-    a: L(
-      "Not at all. Our guides are fluent Mandarin speakers, with local Vietnamese-speaking guides joining for the Vietnam segments. Restaurants, guesthouses, drivers, and shopkeepers — all communication is handled. You travel; we translate.",
-      "全程无需担忧语言问题。我们的向导中文流利（普通话/粤语），在越南段配有越南语翻译向导。食宿、交通、商家沟通均由我们代劳——您只需享受旅程。",
-    ),
-  },
-  {
-    id: "faq-cost",
-    q: L("What does the trip cost and what's included?", "费用大概是多少？包含哪些内容？"),
-    a: L(
-      "Pricing varies by group size, route, and dates — please enquire for an accurate quote. Typical inclusions: private vehicle throughout, double-occupancy accommodation (upgrades available), guiding services, listed meals, and activity entrance fees. International flights and visa fees are not included.",
-      "价格因人数、路线和出发日期而有所不同，建议通过询盘获取准确报价。通常费用包含：全程专车、双人标准间住宿（可升级）、向导服务、已列明的餐食，以及活动门票。国际机票与签证费用不含在内。",
-    ),
-  },
-  {
-    id: "faq-family",
-    q: L("Can elderly travellers or children join?", "路线适合携带老人或小孩吗？"),
-    a: L(
-      "Route 2 (The Southern Loop) moves at a gentle pace and suits families and all fitness levels. Route 1 includes light trekking in Sapa — no technical ability required, but comfortable mobility is helpful. Let us know any specific needs at enquiry stage and we'll tailor the rhythm accordingly.",
-      "路线二（南疆回环）整体节奏偏慢，适合家庭与各年龄层出行。路线一含少量轻度徒步（沙坝梯田），对行动能力有基本要求，但无需专业体能。如有特殊需求，请在询盘时说明，我们会为您量身调整行程节奏。",
-    ),
-  },
-  {
-    id: "faq-change",
-    q: L("What if we want to change the itinerary mid-trip?", "如果临时需要改变行程怎么办？"),
-    a: L(
-      "The whole point of a private tour is flexibility. Weather shifts, a slower morning, a spontaneous detour — just talk to your guide. We're not running a script. Your experience matters more than the plan.",
-      "私家团的最大优势在于灵活性。旅途中如遇天气变化、个人需求调整，可随时与向导沟通，在合理范围内灵活应变。我们不是按脚本执行的观光团——您的真实体验比既定计划更重要。",
-    ),
+    id: "comfort",
+    label: L("Food, Health & Everyday Comfort", "餐饮、卫生与常识"),
+    items: [
+      {
+        id: "faq-water",
+        q: L(
+          "Is tap water safe to drink directly, and how do I find clean water?",
+          "自来水可以直接喝吗？怎么找干净的饮用水？",
+        ),
+        a: L(
+          "Tap water in China is not intended for direct drinking. However, staying hydrated is incredibly easy! Every reputable hotel room comes equipped with a pristine electric kettle for boiling water, along with complimentary bottled mineral water. You will also find cozy convenience stores on almost every street corner selling ice-cold or room-temperature bottled water for a very nominal fee.",
+          "自来水不建议直接饮用。但补水这件事一点不麻烦：正规酒店的房间里都配有电热水壶，也会送免费的瓶装矿泉水；街角几乎都有便利店，冰的、常温的瓶装水都有，价格也很便宜。",
+        ),
+      },
+      {
+        id: "faq-toilets",
+        q: L(
+          "What should I expect regarding public restrooms (Squat Toilets)?",
+          "公共厕所的情况怎么样？会遇到蹲厕吗？",
+        ),
+        a: L(
+          "You will find a blend of styles! Modern shopping malls, high-speed train stations, airports, and luxury hotels are fully equipped with standard Western-style sitting toilets. However, when exploring ancient villages or natural hiking trails, you will primarily encounter traditional squat toilets, which locals prefer for hygiene reasons. A gentle piece of advice: Public restrooms don't always stock paper, so keeping a small pack of pocket tissues and hand sanitizer in your daypack is a wonderful habit.",
+          "两种都会有。现代化的商场、高铁站、机场和高档酒店，基本都是标准的坐式马桶；但在古村落或山野步道上，更多还是传统的蹲厕——当地人认为这样更卫生。有个小提醒：公共厕所不一定备纸，随身带一小包纸巾和免洗洗手液，会是个好习惯。",
+        ),
+      },
+      {
+        id: "faq-security",
+        q: L(
+          "How strict are security checks at metro stations, and what are the rules?",
+          "地铁安检严格吗？有什么规定？",
+        ),
+        a: L(
+          "Security is treated with great care to keep public transit incredibly safe for everyone. Every time you enter a subway or train station, your bags will pass through a quick X-ray scanner. To avoid any minor delays, remember not to pack small pocket knives or flammable aerosols (like spray sunscreens). Also, ensure your portable power banks are clearly labeled with their capacity specifications (under 100Wh or 20000mAh is the standard global airline limit).",
+          "公共交通的安检很认真，这也是为了让大家出行更安心。每次进地铁站或火车站，行李都要过一次 X 光机，速度很快。想少点耽搁：别随身带小刀，也别带喷雾防晒这类易燃气压罐。另外，充电宝上要有清晰的容量标识（不超过 100Wh 或 20000mAh，这也是国际通行的航空标准）。",
+        ),
+      },
+      {
+        id: "faq-safety",
+        q: L(
+          "Is China safe for solo female travelers and late-night walking?",
+          "女性独自旅行、夜间出行安全吗？",
+        ),
+        a: L(
+          "China is globally recognized as one of the safest travel destinations in the world. Violent crime is extraordinarily rare. Whether you are a solo female traveler exploring hidden alleyways or taking a midnight stroll through a bustling neon-lit city, you will feel completely secure. The streets are exceptionally well-lit, neighborhoods are highly vibrant, and the local community is universally respectful, warm, and eager to help international guests feel at home.",
+          "中国是全球公认最安全的旅行目的地之一，暴力犯罪极为罕见。无论你是独自出行的女性，钻进不知名的小巷，还是深夜在霓虹未熄的街市散步，都可以很安心。街道照明充足，街区人气旺盛，本地人也普遍友善热情，很愿意帮远道而来的客人。",
+        ),
+      },
+    ],
   },
 ];
+
+/** 扁平列表：供 hash 锚点定位与旧引用使用 */
+export const faqs: FaqItem[] = faqGroups.flatMap((g) => g.items);
