@@ -347,64 +347,64 @@ export const places: Record<PlaceId, Place> = {
 export const placeStories: Record<PlaceId, { culture: Tx; slides: string[] }> = {
   nanning: {
     culture: L(
-      "Nanning is a garden city on the Yong — Zhuang and Cantonese kitchens side by side. The river walk is for locals, not a show.",
-      "南宁是邕江边的绿城。壮味和粤厨并排，江边是当地人在走，不是表演。",
+      "Nanning is the south's quietest capital — green all year, sitting on the Yong River with Zhuang and Cantonese cooking on either side of the kitchen. Most travellers pass through; we use it as a soft first night by the river, slowing down before the long drive west.",
+      "南宁是华南最安静的省会——一年常绿，邕江从城边流过，壮味和粤味隔着一口锅各做各的。多数旅客把它当中转，我们用它做第一晚：住在江边，把节奏放慢，第二天再往西开。",
     ),
     slides: [asset("/destinations/nanning.jpg"), asset("/destinations/hotel-a.jpg"), asset("/destinations/kunming.jpg")],
   },
   chongzuo: {
     culture: L(
-      "Detian sits on the line itself — the spray is Chinese and Vietnamese at once. Mingshi’s karst road is the quieter twin: fields, peaks, almost no coaches if you time it.",
-      "德天就在国境线上，水花同时属于两边。名仕是更安静的孪生：田、峰、只要赶对时间就几乎没有大巴。",
+      "Detian is the place where the map turns into spray: Vietnam and China on two banks of the same curtain of water. Mingshi is its quieter twin — karst, fields, a road so flat you forget the speed you built up to get here.",
+      "德天是地图变成水花的地方：中越两国隔着一帘白水各站一边。明仕是它更安静的孪生——喀斯特、稻田、一条平到让你忘了来时赶路的公路。",
     ),
     slides: [asset("/destinations/chongzuo.jpg"), asset("/destinations/hotel-b.jpg"), asset("/destinations/puzhehei.jpg")],
   },
   halong: {
     culture: L(
-      "Ha Long Bay is limestone that went to sea — more than a thousand isles in the mist. Two nights so the cruise is a full day, and the town is not a same-day dash.",
-      "下龙湾是走到海里的石灰岩，一千多座岛在雾里。连住两晚，游轮才是完整的一天，镇子不是当天赶路。",
+      "Ha Long is limestone that walked into the sea and forgot to come back — a thousand-odd islands standing in water that never learned to settle. We stay two nights so the cruise is a full day, and the bay belongs to you at dusk.",
+      "下龙湾是石灰岩走到海里忘了回头——一千多座岛立在水上，那水从来没学过平静。我们住两晚，让游轮变成一整天，让黄昏时整个湾都让给你。",
     ),
     slides: [asset("/destinations/catba.jpg"), asset("/destinations/hotel-c.jpg"), asset("/destinations/hanoi.jpg")],
   },
   catba: {
     culture: L(
-      "Cat Ba is limestone and harbour, not a cruise pier. The island still fishes. We arrive by ferry so the night is water, not a highway hotel.",
-      "吉婆是石灰岩和渔港，不是邮轮码头。岛上还在打渔。坐轮渡过来，这一夜是水，不是高速边的酒店。",
+      "Cat Ba is the bay's quieter side — same limestone, far fewer boats, an island that still goes to sea for fish at dawn. We come by ferry so the night is water rather than a highway hotel; the national park is the afternoon, Cannon Fort the last walk.",
+      "吉婆岛是湾的另一半安静——同样的石灰岩，船少得多，清晨还有人出海打鱼。我们坐轮渡来，让这一夜也是水，而不是高速旁的酒店；国家公园是下午，炮台是最后一走。",
     ),
     slides: [asset("/destinations/catba.jpg"), asset("/destinations/hotel-c.jpg"), asset("/destinations/mile.jpg")],
   },
   hanoi: {
     culture: L(
-      "The Old Quarter is a living grid: trade streets, French shade, a lake the city walks around after dark. Two nights so it can be a city, not a transfer.",
-      "古城是还在运转的网格：行业街、法式树荫、夜里绕着走的湖。连住两晚，它才是城，不是中转。",
+      "Hanoi is a city that is still writing itself: 36 trade streets in the Old Quarter, French shade a few blocks over, a lake the city walks around after work. Two nights so the morning broth, the late coffee and the evening beer street can all be Hanoi's, not a transit stop.",
+      "河内是一座还在写自己的城：老城三十六行街、几条街外的法式荫凉、下班后绕着走的湖。两晚，让早上的河粉、下午的咖啡、晚上的啤酒街都属于河内，不是中转站。",
     ),
     slides: [asset("/destinations/hanoi.jpg"), asset("/destinations/hotel-a.jpg"), asset("/destinations/sapa.jpg")],
   },
   sapa: {
     culture: L(
-      "The terraces are a Hmong and Dao working landscape, not a viewpoint franchise. Cat Cat is a village you walk with someone who lives there.",
-      "梯田是苗族、瑶族还在种的地，不是观景台连锁。猫猫村要跟住在这里的人一起走。",
+      "Sapa's terraces are not a viewpoint — they are a water system, hand-cut over centuries by Hmong and Dao families. We walk down into them with someone who farms there, because the rice tells different things at ankle height than at shoulder height.",
+      "沙巴的梯田不是观景台——它是水系，是赫蒙族和瑶族几代人用手刻出来的。我们跟在地里干活的本地人走下去，因为稻子在脚踝和肩膀的高度，说的是不同的故事。",
     ),
     slides: [asset("/destinations/sapa.jpg"), asset("/destinations/hotel-b.jpg"), asset("/destinations/guantang.jpg")],
   },
   train: {
     culture: L(
-      "The meter-gauge is a leftover of the Yunnan–Vietnam railway. Sleeping on it is the border in slow motion — not a gimmick, a way the geography still works.",
-      "米轨是滇越铁路留下的。睡在上面，边境是慢动作，不是噱头，是地理还在运转的方式。",
+      "The metre-gauge is a leftover of the Yunnan–Vietnam railway. Sleeping on it is the border in slow motion — not a gimmick, a way the geography still works. Tea from a flask, dinner at a station platform, and the next morning somewhere else.",
+      "米轨是滇越铁路剩下的。睡在上面，边境是慢动作——不是噱头，是地理还在用的方式。保温瓶里的茶，站台上的饭，第二天醒来已在另一处。",
     ),
     slides: [asset("/destinations/train.jpg"), asset("/destinations/hotel-c.jpg"), asset("/destinations/jianshui.jpg")],
   },
   jianshui: {
     culture: L(
-      "Jianshui is a Confucian town that kept its wall and its tofu. After Hekou, Yunnan starts as lanes and a courtyard, not a highway plaza.",
-      "建水是还留着城墙和豆腐的儒城。河口之后，云南先是巷子和院子，不是高速服务区。",
+      "Jianshui is one of the few Chinese old towns that still believes it's one: a Confucian temple still standing, courtyard houses still lived in, the narrow-gauge still running. The Yunnan after Hekou begins here as lanes and tofu, not as a highway plaza.",
+      "建水是少数还信自己是古城的古城：文庙还立着，院子还住着，米轨小火车还在开。过了河口，云南就从巷子和豆腐开始了，不是高速服务区。",
     ),
     slides: [asset("/destinations/jianshui.jpg"), asset("/destinations/hotel-d.jpg"), asset("/destinations/kunming.jpg")],
   },
   puzhehei: {
     culture: L(
-      "Puzhehei is a lake that grew inside a karst forest. Lotus flowers between the peaks, bamboo raft threading between them — this is the kind of landscape that makes you question whether it's real. Trek with a Yi guide in the afternoon; they call this place 'where fish and shrimp overflow.'",
-      "普者黑是长在喀斯特森林里的一湖水。峰丛之间开着荷花，竹筏从中间穿过去——这种风景会让人怀疑是不是真的。下午跟彝族向导进山；他们管这里叫「鱼虾满出来的地方」。",
+      "Puzhehei is a lake that grew inside a karst forest: lotus threading between the peaks, a bamboo raft the only way in. The local Yi call it 'where fish and shrimp overflow' — once you are there, the name stops sounding like poetry and starts sounding like fact.",
+      "普者黑是长在喀斯特森林里的一湖水：荷花从峰丛之间穿过，进去了只能坐竹筏。当地彝族管这里叫'鱼虾满出来的地方'——到了之后，这名字就不像诗、像事实了。",
     ),
     slides: [
       asset("/destinations/chongzuo.jpg"),
@@ -414,22 +414,22 @@ export const placeStories: Record<PlaceId, { culture: Tx; slides: string[] }> = 
   },
   mile: {
     culture: L(
-      "Mile’s Dongfengyun is a painted set on red earth. We treat it as dusk theatre, then the hot spring as the actual night — Yunnan’s slower register.",
-      "弥勒东风韵是红土上的布景。我们把它当黄昏剧场，温泉才是真正的夜——云南更慢的那个音区。",
+      "Mile's Dongfengyun is what an artist built when he stopped asking permission — red-brick kilns and cone towers with no blueprints, set among the vineyards. We come for the dusk light, then leave the hot springs to do what they do: return us to a body that still works.",
+      "弥勒东风韵是位艺术家不要审批时盖出来的东西——没有图纸的红砖窑和锥形塔，立在葡萄田中间。我们来是为黄昏的光，然后把温泉的事留给温泉——把一具还能用的身体还给你。",
     ),
     slides: [asset("/destinations/mile.jpg"), asset("/destinations/hotel-b.jpg"), asset("/destinations/puzhehei.jpg")],
   },
   kunming: {
     culture: L(
-      "Kunming is the spring city: willows on Green Lake, a market if the flight is late. It is an exit, but it can still be a last walk.",
-      "昆明是春城：翠湖的柳，航班晚就去花市。它是出口，但还可以是最后一走。",
+      "Kunming is the spring city — year-round twenty degrees, willows on Green Lake, gulls from Siberia in November. Most trips end here as a flight home; we end here as a last walk, the city easy enough to still receive you.",
+      "昆明是春城——常年二十度上下，翠湖的柳，十一月有从西伯利亚来的红嘴鸥。多数行程在这里结束于一趟回家的航班；我们在这里结束于最后一走，城市松到还接得住你。",
     ),
     slides: [asset("/destinations/kunming.jpg"), asset("/destinations/hotel-c.jpg"), asset("/destinations/jianshui.jpg")],
   },
   guantang: {
     culture: L(
-      "Longzhou and Guantang sit behind Friendship Pass. Tianqin is a living Zhuang music, not a stage show. Two nights so the cane sea is a morning, not a photo stop.",
-      "龙州、观堂在友谊关背后。天琴是还在弹的壮族音乐，不是舞台。连住两晚，蔗海才是早晨，不是拍照站。",
+      "Longzhou and Guantang sit behind Friendship Pass, where the border is a melody: the Zhuang tianqin, two strings and a question-and-answer song older than the line drawn on the map. Two nights so the cane sea becomes a morning you wake up to, not a window you frame.",
+      "龙州、观堂在友谊关背后，国境线在这里是一支旋律：壮族天琴，两根弦，一首比地图上的界线更老的问歌答歌。连住两晚，让蔗海变成你醒来的早晨，而不是你取景的窗口。",
     ),
     slides: [asset("/destinations/guantang.jpg"), asset("/destinations/hotel-d.jpg"), asset("/destinations/sapa.jpg")],
   },
