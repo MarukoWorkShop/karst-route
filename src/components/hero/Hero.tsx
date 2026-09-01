@@ -28,7 +28,8 @@ function bindVideo(el: HTMLVideoElement | null) {
   el.defaultMuted = true;
   el.setAttribute("playsinline", "true");
   el.setAttribute("webkit-playsinline", "true");
-  el.setAttribute("referrerpolicy", "no-referrer");
+  // 不要设置 referrerpolicy="no-referrer"：
+  // COS 防盗链靠 Referer 白名单放行本站，去掉 Referer 会被 403 拦截导致视频无法播放。
 }
 
 function playSafe(el: HTMLVideoElement | null) {
@@ -253,7 +254,6 @@ export function Hero({
           src={aSlide.video || undefined}
           muted
           playsInline
-          referrerPolicy="no-referrer"
           autoPlay={opaque === "a" && Boolean(aSlide.video) && !reduce}
           preload={opaque === "a" ? "auto" : "metadata"}
           onEnded={() => onVideoEnded("a")}
@@ -272,7 +272,6 @@ export function Hero({
           src={bSlide.video || undefined}
           muted
           playsInline
-          referrerPolicy="no-referrer"
           autoPlay={opaque === "b" && Boolean(bSlide.video) && !reduce}
           preload={opaque === "b" ? "auto" : "metadata"}
           onEnded={() => onVideoEnded("b")}
@@ -327,7 +326,8 @@ export function Hero({
 
       <div className="pointer-events-none relative z-[1] flex min-h-[100svh] flex-col justify-end">
         <div className="page-col pb-[calc(96px+env(safe-area-inset-bottom))] md:pb-14">
-          <div key={slide.id} className="hero-copy max-w-[640px]">
+          {/* key 用索引而非 slide.id：多个 slide 可共用一个主题，用 id 会导致切换时动画不触发 */}
+          <div key={active} className="hero-copy max-w-[640px]">
             <a
               href="#experience"
               aria-label={t(copy.hero.themesAria)}
