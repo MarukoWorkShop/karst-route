@@ -71,16 +71,16 @@ export const heroSlides: HeroSlide[] = [
     ),
   },
   {
-    id: "wild-ridge",
+    id: "villages-living",
     video: cosUrl("videos/4.mp4"),
     poster: asset("/destinations/hero-shot-4.jpg"),
     pos: "center 50%",
-    alt: L("Mountain ridges fading into cloud", "山脊没入云海"),
-    themeId: "wild",
-    title: L("Ridges in Cloud", "云上山脊"),
+    alt: L("A village tucked among the hills", "山间的村落"),
+    themeId: "villages",
+    title: L("The Living Village", "村子还醒着"),
     intro: L(
-      "Late light on the ridges, cloud pooling in the valleys — the south, unhurried and wild.",
-      "暮色压上山脊，云在谷底积水。南方的野，是不着急的那一面。",
+      "Stone lanes, timber houses and kitchen smoke — the village still keeps its own hours.",
+      "石头路、木楼、灶间的烟火。村子还按自己的时辰过日子。",
     ),
   },
 ];
