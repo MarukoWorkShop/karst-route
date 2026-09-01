@@ -53,7 +53,7 @@ export const places: Record<PlaceId, Place> = {
       title: L("Detian boat, both banks", "德天游船，两岸"),
       body: L(
         "Ban Gioc–Detian is Asia's largest transnational waterfall, and the border runs straight through it — Vietnam on one bank, China on the other, one curtain of white water shared by two countries. We take the raft close enough to feel the spray, then drive the Mingshi karst road while the light is still low, cycling a stretch between rice fields and peaks that stand up like green teeth.",
-        "德天瀑布是亚洲最大的跨国瀑布，国境线从水幕中间穿过——一边越南，一边中国，同一帘白水两国共看。我们坐竹筏靠近，水花直接打在脸上；然后趁光线还低、还软，走名仕那段喀斯特路，在稻田和峰丛之间骑一段车，山立得像一排绿牙。",
+        "德天瀑布是亚洲最大的跨国瀑布，国境线从水幕中间穿过——一边越南，一边中国，同一帘白水两国共看。我们坐竹筏靠近，水花直接打在脸上；然后趁光线还低、还软，走明仕那段喀斯特路，在稻田和峰丛之间骑一段车，山立得像一排绿牙。",
       ),
     },
     cuisine: {
@@ -161,14 +161,14 @@ export const places: Record<PlaceId, Place> = {
       title: L("Walk the terraces, not just the viewpoint", "走进梯田，不只是观景台"),
       body: L(
         "The terraces of Muong Hoa are not scenery — they are a water system carved by Hmong and Dao families over centuries, and they only make sense from the inside. We walk down into them instead of photographing from the road, passing Cat Cat village where indigo still stains the hands of women who weave and sell on the same threshold. When the mist comes, the valley disappears and the rice steps fade in and out like a drawing being erased and redrawn.",
-        "芒花谷的梯田不是风景，是赫蒙族和瑶族人家几百年刻出来的水系，只有走进去才看得懂。我们不下车拍照，而是走下去，穿过猫猫村——染缸里的靛蓝还染着织布女人的手，她们在自家门槛上织，也在自家门槛上卖。起雾的时候，山谷自己会变戏法：梯田一层层消失又浮现，像有人把画擦掉重画。",
+        "芒花谷的梯田不是风景，是苗族和瑶族人家几百年刻出来的水系，只有走进去才看得懂。我们不下车拍照，而是走下去，穿过猫猫村——染缸里的靛蓝还染着织布女人的手，她们在自家门槛上织，也在自家门槛上卖。起雾的时候，山谷自己会变戏法：梯田一层层消失又浮现，像有人把画擦掉重画。",
       ),
     },
     cuisine: {
       title: L("Mountain herbs, hot pot", "山间热锅"),
       body: L(
         "Sapa's cold is answered with a pot on the table: local herbs, mountain pork, river fish, greens cut that morning. The broth runs sour and herbal rather than fiery — highland cooking built for damp evenings.",
-        "沙巴的冷是用桌上一口锅来答的：山里的香草、土猪、河鱼，配当天早上摘的青菜。汤头是酸的、带草香，不靠辣——高原的菜，本来就是为潮湿的夜晚准备的。",
+        "沙坝的冷是用桌上一口锅来答的：山里的香草、土猪、河鱼，配当天早上摘的青菜。汤头是酸的、带草香，不靠辣——高原的菜，本来就是为潮湿的夜晚准备的。",
       ),
     },
     hotel: {
@@ -383,7 +383,7 @@ export const placeStories: Record<PlaceId, { culture: Tx; slides: string[] }> = 
   sapa: {
     culture: L(
       "Sapa's terraces are not a viewpoint — they are a water system, hand-cut over centuries by Hmong and Dao families. We walk down into them with someone who farms there, because the rice tells different things at ankle height than at shoulder height.",
-      "沙巴的梯田不是观景台——它是水系，是赫蒙族和瑶族几代人用手刻出来的。我们跟在地里干活的本地人走下去，因为稻子在脚踝和肩膀的高度，说的是不同的故事。",
+      "沙坝的梯田不是观景台——它是水系，是苗族和瑶族几代人用手刻出来的。我们跟在地里干活的本地人走下去，因为稻子在脚踝和肩膀的高度，说的是不同的故事。",
     ),
     slides: [asset("/destinations/sapa.jpg"), asset("/destinations/hotel-b.jpg"), asset("/destinations/guantang.jpg")],
   },

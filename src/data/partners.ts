@@ -25,7 +25,7 @@ export const partners: Partner[] = [
     location: L("Yunnan · Jianshui", "云南·建水"),
     desc: L(
       "A century-old courtyard within the ancient walls of Jianshui — cobblestone sky-wells and nightly tofu-and-rice-wine sessions.",
-      "临安古城内的百年院落，青砖天井，每晚可在天井里喝建水烤豆腐配米酒。",
+      "建水古城内的百年院落，青砖天井，每晚可在天井里喝建水烤豆腐配米酒。",
     ),
     emoji: "🏯",
     color: "#8F8458",

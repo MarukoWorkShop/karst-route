@@ -136,8 +136,8 @@ export const routes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
         stay: L("Karst road, after the falls", "看山，瀑布之后"),
         stayKind: "hotel",
         placeId: "chongzuo",
-        drive: L("Nanning → Detian ~3.5 h · Detian → Mingshi ~1 h", "南宁→德天约 3.5 小时 · 德天→名仕约 1 小时"),
-        transport: L("Private car to Detian Falls, then Mingshi Pastoral", "专车至德天瀑布，再赴名仕田园"),
+        drive: L("Nanning → Detian ~3.5 h · Detian → Mingshi ~1 h", "南宁→德天约 3.5 小时 · 德天→明仕约 1 小时"),
+        transport: L("Private car to Detian Falls, then Mingshi Pastoral", "专车至德天瀑布，再赴明仕田园"),
         lodging: L("Karst-view lodge", "看山的小住"),
         dining: [
           L("Lunch: river fish near the falls", "午餐：瀑布附近的河鱼"),
@@ -145,7 +145,7 @@ export const routes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
         ],
         bullets: [
           L("Nanning to Detian Waterfall, ~3.5 h", "南宁赴德天瀑布，车程约 3.5 小时"),
-          L("Mingshi Pastoral, ~1 h on from the falls", "德天后再赴名仕田园，约 1 小时"),
+          L("Mingshi Pastoral, ~1 h on from the falls", "德天后再赴明仕田园，约 1 小时"),
           L("Stay Chongzuo", "住崇左"),
         ],
         themes: ["wild"],
@@ -470,7 +470,7 @@ export const routes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
         ],
         bullets: [
           L("Detian Waterfall", "德天瀑布"),
-          L("Mingshi Pastoral", "名仕田园"),
+          L("Mingshi Pastoral", "明仕田园"),
           L("Back to Nanning", "住南宁"),
         ],
         themes: ["wild"],
