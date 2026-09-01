@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { IconVolume, IconVolumeOff } from "@/components/icons";
+import { IconSparkles, IconVolume, IconVolumeOff } from "@/components/icons";
 import { heroBgm, heroSlides } from "@/data/heroPanels";
 import { themes } from "@/data/themes";
 
@@ -36,7 +36,7 @@ function playSafe(el: HTMLVideoElement | null) {
   void el.play().catch(() => {});
 }
 
-export function Hero() {
+export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
   const { t, locale } = useLocale();
   const count = heroSlides.length;
   const [active, setActive] = useState(0);
@@ -345,7 +345,22 @@ export function Hero() {
               {t(slide.intro)}
             </p>
 
-            {/* 首屏按钮已移除，让画面铺满；路线/定制入口仍在顶部导航与底部 dock */}
+            <div className="mt-7 flex flex-wrap items-center gap-3 md:mt-8">
+              <a
+                href="#tours"
+                className="pointer-events-auto inline-flex min-h-12 items-center justify-center rounded-lg bg-cta px-6 text-center text-[13px] font-medium text-white md:min-h-[52px] md:px-8 md:text-[14px]"
+              >
+                {t(copy.hero.ctaA)}
+              </a>
+              <a
+                href="#plan"
+                onClick={onPlanOwn}
+                className="pointer-events-auto inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/40 bg-white/10 px-6 text-center text-[13px] font-medium text-white backdrop-blur-md md:min-h-[52px] md:px-8 md:text-[14px]"
+              >
+                <IconSparkles className="h-3.5 w-3.5 shrink-0" />
+                {t(copy.hero.ctaB)}
+              </a>
+            </div>
           </div>
 
           <div className="mt-8 flex items-center gap-1.5 md:mt-10">
