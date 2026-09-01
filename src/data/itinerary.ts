@@ -176,6 +176,10 @@ export const routes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
         stayKind: "hotel",
         placeId: "halong",
         transport: L("Day cruise on Ha Long Bay", "下龙湾一日游轮出海"),
+        blurb: L(
+          "A full day on the water instead of a pass-through: the cruise eases into lagoons the big boats skip, and by evening the bay is yours again. Two nights is what lets you watch it leave and come back.",
+          "今天不赶路，整日在水上：游轮钻进大船绕开的湖，傍晚整座湾又交还给你。连住两晚，才看得见它「离开又回来」。",
+        ),
         lodging: L("Same bay hotel — no packing", "同一家看湾酒店，不用收行李"),
         dining: [
           L("Lunch: on the boat", "午餐：游轮上"),
@@ -191,6 +195,10 @@ export const routes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
         stayKind: "hotel",
         placeId: "catba",
         transport: L("Ferry from Ha Long to Cat Ba, ~1 h", "下龙轮渡登陆吉婆岛，约 1 小时"),
+        blurb: L(
+          "A short ferry from Ha Long, then an island still keeping its own hours — kayaking the lagoons in the morning, the national park in the afternoon, harbour seafood at night. The night here is water, not a highway hotel.",
+          "从下龙坐一小段轮渡，便是一座还按自己节奏过的岛——上午划船进湖，下午走国家公园，夜里港边海鲜。这一夜是水，不是高速旁的酒店。",
+        ),
         lodging: L("Bay-facing island hotel", "看湾的小岛酒店"),
         dining: [
           L("Lunch: on the island after landing", "午餐：登岛之后"),
@@ -230,6 +238,10 @@ export const routes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
         stayKind: "hotel",
         placeId: "hanoi",
         transport: L("On foot and cyclo in the Old Quarter", "古城步行 + 三轮车"),
+        blurb: L(
+          "The second day in the Old Quarter moves slower: a cyclo past the lake, Ba Dinh and St Joseph's, then Train Street as the light goes. Same restored house, no packing — the city is the itinerary.",
+          "在老城的第二天慢下来：三轮车绕湖，巴亭广场与河内大教堂，天暗了去火车街。同一栋老房子，不用收行李——这座城本身就是行程。",
+        ),
         lodging: L("Same restored house — no packing", "同一栋修好的老房子，不用收行李"),
         dining: [
           L("Lunch: a city table near the lake", "午餐：湖边一桌"),
@@ -270,12 +282,19 @@ export const routes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
           "Fansipan cable + Muong Hoa train, then Cat Cat on foot",
           "番西邦缆车 + 芒花小火车，下午步行猫猫村",
         ),
+        blurb: L(
+          "The second morning rides the cable up Fansipan, then comes down to Cat Cat on foot — terraces at shoulder height, a village that still farms them by hand. Two nights so the mist on the rice has somewhere to settle.",
+          "第二天上午缆车上番西邦，下午步行下猫猫村——梯田在肩膀的高度，村里还用手种着。连住两晚，雾在稻子上才有了落脚处。",
+        ),
         lodging: L("Terrace-facing mountain lodge — second night", "看田的山居 · 第二晚"),
         dining: [
           L("Lunch: after the cable, in the valley", "午餐：下山后在谷里"),
           L("Dinner: highland hot pot", "晚餐：高地热锅"),
         ],
-        bullets: [],
+        bullets: [
+          L("Hmong market, if the morning allows", "黑苗族集市（看当天）"),
+          L("Terrace-view evening from the balcony", "阳台上看梯田的傍晚"),
+        ],
         themes: ["wild", "villages"],
       },
       {
@@ -433,6 +452,10 @@ export const routes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
         stayKind: "base",
         placeId: "guantang",
         transport: L("Bicycle in the cane, walk to Tianqin village", "蔗海骑行，步行去天琴寨"),
+        blurb: L(
+          "The second morning belongs to the cane sea — bicycles between the stalks, then a walk to Tianqin village where two strings carry a song older than the border line. No suitcase, no plan beyond the light.",
+          "第二天早晨交给蔗海——蔗丛间骑车，再步行去天琴寨，两根弦挑着一支比国界更老的歌。不拎箱子，除了光，没别的计划。",
+        ),
         lodging: L("Guantang courtyard — second night", "观堂的院子 · 第二晚"),
         dining: [
           L("Lunch: village kitchen", "午餐：村里的厨房"),
