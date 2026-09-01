@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { IconSparkles, IconVolume, IconVolumeOff } from "@/components/icons";
+import { IconVolume, IconVolumeOff } from "@/components/icons";
 import { heroBgm, heroSlides } from "@/data/heroPanels";
 import { themes } from "@/data/themes";
 
-const FADE_MS = 1200;
+const FADE_MS = 700;
 const CLIP_MAX_S = 10;
 const POSTER_HOLD_MS = 10_000;
-const SWIPE_PX = 48;
+const SWIPE_PX = 28;
 
 type Layer = "a" | "b";
 
@@ -36,7 +36,7 @@ function playSafe(el: HTMLVideoElement | null) {
   void el.play().catch(() => {});
 }
 
-export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
+export function Hero() {
   const { t, locale } = useLocale();
   const count = heroSlides.length;
   const [active, setActive] = useState(0);
@@ -51,6 +51,9 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const drag = useRef<{ x: number; y: number } | null>(null);
   const fadingRef = useRef(false);
+  // 切换动画期间累积的滑动意图，动画结束后继续消化，避免连拨时手势被丢弃
+  const pendingRef = useRef(0);
+  const fadeToRef = useRef<((target: number, delta?: number) => void) | null>(null);
   const activeRef = useRef(0);
   const opaqueRef = useRef<Layer>("a");
   const reduceRef = useRef(false);
@@ -66,12 +69,17 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
 
   const layerEl = (layer: Layer) => (layer === "a" ? aRef.current : bRef.current);
 
-  const fadeTo = useCallback((target: number) => {
-    const tIdx = wrap(target, count);
-    if (tIdx === activeRef.current) return;
-    if (fadingRef.current) return;
+  const fadeTo = useCallback(
+    (target: number, delta = 0) => {
+      const tIdx = wrap(target, count);
+      if (tIdx === activeRef.current) return;
+      if (fadingRef.current) {
+        // 动画进行中：累积滑动意图，动画结束后继续翻，而不是丢弃手势
+        pendingRef.current += delta || 1;
+        return;
+      }
 
-    if (reduceRef.current) {
+      if (reduceRef.current) {
       setActive(tIdx);
       setAIdx(tIdx);
       setBIdx(wrap(tIdx + 1, count));
@@ -101,8 +109,14 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
         if (hidden === "a") setBIdx(nxt);
         else setAIdx(nxt);
         layerEl(shown)?.pause();
-      }, FADE_MS);
-    };
+        // 消化动画期间累积的滑动意图
+        if (pendingRef.current !== 0) {
+          const queued = pendingRef.current;
+          pendingRef.current = 0;
+          fadeToRef.current?.(tIdx + queued, queued);
+        }
+        }, FADE_MS);
+        };
 
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
@@ -124,14 +138,16 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
         window.setTimeout(() => {
           el.removeEventListener("canplay", once);
           if (fadingRef.current) run();
-        }, 700);
+        }, 350);
       });
     });
   }, [count]);
 
+  fadeToRef.current = fadeTo;
+
   const go = useCallback(
     (dir: -1 | 1) => {
-      fadeTo(activeRef.current + dir);
+      fadeTo(activeRef.current + dir, dir);
     },
     [fadeTo],
   );
@@ -329,22 +345,7 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
               {t(slide.intro)}
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3 md:mt-8">
-              <a
-                href="#tours"
-                className="pointer-events-auto inline-flex min-h-12 items-center justify-center rounded-lg bg-cta px-6 text-center text-[13px] font-medium text-white md:min-h-[52px] md:px-8 md:text-[14px]"
-              >
-                {t(copy.hero.ctaA)}
-              </a>
-              <a
-                href="#plan"
-                onClick={onPlanOwn}
-                className="pointer-events-auto inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/40 bg-white/10 px-6 text-center text-[13px] font-medium text-white backdrop-blur-md md:min-h-[52px] md:px-8 md:text-[14px]"
-              >
-                <IconSparkles className="h-3.5 w-3.5 shrink-0" />
-                {t(copy.hero.ctaB)}
-              </a>
-            </div>
+            {/* 首屏按钮已移除，让画面铺满；路线/定制入口仍在顶部导航与底部 dock */}
           </div>
 
           <div className="mt-8 flex items-center gap-1.5 md:mt-10">

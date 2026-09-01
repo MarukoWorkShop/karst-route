@@ -31,11 +31,7 @@ export default function App() {
     <>
       <Header onPlan={() => setIntent("custom")} />
       <main className="bg-paper">
-        <Hero
-          onPlanOwn={() => {
-            setIntent("custom");
-          }}
-        />
+        <Hero />
         <BoutiqueTours route={route} onPick={pickRoute} />
         <Timeline
           routeId={route}
