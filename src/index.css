@@ -81,6 +81,31 @@ body {
   stroke: color-mix(in srgb, var(--color-cta) 48%, transparent);
 }
 
+.region-map-water {
+  stroke: color-mix(in srgb, var(--color-cta) 35%, var(--color-paper));
+}
+
+.region-map-route {
+  fill: none;
+  stroke: #2f5344;
+  stroke-width: 8;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.region-map-num {
+  font-size: 26px;
+  font-weight: 700;
+  fill: #2f5344;
+}
+
+.region-map-label {
+  font-size: 13px;
+  font-weight: 500;
+  fill: var(--color-ink-soft);
+  opacity: 0.7;
+}
+
 .page-col {
   width: 100%;
   max-width: 1060px;

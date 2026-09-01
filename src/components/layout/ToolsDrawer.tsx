@@ -15,7 +15,7 @@ const MAP_PLACES = [
 const WEATHER = [
   { region: { en: "Kunming", zh: "昆明" }, icon: "🌤️", temp: "18–24°C", desc: { en: "Spring year-round", zh: "四季如春" } },
   { region: { en: "Nanning", zh: "南宁" }, icon: "⛅", temp: "24–30°C", desc: { en: "Humid, use sunscreen", zh: "湿热，注意防晒" } },
-  { region: { en: "Hanoi", zh: "河内" }, icon: "🌦️", temp: "22–32°C", desc: { en: "Showers likely", zh: "当前多阵雨" } },
+  { region: { en: "Ha Long", zh: "下龙" }, icon: "🌊", temp: "22–28°C", desc: { en: "Sea mist, bring a jacket", zh: "海上多雾，备一件外套" } },
   { region: { en: "Sapa", zh: "沙坝" }, icon: "🌫️", temp: "14–20°C", desc: { en: "Cool & misty", zh: "凉爽多雾" } },
 ] as const;
 

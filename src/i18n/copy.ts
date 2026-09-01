@@ -7,6 +7,7 @@ export const copy = {
     tours: { en: "Boutique Tours", zh: "精品路线" },
     plan: { en: "Plan Your Route", zh: "行程定制" },
     explore: { en: "Explore", zh: "探索" },
+    about: { en: "About Us", zh: "关于我们" },
     faq: { en: "Q&A", zh: "问答" },
     films: { en: "Destination Films", zh: "目的地影像" },
     literature: { en: "Arts & Literature", zh: "文艺推荐" },
@@ -42,18 +43,20 @@ export const copy = {
       en: "Journey themes",
       zh: "旅途主题",
     },
+    prev: { en: "Previous slide", zh: "上一张" },
+    next: { en: "Next slide", zh: "下一张" },
   },
   tours: {
     r1Badge: { en: "ROUTE 01", zh: "路线一" },
     r1Name: { en: "The Three Realms Traverse", zh: "三境溯游" },
     r1Tagline: {
-      en: "A 12-day overland journey from the Gulf to the Plateau",
-      zh: "从北部湾到云贵高原的 12 日跨国纪实",
+      en: "A 14-day overland journey from the Gulf to the Plateau",
+      zh: "从北部湾到云贵高原的 14 日跨国纪实",
     },
-    r1Regions: { en: "Nanning · Vietnam · Yunnan", zh: "南宁 · 越南 · 云南建水 / 弥勒 / 昆明" },
+    r1Regions: { en: "Nanning · Ha Long · Yunnan", zh: "南宁 · 下龙 · 云南建水 / 弥勒 / 昆明" },
     r1Feature: {
-      en: "An epic traverse. From the islands of the Gulf of Tonkin to the French-flavoured streets of Hanoi, up through Sapa's rice terraces, then inland by century-old metre-gauge rail to the timeless Yunnan towns of Jianshui and Puzhehei. The emotional arc rises gradually — humid and vivid at the coast, cooling into highland stillness by the end.",
-      zh: "这是一条史诗级的「穿越」线。从北部湾的海岛（吉婆岛），到法式风情的河内市井，再爬升到沙坝梯田，最后沿着百年米轨进入底蕴深厚的云南建水和普者黑。它的情绪体验是递进的，像是一篇起承转合极其细腻的当代纪实散文，从湿热喧嚣慢慢走向高远宁静。",
+      en: "An epic traverse. Two nights on Ha Long Bay, a slow ferry to Cat Ba, then the century-old metre-gauge from Hai Phong into Hanoi. Sapa’s terraces get a full day — Fansipan in the morning, Cat Cat in the afternoon — before the Hekou crossing into Yunnan’s old towns. The arc is coastal and vivid first, then highland and still.",
+      zh: "这是一条史诗级的「穿越」线。下龙湾连住两晚正经出海，再轮渡吉婆岛；海防百年米轨傍晚驶入河内。沙坝给足一整天：上午番西邦，下午猫猫村，再经河口进入云南建水、普者黑。情绪从湿热的海慢慢走到高远的高原。",
     },
     r2Badge: { en: "ROUTE 02", zh: "路线二" },
     r2Name: { en: "The Southern Loop", zh: "南疆回环" },
@@ -70,7 +73,7 @@ export const copy = {
     entry: { en: "Entry", zh: "入境" },
     exit: { en: "Exit", zh: "出境" },
     for: { en: "Best for", zh: "适合" },
-    r1Days: { en: "12 days", zh: "12 日" },
+    r1Days: { en: "14 days", zh: "14 日" },
     r1Entry: { en: "Nanning", zh: "南宁" },
     r1Exit: { en: "Kunming", zh: "昆明" },
     r1For: { en: "Adventure", zh: "探险" },
@@ -80,7 +83,7 @@ export const copy = {
     r2For: { en: "Families · All", zh: "家庭 · 全部" },
     inquire: { en: "Enquire about this route", zh: "咨询这条路线" },
     days: { en: "ITINERARY", zh: "行程" },
-    r1Tab: { en: "Route 1 · 12 Days", zh: "路线一 · 12日" },
+    r1Tab: { en: "Route 1 · 14 Days", zh: "路线一 · 14日" },
     r2Tab: { en: "Route 2 · 10 Days", zh: "路线二 · 10日" },
     filtered: { en: "Filtered by", zh: "按主题筛选" },
     book: {
@@ -97,6 +100,7 @@ export const copy = {
       playing: { en: "Playing…", zh: "播放中…" },
       replay: { en: "Replay", zh: "再播一次" },
       nowAt: { en: "Now at", zh: "正在经过" },
+      mapCredit: { en: "© OpenStreetMap contributors · Natural Earth", zh: "© OpenStreetMap contributors · Natural Earth" },
     },
     themeNames: {
       wild: { en: "Wild Fun", zh: "纵情山野" },
@@ -110,6 +114,40 @@ export const copy = {
     kicker: { en: "Life changing experience", zh: "Life changing experience" },
     highlights: { en: "Highlights", zh: "旅途亮点" },
     stories: { en: "Real travel stories", zh: "真实的旅行故事" },
+  },
+  about: {
+    kicker: { en: "About Us", zh: "关于我们" },
+    name: { en: "Leisure Time International Travel Service", zh: "有闲旅行" },
+    role: {
+      en: "Bespoke Luxury Travel Across China",
+      zh: "中国全域高端定制旅行服务商",
+    },
+    body1: {
+      en: "We specialize in curated private journeys, immersive themed expeditions, and premium corporate incentive travel. Our signature approach seamlessly weaves iconic landmarks with ultra-exclusive, off-the-beaten-path experiences.",
+      zh: "我们专注于高端私人定制、主题深度探索及企业奖励旅游，致力于将经典地标与隐秘奢华的小众体验完美融合。",
+    },
+    body2Lead: {
+      en: "Trust Built on Firsthand Perfection",
+      zh: "因为严苛，所以信任",
+    },
+    body2: {
+      en: "We strictly adhere to our ethos—never design a journey we haven't personally experienced. Our specialists scout the field year-round, meticulously vetting every detail. This dedication has allowed us to amass an elite portfolio of China's finest luxury resources. By continuously pioneering innovative itineraries and leveraging rare, insider access, we craft unrivaled, bespoke journeys for the discerning traveler.",
+      zh: "我们坚持“不踩线，不设计”的原则，所有行程均由资深定制师常年亲赴一线实地考察。凭借匠心打磨的极致细节，我们建立起庞大的顶级奢华资源库。通过不断创新创意行程，我们用最稀缺、最顶尖的本土资源，为您编织独一无二的中国传奇之旅。",
+    },
+    points: [
+      {
+        en: "Private journeys · themed expeditions · incentive travel",
+        zh: "高端私人定制·主题深度·企业奖励",
+      },
+      {
+        en: "Never design a journey we haven't experienced",
+        zh: "不踩线，不设计",
+      },
+      {
+        en: "Elite luxury and rare resources",
+        zh: "顶级奢华与稀缺资源",
+      },
+    ],
   },
   explore: {
     h2: { en: "Feel the land before you arrive", zh: "在出发前，先感受这片土地" },
@@ -130,8 +168,12 @@ export const copy = {
       zh: "选择现有路线出发，不改行程顺序，只告诉我们时间、人数与特别需求。",
     },
     designLead: {
-      en: "Start from one of our routes, share your preferences, and let AI build a personalised itinerary.",
-      zh: "以我们的现有路线为基础，告诉我们您的偏好，AI 将为您生成一份全新的定制行程单。",
+      en: "Start from one of our routes and tell us your preferences. Submit the request — our travel concierge will reply in detail within 24 hours.",
+      zh: "以我们的现有路线为基础，告诉我们您的偏好。提交后，旅游管家会在 24 小时内给您详细回复。",
+    },
+    designSubmitLead: {
+      en: "Leave your name and a way to reach you. Our travel concierge will reply in detail within 24 hours.",
+      zh: "留下姓名和联系方式。我们的旅游管家会在 24 小时内给您详细回复。",
     },
     bookSteps: [
       { en: "Route & dates", zh: "选择路线与时间" },
@@ -146,11 +188,11 @@ export const copy = {
       { en: "Experiences", zh: "特殊体验" },
     ],
     chooseRoute: { en: "Choose a route", zh: "选择路线" },
-    r1Title: { en: "Three Realms Traverse · 12 days", zh: "三境溯游 · 12 日" },
+    r1Title: { en: "Three Realms Traverse · 14 days", zh: "三境溯游 · 14 日" },
     r1Sub: { en: "Guangxi → Vietnam → Yunnan", zh: "广西 → 越南 → 云南" },
     r1SubLong: {
-      en: "Guangxi → Vietnam (Cat Ba / Hanoi / Sapa) → Yunnan",
-      zh: "广西 → 越南（吉婆/河内/沙坝）→ 云南",
+      en: "Guangxi → Ha Long / Cat Ba / Hanoi / Sapa → Yunnan",
+      zh: "广西 → 越南（下龙/吉婆/河内/沙坝）→ 云南",
     },
     r2Title: { en: "The Southern Loop · 10 days", zh: "南疆回环 · 10 日" },
     r2Sub: {
@@ -194,6 +236,30 @@ export const copy = {
     },
     genBook: { en: "✦ Generate booking PDF", zh: "✦ 生成行程确认单" },
     compiling: { en: "Compiling your booking brief…", zh: "正在整理您的行程确认单…" },
+    aiTailoring: {
+      en: "Tailoring this boutique route to your party. About a minute…",
+      zh: "正在按你的同行与需求微调这条精品线，大约一分钟…",
+    },
+    aiTweaking: {
+      en: "Rebuilding the days from your notes. About a minute…",
+      zh: "正在按你的意见重排行程，大约一分钟…",
+    },
+    bookAiBadge: { en: "AI tailored", zh: "AI 已微调" },
+    bookCatalogBadge: { en: "Original route", zh: "原路线" },
+    aiFallback: {
+      en: "The planner model was unreachable, so this is the original route. You can still add a tweak and retry.",
+      zh: "未能连上规划模型，先给出原路线。你仍可写下微调意见再试。",
+    },
+    tweakLabel: {
+      en: "Days are fixed on this route, but you can still reshape a specific day — slower walks, no early starts, a sunrise, and so on.",
+      zh: "虽然天数是固定的，但可以对具体某天的行程提出一些想法，比如少走路、不想早起、想看日出。",
+    },
+    tweakPh: {
+      en: "e.g. fewer walks, no early starts, catch a sunrise…",
+      zh: "如：少走路、不想早起、想看日出…",
+    },
+    tweakBtn: { en: "Regenerate with this note", zh: "按这个意见重新生成" },
+    pdfAgain: { en: "Download updated PDF", zh: "下载更新后的 PDF" },
     summary: { en: "BOOKING SUMMARY", zh: "预定摘要" },
     rowRoute: { en: "Route", zh: "选择路线" },
     rowDates: { en: "Dates", zh: "出发时间" },
@@ -201,7 +267,7 @@ export const copy = {
     rowGroup: { en: "Group type", zh: "成员类型" },
     rowAddons: { en: "Add-ons", zh: "附加服务" },
     rowNotes: { en: "Special requests", zh: "特别要求" },
-    r1Short: { en: "Three Realms Traverse · 12d", zh: "三境溯游 · 12日" },
+    r1Short: { en: "Three Realms Traverse · 14d", zh: "三境溯游 · 14日" },
     r2Short: { en: "Southern Loop · 10d", zh: "南疆回环 · 10日" },
     tbcBrowse: { en: "TBC — just browsing", zh: "待定，先看看" },
     tbc: { en: "TBC", zh: "待确认" },
@@ -244,8 +310,8 @@ export const copy = {
     sendTeam: { en: "Send to team", zh: "发送给团队" },
     sending: { en: "Sending…", zh: "发送中…" },
     sentNote: {
-      en: "Sent! Our concierge will reach out within 24 hours.",
-      zh: "已发送！管家将在 24 小时内与您联系。",
+      en: "Submitted. Our travel concierge will send you a detailed reply within 24 hours.",
+      zh: "已提交！我们的旅游管家会在 24 小时内给您详细回复。",
     },
     startOver: { en: "Start over", zh: "重新填写" },
     err: {
@@ -272,25 +338,25 @@ export const copy = {
       zh: "可复选，我们会根据您的偏好调整行程中的交通安排",
     },
     expHint: {
-      en: "Tell us what experiences matter most — AI will weave them into your itinerary",
-      zh: "告诉我们您特别想体验的内容，AI 会将它们融入行程",
+      en: "Tell us what experiences matter most — we will weave them into your itinerary",
+      zh: "告诉我们您特别想体验的内容，我们会将它们融入行程",
     },
     moreIdeas: { en: "Anything else (optional)", zh: "其他想法（选填）" },
     moreIdeasPh: {
       en: "e.g. extra night in Sapa, no overnight train, elderly traveller…",
       zh: "如：第3天想多留一天，不想坐夜车，有老人同行……",
     },
-    genDesign: { en: "✦ AI — Generate itinerary", zh: "✦ AI 生成新行程单" },
+    genDesign: { en: "Submit request", zh: "提交需求" },
     aiPlanning: { en: "AI planning", zh: "AI 行程规划中" },
     rebuilding: {
       en: "Rebuilding your itinerary based on your preferences…",
       zh: "正在根据您的偏好重新规划行程……",
     },
     sk1: { en: "Day 1 · Nanning", zh: "第 1 天 · 南宁" },
-    sk2: { en: "Day 2–3 · Detian / Chongzuo", zh: "第 2–3 天 · 德天 / 崇左" },
-    sk3: { en: "Day 4–6 · North Vietnam", zh: "第 4–6 天 · 越南北部" },
-    sk4: { en: "Day 7–9 · Sapa Terraces", zh: "第 7–9 天 · 沙坝梯田" },
-    sk5: { en: "Day 10–12 · Yunnan", zh: "第 10–12 天 · 云南" },
+    sk2: { en: "Day 2–4 · Detian / Ha Long", zh: "第 2–4 天 · 德天 / 下龙" },
+    sk3: { en: "Day 5–7 · Cat Ba / Hanoi", zh: "第 5–7 天 · 吉婆 / 河内" },
+    sk4: { en: "Day 8–9 · Sapa Terraces", zh: "第 8–9 天 · 沙坝梯田" },
+    sk5: { en: "Day 10–14 · Yunnan", zh: "第 10–14 天 · 云南" },
     aiReady: { en: "AI Generated", zh: "AI 已生成" },
     customR1: { en: "Three Realms Traverse · Custom", zh: "三境溯游 · 定制版" },
     customR2: { en: "The Southern Loop · Custom", zh: "南疆回环 · 定制版" },
@@ -331,8 +397,11 @@ export const copy = {
     contact: { en: "Contact us", zh: "联系我们" },
   },
   footer: {
-    brand: { en: "南境拾遗", zh: "南境拾遗" },
-    brandEn: { en: "The Southern Curations", zh: "The Southern Curations" },
+    brand: { en: "有闲旅行", zh: "有闲旅行" },
+    brandEn: {
+      en: "Leisure Time International Travel Service",
+      zh: "Leisure Time International Travel Service",
+    },
     tagline: {
       en: "Private Journeys. Authentic Connections. The Irreplaceable Human Heritage.",
       zh: "私密同行。真实联结。无可替代的人文原乡。",

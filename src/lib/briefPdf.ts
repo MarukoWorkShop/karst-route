@@ -15,6 +15,7 @@ export type BriefDay = {
   dining?: string[];
   drive?: string;
   blurb?: string;
+  date?: string;
 };
 
 export type BriefPdfInput = {
@@ -36,6 +37,47 @@ export type BriefPdfInput = {
   };
   footer: string;
 };
+
+export function todayIso(now = new Date()) {
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+  const d = String(now.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+export function addDaysIso(start: string, offset: number) {
+  const [y, m, d] = start.split("-").map(Number);
+  if (!y || !m || !d) return start;
+  return todayIso(new Date(y, m - 1, d + offset));
+}
+
+export function formatDayDate(iso: string, locale: "en" | "zh") {
+  const [y, m, d] = iso.split("-").map(Number);
+  if (!y || !m || !d) return iso;
+  const dt = new Date(y, m - 1, d);
+  if (locale === "zh") {
+    const wd = ["日", "一", "二", "三", "四", "五", "六"][dt.getDay()];
+    return `${y}年${m}月${d}日 周${wd}`;
+  }
+  return dt.toLocaleDateString("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+export function stampDays(
+  days: BriefDay[],
+  startIso: string | undefined,
+  locale: "en" | "zh",
+): BriefDay[] {
+  if (!startIso || !/^\d{4}-\d{2}-\d{2}$/.test(startIso)) return days;
+  return days.map((day, i) => ({
+    ...day,
+    date: formatDayDate(addDaysIso(startIso, i), locale),
+  }));
+}
 
 export function daysToBrief(
   stops: DayStop[],
@@ -106,11 +148,11 @@ function dayHtml(day: BriefDay, labels: BriefPdfInput["labels"]) {
     ? metaLine(labels.dining, day.dining.join(" · "))
     : "";
   return `<section style="border:1px solid #d9d6cc;border-radius:10px;padding:16px 18px;margin:0 0 12px;background:#fdfbf6;page-break-inside:avoid;">
-    <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px;">
+    <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">
       <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#2f5344;">DAY ${esc(day.num)}</span>
       <span style="font-size:15px;font-weight:500;color:#1e3329;">${esc(day.city)}</span>
     </div>
-    <div style="font-size:12px;color:#5e7368;margin-bottom:10px;">${esc(day.stay)}</div>
+    <div style="font-size:12px;color:#5e7368;margin-bottom:10px;">${esc(day.date ? `${day.date} · ${day.stay}` : day.stay)}</div>
     ${day.blurb ? `<p style="font-size:12.5px;line-height:1.6;color:#1e3329;margin:0 0 10px;">${esc(day.blurb)}</p>` : ""}
     ${
       bullets

@@ -29,7 +29,7 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     id: "chongzuo",
-    src: asset("/destinations/chongzuo.jpg"),
+    src: asset("/destinations/detian.jpg"),
     pos: "center 40%",
     alt: L("Detian karst at the Guangxi border", "广西边境德天喀斯特"),
     themeId: "wild",
@@ -37,6 +37,18 @@ export const heroSlides: HeroSlide[] = [
     intro: L(
       "Detian spills across two countries. We take the raft in, not just up to the viewpoint.",
       "德天倾泻在两国之间。坐竹筏进去，而不只是站在观景台。",
+    ),
+  },
+  {
+    id: "chongzuo-mijing",
+    src: asset("/destinations/chongzuo-mijing.jpg"),
+    pos: "center 42%",
+    alt: L("Chongzuo karst hidden in mist", "崇左喀斯特秘境"),
+    themeId: "wild",
+    title: L("Chongzuo's Hidden Realm", "崇左秘境"),
+    intro: L(
+      "Peaks half-lost in cloud; a river with no guidebook name. Raft the bank — Chongzuo as a hidden valley, not a viewpoint.",
+      "峰丛藏进云里，江水绿得还没被写进路书。竹筏贴岸走，秘境才刚刚开始。",
     ),
   },
   {

@@ -24,7 +24,7 @@ export function Footer() {
             <p className="text-2xl font-medium tracking-[0.06em] text-paper md:text-[26px]">
               {t(copy.footer.brand)}
             </p>
-            <p className="mt-1 text-[10px] tracking-[0.22em] text-[rgba(250,248,242,0.4)] uppercase md:text-[10px]">
+            <p className="mt-1 max-w-[280px] text-[11px] leading-4 text-[rgba(250,248,242,0.4)] md:max-w-none">
               {t(copy.footer.brandEn)}
             </p>
             <p className="mx-auto mt-3.5 max-w-[280px] text-[13px] leading-6 text-[rgba(250,248,242,0.5)] md:mx-0">

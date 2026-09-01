@@ -7,6 +7,7 @@ import { Hero } from "@/components/hero/Hero";
 import { BoutiqueTours } from "@/components/tours/BoutiqueTours";
 import { Timeline } from "@/components/itinerary/Timeline";
 import { Experience } from "@/components/experience/Experience";
+import { About } from "@/components/about/About";
 import { Explore } from "@/components/explore/Explore";
 import { PlanSection } from "@/components/plan/PlanSection";
 import { Faq } from "@/components/faq/Faq";
@@ -71,6 +72,7 @@ export default function App() {
           onOpenId={setExperienceOpen}
           onPickTheme={onTheme}
         />
+        <About />
         <Explore />
         <PlanSection tab={intent} onTab={setIntent} route={route} />
         <Faq />

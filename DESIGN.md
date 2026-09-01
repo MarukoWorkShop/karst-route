@@ -168,7 +168,7 @@ Header：一级 Boutique Tours / 精品路线 · Plan Your Route / 行程定制�
   手机：KARST ROUTE + 汉堡工具箱 + 地球仪切语言
 Hero：满幅轮播；主题芯片 → #experience 打开对应文章（不筛选行程）；实心 → #tours；幽灵 Plan → #plan 自己设计路线
 #tours：两张精品卡
-#itinerary：折叠行程 + 评论 + 路线动画
+#itinerary：折叠行程 + 评论 + 离线矢量路线动画
 #experience：四主题体验卡
 #explore：目的地影像 + 文艺推荐
 #plan：预定现成路线（3 步）| 自己设计路线（5 步）
@@ -222,6 +222,32 @@ Dock：Tours / 路线 | Plan / 定制
 - 展开：后勤条；≤ 3 bullet；最多三张图。日数据含 `themes: ('wild'|'flavors'|'villages'|'locals')[]`。
 - 同时只开一天；默认全折叠。
 - 地点详情抽屉、左右目的地卡已下线；展开日直接出图与导读。
+
+### 路线地图（离线矢量底图）
+
+精品线「在地图上查看完整路线」用**仓库内精简矢量**，不向 Google / OSM 拉瓦片，国内国外都能打开。
+
+| 层 | 来源 | 用途 |
+|---|---|---|
+| 政区 / 河流 | Natural Earth 50m，裁切广西—云南—越北 | 底图，可重建 |
+| 城市 / 景区 | OSM 经纬度，写在 `osmBasemap.json` 的 `places` | 编号点与标签 |
+| 路线顺序 | `routes.r1` / `routes.r2` | 走线动画 + 右侧列表 |
+
+**改行程（最常见）**  
+只改 `src/data/osmBasemap.json` 里对应 `routes` 的停靠 `id`（点必须已在 `places`）。刷新即可重画编号和动画，不必重新导出。
+
+**新地点**  
+在 `places` 补 `id / lon / lat / label`，再写进 `routes`。
+
+**重渲底图（政区或河网过时、要扩范围）**
+
+```bash
+npm run map:basemap
+```
+
+脚本：`scripts/build-osm-basemap.py`（jsDelivr 拉 Natural Earth，不依赖现场 Overpass）。页面只读生成后的 JSON。署名：`© OpenStreetMap contributors · Natural Earth`。
+
+不做：运行时 Google / OSM 瓦片、可无限拖拽的活地图。旧示意路径 `regionMap.ts` 不再给播放器使用。
 
 ### 工具 sheet
 
@@ -363,7 +389,7 @@ label；地球仪 `aria-label="Choose language"`；sheet `dialog` + 焦点循环
 
 ## 15. 验收
 
-- [ ] 375 无横向溢出；折叠 12 日可在约 1.5 屏内扫完
+- [ ] 375 无横向溢出；折叠 14 日可在约 1.5 屏内扫完
 - [ ] 同时只开一天
 - [ ] 底栏两键 Tours | Plan；工具箱在 Header 汉堡
 - [ ] 四主题在 `#experience`；点选可过滤行程

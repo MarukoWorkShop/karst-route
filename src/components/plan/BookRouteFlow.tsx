@@ -1,11 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import type { RouteId } from "@/types";
 import { routes } from "@/data/itinerary";
 import { ADD_ONS, GROUP_TYPES, type DateMode } from "@/data/planOptions";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { labelsOf, sendEnquiry } from "@/lib/enquiry";
-import { daysToBrief, downloadBriefPdf, pdfChrome } from "@/lib/briefPdf";
+import {
+  addDaysIso,
+  daysToBrief,
+  downloadBriefPdf,
+  pdfChrome,
+  stampDays,
+  todayIso,
+  type BriefDay,
+} from "@/lib/briefPdf";
+import { requestBookDraft } from "@/lib/bookCraftClient";
+import type { BookDraft } from "@/lib/bookCraft";
+import { IconSparkles } from "@/components/icons";
+import { ItinDays } from "@/components/plan/ItinDays";
 import {
   Chip,
   ConciergeForm,
@@ -25,15 +38,13 @@ const WEEK_ZH = ["日", "一", "二", "三", "四", "五", "六"];
 const WEEK_EN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 function routeDays(id: RouteId | ""): number | null {
-  if (id === "r1") return 12;
+  if (id === "r1") return 14;
   if (id === "r2") return 10;
   return null;
 }
 
 function endIso(start: string, days: number) {
-  return new Date(new Date(start + "T12:00:00").getTime() + (days - 1) * 86400000)
-    .toISOString()
-    .slice(0, 10);
+  return addDaysIso(start, days - 1);
 }
 
 function toggle(arr: string[], val: string) {
@@ -59,6 +70,10 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   const [error, setError] = useState(false);
   const [pdfBusy, setPdfBusy] = useState(false);
   const [pdfErr, setPdfErr] = useState(false);
+  const [draft, setDraft] = useState<BookDraft | null>(null);
+  const [tweak, setTweak] = useState("");
+  const [waitKind, setWaitKind] = useState<"first" | "tweak">("first");
+  const dateInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setBaseRoute(route);
@@ -116,19 +131,32 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
     ];
   }
 
-  function briefBody() {
+  function startIso() {
+    if (dateMode === "picker" && /^\d{4}-\d{2}-\d{2}$/.test(dateValue)) return dateValue;
+    return "";
+  }
+
+  function catalogDays(): BriefDay[] {
     const rid = baseRoute === "r2" ? "r2" : "r1";
+    return stampDays(daysToBrief(routes[rid].days, t), startIso(), locale);
+  }
+
+  function pdfDays(): BriefDay[] {
+    return stampDays(draft?.days?.length ? draft.days : catalogDays(), startIso(), locale);
+  }
+
+  function briefBody() {
     const lines = briefRows().map((r) => `${r.label}: ${r.value}`);
+    if (draft?.note) lines.push(`${locale === "zh" ? "规划说明" : "Planner note"}: ${draft.note}`);
     lines.push("");
-    routes[rid].days.forEach((d, i) => {
-      const n = String(d.day || i + 1).padStart(2, "0");
-      lines.push(`Day ${n} · ${t(d.city)}`);
-      lines.push(`  ${t(d.stay)}`);
-      d.bullets.forEach((b) => lines.push(`  · ${t(b)}`));
-      if (d.transport) lines.push(`  ${t(copy.tours.book.transport)}: ${t(d.transport)}`);
-      if (d.lodging) lines.push(`  ${t(copy.tours.book.stay)}: ${t(d.lodging)}`);
-      (d.dining ?? []).forEach((meal) => lines.push(`  ${t(copy.tours.book.dining)}: ${t(meal)}`));
-      if (d.drive) lines.push(`  ${t(copy.plan.pdfDrive)}: ${t(d.drive)}`);
+    pdfDays().forEach((d) => {
+      lines.push(`Day ${d.num}${d.date ? ` · ${d.date}` : ""} · ${d.city}`);
+      lines.push(`  ${d.stay}`);
+      d.bullets.forEach((b) => lines.push(`  · ${b}`));
+      if (d.transport) lines.push(`  ${t(copy.tours.book.transport)}: ${d.transport}`);
+      if (d.lodging) lines.push(`  ${t(copy.tours.book.stay)}: ${d.lodging}`);
+      (d.dining ?? []).forEach((meal) => lines.push(`  ${t(copy.tours.book.dining)}: ${meal}`));
+      if (d.drive) lines.push(`  ${t(copy.plan.pdfDrive)}: ${d.drive}`);
       lines.push("");
     });
     return lines.join("\n").trim();
@@ -148,7 +176,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
           new Date().toLocaleString(locale === "zh" ? "zh-CN" : "en-GB"),
         ),
         rows: briefRows(),
-        days: daysToBrief(routes[rid].days, t),
+        days: pdfDays(),
         ...pdfChrome(t),
       });
     } catch {
@@ -158,11 +186,28 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
     }
   }
 
-  function generate() {
+  async function generate(nextTweak?: string) {
+    const rid = baseRoute === "r2" ? "r2" : "r1";
+    const isTweak = Boolean(nextTweak?.trim());
+    setWaitKind(isTweak ? "tweak" : "first");
     setPhase("wait");
-    const reduce =
-      typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.setTimeout(() => setPhase("ready"), reduce ? 400 : 2200);
+    const catalog = catalogDays();
+    const out = await requestBookDraft({
+      locale,
+      routeId: rid,
+      routeTitle: routeLabel(false),
+      dates: dateDisplay(),
+      travelers,
+      groupTypes: labelsOf(groupTypes, GROUP_TYPES, locale),
+      addOns: labelsOf(addOns, ADD_ONS, locale),
+      notes: notes.trim(),
+      catalog,
+      tweak: nextTweak?.trim() || undefined,
+      previous: isTweak ? draft?.days : undefined,
+    });
+    setDraft(out);
+    if (isTweak) setTweak("");
+    setPhase("ready");
   }
 
   async function submit() {
@@ -196,7 +241,9 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
         <div className="mb-3 text-[32px]" aria-hidden>
           ⏳
         </div>
-        <p className="text-[14px] leading-[22px] text-ink-soft">{t(copy.plan.compiling)}</p>
+        <p className="text-[14px] leading-[22px] text-ink-soft">
+          {t(waitKind === "tweak" ? copy.plan.aiTweaking : copy.plan.aiTailoring)}
+        </p>
         <div className="mx-auto mt-6 flex max-w-[320px] flex-col gap-2.5" aria-hidden>
           {[100, 80, 92, 65].map((w, i) => (
             <div key={i} className="sk-pulse h-3.5 rounded bg-bone" style={{ width: `${w}%` }} />
@@ -246,6 +293,51 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
           <div className="h-3" />
         </div>
 
+        {draft?.days?.length ? (
+          <div className="mt-5">
+            <div className="mb-2 flex items-center gap-2">
+              <span
+                className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-[3px] text-[11px] font-medium tracking-[0.08em] ${
+                  draft.source === "ai" ? "border-ok text-ok" : "border-line text-ink-soft"
+                }`}
+              >
+                {draft.source === "ai" ? <IconSparkles className="h-3 w-3" /> : null}
+                {draft.source === "ai" ? t(copy.plan.bookAiBadge) : t(copy.plan.bookCatalogBadge)}
+              </span>
+            </div>
+            {draft.note ? (
+              <p className="mb-3 text-[13px] leading-5 text-ink-soft">{draft.note}</p>
+            ) : draft.source !== "ai" ? (
+              <p className="mb-3 text-[13px] leading-5 text-ink-soft">{t(copy.plan.aiFallback)}</p>
+            ) : null}
+            <ItinDays days={pdfDays()} />
+          </div>
+        ) : null}
+
+        <div className="mt-4 overflow-hidden rounded-[10px] border border-line">
+          <div className="bg-surface px-4 py-3.5">
+            <p className="text-[14px] font-medium leading-[1.55] text-ink">{t(copy.plan.tweakLabel)}</p>
+          </div>
+          <div className="flex flex-col gap-3 p-4">
+            <textarea
+              rows={3}
+              value={tweak}
+              placeholder={t(copy.plan.tweakPh)}
+              onChange={(e) => setTweak(e.target.value)}
+              className="w-full resize-y rounded-lg border-[1.5px] border-line bg-surface px-3.5 py-3 text-[15px] leading-[1.6] text-ink placeholder:text-ink-soft/70 outline-none"
+            />
+            <button
+              type="button"
+              disabled={!tweak.trim()}
+              onClick={() => void generate(tweak)}
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-cta text-[15px] font-medium text-paper disabled:opacity-40"
+            >
+              <IconSparkles className="h-4 w-4" />
+              {t(copy.plan.tweakBtn)}
+            </button>
+          </div>
+        </div>
+
         <div className="mt-4 flex flex-col gap-2.5">
           <button
             type="button"
@@ -254,7 +346,11 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
             className="inline-flex h-12 items-center justify-center gap-2 rounded-[10px] border-[1.5px] border-cta bg-transparent text-[15px] font-medium text-cta disabled:opacity-60"
           >
             <IconDownload />
-            {pdfBusy ? t(copy.plan.pdfPreparing) : t(copy.plan.downloadPdf)}
+            {pdfBusy
+              ? t(copy.plan.pdfPreparing)
+              : draft?.source === "ai"
+                ? t(copy.plan.pdfAgain)
+                : t(copy.plan.downloadPdf)}
           </button>
           {pdfErr ? <p className="text-[13px] text-danger">{t(copy.plan.pdfFailed)}</p> : null}
           {sent ? (
@@ -277,6 +373,8 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
             setSent(false);
             setStep(0);
             setError(false);
+            setDraft(null);
+            setTweak("");
           }}
         />
       </div>
@@ -331,7 +429,25 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
                   <button
                     key={mode}
                     type="button"
-                    onClick={() => setDateMode(dateMode === mode ? "" : mode)}
+                    onClick={() => {
+                      if (dateMode === mode) {
+                        setDateMode("");
+                        return;
+                      }
+                      if (mode === "picker") {
+                        flushSync(() => setDateMode("picker"));
+                        const el = dateInputRef.current;
+                        if (!el) return;
+                        el.focus();
+                        try {
+                          el.showPicker?.();
+                        } catch {
+                          /* showPicker needs a user gesture; focus still lands on the field */
+                        }
+                        return;
+                      }
+                      setDateMode(mode);
+                    }}
                     className={`flex-1 rounded-lg border-[1.5px] px-1.5 py-[9px] text-center text-[12px] font-medium ${
                       on ? "border-cta bg-cta/8 text-cta" : "border-line bg-surface text-ink"
                     }`}
@@ -346,9 +462,15 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
                 <label className="block flex-1">
                   <span className="mb-1 block text-[11px] font-medium text-ink-soft">{t(copy.plan.startDate)}</span>
                   <input
+                    ref={dateInputRef}
                     type="date"
+                    min={todayIso()}
                     value={dateValue}
-                    onChange={(e) => setDateValue(e.target.value)}
+                    onChange={(e) => {
+                      const next = e.target.value;
+                      const min = todayIso();
+                      setDateValue(next && next < min ? min : next);
+                    }}
                     className={fieldClass}
                   />
                 </label>
@@ -447,7 +569,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
         onBack={() => setStep((s) => s - 1)}
         onNext={() => {
           if (step < 2) setStep((s) => s + 1);
-          else generate();
+          else void generate();
         }}
       />
     </div>

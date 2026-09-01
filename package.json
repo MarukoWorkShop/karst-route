@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "map:basemap": "python3 scripts/build-osm-basemap.py",
     "preview": "vite preview"
   },
   "dependencies": {

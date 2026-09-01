@@ -3,6 +3,7 @@ import { IconChevron, IconGlobe, IconMenu } from "@/components/icons";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { ToolsDrawer } from "@/components/layout/ToolsDrawer";
+import { asset } from "@/lib/asset";
 
 export function Header({ onPlan }: { onPlan: () => void }) {
   const { t } = useLocale();
@@ -42,46 +43,50 @@ export function Header({ onPlan }: { onPlan: () => void }) {
           <div className="flex justify-start">
             <MenuButton onClick={() => setDrawerOpen(true)} className={muted} />
           </div>
-          <a
-            href="#top"
-            className={`text-[14px] font-medium tracking-[0.14em] whitespace-nowrap ${ink}`}
-          >
-            KARST ROUTE
-          </a>
+          <BrandLogo solid={solid} className="justify-center" />
           <div className="flex justify-end">
             <GlobeLangButton className={muted} />
           </div>
         </div>
 
         <div className="mx-auto hidden h-[60px] max-w-[1060px] items-center px-8 md:flex">
-          <a href="#top" className={`w-40 text-[14px] font-medium tracking-[0.14em] ${ink}`}>
-            KARST ROUTE
-          </a>
+          <BrandLogo solid={solid} className="w-[230px]" />
           <nav className="flex flex-1 items-center justify-center gap-7">
             <a href="#tours" className={`text-[14px] font-medium ${ink}`}>
               {t(copy.nav.tours)}
             </a>
-            <a href="#plan" onClick={onPlan} className={`inline-flex items-center gap-1.5 text-[14px] font-medium ${ink}`}>
+            <a href="#plan" onClick={onPlan} className={`text-[14px] font-medium ${ink}`}>
               {t(copy.nav.plan)}
-              <span
-                className={`rounded-full border px-1.5 py-px text-[9px] tracking-[0.12em] ${
-                  solid ? "border-cta/25" : "border-paper/35"
-                }`}
-              >
-                AI
-              </span>
+            </a>
+            <a href="#about" className={`text-[14px] font-medium ${ink}`}>
+              {t(copy.nav.about)}
             </a>
             <span className={`h-4 w-px ${solid ? "bg-line" : "bg-paper/25"}`} aria-hidden />
             <SubMenu label={t(copy.nav.explore)} links={exploreLinks} muted={muted} solid={solid} />
             <SubMenu label={t(copy.nav.faq)} links={faqLinks} muted={muted} solid={solid} />
           </nav>
-          <div className="flex items-center justify-end gap-1">
+          <div className="flex w-[230px] items-center justify-end gap-1">
             <MenuButton onClick={() => setDrawerOpen(true)} className={muted} />
             <LangToggle solid={solid} />
           </div>
         </div>
       </header>
     </>
+  );
+}
+
+function BrandLogo({ solid, className }: { solid: boolean; className?: string }) {
+  const { t } = useLocale();
+  return (
+    <a href="#top" className={`flex items-center ${className ?? ""}`}>
+      <img
+        src={asset("brand/youxian-logo.png")}
+        alt={t(copy.footer.brand)}
+        className={`h-[26px] w-auto max-w-[196px] object-contain object-left md:h-8 md:max-w-[220px] ${
+          solid ? "" : "invisible opacity-0 pointer-events-none"
+        }`}
+      />
+    </a>
   );
 }
 

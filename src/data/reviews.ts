@@ -16,7 +16,7 @@ export type TravelerReview = {
   photos: string[];
 };
 
-const r1 = L("Route 1 · 12 days", "路线一 · 12日");
+const r1 = L("Route 1 · 14 days", "路线一 · 14日");
 const r2 = L("Route 2 · 10 days", "路线二 · 10日");
 
 export const travelerReviews: TravelerReview[] = [

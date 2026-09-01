@@ -39,8 +39,8 @@ export const places: Record<PlaceId, Place> = {
     hotel: {
       title: L("Riverside garden stay", "江景花园酒店"),
       body: L(
-        "A quiet room by the Yong River so Day 2’s early border run is a drive, not a scramble.",
-        "邕江边安静的房间，第二天早过关是出车，不是赶路。",
+        "A quiet room by the Yong River so the next day’s road to Detian is a drive, not a scramble.",
+        "邕江边安静的房间，第二天去德天是出车，不是赶路。",
       ),
       photo: asset("/destinations/hotel-a.jpg"),
     },
@@ -72,15 +72,42 @@ export const places: Record<PlaceId, Place> = {
       photo: asset("/destinations/hotel-b.jpg"),
     },
   },
+  halong: {
+    id: "halong",
+    tagline: L("Limestone sea, two nights on the bay", "海上峰林，湾上连住"),
+    photo: asset("/destinations/catba.jpg"),
+    experience: {
+      title: L("A day among the isles", "在岛群里过一天"),
+      body: L(
+        "Ha Long is the karst that went to sea. We take a proper day cruise — not a two-hour loop off the pier — then sleep in town so dawn is still water.",
+        "下龙是走到海里的喀斯特。正经一日游轮，不是码头边两小时绕圈，晚上住镇上，黎明还是水。",
+      ),
+    },
+    cuisine: {
+      title: L("Squid, lime, the harbour", "鱿鱼、青柠、港口"),
+      body: L(
+        "Eat facing the bay. The boat lunch is simple; dinner in town is the one you remember.",
+        "对着湾吃。船上午饭简单，镇上的晚饭才记得住。",
+      ),
+    },
+    hotel: {
+      title: L("Bay-facing room in Ha Long", "下龙看湾的房间"),
+      body: L(
+        "Two nights so the cruise is a day, not a transfer. Morning is limestone, not a lobby.",
+        "连住两晚，游轮才是一天，不是中转。早晨是石灰岩，不是大堂。",
+      ),
+      photo: asset("/destinations/hotel-c.jpg"),
+    },
+  },
   catba: {
     id: "catba",
     tagline: L("Limestone, ferry, night on the island", "石灰岩、轮渡、岛上过夜"),
     photo: asset("/destinations/catba.jpg"),
     experience: {
-      title: L("Mong Cai crossing, then the water", "芒街过关，再下海"),
+      title: L("The island after the bay", "湾之后的岛"),
       body: L(
-        "We handle the stamp. You walk onto a ferry toward Cat Ba’s limestone instead of a coach queue in Ha Long town.",
-        "盖章我们来。你走上吉婆的轮渡，而不是下龙镇的大巴队。",
+        "Cat Ba still fishes. We land by ferry and keep the afternoon slow — limestone, harbour, no cruise pier.",
+        "吉婆还在打渔。轮渡登岛，下午放慢：石灰岩、渔港，不是邮轮码头。",
       ),
     },
     cuisine: {
@@ -320,8 +347,8 @@ export const places: Record<PlaceId, Place> = {
 export const placeStories: Record<PlaceId, { culture: Tx; slides: string[] }> = {
   nanning: {
     culture: L(
-      "Nanning is a garden city on the Yong, the last Chinese night before a border morning. Zhuang and Cantonese kitchens sit side by side; the river walk is for locals, not a show.",
-      "南宁是邕江边的绿城，过关前最后一个中国夜晚。壮味和粤厨并排，江边是当地人在走，不是表演。",
+      "Nanning is a garden city on the Yong — Zhuang and Cantonese kitchens side by side. The river walk is for locals, not a show.",
+      "南宁是邕江边的绿城。壮味和粤厨并排，江边是当地人在走，不是表演。",
     ),
     slides: [asset("/destinations/nanning.jpg"), asset("/destinations/hotel-a.jpg"), asset("/destinations/kunming.jpg")],
   },
@@ -332,10 +359,17 @@ export const placeStories: Record<PlaceId, { culture: Tx; slides: string[] }> = 
     ),
     slides: [asset("/destinations/chongzuo.jpg"), asset("/destinations/hotel-b.jpg"), asset("/destinations/puzhehei.jpg")],
   },
+  halong: {
+    culture: L(
+      "Ha Long Bay is limestone that went to sea — more than a thousand isles in the mist. Two nights so the cruise is a full day, and the town is not a same-day dash.",
+      "下龙湾是走到海里的石灰岩，一千多座岛在雾里。连住两晚，游轮才是完整的一天，镇子不是当天赶路。",
+    ),
+    slides: [asset("/destinations/catba.jpg"), asset("/destinations/hotel-c.jpg"), asset("/destinations/hanoi.jpg")],
+  },
   catba: {
     culture: L(
-      "Cat Ba is limestone and harbour, not a cruise pier. The island still fishes. We cross at Mong Cai so the first Vietnamese night is water, not a highway hotel.",
-      "吉婆是石灰岩和渔港，不是邮轮码头。岛上还在打渔。从芒街过关，越南的第一夜是水，不是高速边的酒店。",
+      "Cat Ba is limestone and harbour, not a cruise pier. The island still fishes. We arrive by ferry so the night is water, not a highway hotel.",
+      "吉婆是石灰岩和渔港，不是邮轮码头。岛上还在打渔。坐轮渡过来，这一夜是水，不是高速边的酒店。",
     ),
     slides: [asset("/destinations/catba.jpg"), asset("/destinations/hotel-c.jpg"), asset("/destinations/mile.jpg")],
   },
@@ -408,11 +442,14 @@ export const animationStops: Record<
   r1: [
     { id: "nanning", x: 548.0, y: 247.4, label: L("Nanning", "南宁") },
     { id: "detian", x: 473.5, y: 245.8, label: L("Detian", "德天") },
+    { id: "halong", x: 490.5, y: 328.0, label: L("Ha Long", "下龙") },
     { id: "catba", x: 488.9, y: 341.9, label: L("Cat Ba", "吉婆岛") },
     { id: "hanoi", x: 432.6, y: 328.3, label: L("Hanoi", "河内") },
     { id: "sapa", x: 340.3, y: 269.4, label: L("Sapa", "沙坝") },
     { id: "hekou", x: 344.7, y: 260.7, label: L("Hekou", "河口") },
     { id: "jianshui", x: 293.0, y: 210.8, label: L("Jianshui", "建水") },
+    { id: "puzhehei", x: 360.0, y: 180.0, label: L("Puzhehei", "普者黑") },
+    { id: "mile", x: 310.0, y: 165.0, label: L("Mile", "弥勒") },
     { id: "kunming", x: 293.4, y: 147.5, label: L("Kunming", "昆明") },
   ],
   r2: [

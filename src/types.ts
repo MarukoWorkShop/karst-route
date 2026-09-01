@@ -31,6 +31,7 @@ export type DayStop = {
 export type PlaceId =
   | "nanning"
   | "chongzuo"
+  | "halong"
   | "catba"
   | "hanoi"
   | "sapa"

@@ -4,7 +4,7 @@ import { asset } from "@/lib/asset";
 const L = (en: string, zh: string): Tx => ({ en, zh });
 
 export const experienceCover: Record<ThemeId, string> = {
-  wild: asset("/destinations/chongzuo.jpg"),
+  wild: asset("/destinations/chongzuo-mijing.jpg"),
   flavors: asset("/destinations/hanoi.jpg"),
   villages: asset("/destinations/sapa.jpg"),
   locals: asset("/destinations/guantang.jpg"),

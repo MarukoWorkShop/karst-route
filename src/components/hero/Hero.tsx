@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { IconSparkles } from "@/components/icons";
+import { IconChevron, IconSparkles } from "@/components/icons";
 import { heroSlides } from "@/data/heroPanels";
 import { themes } from "@/data/themes";
 import type { ThemeId } from "@/types";
+
+const SLIDE_MS = 5500;
+const SWIPE_PX = 48;
 
 export function Hero({
   onPlanOwn,
@@ -15,22 +18,52 @@ export function Hero({
 }) {
   const { t, locale } = useLocale();
   const [idx, setIdx] = useState(0);
+  const drag = useRef<{ x: number; y: number } | null>(null);
   const slide = heroSlides[idx];
   const zh = locale === "zh";
   const theme = themes.find((item) => item.id === slide.themeId);
   const chip = theme ? (zh ? theme.zh.split("・")[0] : theme.en) : "";
+  const count = heroSlides.length;
+
+  const go = useCallback((dir: -1 | 1) => {
+    setIdx((i) => (i + dir + count) % count);
+  }, [count]);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
     const timer = window.setInterval(() => {
-      setIdx((i) => (i + 1) % heroSlides.length);
-    }, 5500);
+      setIdx((i) => (i + 1) % count);
+    }, SLIDE_MS);
     return () => window.clearInterval(timer);
-  }, []);
+  }, [idx, count]);
+
+  function onPointerDown(e: PointerEvent<HTMLElement>) {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    if ((e.target as HTMLElement).closest("a, button")) return;
+    drag.current = { x: e.clientX, y: e.clientY };
+  }
+
+  function onPointerUp(e: PointerEvent<HTMLElement>) {
+    const start = drag.current;
+    drag.current = null;
+    if (!start) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    if (Math.abs(dx) < SWIPE_PX || Math.abs(dx) < Math.abs(dy)) return;
+    go(dx < 0 ? 1 : -1);
+  }
 
   return (
-    <section id="top" className="relative min-h-[100svh] overflow-hidden bg-night">
+    <section
+      id="top"
+      className="relative min-h-[100svh] overflow-hidden bg-night"
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+      onPointerCancel={() => {
+        drag.current = null;
+      }}
+    >
       <div className="absolute inset-0">
         {heroSlides.map((photo, i) => (
           <img
@@ -57,6 +90,23 @@ export function Hero({
           }}
         />
       </div>
+
+      <button
+        type="button"
+        aria-label={t(copy.hero.prev)}
+        onClick={() => go(-1)}
+        className="absolute top-1/2 left-3 z-[2] flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-night/35 text-white backdrop-blur-sm md:left-6 md:h-12 md:w-12"
+      >
+        <IconChevron className="h-5 w-5 rotate-90" />
+      </button>
+      <button
+        type="button"
+        aria-label={t(copy.hero.next)}
+        onClick={() => go(1)}
+        className="absolute top-1/2 right-3 z-[2] flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-night/35 text-white backdrop-blur-sm md:right-6 md:h-12 md:w-12"
+      >
+        <IconChevron className="h-5 w-5 -rotate-90" />
+      </button>
 
       <div className="relative z-[1] flex min-h-[100svh] flex-col justify-end">
         <div className="page-col pb-[calc(96px+env(safe-area-inset-bottom))] md:pb-14">

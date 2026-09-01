@@ -6,6 +6,7 @@ import path from "node:path";
 import { fileURLToPath, URL } from "node:url";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { runCraft } from "./server/runCraft.ts";
+import { runBookCraft } from "./server/runBookCraft.ts";
 
 function pagesBase() {
   const raw = process.env.PAGES_BASE || "/";
@@ -82,8 +83,9 @@ function craftHandler(req: IncomingMessage, res: ServerResponse, next: (err?: un
   }
   void (async () => {
     try {
-      const raw = JSON.parse((await readBody(req)) || "{}") as { brief?: unknown };
-      const draft = await runCraft(raw.brief ?? raw);
+      const raw = JSON.parse((await readBody(req)) || "{}") as { kind?: string; brief?: unknown };
+      const draft =
+        raw.kind === "book" ? await runBookCraft(raw.brief ?? raw) : await runCraft(raw.brief ?? raw);
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/json");
       res.end(JSON.stringify({ draft }));

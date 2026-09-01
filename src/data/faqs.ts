@@ -42,16 +42,16 @@ export const faqs: { id: string; q: Tx; a: Tx }[] = [
     id: "faq-border",
     q: L("How does crossing the China-Vietnam border work?", "跨越中越边境的流程是怎样的？"),
     a: L(
-      "Route 2 crosses at Mong Cai/Dongxing; Route 1 returns via Lao Cai/Hekou. Our guide accompanies you through customs on both sides — handling declarations, luggage through the scanner, and passport checks. A single crossing typically takes 30–60 minutes. Local transport picks up seamlessly on the other side.",
-      "路线一在广西/越南边境过境（芒街↔东兴），路线一回程在老街↔河口过境。我们的向导全程陪同，协助完成两国海关申报、行李过机、护照核验等所有手续，通常单次过境耗时 30–60 分钟。边境通关后直接与当地司机衔接，无缝续程。",
+      "Route 1 enters Vietnam at Dongxing–Mong Cai and returns to China at Lao Cai–Hekou. Our guide accompanies you through customs on both sides — handling declarations, luggage through the scanner, and passport checks. A single crossing typically takes 30–60 minutes. Local transport picks up seamlessly on the other side.",
+      "路线一在东兴↔芒街入境越南，回程在老街↔河口入境中国。我们的向导全程陪同，协助完成两国海关申报、行李过机、护照核验等所有手续，通常单次过境耗时 30–60 分钟。边境通关后直接与当地司机衔接，无缝续程。",
     ),
   },
   {
     id: "tool-transit",
     q: L("What transport is used throughout?", "整段旅途的交通方式是什么？"),
     a: L(
-      "Comfortable private minivans are used for all road legs, including longer stretches like Hanoi to Sapa (5–6 h). Route 1 features a highlight: a vintage metre-gauge sleeper train from Sapa to the border — a slow-travel experience many guests call the trip's emotional peak. Cat Ba Island is reached by ferry.",
-      "全程以舒适型商务车为主，含跨省长途（如河内→沙坝约 5–6 小时）。路线一还包含一段特色米轨卧铺列车（沙坝→老街区段），是旅途中一个非常值得期待的体验节点。岛屿段（吉婆岛）乘坐渡轮前往。",
+      "Comfortable private minivans are used for all road legs, including Hanoi to Sapa (5.5–6 h). Route 1 adds a Ha Long Bay day cruise, the ferry to Cat Ba, and a vintage metre-gauge run from Hai Phong at 18:40 into Hanoi. Route 2 still uses the overnight metre-gauge toward the Friendship Pass.",
+      "全程以舒适型商务车为主，含跨省长途（如河内→沙坝约 5.5–6 小时）。路线一另有下龙湾一日游轮、轮渡吉婆岛，以及海防 18:40 百年米轨驶入河内。路线二仍保留米轨过夜，再经友谊关回国。",
     ),
   },
   {

@@ -19,6 +19,7 @@ export const mapCities = [
   { id: "hanoi", x: 432.6, y: 328.3, anchor: "left", rank: 1, label: { en: "Hanoi", zh: "河内" } },
   { id: "sapa", x: 340.3, y: 269.4, anchor: "left", rank: 1, label: { en: "Sapa", zh: "沙坝" } },
   { id: "catba", x: 488.9, y: 341.9, anchor: "right", rank: 1, label: { en: "Cat Ba", zh: "吉婆岛" } },
+  { id: "halong", x: 490.5, y: 328.0, anchor: "right", rank: 2, label: { en: "Ha Long", zh: "下龙" } },
   { id: "jianshui", x: 293.0, y: 210.8, anchor: "left", rank: 2, label: { en: "Jianshui", zh: "建水" } },
   { id: "hekou", x: 344.7, y: 260.7, anchor: "right", rank: 2, label: { en: "Hekou", zh: "河口" } },
   { id: "detian", x: 473.5, y: 245.8, anchor: "top", rank: 2, label: { en: "Detian", zh: "德天" } },

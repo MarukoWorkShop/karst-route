@@ -1,10 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { RouteId } from "@/types";
-import { animationStops } from "@/data/destinations";
-import { mapPaths, mapViewBox } from "@/data/regionMap";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { IconClose, IconPlay } from "@/components/icons";
+import {
+  linePath,
+  mapView,
+  osmBasemap,
+  project,
+  ringPath,
+  routeStops,
+  walkRoute,
+} from "@/lib/geoMap";
+
+const REGION_LABELS = [
+  { id: "yunnan", lon: 103.35, lat: 24.55 },
+  { id: "guangxi", lon: 109.05, lat: 23.55 },
+  { id: "vietnam", lon: 105.85, lat: 21.35 },
+] as const;
 
 export function RoutePlayer({
   routeId,
@@ -13,17 +26,16 @@ export function RoutePlayer({
   routeId: RouteId;
   onClose: () => void;
 }) {
-  const { t } = useLocale();
-  const stops = animationStops[routeId];
-  const d = stops.map((s, i) => `${i === 0 ? "M" : "L"}${s.x},${s.y}`).join(" ");
-  const pathRef = useRef<SVGPathElement>(null);
+  const { t, locale } = useLocale();
+  const stops = useMemo(() => routeStops(routeId), [routeId]);
+  const track = useMemo(
+    () => stops.map((s, i) => `${i === 0 ? "M" : "L"}${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" "),
+    [stops],
+  );
   const [run, setRun] = useState(0);
-  const [len, setLen] = useState(0);
   const [progress, setProgress] = useState(0);
-  const [dot, setDot] = useState({ x: stops[0]?.x ?? 0, y: stops[0]?.y ?? 0 });
   const reduce =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -34,34 +46,26 @@ export function RoutePlayer({
   }, [onClose]);
 
   useEffect(() => {
-    const path = pathRef.current;
-    if (!path) return;
-    const total = path.getTotalLength();
-    setLen(total);
-    setProgress(0);
     if (reduce) {
       setProgress(1);
-      const last = stops[stops.length - 1];
-      if (last) setDot(last);
       return;
     }
+    setProgress(0);
     let raf = 0;
     const start = performance.now();
-    const duration = 9000;
+    const duration = Math.max(7000, (stops.length - 1) * 1400);
     const tick = (now: number) => {
       const p = Math.min(1, (now - start) / duration);
       setProgress(p);
-      const pt = path.getPointAtLength(total * p);
-      setDot({ x: pt.x, y: pt.y });
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [d, reduce, stops, run]);
+  }, [routeId, reduce, run, stops.length]);
 
-  const idx = Math.min(stops.length - 1, Math.floor(progress * (stops.length - 0.001)));
+  const { d: drawn, x: dotX, y: dotY, idx } = walkRoute(stops, progress);
   const here = stops[idx];
-  const clipId = "route-play-clip";
+  const clipId = `route-play-clip-${routeId}`;
 
   return (
     <div
@@ -70,11 +74,11 @@ export function RoutePlayer({
       aria-modal="true"
       aria-label={t(copy.tours.book.playBtn)}
     >
-      <div className="relative w-full max-w-3xl rounded-lg bg-paper p-4 md:p-6">
+      <div className="relative w-full max-w-5xl rounded-lg bg-paper p-4 md:p-6">
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-3 right-3 flex h-11 w-11 items-center justify-center rounded-lg text-ink"
+          className="absolute top-3 right-3 z-10 flex h-11 w-11 items-center justify-center rounded-lg text-ink"
           aria-label={t(copy.nav.close)}
         >
           <IconClose className="h-5 w-5" />
@@ -83,57 +87,136 @@ export function RoutePlayer({
           {t(copy.tours.book.nowAt)}
         </p>
         <p className="mt-1 text-[20px] font-medium">{here ? t(here.label) : ""}</p>
-        <svg viewBox={mapViewBox} className="mt-4 h-auto w-full" aria-hidden>
-          <defs>
-            <clipPath id={clipId}>
-              <rect x="0" y="0" width="760" height="560" />
-            </clipPath>
-          </defs>
-          <g clipPath={`url(#${clipId})`}>
-            <g className="region-map-land" strokeWidth="0.9" strokeLinejoin="round">
-              <path d={mapPaths.laos} />
-              <path d={mapPaths.vietnam} />
-              <path d={mapPaths.guizhou} />
-              <path d={mapPaths.guangdong} />
-            </g>
-            <g className="region-map-core" strokeWidth="1.35" strokeLinejoin="round">
-              <path d={mapPaths.yunnan} />
-              <path d={mapPaths.guangxi} />
-              <path d={mapPaths.vietnamNorth} />
-            </g>
-            <path
-              d={d}
-              fill="none"
-              stroke="var(--color-line)"
-              strokeWidth="3"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-            />
-            <path
-              ref={pathRef}
-              d={d}
-              fill="none"
-              stroke="var(--color-cta)"
-              strokeWidth="3"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeDasharray={len || 1}
-              strokeDashoffset={(1 - progress) * (len || 1)}
-            />
-            {stops.map((s) => (
-              <circle
-                key={s.id}
-                cx={s.x}
-                cy={s.y}
-                r="4"
-                fill="var(--color-paper)"
-                stroke="var(--color-cta)"
-                strokeWidth="1.5"
+
+        <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-stretch">
+          <svg
+            viewBox={`0 0 ${mapView.w} ${mapView.h}`}
+            className="h-auto w-full md:w-[68%]"
+            aria-hidden
+          >
+            <defs>
+              <clipPath id={clipId}>
+                <rect x="0" y="0" width={mapView.w} height={mapView.h} />
+              </clipPath>
+            </defs>
+            <rect width={mapView.w} height={mapView.h} fill="var(--color-paper)" />
+            <g clipPath={`url(#${clipId})`}>
+              <g
+                className="region-map-land"
+                fill="#e8e5dc"
+                stroke="#5e7368"
+                strokeOpacity="0.28"
+                strokeWidth="0.9"
+                strokeLinejoin="round"
+              >
+                {osmBasemap.land.map((region) =>
+                  region.rings.map((ring, i) => <path key={`${region.id}-${i}`} d={ringPath(ring)} />),
+                )}
+              </g>
+              <g
+                className="region-map-core"
+                fill="#e4ebe6"
+                stroke="#8aa396"
+                strokeWidth="1.35"
+                strokeLinejoin="round"
+              >
+                {osmBasemap.core.map((region) =>
+                  region.rings.map((ring, i) => <path key={`${region.id}-${i}`} d={ringPath(ring)} />),
+                )}
+              </g>
+              <g
+                className="region-map-water"
+                fill="none"
+                stroke="#b7c7bf"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+              >
+                {osmBasemap.rivers.map((river) =>
+                  river.lines.map((line, i) => <path key={`${river.name}-${i}`} d={linePath(line)} />),
+                )}
+              </g>
+              {REGION_LABELS.map((lab) => {
+                const region = osmBasemap.core.find((c) => c.id === lab.id);
+                if (!region) return null;
+                const { x, y } = project(lab.lon, lab.lat);
+                return (
+                  <text
+                    key={lab.id}
+                    x={x}
+                    y={y}
+                    textAnchor="middle"
+                    className="region-map-label"
+                  >
+                    {locale === "zh" ? region.name.zh : region.name.en}
+                  </text>
+                );
+              })}
+              <path
+                d={track}
+                fill="none"
+                stroke="#c9c4b6"
+                strokeWidth="2.5"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeDasharray="7 9"
               />
-            ))}
-            <circle cx={dot.x} cy={dot.y} r="7" fill="var(--color-cta)" />
-          </g>
-        </svg>
+              <path
+                className="region-map-route"
+                d={drawn}
+                fill="none"
+                stroke="#2f5344"
+                strokeWidth="8"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeDasharray="22 14"
+                strokeDashoffset={-progress * 72}
+              />
+              <circle cx={dotX} cy={dotY} r="11" fill="#2f5344" stroke="#faf8f2" strokeWidth="3" />
+              {stops.map((s, i) => (
+                <g key={`${s.id}-${i}`}>
+                  <circle
+                    cx={s.x}
+                    cy={s.y}
+                    r="26"
+                    fill={i === idx ? "#2f5344" : "#faf8f2"}
+                    stroke="#2f5344"
+                    strokeWidth="3"
+                  />
+                  <text
+                    x={s.x}
+                    y={s.y + 9}
+                    textAnchor="middle"
+                    fontSize="26"
+                    fontWeight="700"
+                    fill={i === idx ? "#faf8f2" : "#2f5344"}
+                  >
+                    {s.num}
+                  </text>
+                </g>
+              ))}
+            </g>
+          </svg>
+
+          <ol className="max-h-[320px] overflow-y-auto md:max-h-none md:w-[32%] md:self-stretch">
+            {stops.map((s, i) => {
+              const on = i === idx;
+              return (
+                <li
+                  key={`${s.id}-${i}`}
+                  className={`flex items-baseline gap-2.5 border-t border-line py-2 first:border-t-0 ${
+                    on ? "text-cta" : "text-ink"
+                  }`}
+                >
+                  <span className="w-8 shrink-0 text-[20px] font-bold tabular-nums">{s.num}</span>
+                  <span className="text-[16px] font-medium">{t(s.label)}</span>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+
+        <p className="mt-3 text-[11px] text-ink-soft">{t(copy.tours.book.mapCredit)}</p>
+
         {progress >= 1 ? (
           <button
             type="button"
@@ -141,7 +224,7 @@ export function RoutePlayer({
               setProgress(0);
               setRun((n) => n + 1);
             }}
-            className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-cta font-medium text-white"
+            className="mt-3 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-cta font-medium text-white"
           >
             <IconPlay className="h-4 w-4" />
             {t(copy.tours.book.replay)}
