@@ -148,7 +148,7 @@ export function ReviewsFold() {
                         active.photos.length === 3 && i === 0 ? "col-span-2 aspect-[2/1]" : "aspect-square"
                       }`}
                     >
-                      <img src={src} alt="" className="h-full w-full object-cover" />
+                      <img loading="lazy" src={src} alt="" className="h-full w-full object-cover" />
                     </div>
                   ))}
                 </div>

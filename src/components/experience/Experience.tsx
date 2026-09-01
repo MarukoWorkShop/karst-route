@@ -53,7 +53,7 @@ export function Experience({
                 }}
                 className="relative aspect-[3/4] overflow-hidden rounded-[10px] text-left"
               >
-                <img
+                <img loading="lazy"
                   src={experienceCover[item.id]}
                   alt={main}
                   className="absolute inset-0 h-full w-full object-cover"
@@ -97,7 +97,7 @@ export function Experience({
             className="place-drawer is-open absolute inset-y-0 right-0 flex w-full max-w-[440px] flex-col overflow-y-auto bg-paper"
           >
             <div className="relative aspect-[4/3] shrink-0">
-              <img
+              <img loading="lazy"
                 src={experienceCover[theme.id]}
                 alt=""
                 className="h-full w-full object-cover"

@@ -98,7 +98,7 @@ function RouteCard({
         className="block w-full text-left"
       >
         <span className="relative block aspect-[4/3] overflow-hidden bg-bone">
-          <img src={src} alt={name} className="h-full w-full object-cover" />
+          <img loading="lazy" src={src} alt={name} className="h-full w-full object-cover" />
           <span className="absolute top-3 left-3 rounded-md bg-paper/92 px-2.5 py-1 text-[10px] font-bold tracking-[0.1em] text-cta backdrop-blur-sm">
             {badge}
           </span>

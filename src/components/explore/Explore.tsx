@@ -262,7 +262,7 @@ function VideoCard({
         className="flex w-full overflow-hidden rounded-[10px] border border-line bg-surface text-left"
       >
         <div className="relative w-[110px] min-h-[108px] shrink-0 self-stretch bg-bone">
-          <img src={item.src} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          <img loading="lazy" src={item.src} alt="" className="absolute inset-0 h-full w-full object-cover" />
           <span className="absolute inset-0 bg-[rgba(16,28,22,0.32)]" />
           <span className="absolute inset-0 flex items-center justify-center">
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[rgba(250,248,242,0.92)] pl-0.5 text-cta">
@@ -294,7 +294,7 @@ function LitCard({ work }: { work: LitWork }) {
   return (
     <div className="flex overflow-hidden rounded-[10px] border border-line bg-surface">
       <div className="relative h-[110px] w-[110px] shrink-0 bg-bone">
-        <img src={work.cover} alt="" className="h-full w-full object-cover" />
+        <img loading="lazy" src={work.cover} alt="" className="h-full w-full object-cover" />
         <span
           className={`absolute top-1.5 left-0 rounded-r-[3px] px-1.5 py-0.5 text-[8.5px] font-semibold tracking-[0.06em] text-paper ${
             work.type === "book" ? "bg-cta" : "bg-gold"

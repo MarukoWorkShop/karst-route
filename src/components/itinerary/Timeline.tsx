@@ -159,7 +159,7 @@ function DayRow({
               }`}
             >
               {photos.map((src) => (
-                <img
+                <img loading="lazy"
                   key={src}
                   src={src}
                   alt=""
