@@ -21,9 +21,8 @@
   --color-danger: #b42318;
   --font-sans: "PingFang SC", "PingFang TC", "Hiragino Sans GB", "Heiti SC",
     "Noto Sans SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
-  /* 真正的衬线体：英文 Georgia，中文宋体（此前与 sans 完全相同，font-serif 不生效） */
-  --font-serif: Georgia, "Times New Roman", "Songti SC", "STSong",
-    "Noto Serif SC", "Source Han Serif SC", SimSun, serif;
+  --font-serif: "PingFang SC", "PingFang TC", "Hiragino Sans GB", "Heiti SC",
+    "Noto Sans SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
   --radius-lg: 0.5rem;
 }
 

@@ -138,12 +138,12 @@ export const faqGroups: FaqGroup[] = [
       {
         id: "faq-transit",
         q: L(
-          "How does the 144-Hour Visa-Free Transit work for international travelers?",
-          "144 小时过境免签怎么使用？",
+          "How does the 240-Hour Visa-Free Transit work for international travelers?",
+          "240 小时过境免签怎么使用？",
         ),
         a: L(
-          "It is a wonderful option if you are planning a brief stopover! Travelers from over 50 eligible countries can enter designated Chinese regions for up to 6 days without a visa, provided they are transiting to a third country or region (for example: London → Shanghai → Hanoi). All you need to do is show your confirmed onward ticket at the airport's special transit counter. It is a fantastic, stress-free way to sample the country's rich culture on your way to another destination.",
-          "如果只是中途短暂停留，这个政策非常实用：符合条件的 50 多个国家的旅客，可在指定区域免签停留最多 6 天，前提是你要继续前往第三国或地区（例如：伦敦 → 上海 → 河内）。只要在机场的专用过境柜台出示已确认的联程机票即可。借道中国、顺手看一眼这里的文化，是很划算的走法。",
+          "It is a wonderful option if you are planning a brief stopover! China has relaxed this policy considerably: travellers from an expanding list of eligible countries (currently over 50) can now stay in designated regions for up to 10 days — 240 hours — without a visa, provided they are transiting to a third country or region (for example: London → Shanghai → Hanoi). All you need to do is show your confirmed onward ticket at the airport's special transit counter. It is a fantastic, stress-free way to sample the country's rich culture on your way to another destination.",
+          "如果只是中途短暂停留，这个政策非常实用，而且近两年放宽了不少：符合条件的国家和地区名单还在扩大（目前已有 50 多个），可在指定区域免签停留最多 10 天——也就是 240 小时，前提是你要继续前往第三国或地区（例如：伦敦 → 上海 → 河内）。只要在机场的专用过境柜台出示已确认的联程机票即可。借道中国、顺手看一眼这里的文化，是很划算的走法。",
         ),
       },
       {
