@@ -228,3 +228,20 @@ body {
   box-shadow: 0 1px 4px color-mix(in srgb, var(--color-ink) 18%, transparent);
   cursor: pointer;
 }
+
+/* 极简滚动条：2px 灰色轨道 + 墨绿色小滑块 */
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-cta) var(--color-line);
+}
+.scroll-thin::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+.scroll-thin::-webkit-scrollbar-track {
+  background: var(--color-line);
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: var(--color-cta);
+  border-radius: 999px;
+}

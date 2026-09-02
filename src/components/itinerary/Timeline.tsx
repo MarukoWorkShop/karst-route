@@ -127,7 +127,7 @@ export function Timeline({
 
         {/* 桌面端：左列表 + 右详情的两栏 master-detail */}
         <div className="hidden md:grid md:grid-cols-[0.82fr_1.3fr] md:gap-x-10">
-          <ol className="md:sticky md:top-[110px] md:max-h-[calc(100svh-130px)] md:overflow-y-auto md:py-1 md:pr-1">
+          <ol className="scroll-thin md:sticky md:top-[110px] md:max-h-[calc(100svh-130px)] md:overflow-y-auto md:py-1 md:pr-1">
             {route.days.map((day) => (
               <DayListItem
                 key={`${routeId}-${day.day}`}
@@ -139,7 +139,7 @@ export function Timeline({
           </ol>
           <div
             ref={detailRef}
-            className="md:sticky md:top-[110px] md:max-h-[calc(100svh-130px)] md:overflow-y-auto md:py-1 md:pl-1"
+            className="scroll-thin md:sticky md:top-[110px] md:max-h-[calc(100svh-130px)] md:overflow-y-auto md:py-1 md:pl-1"
           >
             <div key={selectedDay}>
               <DayDetailContent day={selectedStop} showDetail={firstVisitDays.has(selectedStop.day)} />
