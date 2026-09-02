@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { IconClose, IconSend } from "@/components/icons";
-import { FieldLabel } from "@/components/plan/PlanUi";
+import { IconClose } from "@/components/icons";
+import { FieldLabel, IconSend } from "@/components/plan/PlanUi";
 import { sendEnquiry } from "@/lib/enquiry";
 
 const INPUT_CLS =
