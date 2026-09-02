@@ -53,7 +53,7 @@ export function RoutePlayer({
     setProgress(0);
     let raf = 0;
     const start = performance.now();
-    const duration = Math.max(7000, (stops.length - 1) * 1400);
+    const duration = Math.max(11000, (stops.length - 1) * 2200);
     const tick = (now: number) => {
       const p = Math.min(1, (now - start) / duration);
       setProgress(p);
@@ -173,21 +173,34 @@ export function RoutePlayer({
               />
               <circle cx={dotX} cy={dotY} r="11" fill="#2f5344" stroke="#faf8f2" strokeWidth="3" />
               {stops.map((s, i) => (
-                <g key={`${s.id}-${i}`}>
+                <g key={`${s.id}-${i}`} pointerEvents="none">
+                  {/* 地名：仅当前 idx 显示，opacity 跟随切换实现丝滑淡入淡出 */}
+                  <text
+                    x={s.x}
+                    y={s.y - 30}
+                    textAnchor="middle"
+                    fontSize="13"
+                    fontWeight="600"
+                    fill="#2f5344"
+                    opacity={i === idx ? 1 : 0}
+                    style={{ transition: "opacity 600ms ease-out" }}
+                  >
+                    {t(s.label)}
+                  </text>
                   <circle
                     cx={s.x}
                     cy={s.y}
-                    r="26"
+                    r="22"
                     fill={i === idx ? "#2f5344" : "#faf8f2"}
                     stroke="#2f5344"
-                    strokeWidth="3"
+                    strokeWidth="2.5"
                   />
                   <text
                     x={s.x}
-                    y={s.y + 9}
+                    y={s.y + 7}
                     textAnchor="middle"
-                    fontSize="26"
-                    fontWeight="700"
+                    fontSize="18"
+                    fontWeight="600"
                     fill={i === idx ? "#faf8f2" : "#2f5344"}
                   >
                     {s.num}
