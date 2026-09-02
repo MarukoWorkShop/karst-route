@@ -174,32 +174,42 @@ export function RoutePlayer({
               <circle cx={dotX} cy={dotY} r="11" fill="#2f5344" stroke="#faf8f2" strokeWidth="3" />
               {stops.map((s, i) => (
                 <g key={`${s.id}-${i}`} pointerEvents="none">
-                  {/* 地名：仅当前 idx 显示，opacity 跟随切换实现丝滑淡入淡出 */}
+                  {/* 地名：仅当前 idx 显示，白描边避免被圆圈/路径遮挡 */}
                   <text
                     x={s.x}
-                    y={s.y - 30}
+                    y={s.y - 40}
                     textAnchor="middle"
                     fontSize="13"
                     fontWeight="600"
                     fill="#2f5344"
+                    stroke="#faf8f2"
+                    strokeWidth="3"
+                    paintOrder="stroke"
                     opacity={i === idx ? 1 : 0}
                     style={{ transition: "opacity 600ms ease-out" }}
                   >
                     {t(s.label)}
                   </text>
+                  {/* 当前 idx：涟漪微发光，从圆圈外缘向外扩散并淡出 */}
+                  {i === idx && !reduce ? (
+                    <circle cx={s.x} cy={s.y} r="18" fill="none" stroke="#2f5344" strokeWidth="2.5">
+                      <animate attributeName="r" values="18;36" dur="1.8s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.55;0" dur="1.8s" repeatCount="indefinite" />
+                    </circle>
+                  ) : null}
                   <circle
                     cx={s.x}
                     cy={s.y}
-                    r="22"
+                    r="18"
                     fill={i === idx ? "#2f5344" : "#faf8f2"}
                     stroke="#2f5344"
                     strokeWidth="2.5"
                   />
                   <text
                     x={s.x}
-                    y={s.y + 7}
+                    y={s.y + 6}
                     textAnchor="middle"
-                    fontSize="18"
+                    fontSize="16"
                     fontWeight="600"
                     fill={i === idx ? "#faf8f2" : "#2f5344"}
                   >
