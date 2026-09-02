@@ -401,7 +401,7 @@ export const copy = {
     emailLabel: { en: "Your email", zh: "您的邮箱" },
     emailPh: { en: "name@example.com", zh: "name@example.com" },
     messageLabel: { en: "Your message", zh: "留言内容" },
-    messagePh: { en: "e.g. extra night in Sapa, no overnight train, elderly traveller…", zh: "例如：沙坝加住一晚、不要米轨夜车、携带老人等" },
+    messagePh: { en: "e.g. We are a family of 12 — I'd like 1:1 conversations to fully customise my trip…", zh: "我们有12个人的一大家子，我希望一对一沟通，完全定制我想要的旅行……" },
     submit: { en: "Submit request", zh: "提交留言" },
     sending: { en: "Sending…", zh: "发送中…" },
     sentTitle: { en: "Thank you", zh: "感谢留言" },

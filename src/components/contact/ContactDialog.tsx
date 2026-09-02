@@ -84,7 +84,7 @@ export function ContactDialog({
         onClick={onClose}
         className="absolute inset-0 bg-night/55 backdrop-blur-[2px]"
       />
-      <div className="relative w-full max-w-[480px] rounded-[14px] bg-paper p-6 shadow-[0_24px_64px_rgba(22,36,30,0.18)]">
+      <div className="relative w-full max-w-[560px] rounded-[14px] bg-paper p-6 shadow-[0_24px_64px_rgba(22,36,30,0.18)]">
         <button
           type="button"
           aria-label={t(copy.nav.close)}
@@ -135,7 +135,7 @@ export function ContactDialog({
               <label className="block">
                 <FieldLabel>{t(copy.contact.messageLabel)}</FieldLabel>
                 <textarea
-                  rows={5}
+                  rows={6}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder={t(copy.contact.messagePh)}
