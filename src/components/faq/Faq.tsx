@@ -3,10 +3,12 @@ import { faqGroups, faqs } from "@/data/faqs";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { IconChevron } from "@/components/icons";
+import { ContactDialog } from "@/components/contact/ContactDialog";
 
 export function Faq() {
   const { t } = useLocale();
   const [openId, setOpenId] = useState<string | null>(null);
+  const [contactOpen, setContactOpen] = useState(false);
   const [filter, setFilter] = useState<string>("all");
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -144,15 +146,18 @@ export function Faq() {
 
           <div className="mt-9 rounded-[10px] bg-paper px-5 py-5 text-center">
             <p className="text-[14px] text-ink-soft">{t(copy.faq.more)}</p>
-            <a
-              href="#plan"
+            <button
+              type="button"
+              onClick={() => setContactOpen(true)}
               className="mt-3 inline-flex text-[14px] font-medium text-cta underline underline-offset-[3px]"
             >
               {t(copy.faq.cta)}
-            </a>
+            </button>
           </div>
         </div>
       </div>
+
+      <ContactDialog open={contactOpen} onClose={() => setContactOpen(false)} />
     </section>
   );
 }
