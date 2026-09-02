@@ -86,7 +86,7 @@ export function ReviewsFold() {
             type="button"
             aria-expanded={open}
             onClick={() => setOpen((o) => !o)}
-            className={`inline-flex items-center gap-1.5 border-b pb-px text-[13px] ${
+            className={`inline-flex items-center gap-1.5 border-b pb-px text-[13px] font-medium ${
               open ? "border-cta text-cta" : "border-line text-ink-soft"
             }`}
           >

@@ -14,7 +14,7 @@ export function About() {
         </p>
         {/* 标题与 LOGO 同行：LOGO 缩为小签名，紧贴标题区 */}
         <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-5">
-          <h2 className="max-w-[640px] text-[28px] leading-tight font-light text-balance md:text-[32px]">
+          <h2 className="max-w-[640px] text-[28px] leading-tight font-medium text-balance md:text-[32px]">
             {t(copy.about.name)}
           </h2>
           <img

@@ -41,7 +41,7 @@ export function Faq() {
     <section id="faq" className="scroll-mt-24 bg-sage py-12 md:py-14">
       <div className="page-col">
         <div className="mx-auto max-w-[680px]">
-          <h2 className="mt-2 mb-4 text-[22px] leading-[1.3] font-light text-cta">
+          <h2 className="mt-2 mb-4 text-[22px] leading-[1.3] font-medium text-cta">
             {t(copy.faq.h2)}
           </h2>
 
@@ -111,9 +111,9 @@ export function Faq() {
                         onClick={() => setOpenId(isOpen ? null : faq.id)}
                         className="flex w-full items-start justify-between gap-4 py-[18px] text-left"
                       >
-                        {/* 问题：衬线体 + light，与全站 light 风格一致 */}
+                        {/* 问题：衬线体 + medium，重要标题统一字重 */}
                         <span
-                          className={`flex-1 font-serif text-[16.5px] leading-snug font-light ${
+                          className={`flex-1 font-serif text-[16.5px] leading-snug font-medium ${
                             isOpen ? "text-cta" : "text-ink"
                           }`}
                         >
