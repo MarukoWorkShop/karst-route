@@ -144,8 +144,12 @@ export function Timeline({
             <div key={selectedDay}>
               <DayDetailContent day={selectedStop} showDetail={firstVisitDays.has(selectedStop.day)} />
             </div>
-            {/* 评价链接：紧跟详情卡片下方，在 key 重渲染外，整条线路只出现一次 */}
-            <ReviewsFold />
+          </div>
+          {/* 评价链接：grid 全宽新行、屏幕居中，与右栏 sticky 详情错开不重叠 */}
+          <div className="md:col-span-2 md:flex md:justify-center md:pt-2 md:pb-3">
+            <div className="w-full max-w-[640px]">
+              <ReviewsFold />
+            </div>
           </div>
         </div>
       </div>
