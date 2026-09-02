@@ -348,14 +348,14 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
             <div className="mt-7 flex flex-wrap items-center gap-3 md:mt-8">
               <a
                 href="#tours"
-                className="pointer-events-auto inline-flex min-h-12 items-center justify-center rounded-lg bg-cta px-6 text-center text-[13px] font-medium text-white md:min-h-[52px] md:px-8 md:text-[14px]"
+                className="pointer-events-auto inline-flex min-h-12 flex-1 items-center justify-center rounded-lg bg-cta px-5 text-center text-[13px] font-medium text-white md:min-h-[52px] md:px-8 md:text-[14px]"
               >
                 {t(copy.hero.ctaA)}
               </a>
               <a
                 href="#plan"
                 onClick={onPlanOwn}
-                className="pointer-events-auto inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/40 bg-white/10 px-6 text-center text-[13px] font-medium text-white backdrop-blur-md md:min-h-[52px] md:px-8 md:text-[14px]"
+                className="pointer-events-auto inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg border border-white/40 bg-white/10 px-5 text-center text-[13px] font-medium text-white backdrop-blur-md md:min-h-[52px] md:px-8 md:text-[14px]"
               >
                 <IconSparkles className="h-3.5 w-3.5 shrink-0" />
                 {t(copy.hero.ctaB)}
