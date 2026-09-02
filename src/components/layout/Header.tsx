@@ -13,12 +13,6 @@ export function Header({ onPlan }: { onPlan: () => void }) {
     { href: "#explore-films", label: t(copy.nav.films) },
     { href: "#explore-lit", label: t(copy.nav.literature) },
   ];
-  const faqLinks = [
-    { href: "#faq-transit", label: t(copy.nav.visa) },
-    { href: "#faq-holidays", label: t(copy.nav.season) },
-    { href: "#faq-train", label: t(copy.nav.transit) },
-  ];
-
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 40);
     onScroll();
@@ -63,7 +57,9 @@ export function Header({ onPlan }: { onPlan: () => void }) {
             </a>
             <span className={`h-4 w-px ${solid ? "bg-line" : "bg-paper/25"}`} aria-hidden />
             <SubMenu label={t(copy.nav.explore)} links={exploreLinks} muted={muted} solid={solid} />
-            <SubMenu label={t(copy.nav.faq)} links={faqLinks} muted={muted} solid={solid} />
+            <a href="#faq" className={`text-[14px] font-medium ${ink}`}>
+              {t(copy.nav.faq)}
+            </a>
           </nav>
           <div className="flex w-[230px] items-center justify-end gap-1">
             <MenuButton onClick={() => setDrawerOpen(true)} className={muted} />
