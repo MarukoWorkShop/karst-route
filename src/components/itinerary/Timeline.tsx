@@ -127,7 +127,7 @@ export function Timeline({
 
         {/* 桌面端：左列表 + 右详情的两栏 master-detail */}
         <div className="hidden md:grid md:grid-cols-[0.82fr_1.3fr] md:gap-x-10">
-          <ol className="scroll-thin md:sticky md:top-[110px] md:max-h-[calc(100svh-130px)] md:overflow-y-auto md:py-1 md:pr-1">
+          <ol className="scroll-thin md:sticky md:top-[110px] md:py-1 md:pr-1">
             {route.days.map((day) => (
               <DayListItem
                 key={`${routeId}-${day.day}`}
@@ -144,9 +144,7 @@ export function Timeline({
             <div key={selectedDay}>
               <DayDetailContent day={selectedStop} showDetail={firstVisitDays.has(selectedStop.day)} />
             </div>
-          </div>
-          {/* 评价链接：放在整条线路模块底部，每条线路只显示一次 */}
-          <div className="md:col-start-2 md:px-1 md:pt-1 md:pb-2">
+            {/* 评价链接：紧跟详情卡片下方，在 key 重渲染外，整条线路只出现一次 */}
             <ReviewsFold />
           </div>
         </div>
