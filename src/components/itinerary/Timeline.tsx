@@ -144,6 +144,9 @@ export function Timeline({
             <div key={selectedDay}>
               <DayDetailContent day={selectedStop} showDetail={firstVisitDays.has(selectedStop.day)} />
             </div>
+          </div>
+          {/* 评价链接：放在整条线路模块底部，每条线路只显示一次 */}
+          <div className="md:col-start-2 md:px-1 md:pt-1 md:pb-2">
             <ReviewsFold />
           </div>
         </div>

@@ -79,8 +79,8 @@ export function ReviewsFold() {
         </div>
       ) : null}
 
-      {/* 触发按钮：sticky 在父容器底部，始终可见（桌面粘在右栏底部，移动粘在视口底部） */}
-      <div className="sticky bottom-0 z-20 -mx-1 bg-paper px-1 py-3">
+      {/* 触发按钮：放在整条线路模块底部，每条线路只显示一次 */}
+      <div className="pt-1 pb-1">
         <div className="text-center">
           <button
             type="button"
