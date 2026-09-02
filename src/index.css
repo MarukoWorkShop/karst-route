@@ -45,6 +45,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* 中文 locale：正文字重升到 400（苹方 Regular），Inter Light 300 在中文上发虚 */
+html[lang|="zh"] body {
+  font-weight: 400;
+}
+
 :root {
   --color-paper: #faf8f2;
   --color-surface: #fdfbf6;
