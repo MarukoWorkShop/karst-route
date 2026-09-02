@@ -30,23 +30,9 @@ export function ReviewsFold() {
 
   return (
     <div className="mt-6">
-      <div className="text-center">
-        <button
-          type="button"
-          aria-expanded={open}
-          onClick={() => setOpen((o) => !o)}
-          className={`inline-flex items-center gap-1.5 border-b pb-px text-[13px] ${
-            open ? "border-cta text-cta" : "border-line text-ink-soft"
-          }`}
-        >
-          <StarMark />
-          {t(copy.tours.book.readReviews)}
-          <IconChevron className={`h-3 w-3 transition ${open ? "rotate-180" : ""}`} />
-        </button>
-      </div>
-
+      {/* 展开的评论列表：放在触发按钮之前，按钮粘底部时列表在按钮上方 */}
       {open ? (
-        <div className="pt-5">
+        <div className="pb-2 pt-1">
           <div className="flex flex-col gap-2.5">
             {visible.map((r) => (
               <button
@@ -92,6 +78,24 @@ export function ReviewsFold() {
           ) : null}
         </div>
       ) : null}
+
+      {/* 触发按钮：sticky 在父容器底部，始终可见（桌面粘在右栏底部，移动粘在视口底部） */}
+      <div className="sticky bottom-0 z-20 -mx-1 bg-paper px-1 py-3">
+        <div className="text-center">
+          <button
+            type="button"
+            aria-expanded={open}
+            onClick={() => setOpen((o) => !o)}
+            className={`inline-flex items-center gap-1.5 border-b pb-px text-[13px] ${
+              open ? "border-cta text-cta" : "border-line text-ink-soft"
+            }`}
+          >
+            <StarMark />
+            {t(copy.tours.book.readReviews)}
+            <IconChevron className={`h-3 w-3 transition ${open ? "rotate-180" : ""}`} />
+          </button>
+        </div>
+      </div>
 
       {active ? (
         <div className="fixed inset-0 z-50" role="presentation">
