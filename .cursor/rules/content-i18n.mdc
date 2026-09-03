@@ -1,0 +1,15 @@
+---
+description: 内容 YAML 只改原文；上线前按 src 补齐其它语言，不要覆盖原生语言。
+alwaysApply: true
+---
+
+# 内容语言
+
+`content/**/*.yaml` 里每份文件顶部有 `src: zh` 或 `src: en`（字段也可再写 `src` 覆盖）。那是作者写的原文；其它语言键是译文。
+
+- 员工可以只改原文那种语言。不要要求他们成对填写。
+- **永远不要改、覆盖、删除 `src` 指出的那种语言的句子**（除非用户明确要改原文）。
+- 用户说「部署」「上线」「补齐语言」时：先 `node scripts/content-lang-report.mjs`，再只给**空着的**语言键补上译文（旅行文案语气，专有名词保持原样）。缺哪个补哪个，对照 `content/langs.yaml` 的 `served`。
+- 若 git diff 显示原文变了、译文还是旧的，按新原文重译该字段的非 src 语言。
+- 填译文时就地改 YAML，不要整文件重新 dump（会丢掉注释）。
+- 以后要加语言：在 `content/langs.yaml` 的 `served` 和 `src/i18n/copy.ts` 的 `LOCALES` 里加上代码（如 `vi`），再补齐 YAML，并加 URL / 语言切换。

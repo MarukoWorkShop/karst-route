@@ -1,0 +1,136 @@
+# 合作商家
+# type 只能是 google 或 web
+
+src: zh   # 原文语言。只改这种语言；其它语言上线前补齐
+
+list:
+  - name:
+      en: "Chaoyang Post Inn"
+      zh: "朝阳驿·建水"
+    category:
+      en: "Boutique Stay"
+      zh: "精品民宿"
+    location:
+      en: "Yunnan · Jianshui"
+      zh: "云南·建水"
+    desc:
+      en: "A century-old courtyard within the ancient walls of Jianshui — cobblestone sky-wells and nightly tofu-and-rice-wine sessions."
+      zh: "建水古城内的百年院落，青砖天井，每晚可在天井里喝建水烤豆腐配米酒。"
+    emoji: "🏯"
+    color: "#8F8458"
+    links:
+      - label:
+          en: "View on Google Maps"
+          zh: "在 Google 地图查看"
+        url: "https://www.google.com/maps/search/?api=1&query=朝阳驿+建水"
+        type: "google"
+  - name:
+      en: "Topas Ecolodge"
+      zh: "Topas Ecolodge"
+    category:
+      en: "Eco Lodge"
+      zh: "生态度假村"
+    location:
+      en: "Vietnam · Sapa"
+      zh: "越南·沙坝"
+    desc:
+      en: "Stone bungalows above the terraces, a private infinity pool over the valley — waking in the mist is uniquely yours."
+      zh: "梯田之上的石砌小屋，私家无边际泳池俯瞰山谷，晨雾中醒来是每位住客的专属时刻。"
+    emoji: "🌿"
+    color: "#3D6B52"
+    links:
+      - label:
+          en: "Visit website"
+          zh: "访问官网"
+        url: "https://topasecolodge.com"
+        type: "web"
+      - label:
+          en: "Google Maps"
+          zh: "Google 地图"
+        url: "https://www.google.com/maps/search/?api=1&query=Topas+Ecolodge+Sapa"
+        type: "google"
+  - name:
+      en: "Detian Border Guesthouse"
+      zh: "德天边境人家"
+    category:
+      en: "Local Guesthouse"
+      zh: "当地民宿"
+    location:
+      en: "Guangxi · Daxin"
+      zh: "广西·大新"
+    desc:
+      en: "Ten minutes' walk from Detian Falls — evenings on the terrace to the sound of water. The owner is Zhuang; bamboo rice every night."
+      zh: "距德天瀑布步行 10 分钟，傍晚坐在露台听见流水声。老板是当地壮族人，每晚有竹筒饭。"
+    emoji: "🌊"
+    color: "#2F5344"
+    links:
+      - label:
+          en: "Google Maps"
+          zh: "Google 地图"
+        url: "https://www.google.com/maps/search/?api=1&query=德天瀑布+民宿"
+        type: "google"
+  - name:
+      en: "Cat Ba Ventures"
+      zh: "Cat Ba Ventures"
+    category:
+      en: "Outdoor Activities"
+      zh: "户外活动"
+    location:
+      en: "Vietnam · Cat Ba Island"
+      zh: "越南·吉婆岛"
+    desc:
+      en: "Professional kayak team for half-day and full-day cave-passage experiences; top-tier gear, internationally certified guides."
+      zh: "专业皮划艇团队，提供穿越水上洞穴的半日及全日体验，设备一流，教练均持国际认证。"
+    emoji: "🚣"
+    color: "#4A7B8A"
+    links:
+      - label:
+          en: "Visit website"
+          zh: "访问官网"
+        url: "https://catbaventures.com"
+        type: "web"
+  - name:
+      en: "Mile Dongfengyun Winery"
+      zh: "弥勒东风韵酒庄"
+    category:
+      en: "Winery"
+      zh: "酒庄体验"
+    location:
+      en: "Yunnan · Mile"
+      zh: "云南·弥勒"
+    desc:
+      en: "One of Yunnan's finest boutique wineries — 1,300m vineyards, an art architecture park, tastings and stays available."
+      zh: "云南最知名的精品酒庄之一，海拔 1300m 的葡萄园配上建筑艺术园区，可品鉴可住宿。"
+    emoji: "🍷"
+    color: "#7A3E4A"
+    links:
+      - label:
+          en: "Visit website"
+          zh: "访问官网"
+        url: "https://www.google.com/maps/search/?api=1&query=弥勒东风韵酒庄"
+        type: "web"
+      - label:
+          en: "Google Maps"
+          zh: "Google 地图"
+        url: "https://www.google.com/maps/search/?api=1&query=弥勒东风韵酒庄"
+        type: "google"
+  - name:
+      en: "Little Kitchen Hanoi"
+      zh: "河内·小厨越菜"
+    category:
+      en: "Restaurant"
+      zh: "特色餐厅"
+    location:
+      en: "Vietnam · Hanoi"
+      zh: "越南·河内"
+    desc:
+      en: "A family restaurant tucked in an Old Quarter alley — Chef Chio's steamed shrimp-paste fish and Hanoi grilled pork bring locals back week after week."
+      zh: "老街区藏身小巷的家庭餐厅，主厨阿娇的虾酱蒸鱼和河内烤肉是当地食客回头率最高的两道菜。"
+    emoji: "🍜"
+    color: "#C17F3A"
+    links:
+      - label:
+          en: "Google Maps"
+          zh: "Google 地图"
+        url: "https://www.google.com/maps/search/?api=1&query=Little+Kitchen+Hanoi"
+        type: "google"

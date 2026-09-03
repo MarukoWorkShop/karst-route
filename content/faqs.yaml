@@ -1,0 +1,176 @@
+# 常见问题 FAQ
+# 按分组编辑。改 id 时请同步页面锚点（例如 #faq-cards）
+
+src: zh   # 原文语言。只改这种语言；其它语言上线前补齐
+
+groups:
+  - id: "money"
+    label:
+      en: "Payment & Money"
+      zh: "支付与货币"
+    items:
+      - id: "faq-cards"
+        q:
+          en: "Can I use my foreign credit cards (Visa/Mastercard) or cash in China?"
+          zh: "在中国可以用境外信用卡（Visa / Mastercard）或现金吗？"
+        a:
+          en: "While cash is legally accepted everywhere, China has practically transitioned into a cashless, mobile-first society. Many small vendors, street food stalls, and taxis simply do not carry physical change anymore. Standard international plastic cards (Visa/Mastercard/Amex) are generally welcome at luxury hotels and high-end restaurants, but will not work at local scenic spots or boutiques. To travel with absolute peace of mind, we highly recommend setting up mobile payments before you arrive."
+          zh: "现金在法律上当然能花，但今天的中国早已是「一部手机走天下」的社会——小摊贩、街边小吃和出租车，很多时候真的找不开零钱。国际信用卡（Visa、Mastercard、Amex）在高端酒店和讲究的餐厅基本都收，但到了本地景区、小店铺就刷不了了。想全程省心，建议出发前先把手机支付开通好。"
+      - id: "faq-alipay"
+        q:
+          en: "How can I set up Alipay or WeChat Pay without a Chinese bank account?"
+          zh: "没有中国银行卡，怎么开通支付宝或微信支付？"
+        a:
+          en: "Don't worry, the process is incredibly straightforward nowadays! Both Alipay and WeChat have tailored international versions. All you need to do is download the app, sign up with your international phone number, and complete the quick Real-name Verification using your passport. From there, you can seamlessly link your foreign credit or debit cards. When buying something, the vendor will simply scan your app's QR code, or you can scan theirs. Bonus tip: Transaction fees are completely waived for amounts under 200 RMB!"
+          zh: "放心，现在这件事比想象中简单得多。支付宝和微信都做了国际版：下载 App，用境外手机号注册，再拿护照做一次快速实名认证，就能直接绑定你的境外信用卡或借记卡。付钱时，让商家扫你的付款码，或者你扫商家的收款码，都可以。顺便一提：单笔 200 元以下的交易是免手续费的。"
+      - id: "faq-tipping"
+        q:
+          en: "Is tipping customary or expected in restaurants and taxis?"
+          zh: "在餐厅和出租车上需要给小费吗？"
+        a:
+          en: "No, there is absolutely no tipping culture in China. Whether you are dining at a cozy noodle stall or taking a taxi across the city, the price listed is exactly what you pay. In fact, leaving extra cash on the table might actually cause gentle confusion, as polite servers will likely run after you to return the money you \"accidentally forgot.\" Relax and enjoy the authentic hospitality without worrying about math at the end of your meal!"
+          zh: "不需要——中国没有小费文化。无论是在街边小面馆，还是打车横穿半座城，标价多少就付多少。反而你若把零钱留在桌上，服务员多半会追出来，以为你「不小心落了钱」。所以吃完饭不必算数，安心受用这份待客之道就好。"
+  - id: "digital"
+    label:
+      en: "Digital Connectivity & Apps"
+      zh: "网络、应用与沟通"
+    items:
+      - id: "faq-firewall"
+        q:
+          en: "Will my standard social media, Google Maps, and Gmail work in China?"
+          zh: "我常用的社交软件、谷歌地图和 Gmail 在中国能用吗？"
+        a:
+          en: "Mainland China utilizes a network firewall that temporarily restricts access to certain international platforms like Google, WhatsApp, Instagram, and Gmail when you connect through local Wi-Fi. The most seamless remedy is purchasing a travel eSIM or an international roaming plan before you depart. Cellular roaming data automatically bypasses these network blocks, keeping you smoothly connected to your family and friends back home without needing to fiddle with a separate VPN."
+          zh: "连本地 Wi-Fi 时，部分国际平台（Google、WhatsApp、Instagram、Gmail 等）会受限。最省事的办法是出发前买一张旅行 eSIM 或开通国际漫游——走手机蜂窝数据就不受这些限制，和家里人联系一路顺畅，也不用再折腾 VPN。"
+      - id: "faq-esim"
+        q:
+          en: "eSIM vs. Local Physical SIM Card: Which option is better for my trip?"
+          zh: "eSIM 和当地实体卡，哪个更适合我的行程？"
+        a:
+          en: "It truly depends on your travel style, but eSIMs are usually the favorite choice for short-term holidaymakers because they allow you to keep your WhatsApp active instantly upon landing. However, if you plan to stay a bit longer, order local food deliveries, or use certain domestic apps that require verification codes, picking up a local physical SIM card at the airport arrival hall is a fantastic alternative. It grants you a local number and data at an incredibly budget-friendly rate."
+          zh: "看你怎么玩。短期度假一般更推荐 eSIM——落地就能用，WhatsApp 立刻在线。但如果你打算待久一点、要点外卖、或注册一些需要短信验证码的本地 App，那就在机场到达厅办一张本地实体卡，有个本地号码加流量，价格也相当实惠。"
+      - id: "faq-language"
+        q:
+          en: "How can I communicate if I do not speak or read any Chinese?"
+          zh: "完全不懂中文，沟通怎么办？"
+        a:
+          en: "While English is widely understood by staff at international hotels, high-speed train stations, and younger generations in major cities, you might run into language gaps with local cab drivers or market vendors. We warmly recommend downloading a translation app with live voice-to-voice translation and camera scanning features. Simply pointing your camera at a traditional menu or a street sign will instantly translate it, turning a potential barrier into a fun, interactive part of your journey!"
+          zh: "国际酒店、高铁站和大城市的年轻人，英语基本都通；但碰到本地司机或菜市场的摊主，偶尔还是会卡住。建议装一个带实时语音对话和拍照翻译的 App——把镜头对准菜单或路牌，意思立刻就出来了。原本的障碍，反而会变成旅途中挺好玩的一件事。"
+      - id: "faq-apps"
+        q:
+          en: "What essential applications should I install on my phone before landing?"
+          zh: "落地前，手机上该装好哪些应用？"
+        a:
+          en: "To make your trip feel incredibly smooth and effortless, we suggest downloading the \"Big Four\" travel bundle: Alipay & WeChat for all your daily shopping, dining, and coffee runs; Trip.com, the ultimate lifesaver for managing your hotel bookings, bullet train tickets, and attraction entry passes in English; Apple Maps or Metro apps for flawless navigation; and a translation app as your digital companion for warm daily conversations."
+          zh: "想让整趟旅程顺顺当当，建议先装好「四件套」：支付宝和微信（日常购物、吃饭、买咖啡都靠它们）；Trip.com（英文界面搞定酒店、高铁票和景区门票，非常好用）；苹果地图或地铁类 App（导航不迷路）；再一个翻译 App，日常沟通就都有了着落。"
+  - id: "transport"
+    label:
+      en: "Getting Around & Navigation"
+      zh: "交通出行与导航"
+    items:
+      - id: "faq-train"
+        q:
+          en: "Is it easy for foreign tourists to navigate and ride the High-Speed Trains?"
+          zh: "外国游客搭乘高铁方便吗？"
+        a:
+          en: "Absolutely! China's high-speed rail network is world-class, pristine, and incredibly efficient. Booking is effortless through English platforms like Trip.com using your passport details. The best part? China has gone completely paperless. You do not need to queue up to collect physical tickets anymore. When you arrive at the station, simply walk through the designated manual gate or automated passport reader, present your physical passport, and you are ready to board!"
+          zh: "非常方便。中国的高铁网是世界级的——干净、准点、效率极高。用护照信息在 Trip.com 这类英文平台就能轻松订票。还有个好消息：现在已经全面电子客票，不用排队取纸质票了。到站后走人工通道或自助验护照的闸机，递上护照即可上车。"
+      - id: "faq-taxi"
+        q:
+          en: "How do I hail a taxi safely if I can't speak the language?"
+          zh: "语言不通，怎么安全打车？"
+        a:
+          en: "You never have to worry about waving down a cab on the street or dealing with language confusion. Right inside your Alipay app, you will find \"DiDi\" — China's premier ride-hailing service (similar to Uber). The entire interface is in English, you can type your destination in English, and it features a built-in real-time translation chat so you can easily message your driver. Best of all, payments are automatically processed online through your linked card, so you can just step out when you arrive."
+          zh: "完全不必在路边招手、也不必跟司机比划。支付宝里就有「滴滴」——中国的网约车平台（类似 Uber）。界面是英文的，目的地可以直接用英文输入，还内置实时翻译，能和司机顺畅沟通。车费从绑定的卡里自动扣，到站直接下车走人。"
+      - id: "faq-maps"
+        q:
+          en: "Does Google Maps provide accurate routing and schedules in China?"
+          zh: "谷歌地图在中国导航准吗？"
+        a:
+          en: "Because of local mapping regulations, Google Maps can sometimes show a slight coordinate shift or outdated transit schedules within the country. If you are using an iPhone, Apple Maps works beautifully because it sources data from native mapping giants and displays everything in crisp English. For Android users, combining translator tools with native apps or utilizing English-friendly travel map portals will ensure you never lose your way."
+          zh: "受本地地图测绘规定影响，谷歌地图在国内有时会有些坐标偏移，公交信息也可能不够新。用 iPhone 的话，苹果地图体验很好——数据来自本地图商，界面也是清爽的英文。安卓用户可以把翻译工具和本地地图搭配着用，或选择对英文友好的旅行地图站点，一样不会迷路。"
+  - id: "visa"
+    label:
+      en: "Visas, Customs & Hotel Rules"
+      zh: "签证、政策与通关"
+    items:
+      - id: "faq-transit"
+        q:
+          en: "How does the 240-Hour Visa-Free Transit work for international travelers?"
+          zh: "240 小时过境免签怎么使用？"
+        a:
+          en: "It is a wonderful option if you are planning a brief stopover! China has relaxed this policy considerably: travellers from an expanding list of eligible countries (currently over 50) can now stay in designated regions for up to 10 days — 240 hours — without a visa, provided they are transiting to a third country or region (for example: London → Shanghai → Hanoi). All you need to do is show your confirmed onward ticket at the airport's special transit counter. It is a fantastic, stress-free way to sample the country's rich culture on your way to another destination."
+          zh: "如果只是中途短暂停留，这个政策非常实用，而且近两年放宽了不少：符合条件的国家和地区名单还在扩大（目前已有 50 多个），可在指定区域免签停留最多 10 天——也就是 240 小时，前提是你要继续前往第三国或地区（例如：伦敦 → 上海 → 河内）。只要在机场的专用过境柜台出示已确认的联程机票即可。借道中国、顺手看一眼这里的文化，是很划算的走法。"
+      - id: "faq-hotel"
+        q:
+          en: "Can foreign passports check into any hotel or boutique guesthouse?"
+          zh: "持外国护照可以入住任何酒店或精品民宿吗？"
+        a:
+          en: "Recent guidelines have significantly encouraged all hotels to warmly welcome international friends. However, to ensure an absolutely seamless check-in experience and guarantee proper local registration, we always advise booking your stays through established global platforms like Trip.com or checking with our bespoke concierge service. We manually verify each property in our itineraries to ensure they are fully prepared to host you with open arms."
+          zh: "近来的政策明确鼓励各类住宿接待境外旅客。不过为了让入住真正顺畅、也确保临时住宿登记办妥，我们建议通过 Trip.com 这类成熟平台预订，或交由我们的专属顾问安排。行程里的每一处住宿，我们都会逐一核实，确认它们能妥妥当当地接待你。"
+      - id: "faq-passport"
+        q:
+          en: "Do I need to carry my actual physical passport with me during day trips?"
+          zh: "白天出门游玩，需要随身带护照原件吗？"
+        a:
+          en: "Yes, please keep your physical passport safely in your daypack. In China, your passport acts as your universal key. It is required not just for boarding bullet trains and checking into hotels, but also for entering prestigious national museums, purchasing tickets at major landmarks (like the Forbidden City), and occasionally passing standard security checkpoints. Think of it as your essential travel companion!"
+          zh: "需要，请把护照原件随身放好。在中国，护照几乎是一把万能钥匙——不只坐高铁、住酒店要用，进国家级博物馆、在故宫这类重点景区买票，甚至偶尔过安检时，都要出示。把它当成旅途中最重要的那件行李就对了。"
+  - id: "timing"
+    label:
+      en: "Crowds & Smart Timing"
+      zh: "人流控制与时间规划"
+    items:
+      - id: "faq-holidays"
+        q:
+          en: "When should I plan my trip to avoid the biggest national holiday crowds?"
+          zh: "想避开人潮，应该避开哪些时段？"
+        a:
+          en: "To enjoy a serene and relaxed exploration, we highly recommend avoiding the two grand national holidays: Chinese New Year (usually in January or February) and Golden Week (October 1st to 7th). During these festival periods, hundreds of millions of locals travel to reunite with family, causing flights, hotels, and bullet trains to book out months in advance. Choosing the shoulder seasons guarantees you lovely weather and much quieter scenic walks."
+          zh: "想走得从容，建议避开两个全国性长假：春节（通常在 1 月或 2 月）和国庆黄金周（10 月 1 日至 7 日）。这两个时段有几亿人返乡或出行，机票、酒店和高铁往往提前几个月就售罄。选在肩季出行，天气舒服，景区也安静得多。"
+      - id: "faq-weekday"
+        q:
+          en: "Are famous tourist attractions heavily crowded on regular weekdays?"
+          zh: "平日里热门景点也会很挤吗？"
+        a:
+          en: "Regular weekdays offer a much more intimate and quiet experience! To ensure historical monuments and natural parks remain well-preserved, China utilizes a strict real-name advanced reservation system for almost all popular landmarks. This means ticket numbers are capped daily. Don't worry about the logistics, though — our curated roadbooks are designed to automatically lock in your entry time-slots days in advance so you can walk straight in."
+          zh: "平日里会清静很多。为了保护文物和自然环境，国内绝大多数热门景点都实行实名制分时段预约，每天的门票总量是限定的。流程上的事你不用操心——我们的定制路书会提前数天把入场的时段锁定好，你到点直接进去就行。"
+      - id: "faq-duration"
+        q:
+          en: "How many days do you recommend for a beautiful, unhurried first trip?"
+          zh: "第一次来，安排多少天比较从容？"
+        a:
+          en: "To truly absorb the landscape without feeling rushed, a duration of 10 to 14 days is the golden window. For an epic cross-border route like the Yunnan-Guangxi-Vietnam triangle, this timeframe gives you the perfect rhythm. It balances the thrilling speeds of the high-speed rail with deep, slow-paced days spent wandering ancient towns, sipping coffee by pristine rivers, and discovering misty mountain paths."
+          zh: "想把风景真正看进去又不赶，10 到 14 天是最舒服的区间。像滇—桂—越这样的跨境大环线，这个时长刚好能把节奏铺开：既有高铁飞驰的畅快，也留出大把慢日子——在古城里闲逛、在清亮的河边喝杯咖啡、或者走进雾气未散的山路。"
+  - id: "comfort"
+    label:
+      en: "Food, Health & Everyday Comfort"
+      zh: "餐饮、卫生与常识"
+    items:
+      - id: "faq-water"
+        q:
+          en: "Is tap water safe to drink directly, and how do I find clean water?"
+          zh: "自来水可以直接喝吗？怎么找干净的饮用水？"
+        a:
+          en: "Tap water in China is not intended for direct drinking. However, staying hydrated is incredibly easy! Every reputable hotel room comes equipped with a pristine electric kettle for boiling water, along with complimentary bottled mineral water. You will also find cozy convenience stores on almost every street corner selling ice-cold or room-temperature bottled water for a very nominal fee."
+          zh: "自来水不建议直接饮用。但补水这件事一点不麻烦：正规酒店的房间里都配有电热水壶，也会送免费的瓶装矿泉水；街角几乎都有便利店，冰的、常温的瓶装水都有，价格也很便宜。"
+      - id: "faq-toilets"
+        q:
+          en: "What should I expect regarding public restrooms (Squat Toilets)?"
+          zh: "公共厕所的情况怎么样？会遇到蹲厕吗？"
+        a:
+          en: "You will find a blend of styles! Modern shopping malls, high-speed train stations, airports, and luxury hotels are fully equipped with standard Western-style sitting toilets. However, when exploring ancient villages or natural hiking trails, you will primarily encounter traditional squat toilets, which locals prefer for hygiene reasons. A gentle piece of advice: Public restrooms don't always stock paper, so keeping a small pack of pocket tissues and hand sanitizer in your daypack is a wonderful habit."
+          zh: "两种都会有。现代化的商场、高铁站、机场和高档酒店，基本都是标准的坐式马桶；但在古村落或山野步道上，更多还是传统的蹲厕——当地人认为这样更卫生。有个小提醒：公共厕所不一定备纸，随身带一小包纸巾和免洗洗手液，会是个好习惯。"
+      - id: "faq-security"
+        q:
+          en: "How strict are security checks at metro stations, and what are the rules?"
+          zh: "地铁安检严格吗？有什么规定？"
+        a:
+          en: "Security is treated with great care to keep public transit incredibly safe for everyone. Every time you enter a subway or train station, your bags will pass through a quick X-ray scanner. To avoid any minor delays, remember not to pack small pocket knives or flammable aerosols (like spray sunscreens). Also, ensure your portable power banks are clearly labeled with their capacity specifications (under 100Wh or 20000mAh is the standard global airline limit)."
+          zh: "公共交通的安检很认真，这也是为了让大家出行更安心。每次进地铁站或火车站，行李都要过一次 X 光机，速度很快。想少点耽搁：别随身带小刀，也别带喷雾防晒这类易燃气压罐。另外，充电宝上要有清晰的容量标识（不超过 100Wh 或 20000mAh，这也是国际通行的航空标准）。"
+      - id: "faq-safety"
+        q:
+          en: "Is China safe for solo female travelers and late-night walking?"
+          zh: "女性独自旅行、夜间出行安全吗？"
+        a:
+          en: "Generally speaking, China has earned a wonderful global reputation as one of the most secure destinations for international travelers, including solo women. Violent street crime is exceptionally rare, and most urban centers remain vibrant and well-lit long after sunset. However, traveling through an unfamiliar landscape always requires practical mindfulness. Because English isn't universally spoken outside major hubs and digital navigation can occasionally twist or glitch for foreign phones, wandering deep into unfamiliar, non-touristy outskirts alone at night can leave you feeling disoriented or isolated. For the most fulfilling and relaxing evening experience—whether you are hoping to explore night markets or sample late-night street food—we highly recommend joining a small guided group, sticking to major pedestrian districts, or exploring with fellow travelers. Having a local guide or a travel companion not only smooths over any sudden language barriers but allows you to dive into the rich nocturnal culture with absolute comfort and confidence."
+          zh: "总体来说，在国际旅行者（包括独自出行的女性）心中，中国一直是全球最安全的目的地之一。街头暴力犯罪极为罕见，大多数城市中心入夜后依然灯火通明、人气不减。不过，在陌生的地方旅行，多少还是需要一点实际的警觉：主要城市之外英语并不通用，外国手机的导航偶尔也会出偏差或失灵，深夜独自走进游客罕至的城郊深处，难免会让人有些转向、甚至孤立无援。想要一个尽兴又放松的夜晚——无论你是想逛夜市，还是尝尝深夜街头小吃——我们都强烈建议加入小规模的向导团、待在主要的步行街区，或与旅伴结伴探索。有本地向导或旅伴在身边，不仅能随时化解语言障碍，更能让你以最从容、最安心的姿态，沉浸到这片丰富的夜色文化里。"

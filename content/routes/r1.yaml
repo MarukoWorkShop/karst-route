@@ -1,0 +1,50 @@
+# 路线卡片 · r1
+# 改名称、价格、卖点、封面。逐日行程请改 content/itineraries/r1.yaml
+# cover 只写 public 下的相对路径，例如 tours/r1-kunming-exit.jpg
+
+src: zh   # 原文语言。只改这种语言；其它语言上线前补齐
+
+cover: "tours/r1-kunming-exit.jpg"
+badge:
+  en: "ROUTE 01"
+  zh: "路线一"
+name:
+  en: "The Three Realms Traverse"
+  zh: "三境溯游"
+tagline:
+  en: "A 14-day overland journey from the Gulf to the Plateau"
+  zh: "从北部湾到云贵高原的 14 日跨国纪实"
+regions:
+  en: "Nanning · Ha Long · Yunnan"
+  zh: "南宁 · 下龙 · 云南建水 / 弥勒 / 昆明"
+feature:
+  en: "An epic traverse. Two nights on Ha Long Bay, a slow ferry to Cat Ba, then the century-old metre-gauge from Hai Phong into Hanoi. Sapa’s terraces get a full day — Fansipan in the morning, Cat Cat in the afternoon — before the Hekou crossing into Yunnan’s old towns. The arc is coastal and vivid first, then highland and still."
+  zh: "这是一条史诗级的「穿越」线。下龙湾连住两晚正经出海，再轮渡吉婆岛；海防百年米轨傍晚驶入河内。沙坝给足一整天：上午番西邦，下午猫猫村，再经河口进入云南建水、普者黑。情绪从湿热的海慢慢走到高远的高原。"
+days:
+  en: "14 days"
+  zh: "14 日"
+entry:
+  en: "Nanning"
+  zh: "南宁"
+exit:
+  en: "Kunming"
+  zh: "昆明"
+audience:
+  en: "Adventure"
+  zh: "探险"
+price:
+  en: "from $1,890 / person"
+  zh: "¥12,800–18,600 / 人"
+included:
+  - "transport"
+  - "lodging"
+  - "tickets"
+  - "meals"
+  - "guide"
+  - "visaAssist"
+excluded:
+  - "intlFlights"
+  - "visaFee"
+  - "personal"
+  - "optional"
+  - "tips"

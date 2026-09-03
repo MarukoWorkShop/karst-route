@@ -1,0 +1,55 @@
+# 关于我们 About Us
+# 公司介绍、三点摘要、资质与保障
+
+src: zh   # 原文语言。只改这种语言；其它语言上线前补齐
+
+kicker:
+  en: "About Us"
+  zh: "关于我们"
+name:
+  en: "Leisure Time International Travel Service"
+  zh: "有闲旅行"
+role:
+  en: "Bespoke Luxury Travel Across China"
+  zh: "中国全域高端定制旅行服务商"
+body1:
+  en: "We specialize in curated private journeys, immersive themed expeditions, and premium corporate incentive travel. Our signature approach seamlessly weaves iconic landmarks with ultra-exclusive, off-the-beaten-path experiences."
+  zh: "我们专注于高端私人定制、主题深度探索及企业奖励旅游，致力于将经典地标与隐秘奢华的小众体验完美融合。"
+body2Lead:
+  en: "Trust Built on Firsthand Perfection"
+  zh: "因为严苛，所以信任"
+body2:
+  en: "We strictly adhere to our ethos—never design a journey we haven't personally experienced. Our specialists scout the field year-round, meticulously vetting every detail. This dedication has allowed us to amass an elite portfolio of China's finest luxury resources. By continuously pioneering innovative itineraries and leveraging rare, insider access, we craft unrivaled, bespoke journeys for the discerning traveler."
+  zh: "我们坚持“不踩线，不设计”的原则，所有行程均由资深定制师常年亲赴一线实地考察。凭借匠心打磨的极致细节，我们建立起庞大的顶级奢华资源库。通过不断创新创意行程，我们用最稀缺、最顶尖的本土资源，为您编织独一无二的中国传奇之旅。"
+points:
+  - en: "Private journeys · themed expeditions · incentive travel"
+    zh: "高端私人定制·主题深度·企业奖励"
+  - en: "Never design a journey we haven't experienced"
+    zh: "不踩线，不设计"
+  - en: "Elite luxury and rare resources"
+    zh: "顶级奢华与稀缺资源"
+credsTitle:
+  en: "Licensed, insured, accountable"
+  zh: "资质与保障"
+credsSub:
+  en: "Every booking runs through our licensed agency — documented, insured, and with a cancellation policy you can read before you pay."
+  zh: "每一单都由持证旅行社承接：资质可查、含保险、退改政策在付款前就能看清。"
+creds:
+  - icon: "📜"
+    en: "Licensed travel agency · business registration on file"
+    zh: "旅行社业务经营许可证 · 营业执照"
+  - icon: "🎓"
+    en: "Nationally licensed guides on every departure"
+    zh: "全员持证向导"
+  - icon: "🛡️"
+    en: "Travel accident insurance on every booking"
+    zh: "每单含旅游意外险"
+  - icon: "↩️"
+    en: "Free cancellation or date change up to 30 days out"
+    zh: "出发前 30 天免费取消 / 改期"
+  - icon: "📈"
+    en: "8 years operating · 500+ travellers served"
+    zh: "8 年运营 · 服务 500+ 位旅行者"
+  - icon: "🎙️"
+    en: "Covered by independent travel media"
+    zh: "独立旅行媒体报道"

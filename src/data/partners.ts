@@ -1,4 +1,5 @@
 import type { Tx } from "@/types";
+import { overlayPartners } from "@/content/partners";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
 
@@ -18,7 +19,7 @@ export type Partner = {
   links: PartnerLink[];
 };
 
-export const partners: Partner[] = [
+const fallbackPartners: Partner[] = [
   {
     name: L("Chaoyang Post Inn", "朝阳驿·建水"),
     category: L("Boutique Stay", "精品民宿"),
@@ -138,3 +139,5 @@ export const partners: Partner[] = [
     ],
   },
 ];
+
+export const partners = overlayPartners(fallbackPartners);

@@ -1,5 +1,6 @@
 import type { ThemeId, Tx } from "@/types";
 import { asset } from "@/lib/asset";
+import { overlayHeroSlides } from "@/content/hero";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
 
@@ -8,12 +9,12 @@ const L = (en: string, zh: string): Tx => ({ en, zh });
  * 避免 COS 流量扣费。恢复播放时移除该环境变量即可，无需改动代码。
  * （无视频时 Hero 会自动走 POSTER_HOLD_MS 定时轮播 poster。）
  */
-const videoOff = import.meta.env.VITE_HERO_VIDEO_OFF === "1";
+const videoOff = import.meta.env?.VITE_HERO_VIDEO_OFF === "1";
 
 /** COS / CDN root. Empty until VITE_HERO_MEDIA_BASE is set — posters still show. */
 export function heroMedia(file: string): string {
   if (/^https?:\/\//i.test(file)) return file;
-  const base = import.meta.env.VITE_HERO_MEDIA_BASE?.replace(/\/$/, "") ?? "";
+  const base = import.meta.env?.VITE_HERO_MEDIA_BASE?.replace(/\/$/, "") ?? "";
   if (!base) return "";
   return `${base}/${file.replace(/^\//, "")}`;
 }
@@ -22,7 +23,7 @@ export const heroBgm = videoOff ? "" : heroMedia("hero/bgm.mp3");
 
 const COS = "https://youxian-travel-1412422924.cos.ap-guangzhou.myqcloud.com";
 const cosUrl = (file: string) =>
-  videoOff ? "" : `${import.meta.env.DEV ? "/hero-media" : COS}/${file.replace(/^\//, "")}`;
+  videoOff ? "" : `${import.meta.env?.DEV ? "/hero-media" : COS}/${file.replace(/^\//, "")}`;
 
 /** Full-bleed video slide. Poster holds the first paint; video URL comes from COS. */
 export type HeroSlide = {
@@ -36,7 +37,7 @@ export type HeroSlide = {
   intro: Tx;
 };
 
-export const heroSlides: HeroSlide[] = [
+const fallbackSlides: HeroSlide[] = [
   {
     id: "wild",
     video: cosUrl("videos/1.mp4"),
@@ -92,3 +93,5 @@ export const heroSlides: HeroSlide[] = [
     ),
   },
 ];
+
+export const heroSlides = overlayHeroSlides(fallbackSlides);

@@ -1,5 +1,6 @@
 import type { DayStop, RouteId, Tx } from "@/types";
 import { asset } from "@/lib/asset";
+import { overlayItineraries } from "@/content/itineraries";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
 
@@ -109,7 +110,7 @@ function stamp(block: DayStop[], startDay: number): DayStop[] {
   return block.map((d, i) => ({ ...d, day: startDay + i }));
 }
 
-export const routes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
+const fallbackRoutes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
   r1: {
     id: "r1",
     days: [
@@ -666,3 +667,5 @@ export const routes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
     ],
   },
 };
+
+export const routes = overlayItineraries(fallbackRoutes);

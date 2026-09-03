@@ -1,0 +1,22 @@
+# 用户评价 · James R.
+# route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg
+
+src: en   # 原文语言。只改这种语言；其它语言上线前补齐
+
+flag: "🇬🇧"
+name: "James R."
+country: "London"
+route: "r1"
+rating: 5
+date: "2024-10"
+short:
+  en: "Genuinely one of the best-organised trips I've taken. The overnight train from Sapa was a highlight."
+  zh: "组织得极好。沙坝出发的过夜火车是亮点。"
+full:
+  en: "I've travelled extensively, but the logical design of this itinerary stood out — it doesn't just string sights together, it tells a story from coast to plateau. The overnight metre-gauge train was an unexpected joy. Watching mountains through the window from a swaying bunk, everything slows down. The Yunnan section was my personal favourite — Jianshui's streets at 6am have an uncanny quiet."
+  zh: "我去过很多地方，但这次路线设计的逻辑感让我印象深刻——它不是简单地把景点串起来，而是真的讲了一个从沿海到高原的故事。夜间米轨火车是意外之喜，在摇晃的卧铺上看窗外的山，整个人都慢下来了。云南段是我个人最喜欢的部分，建水的街道在清晨六点有一种不可思议的安静。"
+photos:
+  - "destinations/train.jpg"
+  - "destinations/sapa.jpg"
+  - "destinations/jianshui.jpg"
+  - "destinations/kunming.jpg"

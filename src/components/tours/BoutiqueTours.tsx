@@ -37,6 +37,12 @@ export function BoutiqueTours({
       exit: c[`${id}Exit`],
       audience: c[`${id}For`],
       price: f.price,
+      cover:
+        id === "r1"
+          ? "tours/r1-kunming-exit.jpg"
+          : id === "r2"
+            ? "tours/r2-nanning-loop.jpg"
+            : "destinations/detian.jpg",
       included: [...f.included],
       excluded: [...f.excluded],
     };
@@ -53,7 +59,7 @@ export function BoutiqueTours({
         <div className="grid gap-5 md:grid-cols-2 md:gap-6">
           <RouteCard
             routeId="r1"
-            src={asset("/tours/r1-kunming-exit.jpg")}
+            src={asset(`/${c1.cover}`)}
             content={c1}
             active={route === "r1"}
             onView={() => onPick("r1")}
@@ -61,7 +67,7 @@ export function BoutiqueTours({
           />
           <RouteCard
             routeId="r2"
-            src={asset("/tours/r2-nanning-loop.jpg")}
+            src={asset(`/${c2.cover}`)}
             content={c2}
             active={route === "r2"}
             onView={() => onPick("r2")}
@@ -69,7 +75,7 @@ export function BoutiqueTours({
           />
           <RouteCard
             routeId="r3"
-            src={asset("/destinations/detian.jpg")}
+            src={asset(`/${c3.cover}`)}
             content={c3}
             active={route === "r3"}
             onView={() => onPick("r3")}

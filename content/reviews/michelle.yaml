@@ -1,0 +1,21 @@
+# 用户评价 · Michelle T.
+# route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg
+
+src: en   # 原文语言。只改这种语言；其它语言上线前补齐
+
+flag: "🇸🇬"
+name: "Michelle T."
+country: "Singapore"
+route: "r2"
+rating: 5
+date: "2025-01"
+short:
+  en: "The border crossing was seamless, and our guide's knowledge of local history was remarkable."
+  zh: "过境出乎意料地顺利，向导对当地历史的了解令人佩服。"
+full:
+  en: "I thought the border crossing would be complicated, but the guide handled everything. The Sapa morning was the trip's highlight — trekking through mist felt like stepping into another world. I got addicted to Vietnamese coffee and have been sourcing beans to recreate it at home. Exceptional value overall. I'll recommend this to every friend who wants a deep travel experience."
+  zh: "我以为跨境会很麻烦，但向导处理了一切。沙坝的早晨是整个旅程的亮点——我们在迷雾中徒步，感觉就像走进了另一个世界。越南咖啡让我上瘾了，已经在网上找了好几种豆子回来复刻。总体上性价比极高，会推荐给所有想要深度游的朋友。"
+photos:
+  - "destinations/sapa.jpg"
+  - "destinations/hanoi.jpg"
+  - "destinations/catba.jpg"

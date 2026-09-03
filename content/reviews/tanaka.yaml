@@ -1,0 +1,22 @@
+# 用户评价 · 田中 美咲
+# route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg
+
+src: en   # 原文语言。只改这种语言；其它语言上线前补齐
+
+flag: "🇯🇵"
+name: "田中 美咲"
+country: "東京"
+route: "r2"
+rating: 5
+date: "2025-03"
+short:
+  en: "The guide's care and professionalism moved me. Sapa's terraces will stay with me forever."
+  zh: "向导的细心和专业让我非常感动，沙坝的梯田让我终生难忘。"
+full:
+  en: "Three months have passed since the trip ended, but I still think about that Sapa morning — clouds rising from the valley, the terraces lighting up one layer at a time. Our guide brought us to a viewpoint with no other tourists, saying it was his secret spot. Because of moments like that, the whole journey felt like being genuinely cared for. I will definitely return."
+  zh: "旅行结束后已经过去了三个月，但我还是会时常想起沙坝那个清晨——云从山谷里升起来，梯田在光里一层一层地亮起来。向导阿伟提前带我们去了一个没有其他游客的观景点，说那是他的私藏。正因如此，整个旅程有一种被善待的感觉。一定会再来。"
+photos:
+  - "destinations/sapa.jpg"
+  - "destinations/guantang.jpg"
+  - "destinations/jianshui.jpg"
+  - "destinations/puzhehei.jpg"

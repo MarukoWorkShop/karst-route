@@ -1,5 +1,6 @@
 import type { RouteId, Tx } from "@/types";
 import { asset } from "@/lib/asset";
+import { overlayReviews, reviewRouteId } from "@/content/reviews";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
 
@@ -19,7 +20,7 @@ export type TravelerReview = {
 const r1 = L("Route 1 · 14 days", "路线一 · 14日");
 const r2 = L("Route 2 · 10 days", "路线二 · 10日");
 
-export const travelerReviews: TravelerReview[] = [
+const fallbackReviews: TravelerReview[] = [
   {
     id: "lin",
     flag: "🇨🇳",
@@ -202,6 +203,8 @@ export const travelerReviews: TravelerReview[] = [
   },
 ];
 
+export const travelerReviews = overlayReviews(fallbackReviews);
+
 /** 全站聚合评分（用于信任条与首屏社会证明） */
 export const reviewStats = {
   count: travelerReviews.length,
@@ -211,8 +214,5 @@ export const reviewStats = {
 
 /** 某条路线下的全部评价（用于路线卡片显示评价条数） */
 export function reviewsForRoute(routeId: RouteId): TravelerReview[] {
-  // r3 目前还没有评价，返回空（卡片会自动隐藏评价条数）
-  if (routeId === "r1") return travelerReviews.filter((r) => r.route === r1);
-  if (routeId === "r2") return travelerReviews.filter((r) => r.route === r2);
-  return [];
+  return travelerReviews.filter((r) => reviewRouteId(r) === routeId);
 }

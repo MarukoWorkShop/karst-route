@@ -1,0 +1,63 @@
+# 首页 Hero 轮播
+# video 填 COS 对象路径，例如 videos/1.mp4；poster 填 destinations/xxx.jpg
+# themeId 只能是 wild / flavors / villages / locals
+
+src: zh   # 原文语言。只改这种语言；其它语言上线前补齐
+
+slides:
+  - id: "wild"
+    video: "videos/1.mp4"
+    poster: "destinations/chongzuo-mijing.jpg"
+    pos: "center 42%"
+    themeId: "wild"
+    alt:
+      en: "Karst peaks in mist"
+      zh: "云雾中的喀斯特峰丛"
+    title:
+      en: "Chongzuo's Hidden Realm"
+      zh: "崇左秘境"
+    intro:
+      en: "Peaks half-lost in cloud; a river with no guidebook name. Raft the bank — Chongzuo as a hidden valley, not a viewpoint."
+      zh: "峰丛藏进云里，江水绿得还没被写进路书。竹筏贴岸走，秘境才刚刚开始。"
+  - id: "wild-raft"
+    video: "videos/2-hero.mp4"
+    poster: "destinations/hero-shot-2.jpg"
+    pos: "center 55%"
+    themeId: "wild"
+    alt:
+      en: "A bamboo raft drifting down the Li River"
+      zh: "竹筏顺漓江而下"
+    title:
+      en: "Drifting the Li River"
+      zh: "漓江竹筏"
+    intro:
+      en: "A raft slips downstream between karst peaks — you don't have to find the way, the river already knows it."
+      zh: "竹筏顺流而下，两岸峰丛替你指路。不用找路，水知道该怎么走。"
+  - id: "wild-air"
+    video: "videos/3.mp4"
+    poster: "destinations/hero-shot-3.jpg"
+    pos: "center 50%"
+    themeId: "wild"
+    alt:
+      en: "Aerial view of karst peaks"
+      zh: "航拍喀斯特峰丛"
+    title:
+      en: "Above the Karst"
+      zh: "峰丛之上"
+    intro:
+      en: "The drone climbs and the range opens up — fold after fold of green, and no road in sight."
+      zh: "无人机拉高，山一层层展开：满眼是绿，看不见路。"
+  - id: "villages-living"
+    video: "videos/4.mp4"
+    poster: "destinations/hero-shot-4.jpg"
+    pos: "center 50%"
+    themeId: "villages"
+    alt:
+      en: "A village tucked among the hills"
+      zh: "山间的村落"
+    title:
+      en: "The Living Village"
+      zh: "村子还醒着"
+    intro:
+      en: "Stone lanes, timber houses and kitchen smoke — the village still keeps its own hours."
+      zh: "石头路、木楼、灶间的烟火。村子还按自己的时辰过日子。"

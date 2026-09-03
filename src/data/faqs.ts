@@ -1,11 +1,12 @@
 import type { Tx } from "@/types";
+import { overlayFaqs } from "@/content/faqs";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
 
 export type FaqItem = { id: string; q: Tx; a: Tx };
 export type FaqGroup = { id: string; label: Tx; items: FaqItem[] };
 
-export const faqGroups: FaqGroup[] = [
+const fallbackFaqGroups: FaqGroup[] = [
   {
     id: "money",
     label: L("Payment & Money", "支付与货币"),
@@ -260,6 +261,8 @@ export const faqGroups: FaqGroup[] = [
     ],
   },
 ];
+
+export const faqGroups: FaqGroup[] = overlayFaqs(fallbackFaqGroups);
 
 /** 扁平列表：供 hash 锚点定位与旧引用使用 */
 export const faqs: FaqItem[] = faqGroups.flatMap((g) => g.items);

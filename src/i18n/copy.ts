@@ -1,6 +1,13 @@
-export type Locale = "en" | "zh";
+/** Site locales currently served. Keep in sync with content/langs.yaml. */
+export const LOCALES = ["en", "zh"] as const;
+export type Locale = (typeof LOCALES)[number];
 
-export type Tx = { en: string; zh: string };
+export type Tx = {
+  /** Language the author wrote. Other keys are translations and may be filled later. */
+  src?: string;
+  en: string;
+  zh: string;
+};
 
 export const copy = {
   nav: {
@@ -547,7 +554,15 @@ export const copy = {
 } as const;
 
 export function t(tx: Tx, locale: Locale): string {
-  return tx[locale];
+  const direct = tx[locale];
+  if (typeof direct === "string" && direct.trim()) return direct;
+  if (tx.src && tx.src !== locale) {
+    const native = tx[tx.src as Locale];
+    if (typeof native === "string" && native.trim()) return native;
+  }
+  if (tx.en.trim()) return tx.en;
+  if (tx.zh.trim()) return tx.zh;
+  return "";
 }
 
 export function pathFor(locale: Locale): string {

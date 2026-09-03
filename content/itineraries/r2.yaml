@@ -1,0 +1,273 @@
+# 逐日行程 · r2
+# 每一天：城市、住宿、交通、餐饮、活动 bullets、主题 themes
+# photos 只写 public 下的相对路径，例如 destinations/nanning.jpg
+
+src: zh   # 原文语言。只改这种语言；其它语言上线前补齐
+
+days:
+  - day: 1
+    city:
+      en: "Nanning"
+      zh: "南宁"
+    stay:
+      en: "Yong River, before the border"
+      zh: "邕江边，过关前夜"
+    stayKind: "hotel"
+    placeId: "nanning"
+    transport:
+      en: "Airport pickup, then a brief city night"
+      zh: "接机，然后一个短的城市夜"
+    lodging:
+      en: "Riverside garden stay"
+      zh: "江景花园酒店"
+    dining:
+      - en: "Lunch: depending on arrival"
+        zh: "午餐：看抵达时间"
+      - en: "Dinner: snail noodles on Zhongshan Road"
+        zh: "晚餐：中山路螺蛳粉"
+    bullets:
+      - en: "Brief city night"
+        zh: "南宁夜"
+      - en: "Early border next day"
+        zh: "次日过关"
+    themes:
+      - "locals"
+  - day: 2
+    city:
+      en: "Cat Ba Island"
+      zh: "吉婆岛"
+    stay:
+      en: "Harbour night on the island"
+      zh: "岛上港边过夜"
+    stayKind: "hotel"
+    placeId: "catba"
+    drive:
+      en: "Full day transit"
+      zh: "全天交通"
+    transport:
+      en: "Cross at Mong Cai, then ferry to Cat Ba — full day, ~8 h door to door"
+      zh: "芒街口岸通关，转轮渡赴吉婆岛；全程约 8 小时"
+    lodging:
+      en: "Bay-facing island hotel"
+      zh: "看湾的小岛酒店"
+    dining:
+      - en: "Lunch: border-town noodles on the way"
+        zh: "午餐：途中口岸小城的一碗面"
+      - en: "Dinner: seafood on the harbour"
+        zh: "晚餐：港边海鲜"
+    bullets: []
+    themes:
+      - "wild"
+  - day: 3
+    city:
+      en: "Hanoi"
+      zh: "河内"
+    stay:
+      en: "Old Quarter, first night"
+      zh: "古城，第一夜"
+    stayKind: "hotel"
+    placeId: "hanoi"
+    transport:
+      en: "Road from Hai Phong / Cat Ba, ~2.5 h"
+      zh: "海防 / 吉婆岛公路进城，约 2.5 小时"
+    lodging:
+      en: "French-quarter hide near the lake"
+      zh: "湖边法租界小住"
+    dining:
+      - en: "Lunch: on the road into the city"
+        zh: "午餐：进城途中"
+      - en: "Dinner: Old Quarter street table"
+        zh: "晚餐：古城街头一桌"
+    bullets:
+      - en: "36 Streets + cyclo, Train Street"
+        zh: "三十六鼓街含三轮车，打卡火车街"
+      - en: "West Lake night bus"
+        zh: "观光巴士夜游西湖"
+    themes:
+      - "flavors"
+      - "locals"
+  - day: 4
+    city:
+      en: "Hanoi"
+      zh: "河内"
+    stay:
+      en: "Old Quarter, second night"
+      zh: "古城，第二夜"
+    stayKind: "hotel"
+    placeId: "hanoi"
+    transport:
+      en: "On foot and cyclo in the Old Quarter"
+      zh: "古城步行 + 三轮车"
+    lodging:
+      en: "Same restored house — no packing"
+      zh: "同一栋修好的老房子，不用收行李"
+    dining:
+      - en: "Lunch: lotus buffet"
+        zh: "午餐：莲花自助餐"
+      - en: "Dinner: egg coffee, then a stall you pick"
+        zh: "晚餐：蛋咖啡，再选一摊"
+    bullets:
+      - en: "Ho Chi Minh & Ba Dinh"
+        zh: "胡志明纪念堂、巴亭广场"
+      - en: "Free time or the market"
+        zh: "自由活动或逛河内菜市场"
+    themes:
+      - "flavors"
+  - day: 5
+    city:
+      en: "Sapa"
+      zh: "沙坝"
+    stay:
+      en: "Terraces above the town"
+      zh: "镇上看田"
+    stayKind: "hotel"
+    placeId: "sapa"
+    drive:
+      en: "Road · 5–6 h"
+      zh: "公路约 5–6 小时"
+    transport:
+      en: "Private car Hanoi → Sapa, 5–6 h"
+      zh: "专车河内至沙坝，约 5–6 小时"
+    lodging:
+      en: "Terrace-facing mountain lodge"
+      zh: "看田的山居"
+    dining:
+      - en: "Lunch: on the mountain road"
+        zh: "午餐：山路途中"
+      - en: "Dinner: highland hot pot"
+        zh: "晚餐：高地热锅"
+    bullets:
+      - en: "Rice terraces"
+        zh: "沙坝梯田"
+      - en: "Cat Cat village"
+        zh: "猫猫村"
+    themes:
+      - "villages"
+  - day: 6
+    city:
+      en: "Overnight train"
+      zh: "米轨过夜"
+    stay:
+      en: "Sleep on the metre-gauge"
+      zh: "住在米轨上"
+    stayKind: "train"
+    placeId: "train"
+    drive:
+      en: "Overnight metre-gauge"
+      zh: "米轨过夜列车"
+    transport:
+      en: "Fansipan cable up, then evening metre-gauge departure"
+      zh: "上午番西邦缆车上山，晚上米轨发车过夜"
+    lodging:
+      en: "Soft sleeper on the Yunnan–Vietnam line"
+      zh: "滇越米轨软卧"
+    dining:
+      - en: "Lunch: Sapa before the cable"
+        zh: "午餐：上山前在沙坝"
+      - en: "Dinner: simple meal before boarding"
+        zh: "晚餐：上车前简单一顿"
+    bullets: []
+    themes:
+      - "wild"
+  - day: 7
+    city:
+      en: "Guantang"
+      zh: "观堂"
+    stay:
+      en: "Two-night village base"
+      zh: "村里连住的第一晚"
+    stayKind: "base"
+    placeId: "guantang"
+    transport:
+      en: "Lang Son → Friendship Pass crossing, then Longzhou (~1.5 h)"
+      zh: "谅山至友谊关出境，再赴龙州（约 1.5 小时）"
+    lodging:
+      en: "Guantang courtyard"
+      zh: "观堂的院子"
+    dining:
+      - en: "Lunch: after the pass"
+        zh: "午餐：过关之后"
+      - en: "Dinner: Zhuang table at the courtyard"
+        zh: "晚餐：院子里的壮家饭"
+    bullets:
+      - en: "Lang Son & Dong Dang fair"
+        zh: "谅山、同登庙会"
+    themes:
+      - "locals"
+      - "villages"
+  - day: 8
+    city:
+      en: "Guantang"
+      zh: "观堂"
+    stay:
+      en: "Same courtyard, no suitcase"
+      zh: "同一院子，不拎箱子"
+    stayKind: "base"
+    placeId: "guantang"
+    blurb:
+      en: "The second morning belongs to the cane sea — bicycles between the stalks, then a walk to Tianqin village where two strings carry a song older than the border line. No suitcase, no plan beyond the light."
+      zh: "第二天早晨交给蔗海——蔗丛间骑车，再步行去天琴寨，两根弦挑着一支比国界更老的歌。不拎箱子，除了光，没别的计划。"
+    transport:
+      en: "Bicycle in the cane, walk to Tianqin village"
+      zh: "蔗海骑行，步行去天琴寨"
+    lodging:
+      en: "Guantang courtyard — second night"
+      zh: "观堂的院子 · 第二晚"
+    dining:
+      - en: "Lunch: village kitchen"
+        zh: "午餐：村里的厨房"
+      - en: "Dinner: oil tea and whatever came from the field"
+        zh: "晚餐：油茶，和当天地里来的东西"
+    bullets:
+      - en: "Free walk"
+        zh: "自由散步"
+    themes:
+      - "villages"
+      - "wild"
+  - day: 9
+    city:
+      en: "Nanning"
+      zh: "南宁"
+    stay:
+      en: "Back in the garden city"
+      zh: "回到绿城"
+    stayKind: "hotel"
+    placeId: "chongzuo"
+    transport:
+      en: "Detian by car (~2 h), then return to Nanning (~3.5 h)"
+      zh: "专车赴德天（约 2 小时），再返回南宁（约 3.5 小时）"
+    lodging:
+      en: "Nanning riverside hotel"
+      zh: "南宁江景酒店"
+    dining:
+      - en: "Lunch: river fish at Detian"
+        zh: "午餐：德天河鱼"
+      - en: "Dinner: Nanning, whatever you still want"
+        zh: "晚餐：南宁，想吃什么吃什么"
+    bullets:
+      - en: "Mingshi Pastoral"
+        zh: "明仕田园"
+    themes:
+      - "wild"
+  - day: 10
+    city:
+      en: "Depart"
+      zh: "结束"
+    stay:
+      en: "Nanning"
+      zh: "南宁"
+    stayKind: "hotel"
+    transport:
+      en: "Hotel to Nanning Wuxu Airport, ~1 h"
+      zh: "酒店送至吴圩机场，约 1 小时"
+    lodging:
+      en: "Morning checkout"
+      zh: "早晨退房"
+    dining:
+      - en: "Breakfast at the hotel"
+        zh: "酒店早餐"
+    bullets:
+      - en: "Ask us for extra night"
+        zh: "需要加住告诉我们"
+    themes:
+      - "locals"

@@ -1,0 +1,21 @@
+# 用户评价 · Camille D.
+# route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg
+
+src: en   # 原文语言。只改这种语言；其它语言上线前补齐
+
+flag: "🇫🇷"
+name: "Camille D."
+country: "Paris"
+route: "r1"
+rating: 5
+date: "2024-09"
+short:
+  en: "A trip that truly changes your perspective. The Yunnan villages are magnificent."
+  zh: "真正改变视角的一趟。云南的村子美得安静。"
+full:
+  en: "The French can be particular about travel quality — but this trip gave me nothing to complain about. Jianshui's streets reminded me of certain towns in southern France, carrying that sense of layered time. The guide took us to a working pottery workshop where I even tried the wheel myself. The French traces in Vietnam also felt strangely familiar — those old cafés and streets recalled a history I'd half-forgotten."
+  zh: "法国人对旅行品质有些苛刻，但这次我没有任何可以抱怨的。建水古城的街道让我想起了某些南法小城，有一种时间感。当地向导带我们参观了一个正在进行手工陶器制作的工作坊，我甚至动手试了一下。越南段的法式痕迹也让我觉得亲切——那些旧咖啡馆和街道让我想起了一段被遗忘的历史。"
+photos:
+  - "destinations/jianshui.jpg"
+  - "destinations/mile.jpg"
+  - "destinations/kunming.jpg"

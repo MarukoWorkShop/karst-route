@@ -1,6 +1,7 @@
 import { parse } from "yaml";
 import type { RouteId, Tx } from "@/types";
 import { EXCL_LABELS, INCL_LABELS, type ExclId, type InclId } from "@/data/tourFacts";
+import { inferSrc, txOf } from "@/content/helpers";
 
 /**
  * 第一层内容解耦：路线内容写在仓库根目录的 content/routes/*.yaml，构建时同步读取。
@@ -24,6 +25,8 @@ export type RouteContent = {
   exit: Tx;
   audience: Tx;
   price: Tx;
+  /** public/ 下的相对路径，例如 tours/r1-kunming-exit.jpg */
+  cover: string;
   included: InclId[];
   excluded: ExclId[];
 };
@@ -47,17 +50,6 @@ for (const [path, raw] of Object.entries(files)) {
   }
 }
 
-function txOf(value: unknown, fallback: Tx): Tx {
-  if (value && typeof value === "object") {
-    const o = value as Record<string, unknown>;
-    return {
-      en: typeof o.en === "string" && o.en.trim() ? o.en : fallback.en,
-      zh: typeof o.zh === "string" && o.zh.trim() ? o.zh : fallback.zh,
-    };
-  }
-  return fallback;
-}
-
 /** 只保留合法 id，过滤掉 YAML 里写错的值 */
 function idsOf<T extends string>(
   value: unknown,
@@ -76,21 +68,27 @@ function idsOf<T extends string>(
 const VALID_INCL = Object.keys(INCL_LABELS);
 const VALID_EXCL = Object.keys(EXCL_LABELS);
 
+function coverOf(value: unknown, fallback: string): string {
+  return typeof value === "string" && value.trim() ? value.trim().replace(/^\//, "") : fallback;
+}
+
 /** 取某条路线的内容：YAML 优先，逐字段回退到 fallback */
 export function routeContent(id: RouteId, fallback: RouteContent): RouteContent {
   const src = parsed[id];
   if (!src) return fallback;
+  const fileSrc = inferSrc(src, "zh");
   return {
-    badge: txOf(src.badge, fallback.badge),
-    name: txOf(src.name, fallback.name),
-    tagline: txOf(src.tagline, fallback.tagline),
-    regions: txOf(src.regions, fallback.regions),
-    feature: txOf(src.feature, fallback.feature),
-    days: txOf(src.days, fallback.days),
-    entry: txOf(src.entry, fallback.entry),
-    exit: txOf(src.exit, fallback.exit),
-    audience: txOf(src.audience, fallback.audience),
-    price: txOf(src.price, fallback.price),
+    badge: txOf(src.badge, fallback.badge, fileSrc),
+    name: txOf(src.name, fallback.name, fileSrc),
+    tagline: txOf(src.tagline, fallback.tagline, fileSrc),
+    regions: txOf(src.regions, fallback.regions, fileSrc),
+    feature: txOf(src.feature, fallback.feature, fileSrc),
+    days: txOf(src.days, fallback.days, fileSrc),
+    entry: txOf(src.entry, fallback.entry, fileSrc),
+    exit: txOf(src.exit, fallback.exit, fileSrc),
+    audience: txOf(src.audience, fallback.audience, fileSrc),
+    price: txOf(src.price, fallback.price, fileSrc),
+    cover: coverOf(src.cover, fallback.cover),
     included: idsOf<InclId>(src.included, VALID_INCL, fallback.included),
     excluded: idsOf<ExclId>(src.excluded, VALID_EXCL, fallback.excluded),
   };
