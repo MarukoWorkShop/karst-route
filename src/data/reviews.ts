@@ -1,4 +1,4 @@
-import type { Tx } from "@/types";
+import type { RouteId, Tx } from "@/types";
 import { asset } from "@/lib/asset";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
@@ -201,3 +201,16 @@ export const travelerReviews: TravelerReview[] = [
     ],
   },
 ];
+
+/** 全站聚合评分（用于信任条与首屏社会证明） */
+export const reviewStats = {
+  count: travelerReviews.length,
+  average:
+    travelerReviews.reduce((sum, r) => sum + r.rating, 0) / travelerReviews.length,
+};
+
+/** 某条路线下的全部评价（用于路线卡片显示评价条数） */
+export function reviewsForRoute(routeId: RouteId): TravelerReview[] {
+  const target = routeId === "r1" ? r1 : r2;
+  return travelerReviews.filter((r) => r.route === target);
+}

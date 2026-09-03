@@ -52,6 +52,11 @@ export const copy = {
     next: { en: "Next slide", zh: "下一张" },
     soundOn: { en: "Sound on", zh: "开启音效" },
     soundOff: { en: "Sound off", zh: "关闭音效" },
+    benefits: {
+      en: "China–Vietnam overland · Private group · Licensed guide · Unhurried",
+      zh: "中越跨境 · 私人小团 · 持证向导 · 不赶路",
+    },
+    season: { en: "Departures Nov–Mar", zh: "11月–3月可出发" },
   },
   tours: {
     r1Badge: { en: "ROUTE 01", zh: "路线一" },
@@ -117,6 +122,7 @@ export const copy = {
     excluded: { en: "Not included", zh: "费用不含" },
     quote: { en: "Get a quote", zh: "获取报价" },
     quoteBar: { en: "Like this route? Get a quote now", zh: "喜欢这条线路？立刻获取报价" },
+    reviews: { en: "{n} reviews", zh: "{n} 条评价" },
   },
   experience: {
     h2: { en: "Journeys that leave a mark", zh: "让旅途真正改变你" },
@@ -457,6 +463,7 @@ export const copy = {
     err: { en: "Please fill in your email and message.", zh: "请填写邮箱与留言内容。" },
   },
   trust: {
+    rating: { en: "{avg} · {n} verified reviews", zh: "{avg} · {n} 条真实评价" },
     years: { en: "8 years operating", zh: "8 年运营" },
     travellers: { en: "500+ travellers served", zh: "服务 500+ 位旅行者" },
     guide: { en: "Licensed local guides", zh: "全程持证向导" },

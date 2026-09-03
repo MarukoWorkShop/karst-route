@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileDock } from "@/components/layout/MobileDock";
 import { Hero } from "@/components/hero/Hero";
 import { TrustBar } from "@/components/layout/TrustBar";
+import { FeaturedReview } from "@/components/reviews/FeaturedReview";
 import { BoutiqueTours } from "@/components/tours/BoutiqueTours";
 import { Timeline } from "@/components/itinerary/Timeline";
 import { Experience } from "@/components/experience/Experience";
@@ -52,6 +53,7 @@ export default function App() {
           }}
         />
         <TrustBar />
+        <FeaturedReview />
         <BoutiqueTours
           route={route}
           onPick={pickRoute}

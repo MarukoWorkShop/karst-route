@@ -4,6 +4,7 @@ import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { asset } from "@/lib/asset";
 import { EXCL_LABELS, INCL_LABELS, routeFacts } from "@/data/tourFacts";
+import { reviewsForRoute } from "@/data/reviews";
 import {
   IconClock,
   IconLanding,
@@ -96,6 +97,7 @@ function RouteCard({
 }) {
   const { t } = useLocale();
   const facts = routeFacts[routeId];
+  const reviewCount = reviewsForRoute(routeId).length;
   return (
     <article
       className={`overflow-hidden rounded-xl bg-surface text-left ${
@@ -140,13 +142,21 @@ function RouteCard({
         <Meta icon={<IconLanding className="h-4 w-4" />} label={t(copy.tours.exit)} value={exit} />
         <Meta icon={<IconUsers className="h-4 w-4" />} label={t(copy.tours.for)} value={audience} />
       </div>
-      <div className="border-t border-line bg-paper px-4 py-3">
-        <p className="text-[10px] tracking-[0.08em] text-ink-soft uppercase">
-          {t(copy.tours.priceLabel)}
-        </p>
-        <p className="mt-0.5 text-[18px] font-semibold tracking-[-0.01em] text-cta">
-          {t(facts.price)}
-        </p>
+      <div className="flex items-end justify-between gap-3 border-t border-line bg-paper px-4 py-3">
+        <div className="min-w-0">
+          <p className="text-[10px] tracking-[0.08em] text-ink-soft uppercase">
+            {t(copy.tours.priceLabel)}
+          </p>
+          <p className="mt-0.5 text-[18px] font-semibold tracking-[-0.01em] text-cta">
+            {t(facts.price)}
+          </p>
+        </div>
+        {reviewCount > 0 ? (
+          <p className="shrink-0 pb-0.5 text-[11px] text-ink-soft">
+            <span className="text-gold">★</span>{" "}
+            {t(copy.tours.reviews).replace("{n}", String(reviewCount))}
+          </p>
+        ) : null}
       </div>
       <div className="border-t border-line bg-paper px-4 py-4">
         <p className="text-[12.5px] leading-[22px] text-ink-soft">{feature}</p>
