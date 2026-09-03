@@ -27,15 +27,15 @@ export const copy = {
   toolbox: {
     title: { en: "TRAVEL TOOLS", zh: "旅行工具箱" },
     open: { en: "Open tools", zh: "打开工具箱" },
-    currency: { en: "💱 Currency", zh: "💱 汇率换算" },
+    currency: { en: "Currency", zh: "汇率换算" },
     currencySub: { en: "CNY → VND / USD", zh: "人民币 → 越南盾 / 美元" },
     rateNote: { en: "Reference rate · estimate only", zh: "参考汇率 · 仅供估算" },
-    map: { en: "🗺️ Map", zh: "🗺️ 区域地图" },
+    map: { en: "Map", zh: "区域地图" },
     mapSub: { en: "Guangxi · Yunnan · North Vietnam", zh: "广西 · 云南 · 越南北部" },
     openMaps: { en: "Open in Google Maps", zh: "在 Google 地图中打开" },
-    weather: { en: "🌤️ Weather", zh: "🌤️ 本地天气" },
+    weather: { en: "Weather", zh: "本地天气" },
     weatherNote: { en: "Best time: Nov–Mar (cool & dry)", zh: "最佳出行：11月–3月（凉季干燥）" },
-    food: { en: "🍜 Food Tips", zh: "🍜 饮食提示" },
+    food: { en: "Food Tips", zh: "饮食提示" },
     time: { en: "Time", zh: "时间" },
     timeBeijing: { en: "Beijing (UTC+8)", zh: "北京（UTC+8）" },
     timeLocal: { en: "Your time", zh: "您的时区" },
@@ -128,6 +128,11 @@ export const copy = {
     r3Tab: { en: "Route 3 · 7 Days", zh: "路线三 · 7日" },
     book: {
       readReviews: { en: "Read real traveller reviews", zh: "查看客户的真实评价" },
+      downloadRoutePdf: { en: "Download itinerary PDF", zh: "下载路书 PDF" },
+      downloadingPdf: { en: "Preparing PDF…", zh: "正在生成 PDF…" },
+      routeReviews: { en: "Read reviews for this route", zh: "查看本线路的客户实际评价" },
+      customizeQuote: { en: "Customize my plan & get a quote", zh: "定制我的方案并询价" },
+      noRouteReviews: { en: "No reviews for this route yet.", zh: "本线路暂无客户评价。" },
       readFull: { en: "Read full review →", zh: "阅读完整评价 →" },
       moreReviews: { en: "More reviews", zh: "换一批" },
       tripPhotos: { en: "Trip Photos", zh: "旅途照片" },
@@ -147,7 +152,10 @@ export const copy = {
     included: { en: "What's included", zh: "费用包含" },
     excluded: { en: "Not included", zh: "费用不含" },
     quote: { en: "Get a quote", zh: "获取报价" },
-    quoteBar: { en: "Like this route? Get a quote now", zh: "喜欢这条线路？立刻获取报价" },
+    quoteBar: {
+      en: "Like this route? View the day-by-day itinerary",
+      zh: "喜欢这条线路，点击查看路书",
+    },
     reviews: { en: "{n} reviews", zh: "{n} 条评价" },
   },
   experience: {
@@ -159,6 +167,7 @@ export const copy = {
   about: {
     kicker: { en: "About Us", zh: "关于我们" },
     name: { en: "Leisure Time International Travel Service", zh: "有闲旅行" },
+    website: { en: "Official website", zh: "前往官网" },
     role: {
       en: "Bespoke Luxury Travel Across China",
       zh: "中国全域高端定制旅行服务商",
@@ -196,32 +205,32 @@ export const copy = {
     },
     creds: [
       {
-        icon: "📜",
+        icon: "",
         en: "Licensed travel agency · business registration on file",
         zh: "旅行社业务经营许可证 · 营业执照",
       },
       {
-        icon: "🎓",
+        icon: "",
         en: "Nationally licensed guides on every departure",
         zh: "全员持证向导",
       },
       {
-        icon: "🛡️",
+        icon: "",
         en: "Travel accident insurance on every booking",
         zh: "每单含旅游意外险",
       },
       {
-        icon: "↩️",
+        icon: "",
         en: "Free cancellation or date change up to 30 days out",
         zh: "出发前 30 天免费取消 / 改期",
       },
       {
-        icon: "📈",
+        icon: "",
         en: "8 years operating · 500+ travellers served",
         zh: "8 年运营 · 服务 500+ 位旅行者",
       },
       {
-        icon: "🎙️",
+        icon: "",
         en: "Covered by independent travel media",
         zh: "独立旅行媒体报道",
       },
@@ -250,6 +259,12 @@ export const copy = {
     film: { en: "FILM", zh: "电影" },
   },
   plan: {
+    kicker: { en: "Plan your journey", zh: "行程定制" },
+    h2: { en: "Book a route or design your own", zh: "预订精品线路，或定制专属方案" },
+    h2Sub: {
+      en: "Choose a curated itinerary as-is, or build on it with our travel concierge — we reply within 24 hours.",
+      zh: "直接按现有路线出发，或在基础上深度调整；旅游管家 24 小时内回复。",
+    },
     tabBook: {
       en: "Book our boutique routes directly",
       zh: "直接预订我们的精品线路",
@@ -308,9 +323,9 @@ export const copy = {
       zh: "南宁 → 崇左（黑水河）→ 德天 → 北海 → 涠洲岛",
     },
     travelDates: { en: "Travel dates", zh: "出发时间" },
-    datePicker: { en: "📅 Pick dates", zh: "📅 选具体日期" },
-    dateText: { en: "✍️ Rough dates", zh: "✍️ 大致时间" },
-    dateBrowse: { en: "💭 Just browsing", zh: "💭 先看看" },
+    datePicker: { en: "Pick dates", zh: "选具体日期" },
+    dateText: { en: "Rough dates", zh: "大致时间" },
+    dateBrowse: { en: "Just browsing", zh: "先看看" },
     startDate: { en: "Start date", zh: "开始日期" },
     endDateAuto: { en: "End date (auto)", zh: "结束日期（自动）" },
     dateTextPh: {
@@ -407,8 +422,8 @@ export const copy = {
     rowContact: { en: "Contact", zh: "联系方式" },
     daysUnit: { en: "days", zh: "天" },
     concierge: {
-      en: "📞 Have our concierge contact me",
-      zh: "📞 请管家联系我确认更多细节",
+      en: "Have our concierge contact me",
+      zh: "请管家联系我确认更多细节",
     },
     yourName: { en: "Your name", zh: "您的姓名" },
     yourContact: {

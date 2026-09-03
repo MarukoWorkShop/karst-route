@@ -1,6 +1,10 @@
 import { useLocale } from "@/i18n/LocaleProvider";
+import { copy } from "@/i18n/copy";
 import { asset } from "@/lib/asset";
 import { about } from "@/content/about";
+import { IconExternal } from "@/components/icons";
+
+const YOUXIAN_WEBSITE = "http://cs.guilinvillage.com/DiscoverGuilin-/135.html";
 
 export function About() {
   const { t, locale } = useLocale();
@@ -14,9 +18,22 @@ export function About() {
         </p>
         {/* 标题与 LOGO 同行：LOGO 缩为小签名，紧贴标题区 */}
         <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-5">
-          <h2 className="max-w-[640px] text-[28px] leading-tight font-medium text-balance md:text-[32px]">
-            {t(about.name)}
-          </h2>
+          <div className="max-w-[640px]">
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h2 className="text-[28px] leading-tight font-medium text-balance md:text-[32px]">
+                {t(about.name)}
+              </h2>
+              <a
+                href={YOUXIAN_WEBSITE}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[12px] font-medium text-cta transition-colors hover:text-cta-press"
+              >
+                {t(copy.about.website)}
+                <IconExternal className="h-3 w-3 shrink-0" />
+              </a>
+            </div>
+          </div>
           <img
             src={asset("/brand/youxian-logo.png")}
             alt={t(about.name)}
@@ -53,9 +70,7 @@ export function About() {
                 key={cred.en}
                 className="flex items-start gap-2.5 rounded-[10px] border border-line bg-surface px-3.5 py-3"
               >
-                <span className="shrink-0 text-[15px] leading-5" aria-hidden>
-                  {cred.icon}
-                </span>
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cta" aria-hidden />
                 <span className="text-[12.5px] leading-[19px] text-ink">{t(cred)}</span>
               </li>
             ))}

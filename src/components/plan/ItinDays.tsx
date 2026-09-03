@@ -53,8 +53,8 @@ export function ItinDays({ days }: { days: BriefDay[] }) {
                   <p className="text-[12px] text-ink-soft">{day.dining.join(" · ")}</p>
                 ) : null}
                 {day.drive ? (
-                  <div className="mt-1 inline-flex items-center gap-1 rounded-md bg-bone px-2.5 py-1 text-[11.5px] text-ink-soft">
-                    🚗 {day.drive}
+                  <div className="mt-1 inline-flex items-center rounded-md bg-bone px-2.5 py-1 text-[11.5px] text-ink-soft">
+                    {day.drive}
                   </div>
                 ) : null}
               </div>

@@ -371,13 +371,22 @@ async function main() {
       grouped[route].push(page);
     }
     for (const id of ["r1", "r2", "r3"]) {
-      const pages = grouped[id];
+      let pages = grouped[id];
       if (!pages.length) continue;
       const rel = `content/itineraries/${id}.yaml`;
       if (!takeNotion(pages, rel)) continue;
       const prevDoc = existingYaml(rel);
       const prevByDay = new Map((Array.isArray(prevDoc.days) ? prevDoc.days : []).map((d) => [Number(d.day), d]));
       pages.sort((a, b) => Number(prop(a, "day") ?? 0) - Number(prop(b, "day") ?? 0));
+      const deduped = new Map();
+      for (const page of pages) {
+        const dayNum = Number(prop(page, "day")) || 0;
+        const prev = deduped.get(dayNum);
+        if (!prev || Date.parse(page.last_edited_time) >= Date.parse(prev.last_edited_time)) {
+          deduped.set(dayNum, page);
+        }
+      }
+      pages = [...deduped.values()].sort((a, b) => Number(prop(a, "day") ?? 0) - Number(prop(b, "day") ?? 0));
       const fileSrc = text(pages[0], "src") || prevDoc.src || "zh";
       const dayObjs = pages.map((page) => {
         const dayNum = Number(prop(page, "day")) || 0;

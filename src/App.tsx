@@ -4,8 +4,6 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileDock } from "@/components/layout/MobileDock";
 import { Hero } from "@/components/hero/Hero";
-import { TrustBar } from "@/components/layout/TrustBar";
-import { FeaturedReview } from "@/components/reviews/FeaturedReview";
 import { BoutiqueTours } from "@/components/tours/BoutiqueTours";
 import { Timeline } from "@/components/itinerary/Timeline";
 import { Experience } from "@/components/experience/Experience";
@@ -38,7 +36,7 @@ export default function App() {
     return () => io.disconnect();
   }, []);
 
-  function pickRoute(id: RouteId) {
+  function openItinerary(id: RouteId) {
     setRoute(id);
     go("itinerary");
   }
@@ -52,27 +50,26 @@ export default function App() {
             setIntent("custom");
           }}
         />
-        <TrustBar />
-        <FeaturedReview />
         <BoutiqueTours
           route={route}
-          onPick={pickRoute}
-          onQuote={(id) => {
-            setRoute(id);
-            setIntent("boutique");
-            go("plan");
-          }}
+          onSelect={setRoute}
+          onOpenItinerary={openItinerary}
         />
         <Timeline
           routeId={route}
           onRoute={(id) => {
             setRoute(id);
           }}
+          onPlanQuote={(id) => {
+            setRoute(id);
+            setIntent("boutique");
+            go("plan");
+          }}
         />
         <Experience openId={experienceOpen} onOpenId={setExperienceOpen} />
         <About />
-        <Explore />
         <PlanSection tab={intent} onTab={setIntent} route={route} />
+        <Explore />
         <Faq />
         <Partners />
       </main>

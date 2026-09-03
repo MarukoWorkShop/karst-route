@@ -10,10 +10,10 @@ const FALLBACK_RATES: Record<Cur, number> = {
   CNY: 1 / 0.138,
   VND: 3420 / 0.138,
 };
-const CUR_META: Record<Cur, { flag: string; symbol: string }> = {
-  CNY: { flag: "🇨🇳", symbol: "¥" },
-  USD: { flag: "🇺🇸", symbol: "$" },
-  VND: { flag: "🇻🇳", symbol: "₫" },
+const CUR_META: Record<Cur, { symbol: string }> = {
+  CNY: { symbol: "¥" },
+  USD: { symbol: "$" },
+  VND: { symbol: "₫" },
 };
 const ORDER: Cur[] = ["CNY", "USD", "VND"];
 
@@ -32,10 +32,10 @@ const MAP_PLACES = [
 ] as const;
 
 const WEATHER = [
-  { region: { en: "Kunming", zh: "昆明" }, icon: "🌤️", temp: "18–24°C", desc: { en: "Spring year-round", zh: "四季如春" } },
-  { region: { en: "Nanning", zh: "南宁" }, icon: "⛅", temp: "24–30°C", desc: { en: "Humid, use sunscreen", zh: "湿热，注意防晒" } },
-  { region: { en: "Ha Long", zh: "下龙" }, icon: "🌊", temp: "22–28°C", desc: { en: "Sea mist, bring a jacket", zh: "海上多雾，备一件外套" } },
-  { region: { en: "Sapa", zh: "沙坝" }, icon: "🌫️", temp: "14–20°C", desc: { en: "Cool & misty", zh: "凉爽多雾" } },
+  { region: { en: "Kunming", zh: "昆明" }, temp: "18–24°C", desc: { en: "Spring year-round", zh: "四季如春" } },
+  { region: { en: "Nanning", zh: "南宁" }, temp: "24–30°C", desc: { en: "Humid, use sunscreen", zh: "湿热，注意防晒" } },
+  { region: { en: "Ha Long", zh: "下龙" }, temp: "22–28°C", desc: { en: "Sea mist, bring a jacket", zh: "海上多雾，备一件外套" } },
+  { region: { en: "Sapa", zh: "沙坝" }, temp: "14–20°C", desc: { en: "Cool & misty", zh: "凉爽多雾" } },
 ] as const;
 
 
@@ -162,7 +162,7 @@ useEffect(() => {
                     baseCur === c ? "bg-cta text-paper" : "text-ink-soft"
                   }`}
                 >
-                  {CUR_META[c].flag} {c}
+                  {c}
                 </button>
               ))}
             </div>
@@ -180,9 +180,7 @@ useEffect(() => {
             <div className="grid grid-cols-2 gap-2">
               {ORDER.filter((c) => c !== baseCur).map((c) => (
                 <div key={c} className="rounded-lg bg-sage px-2.5 py-2">
-                  <p className="mb-0.5 text-[11px] text-ink-soft">
-                    {CUR_META[c].flag} {c}
-                  </p>
+                  <p className="mb-0.5 text-[11px] text-ink-soft">{c}</p>
                   <p className="text-[14px] font-semibold tracking-[-0.01em] text-ink">
                     {CUR_META[c].symbol} {fmtAmount(convert(amount, baseCur, c, rates), c)}
                   </p>
@@ -229,9 +227,6 @@ useEffect(() => {
             </h3>
             {WEATHER.map((w) => (
               <div key={w.region.en} className="flex items-center gap-2.5 border-b border-line py-2 last:border-b-0">
-                <span className="shrink-0 text-xl" aria-hidden>
-                  {w.icon}
-                </span>
                 <div className="min-w-0 flex-1">
                   <p className="text-[13px] font-medium text-ink">{t(w.region)}</p>
                   <p className="text-[11px] text-ink-soft">{t(w.desc)}</p>
@@ -309,7 +304,10 @@ function TimeCard() {
           online ? "text-ok" : "text-ink-soft"
         }`}
       >
-        <span className="shrink-0">{online ? "🟢" : "🌙"}</span>
+        <span
+          className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${online ? "bg-ok" : "bg-ink-soft/50"}`}
+          aria-hidden
+        />
         <span>{online ? t(copy.toolbox.timeOnline) : t(copy.toolbox.timeNight)}</span>
       </p>
     </section>

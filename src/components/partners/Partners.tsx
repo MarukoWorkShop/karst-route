@@ -24,9 +24,6 @@ export function Partners() {
                 style={{ backgroundColor: p.color }}
               >
                 <div>
-                  <div className="mb-1.5 text-2xl leading-none" aria-hidden>
-                    {p.emoji}
-                  </div>
                   <span className="inline-block rounded-full bg-black/18 px-[7px] py-0.5 text-[9px] font-semibold tracking-[0.06em] text-paper/75 uppercase">
                     {t(p.category)}
                   </span>

@@ -170,13 +170,17 @@ function dayHtml(day: BriefDay, labels: BriefPdfInput["labels"]) {
 function documentHtml(doc: BriefPdfInput) {
   const rows = doc.rows.map((r) => rowHtml(r.label, r.value)).join("");
   const days = doc.days.map((d) => dayHtml(d, doc.labels)).join("");
+  const requestBlock =
+    doc.rows.length > 0
+      ? `<div style="font-size:11px;font-weight:500;letter-spacing:0.08em;color:#a88c56;margin-bottom:8px;">${esc(doc.requestTitle)}</div>
+    <table style="width:100%;border-collapse:collapse;margin-bottom:22px;border-top:1px solid #d9d6cc;">${rows}</table>`
+      : "";
   return `<div style="width:794px;box-sizing:border-box;padding:36px 40px 48px;background:#faf8f2;color:#1e3329;font-family:'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif;">
     <div style="font-size:11px;letter-spacing:0.16em;color:#a88c56;font-weight:500;">THE SOUTHERN CURATIONS · 南境拾遗</div>
     <div style="margin-top:10px;display:inline-block;font-size:10px;letter-spacing:0.08em;color:#2f5344;border:1px solid #2f5344;border-radius:999px;padding:3px 10px;">${esc(doc.kicker)}</div>
     <h1 style="margin:10px 0 4px;font-size:22px;font-weight:500;line-height:1.35;">${esc(doc.title)}</h1>
     <div style="font-size:11px;color:#5e7368;margin-bottom:22px;">${esc(doc.generated)}</div>
-    <div style="font-size:11px;font-weight:500;letter-spacing:0.08em;color:#a88c56;margin-bottom:8px;">${esc(doc.requestTitle)}</div>
-    <table style="width:100%;border-collapse:collapse;margin-bottom:22px;border-top:1px solid #d9d6cc;">${rows}</table>
+    ${requestBlock}
     <div style="font-size:11px;font-weight:500;letter-spacing:0.08em;color:#a88c56;margin:8px 0 12px;">${esc(doc.itineraryTitle)}</div>
     ${days}
     <p style="margin:18px 0 0;font-size:11px;line-height:1.55;color:#5e7368;">${esc(doc.footer)}</p>

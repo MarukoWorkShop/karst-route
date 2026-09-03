@@ -4,6 +4,34 @@
 
 src: zh
 days:
+  - day: 1
+    city:
+      en: Nanning
+      zh: 南宁
+    stay:
+      en: Street food, first night
+      zh: 夜市里的第一夜
+    stayKind: hotel
+    placeId: nanning
+    transport:
+      en: Airport or station pickup, transfer to the hotel
+      zh: 专车接机／接站，送往酒店
+    lodging:
+      en: Shangri-La Nanning
+      zh: 南宁香格里拉酒店
+    dining:
+      - en: "Lunch: not included"
+        zh: 午餐：不含
+      - en: "Dinner: Jianzheng night market, explore on your own"
+        zh: 晚餐：建政夜市，自行寻觅
+    bullets:
+      - en: Sanjie Liangxiang · Changyou Pavilion
+        zh: 三街两巷 · 畅游阁
+      - en: Jianzheng night market
+        zh: 建政夜市
+    themes:
+      - locals
+      - flavors
   - day: 2
     city:
       en: Chongzuo

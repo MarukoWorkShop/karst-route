@@ -15,12 +15,12 @@ import {
 
 export function BoutiqueTours({
   route,
-  onPick,
-  onQuote,
+  onSelect,
+  onOpenItinerary,
 }: {
   route: RouteId;
-  onPick: (id: RouteId) => void;
-  onQuote: (id: RouteId) => void;
+  onSelect: (id: RouteId) => void;
+  onOpenItinerary: (id: RouteId) => void;
 }) {
   /** YAML 缺失或损坏时的保底内容（代码里的默认值） */
   const fallbackFor = (id: RouteId): RouteContent => {
@@ -55,31 +55,31 @@ export function BoutiqueTours({
 
   return (
     <section id="tours" className="scroll-mt-24 py-12 md:py-16">
-      <div className="page-col">
-        <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+      <div className="mx-auto w-full max-w-[1180px] px-4 md:px-8">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:items-start lg:gap-4 lg:pt-8 lg:pb-6">
           <RouteCard
             routeId="r1"
             src={asset(`/${c1.cover}`)}
             content={c1}
             active={route === "r1"}
-            onView={() => onPick("r1")}
-            onQuote={() => onQuote("r1")}
+            onSelect={() => onSelect("r1")}
+            onOpenItinerary={() => onOpenItinerary("r1")}
           />
           <RouteCard
             routeId="r2"
             src={asset(`/${c2.cover}`)}
             content={c2}
             active={route === "r2"}
-            onView={() => onPick("r2")}
-            onQuote={() => onQuote("r2")}
+            onSelect={() => onSelect("r2")}
+            onOpenItinerary={() => onOpenItinerary("r2")}
           />
           <RouteCard
             routeId="r3"
             src={asset(`/${c3.cover}`)}
             content={c3}
             active={route === "r3"}
-            onView={() => onPick("r3")}
-            onQuote={() => onQuote("r3")}
+            onSelect={() => onSelect("r3")}
+            onOpenItinerary={() => onOpenItinerary("r3")}
           />
         </div>
       </div>
@@ -92,27 +92,29 @@ function RouteCard({
   src,
   content,
   active,
-  onView,
-  onQuote,
+  onSelect,
+  onOpenItinerary,
 }: {
   routeId: RouteId;
   src: string;
   content: RouteContent;
   active: boolean;
-  onView: () => void;
-  onQuote: () => void;
+  onSelect: () => void;
+  onOpenItinerary: () => void;
 }) {
   const { t } = useLocale();
   const reviewCount = reviewsForRoute(routeId).length;
   return (
     <article
-      className={`overflow-hidden rounded-xl bg-surface text-left ${
-        active ? "ring-2 ring-cta" : "ring-1 ring-line"
+      className={`relative overflow-hidden rounded-xl bg-surface text-left ring-1 ring-line transition-[transform,filter,box-shadow,opacity] duration-300 ease-out ${
+        active
+          ? "z-10 origin-bottom md:-translate-y-4 md:scale-[1.04] md:ring-2 md:ring-white md:shadow-[0_0_0_3px_rgba(255,255,255,0.95),0_0_40px_12px_rgba(255,255,255,0.9),0_24px_44px_rgba(16,28,22,0.18)]"
+          : "z-0 md:translate-y-2 md:scale-[0.97] md:opacity-[0.78] md:grayscale-[0.32] md:contrast-[0.88] md:saturate-[0.65] md:shadow-[0_10px_24px_rgba(16,28,22,0.08)] md:hover:opacity-90 md:hover:grayscale-[0.12]"
       }`}
     >
       <button
         type="button"
-        onClick={onView}
+        onClick={onSelect}
         aria-pressed={active}
         className="block w-full text-left"
       >
@@ -197,17 +199,10 @@ function RouteCard({
             </li>
           ))}
         </ul>
-        <a
-          href="#plan"
-          className="mt-3.5 inline-flex items-center gap-1.5 text-[13px] font-medium text-cta underline-offset-[3px] hover:underline"
-        >
-          {t(copy.tours.quote)}
-          <IconArrow />
-        </a>
         <button
           type="button"
-          onClick={onQuote}
-          className="cta-sheen mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-cta px-4 py-[11px] text-[13px] font-medium text-paper transition-colors hover:bg-cta-press"
+          onClick={onOpenItinerary}
+          className="cta-sheen mt-3.5 flex w-full items-center justify-center gap-2 rounded-lg bg-cta px-4 py-[11px] text-[13px] font-medium text-paper transition-colors hover:bg-cta-press"
         >
           {t(copy.tours.quoteBar)}
           <IconArrow />

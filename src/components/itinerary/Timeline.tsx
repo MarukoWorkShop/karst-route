@@ -5,23 +5,25 @@ import { places, placeStories } from "@/data/destinations";
 import { IconBoat, IconChevron, IconDining, IconLodge, IconVan } from "@/components/icons";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { ReviewsFold } from "@/components/itinerary/ReviewsFold";
+import { ItineraryCtas } from "@/components/itinerary/ItineraryCtas";
 import { RoutePlayer } from "@/components/itinerary/RoutePlayer";
 
 export function Timeline({
   routeId,
   onRoute,
+  onPlanQuote,
 }: {
   routeId: RouteId;
   onRoute: (id: RouteId) => void;
+  onPlanQuote: (id: RouteId) => void;
 }) {
   const { t } = useLocale();
   const route = routes[routeId];
   const stopCount = new Set(route.days.map((d) => d.placeId).filter(Boolean)).size;
-  // 移动端：手风琴展开
-  const [open, setOpen] = useState<number | null>(null);
+  // 移动端：手风琴展开（用列表下标，避免同一天号重复时叠在一起）
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   // 桌面端：右栏当前选中那天
-  const [selectedDay, setSelectedDay] = useState<number>(route.days[0].day);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const detailRef = useRef<HTMLDivElement>(null);
 
@@ -37,10 +39,10 @@ export function Timeline({
     return days;
   })();
 
-  const selectedStop = route.days.find((d) => d.day === selectedDay) ?? route.days[0];
+  const selectedStop = route.days[selectedIndex] ?? route.days[0];
 
-  function selectDay(day: number) {
-    setSelectedDay(day);
+  function selectDay(index: number) {
+    setSelectedIndex(index);
     // 右栏内容更新后滚到顶
     requestAnimationFrame(() => detailRef.current?.scrollTo({ top: 0 }));
   }
@@ -62,8 +64,8 @@ export function Timeline({
               type="button"
               onClick={() => {
                 onRoute(id);
-                setOpen(null);
-                setSelectedDay(routes[id].days[0].day);
+                setOpenIndex(null);
+                setSelectedIndex(0);
               }}
               className={`h-11 flex-1 text-[14px] font-medium ${
                 routeId === id
@@ -115,29 +117,26 @@ export function Timeline({
       <div className="page-col mt-2">
         {/* 移动端：手风琴，点开在下方展开 */}
         <ol className="mx-auto max-w-[640px] md:hidden">
-          {route.days.map((day) => (
+          {route.days.map((day, i) => (
             <DayRow
-              key={`${routeId}-${day.day}`}
+              key={`${routeId}-${i}`}
               day={day}
-              open={open === day.day}
+              open={openIndex === i}
               showDetail={firstVisitDays.has(day.day)}
-              onToggle={() => setOpen((cur) => (cur === day.day ? null : day.day))}
+              onToggle={() => setOpenIndex((cur) => (cur === i ? null : i))}
             />
           ))}
         </ol>
-        <div className="md:hidden">
-          <ReviewsFold />
-        </div>
 
         {/* 桌面端：左列表 + 右详情。两栏都限高，评价才能紧贴模块下方居中，而不是被左栏 14 天撑到下一屏。 */}
         <div className="hidden md:grid md:grid-cols-[0.82fr_1.3fr] md:gap-x-10">
           <ol className="scroll-thin md:sticky md:top-[110px] md:max-h-[calc(100svh-130px)] md:overflow-y-auto md:py-1 md:pr-1">
-            {route.days.map((day) => (
+            {route.days.map((day, i) => (
               <DayListItem
-                key={`${routeId}-${day.day}`}
+                key={`${routeId}-${i}`}
                 day={day}
-                selected={selectedDay === day.day}
-                onSelect={() => selectDay(day.day)}
+                selected={selectedIndex === i}
+                onSelect={() => selectDay(i)}
               />
             ))}
           </ol>
@@ -145,16 +144,13 @@ export function Timeline({
             ref={detailRef}
             className="scroll-thin md:sticky md:top-[110px] md:max-h-[calc(100svh-130px)] md:overflow-y-auto md:py-1 md:pl-1"
           >
-            <div key={selectedDay}>
+            <div key={selectedIndex}>
               <DayDetailContent day={selectedStop} showDetail={firstVisitDays.has(selectedStop.day)} />
             </div>
           </div>
         </div>
-        {/* 评价：单独一行、屏幕居中，在两栏行程模块正下方（bb1826f） */}
-        <div className="hidden md:flex md:justify-center md:pt-2 md:pb-3">
-          <div className="w-full max-w-[640px]">
-            <ReviewsFold />
-          </div>
+        <div className="mx-auto max-w-[640px]">
+          <ItineraryCtas routeId={routeId} onPlanQuote={onPlanQuote} />
         </div>
       </div>
 

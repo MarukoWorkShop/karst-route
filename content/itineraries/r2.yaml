@@ -32,33 +32,6 @@ days:
     themes:
       - locals
       - flavors
-  - day: 1
-    city:
-      en: Nanning
-      zh: 南宁
-    stay:
-      en: Yong River, before the border
-      zh: 邕江边，过关前夜
-    stayKind: hotel
-    placeId: nanning
-    transport:
-      en: Airport pickup, then a brief city night
-      zh: 接机，然后一个短的城市夜
-    lodging:
-      en: Riverside garden stay
-      zh: 江景花园酒店
-    dining:
-      - en: "Lunch: depending on arrival"
-        zh: 午餐：看抵达时间
-      - en: "Dinner: snail noodles on Zhongshan Road"
-        zh: 晚餐：中山路螺蛳粉
-    bullets:
-      - en: Brief city night
-        zh: 南宁夜
-      - en: Early border next day
-        zh: 次日过关
-    themes:
-      - locals
   - day: 2
     city:
       en: Cat Ba Island

@@ -1,18 +1,32 @@
 import { useEffect, useState } from "react";
-import { travelerReviews, type TravelerReview } from "@/data/reviews";
+import type { RouteId } from "@/types";
+import { reviewsForRoute, type TravelerReview } from "@/data/reviews";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { IconChevron, IconClose } from "@/components/icons";
+import { IconClose } from "@/components/icons";
 
 const PER_PAGE = 4;
 
-export function ReviewsFold() {
+export function ReviewsFold({
+  routeId,
+  open,
+}: {
+  routeId: RouteId;
+  open: boolean;
+  onOpenChange?: (open: boolean) => void;
+  hideTrigger?: boolean;
+}) {
   const { t } = useLocale();
-  const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [active, setActive] = useState<TravelerReview | null>(null);
-  const totalPages = Math.ceil(travelerReviews.length / PER_PAGE);
-  const visible = travelerReviews.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
+  const pool = reviewsForRoute(routeId);
+  const totalPages = Math.max(1, Math.ceil(pool.length / PER_PAGE));
+  const visible = pool.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
+
+  useEffect(() => {
+    setPage(0);
+    setActive(null);
+  }, [routeId]);
 
   useEffect(() => {
     if (!active) return;
@@ -28,10 +42,13 @@ export function ReviewsFold() {
     };
   }, [active]);
 
+  if (!open) return null;
+
   return (
-    <div className="mt-6">
-      {/* 展开的评论列表：放在触发按钮之前，按钮粘底部时列表在按钮上方 */}
-      {open ? (
+    <div className="mt-4">
+      {pool.length === 0 ? (
+        <p className="py-4 text-center text-[13px] text-ink-soft">{t(copy.tours.book.noRouteReviews)}</p>
+      ) : (
         <div className="pb-2 pt-1">
           <div className="flex flex-col gap-2.5">
             {visible.map((r) => (
@@ -77,25 +94,7 @@ export function ReviewsFold() {
             </div>
           ) : null}
         </div>
-      ) : null}
-
-      {/* 触发按钮：放在整条线路模块底部，每条线路只显示一次 */}
-      <div className="pt-1 pb-1">
-        <div className="text-center">
-          <button
-            type="button"
-            aria-expanded={open}
-            onClick={() => setOpen((o) => !o)}
-            className={`inline-flex items-center gap-1.5 border-b pb-px text-[13px] font-medium ${
-              open ? "border-cta text-cta" : "border-line text-ink-soft"
-            }`}
-          >
-            <StarMark />
-            {t(copy.tours.book.readReviews)}
-            <IconChevron className={`h-3 w-3 transition ${open ? "rotate-180" : ""}`} />
-          </button>
-        </div>
-      </div>
+      )}
 
       {active ? (
         <div className="fixed inset-0 z-50" role="presentation">
@@ -162,14 +161,6 @@ export function ReviewsFold() {
         </div>
       ) : null}
     </div>
-  );
-}
-
-function StarMark() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor" aria-hidden>
-      <path d="M6.5 1.5l1.35 2.74 3.02.44-2.19 2.13.52 3.02L6.5 8.25l-2.7 1.58.52-3.02L2.13 4.68l3.02-.44z" />
-    </svg>
   );
 }
 

@@ -41,6 +41,18 @@ function routeDays(id: RouteId | ""): number | null {
   return null;
 }
 
+function asRoute(id: RouteId | ""): RouteId {
+  return id === "r2" || id === "r3" ? id : "r1";
+}
+
+function bookingPdfFilename(rid: RouteId) {
+  return {
+    r1: "karst-r1-three-realms-booking.pdf",
+    r2: "karst-r2-southern-loop-booking.pdf",
+    r3: "karst-r3-chongzuo-weizhou-booking.pdf",
+  }[rid];
+}
+
 function endIso(start: string, days: number) {
   return addDaysIso(start, days - 1);
 }
@@ -135,7 +147,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   }
 
   function catalogDays(): BriefDay[] {
-    const rid = baseRoute === "r2" ? "r2" : "r1";
+    const rid = asRoute(baseRoute);
     return stampDays(daysToBrief(routes[rid].days, t), startIso(), locale);
   }
 
@@ -160,12 +172,12 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   }
 
   async function downloadPdf() {
-    const rid = baseRoute === "r2" ? "r2" : "r1";
+    const rid = asRoute(baseRoute);
     setPdfBusy(true);
     setPdfErr(false);
     try {
       await downloadBriefPdf({
-        filename: rid === "r2" ? "karst-southern-loop-booking.pdf" : "karst-three-realms-booking.pdf",
+        filename: bookingPdfFilename(rid),
         kicker: t(copy.plan.summary),
         title: routeLabel(false),
         generated: t(copy.plan.pdfGenerated).replace(
@@ -324,6 +336,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
                 [
                   { val: "r1" as const, title: copy.plan.r1Title, sub: copy.plan.r1Sub },
                   { val: "r2" as const, title: copy.plan.r2Title, sub: copy.plan.r2Sub },
+                  { val: "r3" as const, title: copy.plan.r3Title, sub: copy.plan.r3Sub },
                 ] as const
               ).map((r) => {
                 const on = baseRoute === r.val;

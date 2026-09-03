@@ -360,17 +360,6 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
               {t(slide.intro)}
             </p>
 
-            {/* 价值主张：可出发月份 + 核心利益点 */}
-            <div className="mt-3.5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 md:mt-4">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/12 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-sm md:text-[12px]">
-                <CalendarMark />
-                {t(copy.hero.season)}
-              </span>
-              <span className="text-[11.5px] leading-4 text-white/85 md:text-[12.5px]">
-                {t(copy.hero.benefits)}
-              </span>
-            </div>
-
             <div className="mt-7 flex flex-wrap items-center gap-3 md:mt-8">
               <a
                 href="#tours"
@@ -406,14 +395,5 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
         </div>
       </div>
     </section>
-  );
-}
-
-function CalendarMark() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden>
-      <rect x="1.5" y="2.5" width="9" height="8" rx="1.5" />
-      <path d="M1.5 5h9M4 1.5v2M8 1.5v2" />
-    </svg>
   );
 }

@@ -26,11 +26,33 @@ function toggle(arr: string[], val: string) {
   return arr.includes(val) ? arr.filter((x) => x !== val) : [...arr, val];
 }
 
+function defaultDays(id: RouteId) {
+  if (id === "r1") return 14;
+  if (id === "r2") return 10;
+  return 7;
+}
+
+function durationRange(id: RouteId) {
+  if (id === "r3") return { min: 5, max: 12 };
+  if (id === "r2") return { min: 8, max: 14 };
+  return { min: 8, max: 18 };
+}
+
+function routeTitle(id: RouteId) {
+  if (id === "r1") return copy.plan.r1Title;
+  if (id === "r2") return copy.plan.r2Title;
+  return copy.plan.r3Title;
+}
+
+function asRoute(id: RouteId | ""): RouteId {
+  return id === "r2" || id === "r3" ? id : "r1";
+}
+
 export function DesignRouteFlow({ route }: { route: RouteId }) {
   const { t, locale } = useLocale();
   const [step, setStep] = useState(0);
   const [baseRoute, setBaseRoute] = useState<RouteId | "">(route);
-  const [duration, setDuration] = useState(route === "r2" ? 10 : route === "r3" ? 7 : 14);
+  const [duration, setDuration] = useState(defaultDays(route));
   const [extraDests, setExtraDests] = useState<string[]>([]);
   const [hotelTier, setHotelTier] = useState<HotelTierId | "">("");
   const [transport, setTransport] = useState<string[]>([]);
@@ -45,10 +67,11 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
 
   useEffect(() => {
     setBaseRoute(route);
-    setDuration(route === "r2" ? 10 : route === "r3" ? 7 : 14);
+    setDuration(defaultDays(route));
   }, [route]);
 
-  const rid: RouteId = baseRoute === "r2" ? "r2" : "r1";
+  const rid = asRoute(baseRoute);
+  const daysRange = durationRange(rid);
 
   function listOrDash(items: string[]) {
     const sep = locale === "zh" ? "、" : ", ";
@@ -61,7 +84,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
     return [
       {
         label: t(copy.plan.rowRoute),
-        value: t(baseRoute === "r2" ? copy.plan.r2Title : copy.plan.r1Title),
+        value: t(routeTitle(rid)),
       },
       { label: t(copy.plan.rowDuration), value: `${duration} ${t(copy.plan.daysUnit)}` },
       {
@@ -182,6 +205,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
             [
               { val: "r1" as const, days: 14, title: copy.plan.r1Title, sub: copy.plan.r1SubLong },
               { val: "r2" as const, days: 10, title: copy.plan.r2Title, sub: copy.plan.r2SubLong },
+              { val: "r3" as const, days: 7, title: copy.plan.r3Title, sub: copy.plan.r3SubLong },
             ] as const
           ).map((r) => {
             const on = baseRoute === r.val;
@@ -191,7 +215,8 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
                 active={on}
                 onClick={() => {
                   setBaseRoute(r.val);
-                  setDuration(r.days);
+                  const range = durationRange(r.val);
+                  setDuration(Math.min(Math.max(r.days, range.min), range.max));
                 }}
               >
                 <div className="mb-[3px] font-medium">{t(r.title)}</div>
@@ -203,15 +228,23 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
             <FieldLabel>{t(copy.plan.totalDays).replace("{n}", String(duration))}</FieldLabel>
             <input
               type="range"
-              min={8}
-              max={18}
-              value={duration}
+              min={daysRange.min}
+              max={daysRange.max}
+              value={Math.min(Math.max(duration, daysRange.min), daysRange.max)}
               onChange={(e) => setDuration(Number(e.target.value))}
               className="range-forest mt-2 w-full"
             />
             <div className="mt-1 flex justify-between text-[11px] text-ink-soft">
-              <span>{t(copy.plan.daysMin)}</span>
-              <span>{t(copy.plan.daysMax)}</span>
+              <span>
+                {daysRange.min}
+                {t(copy.plan.daysUnit)}
+                {locale === "zh" ? "（精简）" : ""}
+              </span>
+              <span>
+                {daysRange.max}
+                {t(copy.plan.daysUnit)}
+                {locale === "zh" ? "（深度）" : ""}
+              </span>
             </div>
           </div>
         </div>
