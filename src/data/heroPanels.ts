@@ -3,6 +3,13 @@ import { asset } from "@/lib/asset";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
 
+/**
+ * 测试期开关：设 VITE_HERO_VIDEO_OFF=1 时停掉首页视频与 BGM，只显示 poster 静图，
+ * 避免 COS 流量扣费。恢复播放时移除该环境变量即可，无需改动代码。
+ * （无视频时 Hero 会自动走 POSTER_HOLD_MS 定时轮播 poster。）
+ */
+const videoOff = import.meta.env.VITE_HERO_VIDEO_OFF === "1";
+
 /** COS / CDN root. Empty until VITE_HERO_MEDIA_BASE is set — posters still show. */
 export function heroMedia(file: string): string {
   if (/^https?:\/\//i.test(file)) return file;
@@ -11,11 +18,11 @@ export function heroMedia(file: string): string {
   return `${base}/${file.replace(/^\//, "")}`;
 }
 
-export const heroBgm = heroMedia("hero/bgm.mp3");
+export const heroBgm = videoOff ? "" : heroMedia("hero/bgm.mp3");
 
 const COS = "https://youxian-travel-1412422924.cos.ap-guangzhou.myqcloud.com";
 const cosUrl = (file: string) =>
-  `${import.meta.env.DEV ? "/hero-media" : COS}/${file.replace(/^\//, "")}`;
+  videoOff ? "" : `${import.meta.env.DEV ? "/hero-media" : COS}/${file.replace(/^\//, "")}`;
 
 /** Full-bleed video slide. Poster holds the first paint; video URL comes from COS. */
 export type HeroSlide = {

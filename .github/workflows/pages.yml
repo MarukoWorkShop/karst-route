@@ -30,6 +30,9 @@ jobs:
         env:
           PAGES_BASE: ${{ steps.pages.outputs.base_path }}
           VITE_WEB3FORMS_ACCESS_KEY: ${{ secrets.VITE_WEB3FORMS_ACCESS_KEY }}
+          # 测试期：关掉首页视频与 BGM，只显示 poster，避免 COS 流量扣费。
+          # 恢复播放时把这一行删掉（或改成 "0"）并重新部署。
+          VITE_HERO_VIDEO_OFF: "1"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
