@@ -5,7 +5,7 @@ import { IconClose, IconExternal } from "@/components/icons";
 
 type Cur = "CNY" | "USD" | "VND";
 // Reference rates pegged to USD (1 USD ≈ 7.25 CNY ≈ 24,800 VND)
-const RATES: Record<Cur, number> = {
+const FALLBACK_RATES: Record<Cur, number> = {
   USD: 1,
   CNY: 1 / 0.138,
   VND: 3420 / 0.138,
@@ -17,9 +17,9 @@ const CUR_META: Record<Cur, { flag: string; symbol: string }> = {
 };
 const ORDER: Cur[] = ["CNY", "USD", "VND"];
 
-function convert(amount: number, from: Cur, to: Cur): number {
+function convert(amount: number, from: Cur, to: Cur, rates: Record<Cur, number>): number {
   if (from === to) return amount;
-  return (amount / RATES[from]) * RATES[to];
+  return (amount / rates[from]) * rates[to];
 }
 function fmtAmount(amount: number, cur: Cur): string {
   return cur === "VND" ? Math.round(amount).toLocaleString() : amount.toFixed(2);
@@ -50,6 +50,8 @@ export function ToolsDrawer({
   const { t } = useLocale();
   const [curInput, setCurInput] = useState("100");
   const [baseCur, setBaseCur] = useState<Cur>("CNY");
+  const [rates, setRates] = useState<Record<Cur, number>>(FALLBACK_RATES);
+  const [rateDate, setRateDate] = useState("");
   const amount = Number(curInput) || 0;
 
   useEffect(() => {
@@ -65,6 +67,23 @@ export function ToolsDrawer({
       window.removeEventListener("keydown", onKey);
     };
   }, [open, onClose]);
+
+  // 拉取最新汇率（fawazahmed0 currency-api，免费无 key，含 CNY/VND）；失败降级到静态值
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json")
+      .then((r) => r.json())
+      .then((d) => {
+        if (cancelled || !d?.usd?.cny || !d?.usd?.vnd) return;
+        setRates({ USD: 1, CNY: d.usd.cny, VND: d.usd.vnd });
+        setRateDate(String(d.date ?? ""));
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
 
   return (
     <>
@@ -138,12 +157,12 @@ export function ToolsDrawer({
                     {CUR_META[c].flag} {c}
                   </p>
                   <p className="text-[14px] font-semibold tracking-[-0.01em] text-ink">
-                    {CUR_META[c].symbol} {fmtAmount(convert(amount, baseCur, c), c)}
+                    {CUR_META[c].symbol} {fmtAmount(convert(amount, baseCur, c, rates), c)}
                   </p>
                 </div>
               ))}
             </div>
-            <p className="mt-2 text-[10px] text-ink-soft/70">{t(copy.toolbox.rateNote)}</p>
+            <p className="mt-2 text-[10px] text-ink-soft/70">{t(copy.toolbox.rateNote)}{rateDate ? ` · ${rateDate}` : ""}</p>
           </section>
 
           <TimeCard />
