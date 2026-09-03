@@ -1,0 +1,71 @@
+# 线路三 · 崇左栖山 · 涠洲枕海（7 天 6 晚，不跨境）
+#
+# ── 内容与代码解耦示例 ──
+# 改完本文件 → 提交到 main → GitHub Actions 自动构建部署，约 1 分钟生效。
+# 不需要改任何 .tsx / .ts 代码。
+#
+# 填写规则：
+#   1. en / zh 成对填写；某门留空会自动回退到代码里的默认值，页面不会塌。
+#   2. included / excluded 只填 id，不要写中文（文案由代码统一维护）。
+#   3. 缩进只能用空格，不能用 Tab；冒号后要空一格。
+
+badge:
+  en: "ROUTE 03"
+  zh: "路线三"
+
+name:
+  en: "Chongzuo Karst · Weizhou Isle"
+  zh: "崇左栖山 · 涠洲枕海"
+
+tagline:
+  en: "Seven days from karst peaks to a volcanic island"
+  zh: "从喀斯特峰林到火山岛的七日"
+
+regions:
+  en: "Nanning · Chongzuo · Beihai · Weizhou"
+  zh: "南宁 · 崇左 · 北海 · 涠洲岛"
+
+feature:
+  en: "A week that holds two very different Guangxis: the karst river country around Chongzuo — black-water boat rides, the Detian falls and the Mingshi paddies — then south to the coast for Weizhou Island, where a volcanic shoreline, coral-stone chapels and a working fishing harbour set the pace. No border crossing, no long hauls."
+  zh: "一周装下两个截然不同的广西：先走进崇左的喀斯特水乡——黑水河游船、德天瀑布与明仕田园；再南下海边，登涠洲岛，看火山岩海岸、珊瑚石教堂与归航的渔港。不跨境，不长途奔波。"
+
+days:
+  en: "7 days · 6 nights"
+  zh: "7 天 6 晚"
+
+entry:
+  en: "Nanning"
+  zh: "南宁"
+
+exit:
+  en: "Beihai"
+  zh: "北海"
+
+audience:
+  en: "Mountains + sea · Short break"
+  zh: "山海双景 · 短假期"
+
+# 参考预算（⚠️ 报价单未提供价格，此处为占位，请替换为真实报价）
+price:
+  en: "from $980 / person"
+  zh: "¥6,800–9,800 / 人"
+
+# 费用标签 —— 只填 id
+#   包含可选：transport(专车交通) · lodging(住宿) · tickets(门票及活动) · meals(餐食)
+#             guide(持证向导) · visaAssist(签证材料协助) · insurance(旅游人身意外险)
+#   不含可选：intlFlights(往返机票) · visaFee(签证费) · personal(个人消费)
+#             optional(自选项目) · tips(小费)
+#
+# 本行程按报价单：含住宿、餐食、门票活动、当地用车及司机、旅游意外险；
+# 不含往返机票、行程外费用、其他个人费用。不跨境，故无签证材料协助。
+included:
+  - transport
+  - lodging
+  - tickets
+  - meals
+  - insurance
+
+excluded:
+  - intlFlights
+  - optional
+  - personal

@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
-import type { RouteId } from "@/types";
+import type { RouteId, Tx } from "@/types";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { asset } from "@/lib/asset";
 import { EXCL_LABELS, INCL_LABELS, routeFacts } from "@/data/tourFacts";
 import { reviewsForRoute } from "@/data/reviews";
+import { routeContent, type RouteContent } from "@/content/routes";
 import {
   IconClock,
   IconLanding,
@@ -21,7 +22,31 @@ export function BoutiqueTours({
   onPick: (id: RouteId) => void;
   onQuote: (id: RouteId) => void;
 }) {
-  const { t } = useLocale();
+  /** YAML 缺失或损坏时的保底内容（代码里的默认值） */
+  const fallbackFor = (id: RouteId): RouteContent => {
+    const f = routeFacts[id];
+    const c = copy.tours as unknown as Record<string, Tx>;
+    return {
+      badge: c[`${id}Badge`],
+      name: c[`${id}Name`],
+      tagline: c[`${id}Tagline`],
+      regions: c[`${id}Regions`],
+      feature: c[`${id}Feature`],
+      days: c[`${id}Days`],
+      entry: c[`${id}Entry`],
+      exit: c[`${id}Exit`],
+      audience: c[`${id}For`],
+      price: f.price,
+      included: [...f.included],
+      excluded: [...f.excluded],
+    };
+  };
+
+  // 内容以 content/routes/*.yaml 为准，缺失字段自动回退到上面的默认值
+  const c1 = routeContent("r1", fallbackFor("r1"));
+  const c2 = routeContent("r2", fallbackFor("r2"));
+  const c3 = routeContent("r3", fallbackFor("r3"));
+
   return (
     <section id="tours" className="scroll-mt-24 py-12 md:py-16">
       <div className="page-col">
@@ -29,15 +54,7 @@ export function BoutiqueTours({
           <RouteCard
             routeId="r1"
             src={asset("/tours/r1-kunming-exit.jpg")}
-            badge={t(copy.tours.r1Badge)}
-            name={t(copy.tours.r1Name)}
-            tagline={t(copy.tours.r1Tagline)}
-            regions={t(copy.tours.r1Regions)}
-            feature={t(copy.tours.r1Feature)}
-            days={t(copy.tours.r1Days)}
-            entry={t(copy.tours.r1Entry)}
-            exit={t(copy.tours.r1Exit)}
-            audience={t(copy.tours.r1For)}
+            content={c1}
             active={route === "r1"}
             onView={() => onPick("r1")}
             onQuote={() => onQuote("r1")}
@@ -45,18 +62,18 @@ export function BoutiqueTours({
           <RouteCard
             routeId="r2"
             src={asset("/tours/r2-nanning-loop.jpg")}
-            badge={t(copy.tours.r2Badge)}
-            name={t(copy.tours.r2Name)}
-            tagline={t(copy.tours.r2Tagline)}
-            regions={t(copy.tours.r2Regions)}
-            feature={t(copy.tours.r2Feature)}
-            days={t(copy.tours.r2Days)}
-            entry={t(copy.tours.r2Entry)}
-            exit={t(copy.tours.r2Exit)}
-            audience={t(copy.tours.r2For)}
+            content={c2}
             active={route === "r2"}
             onView={() => onPick("r2")}
             onQuote={() => onQuote("r2")}
+          />
+          <RouteCard
+            routeId="r3"
+            src={asset("/destinations/detian.jpg")}
+            content={c3}
+            active={route === "r3"}
+            onView={() => onPick("r3")}
+            onQuote={() => onQuote("r3")}
           />
         </div>
       </div>
@@ -67,36 +84,19 @@ export function BoutiqueTours({
 function RouteCard({
   routeId,
   src,
-  badge,
-  name,
-  tagline,
-  regions,
-  feature,
-  days,
-  entry,
-  exit,
-  audience,
+  content,
   active,
   onView,
   onQuote,
 }: {
   routeId: RouteId;
-  onQuote: () => void;
   src: string;
-  badge: string;
-  name: string;
-  tagline: string;
-  regions: string;
-  feature: string;
-  days: string;
-  entry: string;
-  exit: string;
-  audience: string;
+  content: RouteContent;
   active: boolean;
   onView: () => void;
+  onQuote: () => void;
 }) {
   const { t } = useLocale();
-  const facts = routeFacts[routeId];
   const reviewCount = reviewsForRoute(routeId).length;
   return (
     <article
@@ -111,22 +111,22 @@ function RouteCard({
         className="block w-full text-left"
       >
         <span className="relative block aspect-[4/3] overflow-hidden bg-bone">
-          <img loading="lazy" src={src} alt={name} className="h-full w-full object-cover" />
+          <img loading="lazy" src={src} alt={t(content.name)} className="h-full w-full object-cover" />
           <span className="absolute top-3 left-3 rounded-md bg-paper/92 px-2.5 py-1 text-[10px] font-bold tracking-[0.1em] text-cta backdrop-blur-sm">
-            {badge}
+            {t(content.badge)}
           </span>
           <span className="pointer-events-none absolute inset-0 bg-linear-to-t from-night/75 via-night/10 to-transparent" />
           <span className="absolute right-3.5 bottom-3.5 left-3.5">
             <span className="block text-[20px] leading-tight font-medium text-paper md:text-2xl">
-              {name}
+              {t(content.name)}
             </span>
             <span className="mt-1 block text-[11px] leading-4 text-paper/80">
-              {tagline}
+              {t(content.tagline)}
             </span>
           </span>
         </span>
         <span className="flex flex-wrap gap-1.5 px-3.5 pt-3 pb-1">
-          {regions.split(" · ").map((seg, i) => (
+          {t(content.regions).split(" · ").map((seg, i) => (
             <span
               key={`${seg}-${i}`}
               className="rounded-full bg-cta/8 px-2.5 py-0.5 text-[11px] font-medium tracking-[0.03em] text-cta"
@@ -137,10 +137,10 @@ function RouteCard({
         </span>
       </button>
       <div className="mt-1 grid grid-cols-2 gap-px border-t border-line bg-line">
-        <Meta icon={<IconClock className="h-4 w-4" />} label={t(copy.tours.duration)} value={days} />
-        <Meta icon={<IconTakeoff className="h-4 w-4" />} label={t(copy.tours.entry)} value={entry} />
-        <Meta icon={<IconLanding className="h-4 w-4" />} label={t(copy.tours.exit)} value={exit} />
-        <Meta icon={<IconUsers className="h-4 w-4" />} label={t(copy.tours.for)} value={audience} />
+        <Meta icon={<IconClock className="h-4 w-4" />} label={t(copy.tours.duration)} value={t(content.days)} />
+        <Meta icon={<IconTakeoff className="h-4 w-4" />} label={t(copy.tours.entry)} value={t(content.entry)} />
+        <Meta icon={<IconLanding className="h-4 w-4" />} label={t(copy.tours.exit)} value={t(content.exit)} />
+        <Meta icon={<IconUsers className="h-4 w-4" />} label={t(copy.tours.for)} value={t(content.audience)} />
       </div>
       <div className="flex items-end justify-between gap-3 border-t border-line bg-paper px-4 py-3">
         <div className="min-w-0">
@@ -148,7 +148,7 @@ function RouteCard({
             {t(copy.tours.priceLabel)}
           </p>
           <p className="mt-0.5 text-[18px] font-semibold tracking-[-0.01em] text-cta">
-            {t(facts.price)}
+            {t(content.price)}
           </p>
         </div>
         {reviewCount > 0 ? (
@@ -159,7 +159,7 @@ function RouteCard({
         ) : null}
       </div>
       <div className="border-t border-line bg-paper px-4 py-4">
-        <p className="text-[12.5px] leading-[22px] text-ink-soft">{feature}</p>
+        <p className="text-[12.5px] leading-[22px] text-ink-soft">{t(content.feature)}</p>
       </div>
       {/* 费用项按 id 标签渲染：后台表格勾选的 id 数组直接驱动这里 */}
       <div className="border-t border-line px-4 py-3.5">
@@ -167,7 +167,7 @@ function RouteCard({
           {t(copy.tours.included)}
         </p>
         <ul className="flex flex-wrap gap-1.5">
-          {facts.included.map((id) => (
+          {content.included.map((id) => (
             <li
               key={id}
               className="inline-flex items-center gap-1 rounded-full bg-cta/8 px-2.5 py-[5px] text-[11px] font-medium text-cta"
@@ -181,7 +181,7 @@ function RouteCard({
           {t(copy.tours.excluded)}
         </p>
         <ul className="flex flex-wrap gap-1.5">
-          {facts.excluded.map((id) => (
+          {content.excluded.map((id) => (
             <li
               key={id}
               className="inline-flex items-center gap-1 rounded-full bg-sage px-2.5 py-[5px] text-[11px] text-ink-soft"

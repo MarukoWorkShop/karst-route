@@ -211,6 +211,8 @@ export const reviewStats = {
 
 /** 某条路线下的全部评价（用于路线卡片显示评价条数） */
 export function reviewsForRoute(routeId: RouteId): TravelerReview[] {
-  const target = routeId === "r1" ? r1 : r2;
-  return travelerReviews.filter((r) => r.route === target);
+  // r3 目前还没有评价，返回空（卡片会自动隐藏评价条数）
+  if (routeId === "r1") return travelerReviews.filter((r) => r.route === r1);
+  if (routeId === "r2") return travelerReviews.filter((r) => r.route === r2);
+  return [];
 }

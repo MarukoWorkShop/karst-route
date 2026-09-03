@@ -30,7 +30,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
   const { t, locale } = useLocale();
   const [step, setStep] = useState(0);
   const [baseRoute, setBaseRoute] = useState<RouteId | "">(route);
-  const [duration, setDuration] = useState(route === "r2" ? 10 : 14);
+  const [duration, setDuration] = useState(route === "r2" ? 10 : route === "r3" ? 7 : 14);
   const [extraDests, setExtraDests] = useState<string[]>([]);
   const [hotelTier, setHotelTier] = useState<HotelTierId | "">("");
   const [transport, setTransport] = useState<string[]>([]);
@@ -45,7 +45,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
 
   useEffect(() => {
     setBaseRoute(route);
-    setDuration(route === "r2" ? 10 : 14);
+    setDuration(route === "r2" ? 10 : route === "r3" ? 7 : 14);
   }, [route]);
 
   const rid: RouteId = baseRoute === "r2" ? "r2" : "r1";

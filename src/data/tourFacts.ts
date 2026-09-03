@@ -13,7 +13,8 @@ export type InclId =
   | "tickets"
   | "meals"
   | "guide"
-  | "visaAssist";
+  | "visaAssist"
+  | "insurance";
 
 export type ExclId = "intlFlights" | "visaFee" | "personal" | "optional" | "tips";
 
@@ -24,6 +25,7 @@ export const INCL_LABELS: Record<InclId, Tx> = {
   meals: L("Meals as listed", "行程所列餐食"),
   guide: L("Licensed local guide", "持证当地向导"),
   visaAssist: L("Visa paperwork assistance", "签证材料协助"),
+  insurance: L("Travel accident insurance", "旅游人身意外险"),
 };
 
 export const EXCL_LABELS: Record<ExclId, Tx> = {
@@ -69,5 +71,12 @@ export const routeFacts: Record<RouteId, RouteFacts> = {
     price: L("from $1,390 / person", "¥9,400–13,800 / 人"),
     included: ALL_INCLUDED,
     excluded: ALL_EXCLUDED,
+  },
+  r3: {
+    price: L("from $980 / person", "¥6,800–9,800 / 人"),
+    // 按报价单：含住宿、餐食、门票活动、当地用车及司机服务费、旅游意外险；
+    // 不含往返机票、行程外费用、其他个人费用。此行程不跨境，故无签证材料协助。
+    included: ["transport", "lodging", "tickets", "meals", "insurance"],
+    excluded: ["intlFlights", "optional", "personal"],
   },
 };

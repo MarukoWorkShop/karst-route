@@ -54,7 +54,7 @@ export function Timeline({
       </div>
       <div className="sticky top-[52px] z-30 border-b border-line bg-paper md:top-[60px]">
         <div role="tablist" className="page-col flex">
-          {(["r1", "r2"] as RouteId[]).map((id) => (
+          {(["r1", "r2", "r3"] as RouteId[]).map((id) => (
             <button
               key={id}
               role="tab"
@@ -71,7 +71,11 @@ export function Timeline({
                   : "border-b-2 border-transparent text-ink-soft"
               }`}
             >
-              {id === "r1" ? t(copy.tours.r1Tab) : t(copy.tours.r2Tab)}
+              {id === "r1"
+                ? t(copy.tours.r1Tab)
+                : id === "r2"
+                  ? t(copy.tours.r2Tab)
+                  : t(copy.tours.r3Tab)}
             </button>
           ))}
         </div>

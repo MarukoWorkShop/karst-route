@@ -37,6 +37,7 @@ const WEEK_EN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 function routeDays(id: RouteId | ""): number | null {
   if (id === "r1") return 14;
   if (id === "r2") return 10;
+  if (id === "r3") return 7;
   return null;
 }
 
@@ -95,6 +96,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   function routeLabel(short = false) {
     if (baseRoute === "r1") return t(short ? copy.plan.r1Short : copy.plan.r1Title);
     if (baseRoute === "r2") return t(short ? copy.plan.r2Short : copy.plan.r2Title);
+    if (baseRoute === "r3") return t(short ? copy.plan.r3Short : copy.plan.r3Title);
     return "—";
   }
 

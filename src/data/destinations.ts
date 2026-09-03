@@ -1,4 +1,4 @@
-import type { PlaceId, RouteId, Tx } from "@/types";
+import type { PlaceId, Tx } from "@/types";
 import { asset } from "@/lib/asset";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
@@ -435,30 +435,6 @@ export const placeStories: Record<PlaceId, { culture: Tx; slides: string[] }> = 
   },
 };
 
-export const animationStops: Record<
-  RouteId,
-  { id: string; x: number; y: number; label: Tx }[]
-> = {
-  r1: [
-    { id: "nanning", x: 548.0, y: 247.4, label: L("Nanning", "南宁") },
-    { id: "detian", x: 473.5, y: 245.8, label: L("Detian", "德天") },
-    { id: "halong", x: 490.5, y: 328.0, label: L("Ha Long", "下龙") },
-    { id: "catba", x: 488.9, y: 341.9, label: L("Cat Ba", "吉婆岛") },
-    { id: "hanoi", x: 432.6, y: 328.3, label: L("Hanoi", "河内") },
-    { id: "sapa", x: 340.3, y: 269.4, label: L("Sapa", "沙坝") },
-    { id: "hekou", x: 344.7, y: 260.7, label: L("Hekou", "河口") },
-    { id: "jianshui", x: 293.0, y: 210.8, label: L("Jianshui", "建水") },
-    { id: "puzhehei", x: 360.0, y: 180.0, label: L("Puzhehei", "普者黑") },
-    { id: "mile", x: 310.0, y: 165.0, label: L("Mile", "弥勒") },
-    { id: "kunming", x: 293.4, y: 147.5, label: L("Kunming", "昆明") },
-  ],
-  r2: [
-    { id: "nanning", x: 548.0, y: 247.4, label: L("Nanning", "南宁") },
-    { id: "catba", x: 488.9, y: 341.9, label: L("Cat Ba", "吉婆岛") },
-    { id: "hanoi", x: 432.6, y: 328.3, label: L("Hanoi", "河内") },
-    { id: "sapa", x: 340.3, y: 269.4, label: L("Sapa", "沙坝") },
-    { id: "longzhou", x: 479.9, y: 269.1, label: L("Longzhou", "龙州") },
-    { id: "detian", x: 473.5, y: 245.8, label: L("Detian", "德天") },
-    { id: "nanning-end", x: 548.0, y: 247.4, label: L("Nanning", "南宁") },
-  ],
-};
+// 注：原 animationStops 已移除 —— 它从未被引用（死代码），
+// 且其硬编码坐标与 geoMap.project() 的结果不一致（过时数据）。
+// 地图播放实际使用 routeStops(routeId)，数据源为 src/data/osmBasemap.json。

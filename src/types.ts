@@ -2,7 +2,7 @@ import type { Tx } from "@/i18n/copy";
 
 export type { Tx };
 export type ThemeId = "wild" | "flavors" | "villages" | "locals";
-export type RouteId = "r1" | "r2";
+export type RouteId = "r1" | "r2" | "r3";
 export type StayKind = "hotel" | "train" | "park" | "base";
 
 export type Theme = {

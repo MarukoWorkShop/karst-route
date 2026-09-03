@@ -93,6 +93,24 @@ export const copy = {
     r2Entry: { en: "Nanning", zh: "南宁" },
     r2Exit: { en: "Nanning", zh: "南宁" },
     r2For: { en: "Families · All", zh: "家庭 · 全部" },
+    r3Badge: { en: "ROUTE 03", zh: "路线三" },
+    r3Name: { en: "Chongzuo Karst · Weizhou Isle", zh: "崇左栖山 · 涠洲枕海" },
+    r3Tagline: {
+      en: "Seven days from karst peaks to a volcanic island",
+      zh: "从喀斯特峰林到火山岛的七日",
+    },
+    r3Regions: {
+      en: "Nanning · Chongzuo · Beihai · Weizhou",
+      zh: "南宁 · 崇左 · 北海 · 涠洲岛",
+    },
+    r3Feature: {
+      en: "A week that holds two very different Guangxis: the karst river country around Chongzuo — black-water boat rides, the Detian falls and the Mingshi paddies — then south to the coast for Weizhou Island, where a volcanic shoreline, coral-stone chapels and a working fishing harbour set the pace. No border crossing, no long hauls.",
+      zh: "一周装下两个截然不同的广西：先走进崇左的喀斯特水乡——黑水河游船、德天瀑布与明仕田园；再南下海边，登涠洲岛，看火山岩海岸、珊瑚石教堂与归航的渔港。不跨境，不长途奔波。",
+    },
+    r3Days: { en: "7 days · 6 nights", zh: "7 天 6 晚" },
+    r3Entry: { en: "Nanning", zh: "南宁" },
+    r3Exit: { en: "Beihai", zh: "北海" },
+    r3For: { en: "Mountains + sea · Short break", zh: "山海双景 · 短假期" },
     playVideoIntro: {
       en: "Play the full-route video introduction",
       zh: "播放整条路线的视频介绍",
@@ -100,6 +118,7 @@ export const copy = {
     days: { en: "ITINERARY", zh: "行程" },
     r1Tab: { en: "Route 1 · 14 Days", zh: "路线一 · 14日" },
     r2Tab: { en: "Route 2 · 10 Days", zh: "路线二 · 10日" },
+    r3Tab: { en: "Route 3 · 7 Days", zh: "路线三 · 7日" },
     book: {
       readReviews: { en: "Read real traveller reviews", zh: "查看客户的真实评价" },
       readFull: { en: "Read full review →", zh: "阅读完整评价 →" },
@@ -272,6 +291,15 @@ export const copy = {
       en: "Nanning → Vietnam → Friendship Gate → Longzhou → Detian → Nanning",
       zh: "南宁 → 越南 → 友谊关 → 龙州 → 德天 → 南宁",
     },
+    r3Title: { en: "Chongzuo Karst · Weizhou Isle · 7 days", zh: "崇左栖山 · 涠洲枕海 · 7 日" },
+    r3Sub: {
+      en: "Nanning → Chongzuo → Detian → Beihai → Weizhou",
+      zh: "南宁 → 崇左 → 德天 → 北海 → 涠洲岛",
+    },
+    r3SubLong: {
+      en: "Nanning → Chongzuo (Black Water River) → Detian → Beihai → Weizhou Island",
+      zh: "南宁 → 崇左（黑水河）→ 德天 → 北海 → 涠洲岛",
+    },
     travelDates: { en: "Travel dates", zh: "出发时间" },
     datePicker: { en: "📅 Pick dates", zh: "📅 选具体日期" },
     dateText: { en: "✍️ Rough dates", zh: "✍️ 大致时间" },
@@ -342,6 +370,7 @@ export const copy = {
     rowNotes: { en: "Special requests", zh: "特别要求" },
     r1Short: { en: "Three Realms Traverse · 14d", zh: "三境溯游 · 14日" },
     r2Short: { en: "Southern Loop · 10d", zh: "南疆回环 · 10日" },
+    r3Short: { en: "Chongzuo & Weizhou · 7d", zh: "崇左 · 涠洲 · 7日" },
     tbcBrowse: { en: "TBC — just browsing", zh: "待定，先看看" },
     tbc: { en: "TBC", zh: "待确认" },
     none: { en: "None", zh: "无" },
