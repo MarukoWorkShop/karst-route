@@ -19,14 +19,7 @@ const WEATHER = [
   { region: { en: "Sapa", zh: "沙坝" }, icon: "🌫️", temp: "14–20°C", desc: { en: "Cool & misty", zh: "凉爽多雾" } },
 ] as const;
 
-const FOOD_TIPS = [
-  { emoji: "🥢", tip: { en: "Phở for breakfast — eat it hot", zh: "越南米粉（Phở）— 早餐首选，趁热吃" } },
-  { emoji: "☕", tip: { en: "Vietnamese drip coffee with condensed milk", zh: "越南滴滤咖啡配炼乳，强烈推荐" } },
-  { emoji: "🌶️", tip: { en: 'Guangxi dishes are sour-spicy — say "不辣" if needed', zh: "广西菜偏酸辣，不喜辣请提前说明" } },
-  { emoji: "🍄", tip: { en: "Yunnan wild mushrooms in season Jul–Sep", zh: "云南野生菌季（7–9月）是当地特色" } },
-  { emoji: "🚰", tip: { en: "Stick to bottled water throughout", zh: "全程建议饮用瓶装水" } },
-  { emoji: "💵", tip: { en: "Vietnam: carry VND cash for street food", zh: "越南多用现金越南盾，备好零钱" } },
-] as const;
+
 
 export function ToolsDrawer({
   open,
@@ -117,6 +110,8 @@ export function ToolsDrawer({
             <p className="mt-2 text-[10px] text-ink-soft/70">{t(copy.toolbox.rateNote)}</p>
           </section>
 
+          <TimeCard />
+
           <section className="mb-3 rounded-xl border border-line bg-surface px-4 pt-4 pb-[18px]">
             <h3 className="mb-3 text-[11px] font-semibold tracking-[0.1em] text-cta uppercase">
               {t(copy.toolbox.map)}
@@ -165,22 +160,7 @@ export function ToolsDrawer({
             <p className="mt-2 text-[10px] text-ink-soft/70">{t(copy.toolbox.weatherNote)}</p>
           </section>
 
-          <section className="rounded-xl border border-line bg-surface px-4 pt-4 pb-[18px]">
-            <h3 className="mb-3 text-[11px] font-semibold tracking-[0.1em] text-cta uppercase">
-              {t(copy.toolbox.food)}
-            </h3>
-            {FOOD_TIPS.map((item, i) => (
-              <div
-                key={item.tip.en}
-                className={`flex items-start gap-2.5 py-2 ${i < FOOD_TIPS.length - 1 ? "border-b border-line" : ""}`}
-              >
-                <span className="mt-px shrink-0 text-base" aria-hidden>
-                  {item.emoji}
-                </span>
-                <span className="text-[12px] leading-[18px] text-ink">{t(item.tip)}</span>
-              </div>
-            ))}
-          </section>
+
         </div>
       </aside>
     </>
@@ -193,5 +173,63 @@ function MapPinIcon() {
       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
       <circle cx="12" cy="10" r="3" />
     </svg>
+  );
+}
+
+function TimeCard() {
+  const { t } = useLocale();
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const id = window.setInterval(() => setNow(new Date()), 1000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const beijingTime = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Shanghai",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(now);
+  const beijingHour = Number(
+    new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Shanghai",
+      hour: "2-digit",
+      hour12: false,
+    }).format(now),
+  );
+  const localTime = new Intl.DateTimeFormat(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(now);
+  const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+  const online = beijingHour >= 9 && beijingHour < 21;
+
+  return (
+    <section className="mb-3 rounded-xl border border-line bg-surface px-4 pt-4 pb-[18px]">
+      <h3 className="mb-3 text-[11px] font-semibold tracking-[0.1em] text-cta uppercase">
+        {t(copy.toolbox.time)}
+      </h3>
+      <div className="grid grid-cols-2 gap-2">
+        <div className="rounded-lg bg-sage px-2.5 py-2">
+          <p className="mb-0.5 text-[11px] text-ink-soft">{t(copy.toolbox.timeBeijing)}</p>
+          <p className="text-[15px] font-semibold tabular-nums tracking-[-0.01em] text-ink">{beijingTime}</p>
+        </div>
+        <div className="rounded-lg bg-sage px-2.5 py-2">
+          <p className="mb-0.5 text-[11px] text-ink-soft">{t(copy.toolbox.timeLocal)}</p>
+          <p className="text-[15px] font-semibold tabular-nums tracking-[-0.01em] text-ink">{localTime}</p>
+          {localTz ? <p className="mt-0.5 truncate text-[10px] text-ink-soft/70">{localTz}</p> : null}
+        </div>
+      </div>
+      <p
+        className={`mt-2.5 flex items-start gap-1.5 text-[11px] leading-[15px] ${
+          online ? "text-ok" : "text-ink-soft"
+        }`}
+      >
+        <span className="shrink-0">{online ? "🟢" : "🌙"}</span>
+        <span>{online ? t(copy.toolbox.timeOnline) : t(copy.toolbox.timeNight)}</span>
+      </p>
+    </section>
   );
 }

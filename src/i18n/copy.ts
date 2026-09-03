@@ -29,6 +29,11 @@ export const copy = {
     weather: { en: "🌤️ Weather", zh: "🌤️ 本地天气" },
     weatherNote: { en: "Best time: Nov–Mar (cool & dry)", zh: "最佳出行：11月–3月（凉季干燥）" },
     food: { en: "🍜 Food Tips", zh: "🍜 饮食提示" },
+    time: { en: "Time", zh: "时间" },
+    timeBeijing: { en: "Beijing (UTC+8)", zh: "北京（UTC+8）" },
+    timeLocal: { en: "Your time", zh: "您的时区" },
+    timeOnline: { en: "Youxian concierge online · ~5-min reply", zh: "有闲旅游专属顾问在线，平均 5 分钟内响应" },
+    timeNight: { en: "Local night — send your request and we'll pick it up first at Beijing 9:00", zh: "当前为当地夜间，您可直接提交定制意向，我们将在北京时间早 9:00 优先处理" },
   },
   hero: {
     ctaA: {
