@@ -129,9 +129,9 @@ export function Timeline({
           <ReviewsFold />
         </div>
 
-        {/* 桌面端：左列表 + 右详情的两栏 master-detail */}
+        {/* 桌面端：左列表 + 右详情。两栏都限高，评价才能紧贴模块下方居中，而不是被左栏 14 天撑到下一屏。 */}
         <div className="hidden md:grid md:grid-cols-[0.82fr_1.3fr] md:gap-x-10">
-          <ol className="scroll-thin md:sticky md:top-[110px] md:py-1 md:pr-1">
+          <ol className="scroll-thin md:sticky md:top-[110px] md:max-h-[calc(100svh-130px)] md:overflow-y-auto md:py-1 md:pr-1">
             {route.days.map((day) => (
               <DayListItem
                 key={`${routeId}-${day.day}`}
@@ -149,11 +149,11 @@ export function Timeline({
               <DayDetailContent day={selectedStop} showDetail={firstVisitDays.has(selectedStop.day)} />
             </div>
           </div>
-          {/* 评价链接：grid 全宽新行、屏幕居中，与右栏 sticky 详情错开不重叠 */}
-          <div className="md:col-span-2 md:flex md:justify-center md:pt-2 md:pb-3">
-            <div className="w-full max-w-[640px]">
-              <ReviewsFold />
-            </div>
+        </div>
+        {/* 评价：单独一行、屏幕居中，在两栏行程模块正下方（bb1826f） */}
+        <div className="hidden md:flex md:justify-center md:pt-2 md:pb-3">
+          <div className="w-full max-w-[640px]">
+            <ReviewsFold />
           </div>
         </div>
       </div>
