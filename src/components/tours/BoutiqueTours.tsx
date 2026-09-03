@@ -3,10 +3,10 @@ import type { RouteId } from "@/types";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { asset } from "@/lib/asset";
+import { EXCL_LABELS, INCL_LABELS, routeFacts } from "@/data/tourFacts";
 import {
   IconClock,
   IconLanding,
-  IconPlay,
   IconTakeoff,
   IconUsers,
 } from "@/components/icons";
@@ -24,6 +24,7 @@ export function BoutiqueTours({
       <div className="page-col">
         <div className="grid gap-5 md:grid-cols-2 md:gap-6">
           <RouteCard
+            routeId="r1"
             src={asset("/tours/r1-kunming-exit.jpg")}
             badge={t(copy.tours.r1Badge)}
             name={t(copy.tours.r1Name)}
@@ -38,6 +39,7 @@ export function BoutiqueTours({
             onView={() => onPick("r1")}
           />
           <RouteCard
+            routeId="r2"
             src={asset("/tours/r2-nanning-loop.jpg")}
             badge={t(copy.tours.r2Badge)}
             name={t(copy.tours.r2Name)}
@@ -58,6 +60,7 @@ export function BoutiqueTours({
 }
 
 function RouteCard({
+  routeId,
   src,
   badge,
   name,
@@ -71,6 +74,7 @@ function RouteCard({
   active,
   onView,
 }: {
+  routeId: RouteId;
   src: string;
   badge: string;
   name: string;
@@ -85,6 +89,7 @@ function RouteCard({
   onView: () => void;
 }) {
   const { t } = useLocale();
+  const facts = routeFacts[routeId];
   return (
     <article
       className={`overflow-hidden rounded-xl bg-surface text-left ${
@@ -129,15 +134,53 @@ function RouteCard({
         <Meta icon={<IconLanding className="h-4 w-4" />} label={t(copy.tours.exit)} value={exit} />
         <Meta icon={<IconUsers className="h-4 w-4" />} label={t(copy.tours.for)} value={audience} />
       </div>
+      <div className="border-t border-line bg-paper px-4 py-3">
+        <p className="text-[10px] tracking-[0.08em] text-ink-soft uppercase">
+          {t(copy.tours.priceLabel)}
+        </p>
+        <p className="mt-0.5 text-[18px] font-semibold tracking-[-0.01em] text-cta">
+          {t(facts.price)}
+        </p>
+      </div>
       <div className="border-t border-line bg-paper px-4 py-4">
         <p className="text-[12.5px] leading-[22px] text-ink-soft">{feature}</p>
+      </div>
+      {/* 费用项按 id 标签渲染：后台表格勾选的 id 数组直接驱动这里 */}
+      <div className="border-t border-line px-4 py-3.5">
+        <p className="mb-2 text-[10px] font-semibold tracking-[0.1em] text-cta uppercase">
+          {t(copy.tours.included)}
+        </p>
+        <ul className="flex flex-wrap gap-1.5">
+          {facts.included.map((id) => (
+            <li
+              key={id}
+              className="inline-flex items-center gap-1 rounded-full bg-cta/8 px-2.5 py-[5px] text-[11px] font-medium text-cta"
+            >
+              <CheckMark />
+              {t(INCL_LABELS[id])}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3.5 mb-2 text-[10px] font-semibold tracking-[0.1em] text-ink-soft uppercase">
+          {t(copy.tours.excluded)}
+        </p>
+        <ul className="flex flex-wrap gap-1.5">
+          {facts.excluded.map((id) => (
+            <li
+              key={id}
+              className="inline-flex items-center gap-1 rounded-full bg-sage px-2.5 py-[5px] text-[11px] text-ink-soft"
+            >
+              <DashMark />
+              {t(EXCL_LABELS[id])}
+            </li>
+          ))}
+        </ul>
         <a
-          href="#"
-          onClick={(e) => e.preventDefault()}
-          className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-cta underline-offset-[3px] hover:underline"
+          href="#plan"
+          className="mt-3.5 inline-flex items-center gap-1.5 text-[13px] font-medium text-cta underline-offset-[3px] hover:underline"
         >
-          <IconPlay className="h-4 w-4" />
-          {t(copy.tours.playVideoIntro)}
+          {t(copy.tours.quote)}
+          <IconArrow />
         </a>
       </div>
     </article>
@@ -165,5 +208,29 @@ function Meta({
         <span className="block text-[12px] font-medium text-ink">{value}</span>
       </span>
     </span>
+  );
+}
+
+function CheckMark() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+      <path d="M2 5.8 4.2 8 9 2.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function DashMark() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+      <path d="M2.5 5.5h6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconArrow() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+      <path d="M2.5 6.5h7M7 4l2.5 2.5L7 9" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }

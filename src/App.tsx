@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileDock } from "@/components/layout/MobileDock";
 import { Hero } from "@/components/hero/Hero";
+import { TrustBar } from "@/components/layout/TrustBar";
 import { BoutiqueTours } from "@/components/tours/BoutiqueTours";
 import { Timeline } from "@/components/itinerary/Timeline";
 import { Experience } from "@/components/experience/Experience";
@@ -50,6 +51,7 @@ export default function App() {
             setIntent("custom");
           }}
         />
+        <TrustBar />
         <BoutiqueTours route={route} onPick={pickRoute} />
         <Timeline
           routeId={route}

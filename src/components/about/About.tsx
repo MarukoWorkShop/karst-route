@@ -40,6 +40,27 @@ export function About() {
             </li>
           ))}
         </ul>
+
+        {/* 资质与保障：执照 / 持证向导 / 保险 / 退改 / 运营数据 / 媒体背书 */}
+        <div className="mt-9">
+          <p className="mb-1.5 text-[13px] font-semibold text-cta">{t(copy.about.credsTitle)}</p>
+          <p className="mb-4 max-w-[640px] text-[13px] leading-[22px] text-ink-soft">
+            {t(copy.about.credsSub)}
+          </p>
+          <ul className="grid gap-2.5 sm:grid-cols-2">
+            {copy.about.creds.map((cred) => (
+              <li
+                key={cred.en}
+                className="flex items-start gap-2.5 rounded-[10px] border border-line bg-surface px-3.5 py-3"
+              >
+                <span className="shrink-0 text-[15px] leading-5" aria-hidden>
+                  {cred.icon}
+                </span>
+                <span className="text-[12.5px] leading-[19px] text-ink">{t(cred)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

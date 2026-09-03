@@ -112,6 +112,10 @@ export const copy = {
       nowAt: { en: "Now at", zh: "正在经过" },
       mapCredit: { en: "© OpenStreetMap contributors · Natural Earth", zh: "© OpenStreetMap contributors · Natural Earth" },
     },
+    priceLabel: { en: "Reference budget", zh: "参考预算" },
+    included: { en: "What's included", zh: "费用包含" },
+    excluded: { en: "Not included", zh: "费用不含" },
+    quote: { en: "Get a quote", zh: "获取报价" },
   },
   experience: {
     h2: { en: "Journeys that leave a mark", zh: "让旅途真正改变你" },
@@ -150,6 +154,43 @@ export const copy = {
       {
         en: "Elite luxury and rare resources",
         zh: "顶级奢华与稀缺资源",
+      },
+    ],
+    credsTitle: { en: "Licensed, insured, accountable", zh: "资质与保障" },
+    credsSub: {
+      en: "Every booking runs through our licensed agency — documented, insured, and with a cancellation policy you can read before you pay.",
+      zh: "每一单都由持证旅行社承接：资质可查、含保险、退改政策在付款前就能看清。",
+    },
+    creds: [
+      {
+        icon: "📜",
+        en: "Licensed travel agency · business registration on file",
+        zh: "旅行社业务经营许可证 · 营业执照",
+      },
+      {
+        icon: "🎓",
+        en: "Nationally licensed guides on every departure",
+        zh: "全员持证向导",
+      },
+      {
+        icon: "🛡️",
+        en: "Travel accident insurance on every booking",
+        zh: "每单含旅游意外险",
+      },
+      {
+        icon: "↩️",
+        en: "Free cancellation or date change up to 30 days out",
+        zh: "出发前 30 天免费取消 / 改期",
+      },
+      {
+        icon: "📈",
+        en: "8 years operating · 500+ travellers served",
+        zh: "8 年运营 · 服务 500+ 位旅行者",
+      },
+      {
+        icon: "🎙️",
+        en: "Covered by independent travel media",
+        zh: "独立旅行媒体报道",
       },
     ],
   },
@@ -413,6 +454,13 @@ export const copy = {
     sentBody: { en: "We'll get back to you within 24 hours.", zh: "我们会在 24 小时内回复您。" },
     close: { en: "Close", zh: "关闭" },
     err: { en: "Please fill in your email and message.", zh: "请填写邮箱与留言内容。" },
+  },
+  trust: {
+    years: { en: "8 years operating", zh: "8 年运营" },
+    travellers: { en: "500+ travellers served", zh: "服务 500+ 位旅行者" },
+    guide: { en: "Licensed local guides", zh: "全程持证向导" },
+    insurance: { en: "Travel insurance included", zh: "含旅游意外险" },
+    cancel: { en: "Free cancellation 30 days out", zh: "出发前 30 天免费取消" },
   },
   dock: {
     tours: { en: "Tours", zh: "路线" },
