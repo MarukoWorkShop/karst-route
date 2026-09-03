@@ -68,22 +68,49 @@ export function ToolsDrawer({
     };
   }, [open, onClose]);
 
-  // 拉取最新汇率（fawazahmed0 currency-api，免费无 key，含 CNY/VND）；失败降级到静态值
-  useEffect(() => {
-    if (!open) return;
-    let cancelled = false;
-    fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json")
-      .then((r) => r.json())
-      .then((d) => {
-        if (cancelled || !d?.usd?.cny || !d?.usd?.vnd) return;
-        setRates({ USD: 1, CNY: d.usd.cny, VND: d.usd.vnd });
-        setRateDate(String(d.date ?? ""));
-      })
-      .catch(() => {});
-    return () => {
-      cancelled = true;
-    };
-  }, [open]);
+  // 拉取最新汇率（fawazahmed0 currency-api，免费无 key，含 CNY/VND）；
+// sessionStorage 缓存 24 小时，命中则不重复请求；失败降级到静态值
+useEffect(() => {
+  if (!open) return;
+  const CACHE_KEY = "fxRates";
+  const ONE_DAY = 24 * 60 * 60 * 1000;
+  try {
+    const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || "");
+    if (
+      cached?.ts &&
+      Date.now() - cached.ts < ONE_DAY &&
+      cached?.rates?.CNY &&
+      cached?.rates?.VND
+    ) {
+      setRates({ USD: 1, CNY: cached.rates.CNY, VND: cached.rates.VND });
+      setRateDate(String(cached.date ?? ""));
+      return;
+    }
+  } catch {
+    /* sessionStorage 不可用或缓存损坏 — 走 fetch */
+  }
+  let cancelled = false;
+  fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json")
+    .then((r) => r.json())
+    .then((d) => {
+      if (cancelled || !d?.usd?.cny || !d?.usd?.vnd) return;
+      const next = { USD: 1, CNY: d.usd.cny, VND: d.usd.vnd };
+      setRates(next);
+      setRateDate(String(d.date ?? ""));
+      try {
+        sessionStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({ ts: Date.now(), date: d.date, rates: next }),
+        );
+      } catch {
+        /* 写入失败（隐私模式等）— 不影响本次显示 */
+      }
+    })
+    .catch(() => {});
+  return () => {
+    cancelled = true;
+  };
+}, [open]);
 
   return (
     <>
