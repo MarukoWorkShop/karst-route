@@ -1,21 +1,20 @@
-# 用户评价 · Markus H.
+# 用户评价 · Markus
 # route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg
 
-src: en   # 原文语言。只改这种语言；其它语言上线前补齐
-
-flag: "🇩🇪"
-name: "Markus H."
-country: "München"
-route: "r1"
+src: en
+flag: 🇩🇪
+name: Markus
+country: München
+route: r1
 rating: 5
-date: "2024-12"
+date: 2024-09-04
 short:
-  en: "Perfect organisation, authentic experiences. The border crossing was surprisingly smooth."
-  zh: "组织严谨，体验真实。过境出乎意料地顺畅。"
+  en: Perfect organisation, authentic experiences. The border crossing was surprisingly smooth.
+  zh: 组织严谨，体验真实。过境出乎意料地顺畅。
 full:
-  en: "Germans value precision in travel planning — this trip met my standards completely, and then surpassed them. Every pickup was on time, no confusion ever arose. What made it remarkable was the warmth behind the efficiency — our guide explained local customs, helped us connect with villagers, gave us genuine human warmth rather than just sightseeing. The Ha Long Bay sunset was the most beautiful I've seen in my life."
-  zh: "德国人向来注重行程的严谨性，这次旅行完全符合我的标准，甚至超出了。每天的接送时间精准，没有一次出现混乱。更难得的是，这种高效率背后不失人情味——向导会主动介绍当地风俗，帮我们和村民沟通，让我们感受到了真实的人文温度，而不只是走马观花。下龙湾的日落是我此生见过最美的。"
+  en: Germans value precision in travel planning — this trip met my standards completely, and then surpassed them. Every pickup was on time, no confusion ever arose. What made it remarkable was the warmth behind the efficiency — our guide explained local customs, helped us connect with villagers, gave us genuine human warmth rather than just sightseeing. The Ha Long Bay sunset was the most beautiful I've seen in my life.
+  zh: 德国人向来注重行程的严谨性，这次旅行完全符合我的标准，甚至超出了。每天的接送时间精准，没有一次出现混乱。更难得的是，这种高效率背后不失人情味——向导会主动介绍当地风俗，帮我们和村民沟通，让我们感受到了真实的人文温度，而不只是走马观花。下龙湾的日落是我此生见过最美的。
 photos:
-  - "destinations/catba.jpg"
-  - "destinations/nanning.jpg"
-  - "destinations/chongzuo.jpg"
+  - destinations/catba.jpg
+  - destinations/nanning.jpg
+  - destinations/chongzuo.jpg

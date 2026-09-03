@@ -8,6 +8,8 @@
     "build": "tsc --noEmit && vite build",
     "map:basemap": "python3 scripts/build-osm-basemap.py",
     "content:lang": "node scripts/content-lang-report.mjs",
+    "content:csv": "node scripts/export-notion-csv.mjs",
+    "content:notion": "node scripts/sync-notion.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -1,46 +1,46 @@
 # 路线卡片 · r3
 # 改名称、价格、卖点、封面。逐日行程请改 content/itineraries/r3.yaml
+# cover 只写 public 下的相对路径
 
-src: zh   # 原文语言。只改这种语言；其它语言上线前补齐
-
-cover: "destinations/detian.jpg"
+src: zh
+cover: destinations/detian.jpg
 badge:
-  en: "ROUTE 03"
-  zh: "路线三"
+  en: ROUTE 03
+  zh: 路线三
 name:
-  en: "Chongzuo Karst · Weizhou Isle"
-  zh: "崇左栖山 · 涠洲枕海"
+  en: Chongzuo Karst · Weizhou Isle
+  zh: 崇左栖山 · 涠洲枕海
 tagline:
-  en: "Seven days from karst peaks to a volcanic island"
-  zh: "从喀斯特峰林到火山岛的七日"
+  en: Seven days from karst peaks to a volcanic island
+  zh: 从喀斯特峰林到火山岛的七日
 regions:
-  en: "Nanning · Chongzuo · Beihai · Weizhou"
-  zh: "南宁 · 崇左 · 北海 · 涠洲岛"
+  en: Nanning · Chongzuo · Beihai · Weizhou
+  zh: 南宁 · 崇左 · 北海 · 涠洲岛
 feature:
   en: "A week that holds two very different Guangxis: the karst river country around Chongzuo — black-water boat rides, the Detian falls and the Mingshi paddies — then south to the coast for Weizhou Island, where a volcanic shoreline, coral-stone chapels and a working fishing harbour set the pace. No border crossing, no long hauls."
-  zh: "一周装下两个截然不同的广西：先走进崇左的喀斯特水乡——黑水河游船、德天瀑布与明仕田园；再南下海边，登涠洲岛，看火山岩海岸、珊瑚石教堂与归航的渔港。不跨境，不长途奔波。"
-days:
-  en: "7 days · 6 nights"
-  zh: "7 天 6 晚"
+  zh: 一周装下两个截然不同的广西：先走进崇左的喀斯特水乡——黑水河游船、德天瀑布与明仕田园；再南下海边，登涠洲岛，看火山岩海岸、珊瑚石教堂与归航的渔港。不跨境，不长途奔波。
 entry:
-  en: "Nanning"
-  zh: "南宁"
+  en: Nanning
+  zh: 南宁
 exit:
-  en: "Beihai"
-  zh: "北海"
+  en: Beihai
+  zh: 北海
 audience:
-  en: "Mountains + sea · Short break"
-  zh: "山海双景 · 短假期"
+  en: Mountains + sea · Short break
+  zh: 山海双景 · 短假期
 price:
-  en: "from $980 / person"
-  zh: "¥6,800–9,800 / 人"
+  en: from $980 / person
+  zh: ¥6,800–9,800 / 人
+days:
+  en: 76 days
+  zh: 76 日
 included:
-  - "transport"
-  - "lodging"
-  - "tickets"
-  - "meals"
-  - "insurance"
+  - transport
+  - lodging
+  - tickets
+  - meals
+  - insurance
 excluded:
-  - "intlFlights"
-  - "optional"
-  - "personal"
+  - intlFlights
+  - optional
+  - personal

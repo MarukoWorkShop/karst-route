@@ -1,22 +1,21 @@
 # 用户评价 · 林 晓燕
 # route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg
 
-src: zh   # 原文语言。只改这种语言；其它语言上线前补齐
-
-flag: "🇨🇳"
-name: "林 晓燕"
-country: "上海"
-route: "r1"
+src: zh
+flag: 🇨🇳
+name: 林 晓燕
+country: 上海
+route: r2
 rating: 5
-date: "2024-11"
+date: 2025-12-17
 short:
-  en: "Thoughtfully arranged, excellent guide — the whole trip exceeded expectations."
-  zh: "行程安排得非常用心，向导很专业，整个旅途超出预期。"
+  en: Thoughtfully arranged, excellent guide — the whole trip exceeded expectations.
+  zh: 行程安排得非常用心，向导很专业，整个旅途超出预期。
 full:
-  en: "Our family of four tried a cross-border journey for the first time — we were nervous before departure. But from the airport pickup on day one, every detail was handled. Our Vietnam guide was incredibly engaging; even the kids loved it. It rained lightly at Detian Falls and the bamboo rafting felt even more atmospheric for it. The old courtyard guesthouse in Jianshui was unforgettable — the tofu soup at breakfast was the best meal of the whole trip. Highly recommended for families."
-  zh: "我们一家四口第一次尝试跨境自驾游，出发前非常忐忑。但从第一天的接机开始，每个细节都被安排得妥妥当当。越南段的向导小明讲解特别生动，孩子们也很喜欢。德天瀑布那天下了点小雨，竹筏漂流更有感觉。最后在建水住的那家老宅客栈让人印象深刻，早餐的豆腐脑是全程最好吃的一顿。强烈推荐有小孩的家庭！"
+  en: Our family of four tried a cross-border journey for the first time — we were nervous before departure. But from the airport pickup on day one, every detail was handled. Our Vietnam guide was incredibly engaging; even the kids loved it. It rained lightly at Detian Falls and the bamboo rafting felt even more atmospheric for it. The old courtyard guesthouse in Jianshui was unforgettable — the tofu soup at breakfast was the best meal of the whole trip. Highly recommended for families.
+  zh: 我们一家四口第一次尝试跨境自驾游，出发前非常忐忑。但从第一天的接机开始，每个细节都被安排得妥妥当当。越南段的向导小明讲解特别生动，孩子们也很喜欢。德天瀑布那天下了点小雨，竹筏漂流更有感觉。最后在建水住的那家老宅客栈让人印象深刻，早餐的豆腐脑是全程最好吃的一顿。强烈推荐有小孩的家庭！
 photos:
-  - "destinations/chongzuo.jpg"
-  - "destinations/jianshui.jpg"
-  - "destinations/hotel-a.jpg"
-  - "destinations/nanning.jpg"
+  - destinations/chongzuo.jpg
+  - destinations/jianshui.jpg
+  - destinations/hotel-a.jpg
+  - destinations/nanning.jpg

@@ -52,6 +52,8 @@ content/
     └── …
 ```
 
+把现有内容导入 Notion：用 [`content/notion-import/`](./notion-import/README.md) 里的 CSV（`npm run content:csv` 可重新生成）。
+
 **卡片和日程是分开的：** 改价格、卖点、封面 → `routes/`；改第 3 天去哪、住哪 → `itineraries/`。两处都要改时请打开两个文件。
 
 ---

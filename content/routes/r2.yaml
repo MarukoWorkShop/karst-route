@@ -1,49 +1,49 @@
 # 路线卡片 · r2
 # 改名称、价格、卖点、封面。逐日行程请改 content/itineraries/r2.yaml
+# cover 只写 public 下的相对路径
 
-src: zh   # 原文语言。只改这种语言；其它语言上线前补齐
-
-cover: "tours/r2-nanning-loop.jpg"
+src: zh
+cover: tours/r2-nanning-loop.jpg
 badge:
-  en: "ROUTE 02"
-  zh: "路线二"
+  en: ROUTE 02
+  zh: 路线二
 name:
-  en: "The Southern Loop"
-  zh: "南疆回环"
+  en: The Southern Loop
+  zh: 南疆回环
 tagline:
-  en: "A slow cultural circuit through sugarcane fields, rice terraces and French-era streets"
-  zh: "穿行于蔗海、梯田与法式老街的慢节奏人文巡游"
+  en: A slow cultural circuit through sugarcane fields, rice terraces and French-era streets
+  zh: 穿行于蔗海、梯田与法式老街的慢节奏人文巡游
 regions:
-  en: "Nanning · Chongzuo · Vietnam · Longzhou · Nanning"
-  zh: "南宁 · 崇左 · 越南 · 龙州 · 南宁"
+  en: Nanning · Chongzuo · Vietnam · Longzhou · Nanning
+  zh: 南宁 · 崇左 · 越南 · 龙州 · 南宁
 feature:
-  en: "A closed loop from Nanning, built for travellers with limited time and zero compromise on depth. Detian Falls, Cat Ba's sea air, Hanoi's old-quarter energy, then back through Longzhou for Zhuang music and sugarcane-field cycling. Ten days, one seamless re-entry, maximum cultural density."
-  zh: "一条以南宁为原点的闭环路线，专为时间紧凑而深度不妥协的旅人设计。德天瀑布的震撼、吉婆岛的海风、河内老街的烟火气，再折返至龙州天琴壮寨，听一曲古琴、骑行蔗海。10 天内完成一次文化密度极高的边境漫游，进出无缝，行程自洽。"
-days:
-  en: "10 days"
-  zh: "10 日"
+  en: A closed loop from Nanning, built for travellers with limited time and zero compromise on depth. Detian Falls, Cat Ba's sea air, Hanoi's old-quarter energy, then back through Longzhou for Zhuang music and sugarcane-field cycling. Ten days, one seamless re-entry, maximum cultural density.
+  zh: 一条以南宁为原点的闭环路线，专为时间紧凑而深度不妥协的旅人设计。德天瀑布的震撼、吉婆岛的海风、河内老街的烟火气，再折返至龙州天琴壮寨，听一曲古琴、骑行蔗海。10 天内完成一次文化密度极高的边境漫游，进出无缝，行程自洽。
 entry:
-  en: "Nanning"
-  zh: "南宁"
+  en: Nanning
+  zh: 南宁
 exit:
-  en: "Nanning"
-  zh: "南宁"
+  en: Nanning
+  zh: 南宁
 audience:
-  en: "Families · All"
-  zh: "家庭 · 全部"
+  en: Families · All
+  zh: 家庭 · 全部
 price:
-  en: "from $1,390 / person"
-  zh: "¥9,400–13,800 / 人"
+  en: from $1,390 / person
+  zh: ¥9,400–13,800 / 人
+days:
+  en: 10 days
+  zh: 10 日
 included:
-  - "transport"
-  - "lodging"
-  - "tickets"
-  - "meals"
-  - "guide"
-  - "visaAssist"
+  - transport
+  - lodging
+  - tickets
+  - meals
+  - guide
+  - visaAssist
 excluded:
-  - "intlFlights"
-  - "visaFee"
-  - "personal"
-  - "optional"
-  - "tips"
+  - intlFlights
+  - visaFee
+  - personal
+  - optional
+  - tips

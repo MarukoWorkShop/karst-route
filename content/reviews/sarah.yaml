@@ -1,21 +1,20 @@
 # 用户评价 · Sarah K.
 # route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg
 
-src: en   # 原文语言。只改这种语言；其它语言上线前补齐
-
-flag: "🇦🇺"
-name: "Sarah K."
-country: "Melbourne"
-route: "r2"
+src: en
+flag: 🇦🇺
+name: Sarah K.
+country: Melbourne
+route: r2
 rating: 5
-date: "2025-02"
+date: 2021-09-21
 short:
-  en: "The food experiences alone were worth the trip. Our guide knew every hidden gem."
-  zh: "光是吃就值回票价。向导知道每一处藏着的好店。"
+  en: The food experiences alone were worth the trip. Our guide knew every hidden gem.
+  zh: 光是吃就值回票价。向导知道每一处藏着的好店。
 full:
-  en: "As a food traveller, this route delivered completely. In every city, a local guide took us to the real places — not influencer restaurants, but the street corner stalls, the morning market, the elderly woman's home kitchen. The snail vermicelli in Ninh Bình was prepared in a way I've never seen in any recipe. This trip made me start learning Vietnamese seriously."
-  zh: "作为一个美食旅行者，这条路线完全满足了我的期待。每一个城市都有当地向导带我们去「真正的」地方——不是网红餐厅，而是街角的小摊、菜市场、老奶奶家里的灶台。宁平的田螺米线是我从来没有在任何食谱上见过的做法。这趟旅行让我开始认真学越南语了。"
+  en: As a food traveller, this route delivered completely. In every city, a local guide took us to the real places — not influencer restaurants, but the street corner stalls, the morning market, the elderly woman's home kitchen. The snail vermicelli in Ninh Bình was prepared in a way I've never seen in any recipe. This trip made me start learning Vietnamese seriously.
+  zh: 作为一个美食旅行者，这条路线完全满足了我的期待。每一个城市都有当地向导带我们去「真正的」地方——不是网红餐厅，而是街角的小摊、菜市场、老奶奶家里的灶台。宁平的田螺米线是我从来没有在任何食谱上见过的做法。这趟旅行让我开始认真学越南语了。
 photos:
-  - "destinations/hanoi.jpg"
-  - "destinations/puzhehei.jpg"
-  - "destinations/mile.jpg"
+  - destinations/hanoi.jpg
+  - destinations/puzhehei.jpg
+  - destinations/mile.jpg

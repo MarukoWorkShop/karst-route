@@ -1,403 +1,387 @@
 # 逐日行程 · r1
 # 每一天：城市、住宿、交通、餐饮、活动 bullets、主题 themes
-# photos 只写 public 下的相对路径，例如 destinations/nanning.jpg
+# photos 只写 public 下的相对路径
 
-src: zh   # 原文语言。只改这种语言；其它语言上线前补齐
-
+src: zh
 days:
   - day: 1
     city:
-      en: "Nanning"
-      zh: "南宁"
+      en: Nanning
+      zh: 南宁
     stay:
-      en: "Yong River, first Chinese night"
-      zh: "邕江边，第一夜"
-    stayKind: "hotel"
-    placeId: "nanning"
+      en: Yong River, first Chinese night
+      zh: 邕江边，第一夜
+    stayKind: hotel
+    placeId: nanning
     transport:
-      en: "Airport pickup, then a slow city night"
-      zh: "接机，然后一个慢的城市夜"
+      en: Airport pickup, then a slow city night
+      zh: 接机，然后一个慢的城市夜
     lodging:
-      en: "Riverside garden stay"
-      zh: "江景花园酒店"
+      en: Riverside garden stay
+      zh: 江景花园酒店
     dining:
       - en: "Lunch: depending on arrival"
-        zh: "午餐：看抵达时间"
+        zh: 午餐：看抵达时间
       - en: "Dinner: snail noodles on Zhongshan Road"
-        zh: "晚餐：中山路螺蛳粉"
+        zh: 晚餐：中山路螺蛳粉
     bullets:
-      - en: "City orientation"
-        zh: "城市适应"
-      - en: "Rest before the road"
-        zh: "上路前休息"
+      - en: City orientation
+        zh: 城市适应
+      - en: Rest before the road
+        zh: 上路前休息
     themes:
-      - "locals"
+      - locals
   - day: 2
     city:
-      en: "Chongzuo"
-      zh: "崇左"
+      en: Chongzuo
+      zh: 崇左
     stay:
-      en: "Karst road, after the falls"
-      zh: "看山，瀑布之后"
-    stayKind: "hotel"
-    placeId: "chongzuo"
+      en: Karst road, after the falls
+      zh: 看山，瀑布之后
+    stayKind: hotel
+    placeId: chongzuo
     drive:
-      en: "Nanning → Detian ~3.5 h · Detian → Mingshi ~1 h"
-      zh: "南宁→德天约 3.5 小时 · 德天→明仕约 1 小时"
+      en: Nanning → Detian ~3.5 h · Detian → Mingshi ~1 h
+      zh: 南宁→德天约 3.5 小时 · 德天→明仕约 1 小时
     transport:
-      en: "Private car to Detian Falls (~3.5 h), then on to Mingshi Pastoral (~1 h)"
-      zh: "专车至德天瀑布（约 3.5 小时），再赴明仕田园（约 1 小时）"
+      en: Private car to Detian Falls (~3.5 h), then on to Mingshi Pastoral (~1 h)
+      zh: 专车至德天瀑布（约 3.5 小时），再赴明仕田园（约 1 小时）
     lodging:
-      en: "Karst-view lodge"
-      zh: "看山的小住"
+      en: Karst-view lodge
+      zh: 看山的小住
     dining:
       - en: "Lunch: river fish near the falls"
-        zh: "午餐：瀑布附近的河鱼"
+        zh: 午餐：瀑布附近的河鱼
       - en: "Dinner: Chongzuo sticky rice table"
-        zh: "晚餐：崇左糯米一桌"
+        zh: 晚餐：崇左糯米一桌
     bullets: []
     themes:
-      - "wild"
+      - wild
   - day: 3
     city:
-      en: "Ha Long"
-      zh: "下龙"
+      en: Ha Long
+      zh: 下龙
     stay:
-      en: "First night on the bay"
-      zh: "湾上第一夜"
-    stayKind: "hotel"
-    placeId: "halong"
+      en: First night on the bay
+      zh: 湾上第一夜
+    stayKind: hotel
+    placeId: halong
     drive:
-      en: "Chongzuo → Dongxing, then into Vietnam"
-      zh: "崇左赴东兴，过境后再赴下龙"
+      en: Chongzuo → Dongxing, then into Vietnam
+      zh: 崇左赴东兴，过境后再赴下龙
     transport:
-      en: "Chongzuo → Dongxing (~2.5 h), cross at Mong Cai, then on to Ha Long (~3 h)"
-      zh: "崇左赴东兴（约 2.5 小时），芒街口岸入境越南，再赴下龙（约 3 小时）"
+      en: Chongzuo → Dongxing (~2.5 h), cross at Mong Cai, then on to Ha Long (~3 h)
+      zh: 崇左赴东兴（约 2.5 小时），芒街口岸入境越南，再赴下龙（约 3 小时）
     lodging:
-      en: "Bay-facing hotel in Ha Long"
-      zh: "下龙看湾的酒店"
+      en: Bay-facing hotel in Ha Long
+      zh: 下龙看湾的酒店
     dining:
       - en: "Lunch: after the crossing"
-        zh: "午餐：过关之后"
+        zh: 午餐：过关之后
       - en: "Dinner: seafood on the harbour"
-        zh: "晚餐：港边海鲜"
+        zh: 晚餐：港边海鲜
     bullets: []
     themes:
-      - "wild"
+      - wild
   - day: 4
     city:
-      en: "Ha Long"
-      zh: "下龙"
+      en: Ha Long
+      zh: 下龙
     stay:
-      en: "Second night on the bay"
-      zh: "湾上第二夜"
-    stayKind: "hotel"
-    placeId: "halong"
-    blurb:
-      en: "A full day on the water instead of a pass-through: the cruise eases into lagoons the big boats skip, and by evening the bay is yours again. Two nights is what lets you watch it leave and come back."
-      zh: "今天不赶路，整日在水上：游轮钻进大船绕开的湖，傍晚整座湾又交还给你。连住两晚，才看得见它「离开又回来」。"
+      en: Second night on the bay
+      zh: 湾上第二夜
+    stayKind: hotel
+    placeId: halong
     transport:
-      en: "Day cruise on Ha Long Bay"
-      zh: "下龙湾一日游轮出海"
+      en: Day cruise on Ha Long Bay
+      zh: 下龙湾一日游轮出海
     lodging:
-      en: "Same bay hotel — no packing"
-      zh: "同一家看湾酒店，不用收行李"
+      en: Same bay hotel — no packing
+      zh: 同一家看湾酒店，不用收行李
     dining:
       - en: "Lunch: on the boat"
-        zh: "午餐：游轮上"
+        zh: 午餐：游轮上
       - en: "Dinner: back in Ha Long town"
-        zh: "晚餐：回到下龙镇上"
+        zh: 晚餐：回到下龙镇上
     bullets:
-      - en: "Karst seascape among the limestone isles"
-        zh: "海上喀斯特风光"
+      - en: Karst seascape among the limestone isles
+        zh: 海上喀斯特风光
     themes:
-      - "wild"
+      - wild
   - day: 5
     city:
-      en: "Cat Ba Island"
-      zh: "吉婆岛"
+      en: Cat Ba Island
+      zh: 吉婆岛
     stay:
-      en: "Harbour night on the island"
-      zh: "岛上港边过夜"
-    stayKind: "hotel"
-    placeId: "catba"
-    blurb:
-      en: "A short ferry from Ha Long, then an island still keeping its own hours — kayaking the lagoons in the morning, the national park in the afternoon, harbour seafood at night. The night here is water, not a highway hotel."
-      zh: "从下龙坐一小段轮渡，便是一座还按自己节奏过的岛——上午划船进湖，下午走国家公园，夜里港边海鲜。这一夜是水，不是高速旁的酒店。"
+      en: Harbour night on the island
+      zh: 岛上港边过夜
+    stayKind: hotel
+    placeId: catba
     transport:
-      en: "Ferry from Ha Long to Cat Ba, ~1 h"
-      zh: "下龙轮渡登陆吉婆岛，约 1 小时"
+      en: Ferry from Ha Long to Cat Ba, ~1 h
+      zh: 下龙轮渡登陆吉婆岛，约 1 小时
     lodging:
-      en: "Bay-facing island hotel"
-      zh: "看湾的小岛酒店"
+      en: Bay-facing island hotel
+      zh: 看湾的小岛酒店
     dining:
       - en: "Lunch: on the island after landing"
-        zh: "午餐：登岛之后"
+        zh: 午餐：登岛之后
       - en: "Dinner: harbour seafood"
-        zh: "晚餐：港边海鲜"
+        zh: 晚餐：港边海鲜
     bullets:
-      - en: "An unhurried island afternoon"
-        zh: "海岛休闲"
+      - en: An unhurried island afternoon
+        zh: 海岛休闲
     themes:
-      - "wild"
+      - wild
   - day: 6
     city:
-      en: "Hanoi"
-      zh: "河内"
+      en: Hanoi
+      zh: 河内
     stay:
-      en: "Old Quarter, first night"
-      zh: "古城，第一夜"
-    stayKind: "hotel"
-    placeId: "hanoi"
+      en: Old Quarter, first night
+      zh: 古城，第一夜
+    stayKind: hotel
+    placeId: hanoi
     drive:
-      en: "Cable to Hai Phong · metre-gauge 18:40 to Hanoi"
-      zh: "跨海缆车至海防 · 18:40 米轨赴河内"
+      en: Cable to Hai Phong · metre-gauge 18:40 to Hanoi
+      zh: 跨海缆车至海防 · 18:40 米轨赴河内
     transport:
-      en: "Cat Ba cable to Hai Phong; 18:40 metre-gauge into Hanoi (~2 h)"
-      zh: "吉婆岛跨海缆车至海防；18:40 百年米轨前往河内（约 2 小时）"
+      en: Cat Ba cable to Hai Phong; 18:40 metre-gauge into Hanoi (~2 h)
+      zh: 吉婆岛跨海缆车至海防；18:40 百年米轨前往河内（约 2 小时）
     lodging:
-      en: "French-quarter hide near the lake"
-      zh: "湖边法租界小住"
+      en: French-quarter hide near the lake
+      zh: 湖边法租界小住
     dining:
       - en: "Afternoon: Vietnamese drip coffee while you wait"
-        zh: "等候时赠送越南滴漏咖啡"
+        zh: 等候时赠送越南滴漏咖啡
       - en: "Dinner: after the train, Old Quarter"
-        zh: "晚餐：下车后在古城"
+        zh: 晚餐：下车后在古城
     bullets:
-      - en: "Hai Phong’s century-old station; drip coffee while you wait"
-        zh: "参观海防百年老火车站；等候赠送越南滴漏咖啡"
+      - en: Hai Phong’s century-old station; drip coffee while you wait
+        zh: 参观海防百年老火车站；等候赠送越南滴漏咖啡
     themes:
-      - "flavors"
-      - "locals"
+      - flavors
+      - locals
   - day: 7
     city:
-      en: "Hanoi"
-      zh: "河内"
+      en: Hanoi
+      zh: 河内
     stay:
-      en: "Old Quarter, second night"
-      zh: "古城，第二夜"
-    stayKind: "hotel"
-    placeId: "hanoi"
-    blurb:
-      en: "The second day in the Old Quarter moves slower: a cyclo past the lake, Ba Dinh and St Joseph's, then Train Street as the light goes. Same restored house, no packing — the city is the itinerary."
-      zh: "在老城的第二天慢下来：三轮车绕湖，巴亭广场与河内大教堂，天暗了去火车街。同一栋老房子，不用收行李——这座城本身就是行程。"
+      en: Old Quarter, second night
+      zh: 古城，第二夜
+    stayKind: hotel
+    placeId: hanoi
     transport:
-      en: "On foot and cyclo in the Old Quarter"
-      zh: "古城步行 + 三轮车"
+      en: On foot and cyclo in the Old Quarter
+      zh: 古城步行 + 三轮车
     lodging:
-      en: "Same restored house — no packing"
-      zh: "同一栋修好的老房子，不用收行李"
+      en: Same restored house — no packing
+      zh: 同一栋修好的老房子，不用收行李
     dining:
       - en: "Lunch: a city table near the lake"
-        zh: "午餐：湖边一桌"
+        zh: 午餐：湖边一桌
       - en: "Dinner: Old Quarter street stall"
-        zh: "晚餐：古城街头一摊"
+        zh: 晚餐：古城街头一摊
     bullets:
-      - en: "Ba Dinh Square, Ho Chi Minh’s residence, St Joseph’s Cathedral"
-        zh: "巴亭广场、胡志明故居、河内大教堂"
-      - en: "Train Street"
-        zh: "火车街"
+      - en: Ba Dinh Square, Ho Chi Minh’s residence, St Joseph’s Cathedral
+        zh: 巴亭广场、胡志明故居、河内大教堂
+      - en: Train Street
+        zh: 火车街
     themes:
-      - "flavors"
-      - "locals"
+      - flavors
+      - locals
   - day: 8
     city:
-      en: "Sapa"
-      zh: "沙坝"
+      en: Sapa
+      zh: 沙坝
     stay:
-      en: "Terraces above the town"
-      zh: "镇上看田"
-    stayKind: "hotel"
-    placeId: "sapa"
+      en: Terraces above the town
+      zh: 镇上看田
+    stayKind: hotel
+    placeId: sapa
     drive:
-      en: "Private car · 5.5–6 h"
-      zh: "专车约 5.5–6 小时"
+      en: Private car · 5.5–6 h
+      zh: 专车约 5.5–6 小时
     transport:
-      en: "Private car Hanoi → Sapa, 5.5–6 h"
-      zh: "河内包车前往沙坝，车程 5.5–6 小时"
+      en: Private car Hanoi → Sapa, 5.5–6 h
+      zh: 河内包车前往沙坝，车程 5.5–6 小时
     lodging:
-      en: "Terrace-facing mountain lodge"
-      zh: "看田的山居"
+      en: Terrace-facing mountain lodge
+      zh: 看田的山居
     dining:
       - en: "Lunch: on the mountain road"
-        zh: "午餐：山路途中"
-      - en: "Afternoon tea among the terraces"
-        zh: "抵达后梯田下午茶"
+        zh: 午餐：山路途中
+      - en: Afternoon tea among the terraces
+        zh: 抵达后梯田下午茶
     bullets: []
     themes:
-      - "villages"
+      - villages
   - day: 9
     city:
-      en: "Sapa"
-      zh: "沙坝"
+      en: Sapa
+      zh: 沙坝
     stay:
-      en: "Same lodge, no suitcase"
-      zh: "同一山居，不拎箱子"
-    stayKind: "hotel"
-    placeId: "sapa"
-    blurb:
-      en: "The second morning rides the cable up Fansipan, then comes down to Cat Cat on foot — terraces at shoulder height, a village that still farms them by hand. Two nights so the mist on the rice has somewhere to settle."
-      zh: "第二天上午缆车上番西邦，下午步行下猫猫村——梯田在肩膀的高度，村里还用手种着。连住两晚，雾在稻子上才有了落脚处。"
+      en: Same lodge, no suitcase
+      zh: 同一山居，不拎箱子
+    stayKind: hotel
+    placeId: sapa
     transport:
-      en: "Fansipan cable + Muong Hoa train, then Cat Cat on foot"
-      zh: "番西邦缆车 + 芒花小火车，下午步行猫猫村"
+      en: Fansipan cable + Muong Hoa train, then Cat Cat on foot
+      zh: 番西邦缆车 + 芒花小火车，下午步行猫猫村
     lodging:
-      en: "Terrace-facing mountain lodge — second night"
-      zh: "看田的山居 · 第二晚"
+      en: Terrace-facing mountain lodge — second night
+      zh: 看田的山居 · 第二晚
     dining:
       - en: "Lunch: after the cable, in the valley"
-        zh: "午餐：下山后在谷里"
+        zh: 午餐：下山后在谷里
       - en: "Dinner: highland hot pot"
-        zh: "晚餐：高地热锅"
+        zh: 晚餐：高地热锅
     bullets:
-      - en: "Hmong market, if the morning allows"
-        zh: "黑苗族集市（看当天）"
-      - en: "Terrace-view evening from the balcony"
-        zh: "阳台上看梯田的傍晚"
+      - en: Hmong market, if the morning allows
+        zh: 黑苗族集市（看当天）
+      - en: Terrace-view evening from the balcony
+        zh: 阳台上看梯田的傍晚
     themes:
-      - "wild"
-      - "villages"
+      - wild
+      - villages
   - day: 10
     city:
-      en: "Jianshui"
-      zh: "建水"
+      en: Jianshui
+      zh: 建水
     stay:
-      en: "Inside the old town wall"
-      zh: "古城墙里"
-    stayKind: "hotel"
-    placeId: "jianshui"
+      en: Inside the old town wall
+      zh: 古城墙里
+    stayKind: hotel
+    placeId: jianshui
     drive:
-      en: "Sapa → Lao Cai → Hekou, then to Jianshui"
-      zh: "沙坝—老街—河口，再乘车赴建水"
+      en: Sapa → Lao Cai → Hekou, then to Jianshui
+      zh: 沙坝—老街—河口，再乘车赴建水
     transport:
-      en: "Sapa → Lao Cai (~1 h), exit at Hekou, then car to Jianshui (~3 h)"
-      zh: "沙坝至老街（约 1 小时），河口口岸出境，乘车赴建水（约 3 小时）"
+      en: Sapa → Lao Cai (~1 h), exit at Hekou, then car to Jianshui (~3 h)
+      zh: 沙坝至老街（约 1 小时），河口口岸出境，乘车赴建水（约 3 小时）
     lodging:
-      en: "Courtyard inn inside the wall"
-      zh: "城墙里的院子客栈"
+      en: Courtyard inn inside the wall
+      zh: 城墙里的院子客栈
     dining:
       - en: "Lunch: after the crossing"
-        zh: "午餐：过关之后"
+        zh: 午餐：过关之后
       - en: "Dinner: grilled tofu in the courtyard"
-        zh: "晚餐：天井里的烤豆腐"
+        zh: 晚餐：天井里的烤豆腐
     bullets: []
     themes:
-      - "villages"
+      - villages
   - day: 11
     city:
-      en: "Puzhehei"
-      zh: "普者黑"
+      en: Puzhehei
+      zh: 普者黑
     stay:
-      en: "Inside Puzhehei scenic area"
-      zh: "普者黑景区内"
-    stayKind: "park"
-    placeId: "puzhehei"
+      en: Inside Puzhehei scenic area
+      zh: 普者黑景区内
+    stayKind: park
+    placeId: puzhehei
     drive:
-      en: "Private car · ~4 h"
-      zh: "专车约 4 小时"
-    blurb:
-      en: "Puzhehei is a lake that grew inside a karst forest. Lotus flowers between the peaks, bamboo raft threading between them — this is the kind of landscape that makes you question whether it's real."
-      zh: "普者黑是长在喀斯特森林里的一湖水。峰丛之间开着荷花，竹筏从中间穿过去——这种风景会让人怀疑是不是真的。"
-    photos:
-      - "destinations/jianshui.jpg"
-      - "destinations/chongzuo.jpg"
-      - "destinations/puzhehei.jpg"
+      en: Private car · ~4 h
+      zh: 专车约 4 小时
     transport:
-      en: "Jianshui mini-train, then car to Puzhehei ~4 h"
-      zh: "建水小火车，下午专车赴普者黑约 4 小时"
+      en: Jianshui mini-train, then car to Puzhehei ~4 h
+      zh: 建水小火车，下午专车赴普者黑约 4 小时
     lodging:
-      en: "Yi minority lakeside guesthouse"
-      zh: "彝族湖畔民宿"
+      en: Yi minority lakeside guesthouse
+      zh: 彝族湖畔民宿
     dining:
       - en: "Lunch: in Jianshui before the road"
-        zh: "午餐：上路前在建水"
+        zh: 午餐：上路前在建水
       - en: "Dinner: innkeeper’s home-style cooking"
-        zh: "晚餐：房东家常菜"
+        zh: 晚餐：房东家常菜
     bullets:
-      - en: "Jianshui old town and the mini-train (Double Dragon, Xianghui, Tuanshan)"
-        zh: "建水古城、小火车（双龙桥、香会桥、团山民居）"
+      - en: Jianshui old town and the mini-train (Double Dragon, Xianghui, Tuanshan)
+        zh: 建水古城、小火车（双龙桥、香会桥、团山民居）
     themes:
-      - "villages"
-      - "wild"
+      - villages
+      - wild
+    photos:
+      - destinations/jianshui.jpg
+      - destinations/chongzuo.jpg
+      - destinations/puzhehei.jpg
   - day: 12
     city:
-      en: "Mile"
-      zh: "弥勒"
+      en: Mile
+      zh: 弥勒
     stay:
-      en: "Dongfengyun, then the spring"
-      zh: "东风韵，然后温泉"
-    stayKind: "hotel"
-    placeId: "mile"
+      en: Dongfengyun, then the spring
+      zh: 东风韵，然后温泉
+    stayKind: hotel
+    placeId: mile
     drive:
-      en: "Private car · 3 h"
-      zh: "专车约 3 小时"
+      en: Private car · 3 h
+      zh: 专车约 3 小时
     transport:
-      en: "Willow-leaf boat, then car to Mile ~3 h"
-      zh: "柳叶舟游湖，专车至弥勒约 3 小时"
+      en: Willow-leaf boat, then car to Mile ~3 h
+      zh: 柳叶舟游湖，专车至弥勒约 3 小时
     lodging:
-      en: "Hot-spring room"
-      zh: "温泉房"
+      en: Hot-spring room
+      zh: 温泉房
     dining:
       - en: "Lunch: lake fish before leaving Puzhehei"
-        zh: "午餐：离开普者黑前的湖鱼"
+        zh: 午餐：离开普者黑前的湖鱼
       - en: "Dinner: Yunnan table, then the spring"
-        zh: "晚餐：云南菜，然后泡汤"
+        zh: 晚餐：云南菜，然后泡汤
     bullets:
-      - en: "Dongfengyun at dusk"
-        zh: "傍晚东风韵"
+      - en: Dongfengyun at dusk
+        zh: 傍晚东风韵
     themes:
-      - "wild"
-      - "flavors"
+      - wild
+      - flavors
   - day: 13
     city:
-      en: "Kunming"
-      zh: "昆明"
+      en: Kunming
+      zh: 昆明
     stay:
-      en: "Green Lake, last city night"
-      zh: "翠湖，最后一城"
-    stayKind: "hotel"
-    placeId: "kunming"
+      en: Green Lake, last city night
+      zh: 翠湖，最后一城
+    stayKind: hotel
+    placeId: kunming
     drive:
-      en: "Private car · 2 h"
-      zh: "专车约 2 小时"
+      en: Private car · 2 h
+      zh: 专车约 2 小时
     transport:
-      en: "Private car Mile → Kunming ~2 h"
-      zh: "专车弥勒至昆明约 2 小时"
+      en: Private car Mile → Kunming ~2 h
+      zh: 专车弥勒至昆明约 2 小时
     lodging:
-      en: "Green Lake or near the airport"
-      zh: "翠湖或机场附近"
+      en: Green Lake or near the airport
+      zh: 翠湖或机场附近
     dining:
       - en: "Lunch: crossing-the-bridge noodles"
-        zh: "午餐：过桥米线"
+        zh: 午餐：过桥米线
       - en: "Dinner: old street, if you still have legs"
-        zh: "晚餐：还有腿就去老街"
+        zh: 晚餐：还有腿就去老街
     bullets:
-      - en: "Green Lake Park"
-        zh: "昆明翠湖公园"
-      - en: "Kunming old street"
-        zh: "昆明老街"
+      - en: Green Lake Park
+        zh: 昆明翠湖公园
+      - en: Kunming old street
+        zh: 昆明老街
     themes:
-      - "flavors"
-      - "locals"
+      - flavors
+      - locals
   - day: 14
     city:
-      en: "Depart"
-      zh: "送机"
+      en: Depart
+      zh: 送机
     stay:
-      en: "Airport"
-      zh: "机场"
-    stayKind: "hotel"
+      en: Airport
+      zh: 机场
+    stayKind: hotel
     transport:
-      en: "Hotel to Kunming Changshui, ~1 h"
-      zh: "酒店送至长水机场，约 1 小时"
+      en: Hotel to Kunming Changshui, ~1 h
+      zh: 酒店送至长水机场，约 1 小时
     lodging:
-      en: "Morning checkout"
-      zh: "早晨退房"
+      en: Morning checkout
+      zh: 早晨退房
     dining:
-      - en: "Breakfast at the hotel, or Dounan if the flight is late"
-        zh: "酒店早餐；晚班机可加斗南"
+      - en: Breakfast at the hotel, or Dounan if the flight is late
+        zh: 酒店早餐；晚班机可加斗南
     bullets:
-      - en: "Afternoon or evening flight? Dounan flower market"
-        zh: "若下午或晚上航班，可安排斗南花市"
+      - en: Afternoon or evening flight? Dounan flower market
+        zh: 若下午或晚上航班，可安排斗南花市
     themes:
-      - "flavors"
+      - flavors

@@ -1,22 +1,21 @@
 # 用户评价 · David & Laura
 # route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg
 
-src: en   # 原文语言。只改这种语言；其它语言上线前补齐
-
-flag: "🇺🇸"
-name: "David & Laura"
-country: "New York"
-route: "r2"
+src: en
+flag: 🇺🇸
+name: David & Laura
+country: New York
+route: r1
 rating: 5
-date: "2025-01"
+date: 2026-09-11
 short:
-  en: "We've done group tours before — this private experience is on a completely different level."
-  zh: "以前走过团队游，这次私团完全是另一个层级。"
+  en: We've done group tours before — this private experience is on a completely different level.
+  zh: 以前走过团队游，这次私团完全是另一个层级。
 full:
-  en: "We've done group tours before and always came home feeling we'd seen nothing properly. This was completely different — being private meant we could linger anywhere, and the guide was willing to go much deeper into every story. The Tianqin performance in Longzhou was in an actual Zhuang village, not a tourist stage. That kind of experience is priceless. Since returning to New York, I've recommended this trip to at least seven friends."
-  zh: "我们以前参加过很多团队游，回来后总觉得走马观花。这次完全不同——因为是私家团，我们可以在任何一个地方多待一会儿，向导也更愿意讲深入的故事。龙州的天琴表演是在一个真实的壮族村落里看的，不是为游客特别安排的舞台。那种体验是无价的。回到纽约以后，我把这段旅行推荐给了至少七个朋友。"
+  en: We've done group tours before and always came home feeling we'd seen nothing properly. This was completely different — being private meant we could linger anywhere, and the guide was willing to go much deeper into every story. The Tianqin performance in Longzhou was in an actual Zhuang village, not a tourist stage. That kind of experience is priceless. Since returning to New York, I've recommended this trip to at least seven friends.
+  zh: 我们以前参加过很多团队游，回来后总觉得走马观花。这次完全不同——因为是私家团，我们可以在任何一个地方多待一会儿，向导也更愿意讲深入的故事。龙州的天琴表演是在一个真实的壮族村落里看的，不是为游客特别安排的舞台。那种体验是无价的。回到纽约以后，我把这段旅行推荐给了至少七个朋友。
 photos:
-  - "destinations/guantang.jpg"
-  - "destinations/chongzuo.jpg"
-  - "destinations/catba.jpg"
-  - "destinations/sapa.jpg"
+  - destinations/guantang.jpg
+  - destinations/chongzuo.jpg
+  - destinations/catba.jpg
+  - destinations/sapa.jpg

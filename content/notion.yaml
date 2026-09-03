@@ -1,0 +1,15 @@
+# Notion 数据库 ID（不是密钥）
+# 打开整页表格 → 右上角「分享」→ 复制链接
+# 链接里 ? 前面那串 32 位十六进制就是 ID，例如：
+#   https://www.notion.so/12ab34cd56ef7890aa11bb22cc33dd44?v=...
+# 填下面，可带横线也可不带。
+
+databases:
+  routes: "3d0d5dfd82c480b8b4a6e4e83fb2968e" # 路线卡片
+  itineraries: "3d0d5dfd82c4808f9005c3f598f6a8cb" # 逐日行程
+  reviews: "3d0d5dfd82c480839d1cc9272e4a87bd" # 客人评价
+  faqs: "" # FAQ
+  partners: "" # 合作商家
+  hero: "" # 首页轮播
+  about: "" # 关于我们
+  aboutCreds: "" # 关于我们 · 资质

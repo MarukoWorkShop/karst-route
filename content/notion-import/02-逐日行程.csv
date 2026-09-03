@@ -1,0 +1,140 @@
+﻿标题,路线,day,src,stayKind,placeId,themes,city_zh,city_en,stay_zh,stay_en,drive_zh,drive_en,transport_zh,transport_en,lodging_zh,lodging_en,dining_zh,dining_en,bullets_zh,bullets_en,photos
+"r1-D01 南宁","r1","1","zh","hotel","nanning","locals","南宁","Nanning","邕江边，第一夜","Yong River, first Chinese night","","","接机，然后一个慢的城市夜","Airport pickup, then a slow city night","江景花园酒店","Riverside garden stay","午餐：看抵达时间
+晚餐：中山路螺蛳粉","Lunch: depending on arrival
+Dinner: snail noodles on Zhongshan Road","城市适应
+上路前休息","City orientation
+Rest before the road",""
+"r1-D02 崇左","r1","2","zh","hotel","chongzuo","wild","崇左","Chongzuo","看山，瀑布之后","Karst road, after the falls","南宁→德天约 3.5 小时 · 德天→明仕约 1 小时","Nanning → Detian ~3.5 h · Detian → Mingshi ~1 h","专车至德天瀑布（约 3.5 小时），再赴明仕田园（约 1 小时）","Private car to Detian Falls (~3.5 h), then on to Mingshi Pastoral (~1 h)","看山的小住","Karst-view lodge","午餐：瀑布附近的河鱼
+晚餐：崇左糯米一桌","Lunch: river fish near the falls
+Dinner: Chongzuo sticky rice table","","",""
+"r1-D03 下龙","r1","3","zh","hotel","halong","wild","下龙","Ha Long","湾上第一夜","First night on the bay","崇左赴东兴，过境后再赴下龙","Chongzuo → Dongxing, then into Vietnam","崇左赴东兴（约 2.5 小时），芒街口岸入境越南，再赴下龙（约 3 小时）","Chongzuo → Dongxing (~2.5 h), cross at Mong Cai, then on to Ha Long (~3 h)","下龙看湾的酒店","Bay-facing hotel in Ha Long","午餐：过关之后
+晚餐：港边海鲜","Lunch: after the crossing
+Dinner: seafood on the harbour","","",""
+"r1-D04 下龙","r1","4","zh","hotel","halong","wild","下龙","Ha Long","湾上第二夜","Second night on the bay","","","下龙湾一日游轮出海","Day cruise on Ha Long Bay","同一家看湾酒店，不用收行李","Same bay hotel — no packing","午餐：游轮上
+晚餐：回到下龙镇上","Lunch: on the boat
+Dinner: back in Ha Long town","海上喀斯特风光","Karst seascape among the limestone isles",""
+"r1-D05 吉婆岛","r1","5","zh","hotel","catba","wild","吉婆岛","Cat Ba Island","岛上港边过夜","Harbour night on the island","","","下龙轮渡登陆吉婆岛，约 1 小时","Ferry from Ha Long to Cat Ba, ~1 h","看湾的小岛酒店","Bay-facing island hotel","午餐：登岛之后
+晚餐：港边海鲜","Lunch: on the island after landing
+Dinner: harbour seafood","海岛休闲","An unhurried island afternoon",""
+"r1-D06 河内","r1","6","zh","hotel","hanoi","flavors,locals","河内","Hanoi","古城，第一夜","Old Quarter, first night","跨海缆车至海防 · 18:40 米轨赴河内","Cable to Hai Phong · metre-gauge 18:40 to Hanoi","吉婆岛跨海缆车至海防；18:40 百年米轨前往河内（约 2 小时）","Cat Ba cable to Hai Phong; 18:40 metre-gauge into Hanoi (~2 h)","湖边法租界小住","French-quarter hide near the lake","等候时赠送越南滴漏咖啡
+晚餐：下车后在古城","Afternoon: Vietnamese drip coffee while you wait
+Dinner: after the train, Old Quarter","参观海防百年老火车站；等候赠送越南滴漏咖啡","Hai Phong’s century-old station; drip coffee while you wait",""
+"r1-D07 河内","r1","7","zh","hotel","hanoi","flavors,locals","河内","Hanoi","古城，第二夜","Old Quarter, second night","","","古城步行 + 三轮车","On foot and cyclo in the Old Quarter","同一栋修好的老房子，不用收行李","Same restored house — no packing","午餐：湖边一桌
+晚餐：古城街头一摊","Lunch: a city table near the lake
+Dinner: Old Quarter street stall","巴亭广场、胡志明故居、河内大教堂
+火车街","Ba Dinh Square, Ho Chi Minh’s residence, St Joseph’s Cathedral
+Train Street",""
+"r1-D08 沙坝","r1","8","zh","hotel","sapa","villages","沙坝","Sapa","镇上看田","Terraces above the town","专车约 5.5–6 小时","Private car · 5.5–6 h","河内包车前往沙坝，车程 5.5–6 小时","Private car Hanoi → Sapa, 5.5–6 h","看田的山居","Terrace-facing mountain lodge","午餐：山路途中
+抵达后梯田下午茶","Lunch: on the mountain road
+Afternoon tea among the terraces","","",""
+"r1-D09 沙坝","r1","9","zh","hotel","sapa","wild,villages","沙坝","Sapa","同一山居，不拎箱子","Same lodge, no suitcase","","","番西邦缆车 + 芒花小火车，下午步行猫猫村","Fansipan cable + Muong Hoa train, then Cat Cat on foot","看田的山居 · 第二晚","Terrace-facing mountain lodge — second night","午餐：下山后在谷里
+晚餐：高地热锅","Lunch: after the cable, in the valley
+Dinner: highland hot pot","黑苗族集市（看当天）
+阳台上看梯田的傍晚","Hmong market, if the morning allows
+Terrace-view evening from the balcony",""
+"r1-D10 建水","r1","10","zh","hotel","jianshui","villages","建水","Jianshui","古城墙里","Inside the old town wall","沙坝—老街—河口，再乘车赴建水","Sapa → Lao Cai → Hekou, then to Jianshui","沙坝至老街（约 1 小时），河口口岸出境，乘车赴建水（约 3 小时）","Sapa → Lao Cai (~1 h), exit at Hekou, then car to Jianshui (~3 h)","城墙里的院子客栈","Courtyard inn inside the wall","午餐：过关之后
+晚餐：天井里的烤豆腐","Lunch: after the crossing
+Dinner: grilled tofu in the courtyard","","",""
+"r1-D11 普者黑","r1","11","zh","park","puzhehei","villages,wild","普者黑","Puzhehei","普者黑景区内","Inside Puzhehei scenic area","专车约 4 小时","Private car · ~4 h","建水小火车，下午专车赴普者黑约 4 小时","Jianshui mini-train, then car to Puzhehei ~4 h","彝族湖畔民宿","Yi minority lakeside guesthouse","午餐：上路前在建水
+晚餐：房东家常菜","Lunch: in Jianshui before the road
+Dinner: innkeeper’s home-style cooking","建水古城、小火车（双龙桥、香会桥、团山民居）","Jianshui old town and the mini-train (Double Dragon, Xianghui, Tuanshan)","destinations/jianshui.jpg
+destinations/chongzuo.jpg
+destinations/puzhehei.jpg"
+"r1-D12 弥勒","r1","12","zh","hotel","mile","wild,flavors","弥勒","Mile","东风韵，然后温泉","Dongfengyun, then the spring","专车约 3 小时","Private car · 3 h","柳叶舟游湖，专车至弥勒约 3 小时","Willow-leaf boat, then car to Mile ~3 h","温泉房","Hot-spring room","午餐：离开普者黑前的湖鱼
+晚餐：云南菜，然后泡汤","Lunch: lake fish before leaving Puzhehei
+Dinner: Yunnan table, then the spring","傍晚东风韵","Dongfengyun at dusk",""
+"r1-D13 昆明","r1","13","zh","hotel","kunming","flavors,locals","昆明","Kunming","翠湖，最后一城","Green Lake, last city night","专车约 2 小时","Private car · 2 h","专车弥勒至昆明约 2 小时","Private car Mile → Kunming ~2 h","翠湖或机场附近","Green Lake or near the airport","午餐：过桥米线
+晚餐：还有腿就去老街","Lunch: crossing-the-bridge noodles
+Dinner: old street, if you still have legs","昆明翠湖公园
+昆明老街","Green Lake Park
+Kunming old street",""
+"r1-D14 送机","r1","14","zh","hotel","","flavors","送机","Depart","机场","Airport","","","酒店送至长水机场，约 1 小时","Hotel to Kunming Changshui, ~1 h","早晨退房","Morning checkout","酒店早餐；晚班机可加斗南","Breakfast at the hotel, or Dounan if the flight is late","若下午或晚上航班，可安排斗南花市","Afternoon or evening flight? Dounan flower market",""
+"r2-D01 南宁","r2","1","zh","hotel","nanning","locals","南宁","Nanning","邕江边，过关前夜","Yong River, before the border","","","接机，然后一个短的城市夜","Airport pickup, then a brief city night","江景花园酒店","Riverside garden stay","午餐：看抵达时间
+晚餐：中山路螺蛳粉","Lunch: depending on arrival
+Dinner: snail noodles on Zhongshan Road","南宁夜
+次日过关","Brief city night
+Early border next day",""
+"r2-D02 吉婆岛","r2","2","zh","hotel","catba","wild","吉婆岛","Cat Ba Island","岛上港边过夜","Harbour night on the island","全天交通","Full day transit","芒街口岸通关，转轮渡赴吉婆岛；全程约 8 小时","Cross at Mong Cai, then ferry to Cat Ba — full day, ~8 h door to door","看湾的小岛酒店","Bay-facing island hotel","午餐：途中口岸小城的一碗面
+晚餐：港边海鲜","Lunch: border-town noodles on the way
+Dinner: seafood on the harbour","","",""
+"r2-D03 河内","r2","3","zh","hotel","hanoi","flavors,locals","河内","Hanoi","古城，第一夜","Old Quarter, first night","","","海防 / 吉婆岛公路进城，约 2.5 小时","Road from Hai Phong / Cat Ba, ~2.5 h","湖边法租界小住","French-quarter hide near the lake","午餐：进城途中
+晚餐：古城街头一桌","Lunch: on the road into the city
+Dinner: Old Quarter street table","三十六鼓街含三轮车，打卡火车街
+观光巴士夜游西湖","36 Streets + cyclo, Train Street
+West Lake night bus",""
+"r2-D04 河内","r2","4","zh","hotel","hanoi","flavors","河内","Hanoi","古城，第二夜","Old Quarter, second night","","","古城步行 + 三轮车","On foot and cyclo in the Old Quarter","同一栋修好的老房子，不用收行李","Same restored house — no packing","午餐：莲花自助餐
+晚餐：蛋咖啡，再选一摊","Lunch: lotus buffet
+Dinner: egg coffee, then a stall you pick","胡志明纪念堂、巴亭广场
+自由活动或逛河内菜市场","Ho Chi Minh & Ba Dinh
+Free time or the market",""
+"r2-D05 沙坝","r2","5","zh","hotel","sapa","villages","沙坝","Sapa","镇上看田","Terraces above the town","公路约 5–6 小时","Road · 5–6 h","专车河内至沙坝，约 5–6 小时","Private car Hanoi → Sapa, 5–6 h","看田的山居","Terrace-facing mountain lodge","午餐：山路途中
+晚餐：高地热锅","Lunch: on the mountain road
+Dinner: highland hot pot","沙坝梯田
+猫猫村","Rice terraces
+Cat Cat village",""
+"r2-D06 米轨过夜","r2","6","zh","train","train","wild","米轨过夜","Overnight train","住在米轨上","Sleep on the metre-gauge","米轨过夜列车","Overnight metre-gauge","上午番西邦缆车上山，晚上米轨发车过夜","Fansipan cable up, then evening metre-gauge departure","滇越米轨软卧","Soft sleeper on the Yunnan–Vietnam line","午餐：上山前在沙坝
+晚餐：上车前简单一顿","Lunch: Sapa before the cable
+Dinner: simple meal before boarding","","",""
+"r2-D07 观堂","r2","7","zh","base","guantang","locals,villages","观堂","Guantang","村里连住的第一晚","Two-night village base","","","谅山至友谊关出境，再赴龙州（约 1.5 小时）","Lang Son → Friendship Pass crossing, then Longzhou (~1.5 h)","观堂的院子","Guantang courtyard","午餐：过关之后
+晚餐：院子里的壮家饭","Lunch: after the pass
+Dinner: Zhuang table at the courtyard","谅山、同登庙会","Lang Son & Dong Dang fair",""
+"r2-D08 观堂","r2","8","zh","base","guantang","villages,wild","观堂","Guantang","同一院子，不拎箱子","Same courtyard, no suitcase","","","蔗海骑行，步行去天琴寨","Bicycle in the cane, walk to Tianqin village","观堂的院子 · 第二晚","Guantang courtyard — second night","午餐：村里的厨房
+晚餐：油茶，和当天地里来的东西","Lunch: village kitchen
+Dinner: oil tea and whatever came from the field","自由散步","Free walk",""
+"r2-D09 南宁","r2","9","zh","hotel","chongzuo","wild","南宁","Nanning","回到绿城","Back in the garden city","","","专车赴德天（约 2 小时），再返回南宁（约 3.5 小时）","Detian by car (~2 h), then return to Nanning (~3.5 h)","南宁江景酒店","Nanning riverside hotel","午餐：德天河鱼
+晚餐：南宁，想吃什么吃什么","Lunch: river fish at Detian
+Dinner: Nanning, whatever you still want","明仕田园","Mingshi Pastoral",""
+"r2-D10 结束","r2","10","zh","hotel","","locals","结束","Depart","南宁","Nanning","","","酒店送至吴圩机场，约 1 小时","Hotel to Nanning Wuxu Airport, ~1 h","早晨退房","Morning checkout","酒店早餐","Breakfast at the hotel","需要加住告诉我们","Ask us for extra night",""
+"r3-D01 南宁","r3","1","zh","hotel","nanning","locals,flavors","南宁","Nanning","夜市里的第一夜","Street food, first night","","","专车接机／接站，送往酒店","Airport or station pickup, transfer to the hotel","南宁香格里拉酒店","Shangri-La Nanning","午餐：不含
+晚餐：建政夜市，自行寻觅","Lunch: not included
+Dinner: Jianzheng night market, at your own pace","三街两巷 · 畅游阁
+建政夜市","Three Streets & Two Lanes, Changyou Pavilion
+Jianzheng night market",""
+"r3-D02 崇左","r3","2","zh","hotel","chongzuo","wild","崇左","Chongzuo","黑水河边","By the Black Water River","南宁赴崇左","Nanning → Chongzuo","专车赴崇左，黑水河游船","Private car to Chongzuo, then the Black Water River boat","崇左秘境丽世度假村","LUX* Chongzuo","午餐：小岛简餐
+晚餐：不含","Lunch: simple lunch on the island
+Dinner: not included","黑水河游船
+秘境小岛 · 3.6 公里皮划艇
+伏那秘境徒步 + 皮划艇","Black Water River boat trip
+Secret island, 3.6 km by kayak
+Funa: karst forest hike + kayak","destinations/chongzuo.jpg
+destinations/chongzuo-mijing.jpg"
+"r3-D03 崇左","r3","3","zh","hotel","chongzuo","wild,locals","崇左","Chongzuo","同一度假村，不拎箱子","Same resort, no suitcase","","","德天瀑布，之后蓝洞咖啡","Detian falls, then the Blue Cave café","崇左秘境丽世度假村 · 第二晚","LUX* Chongzuo — second night","午餐：蓝洞简餐
+晚餐：不含","Lunch: light lunch at the Blue Cave
+Dinner: not included","德天瀑布
+蓝洞咖啡
+丽世自由活动：垂钓、图书馆、散步","Detian falls
+Blue Cave café
+LUX* at leisure: fishing, library, walks","destinations/detian.jpg"
+"r3-D04 北海","r3","4","zh","hotel","","locals,flavors","北海","Beihai","银滩边","By Silver Beach","明仕赴北海","Mingshi → Beihai","观光车游览明仕田园，之后赴北海","Mingshi Pastoral by buggy, then drive to Beihai","北海万豪度假酒店","Beihai Marriott Resort","午餐：簸箕宴
+晚餐：侨港美食街，自行寻觅","Lunch: basket feast
+Dinner: Qiaogang food street, at your own pace","观光车游览明仕田园
+自由逛银滩
+侨港美食街","Mingshi Pastoral by buggy
+Silver Beach
+Qiaogang food street","destinations/chongzuo.jpg
+destinations/catba.jpg"
+"r3-D05 涠洲岛","r3","5","zh","hotel","","locals,wild","涠洲岛","Weizhou Island","悬崖上的海景房","Cliffside above the sea","","","乘船上岛，环岛游","Ferry to Weizhou, then a circuit of the island","巨鲸悬崖度假酒店","Whale Cliff resort","午餐：百龄楼午餐
+晚餐：巨鲸悬崖晚餐","Lunch: Bailing House
+Dinner: cliffside dinner","珊瑚石天主堂
+百龄楼
+石螺口
+巨鲸下午茶","Coral-stone Catholic church
+Bailing House
+Shiluokou bay
+Whale afternoon tea","destinations/catba.jpg
+destinations/halong-natgeo.jpg"
+"r3-D06 涠洲岛","r3","6","zh","hotel","","locals,flavors,wild","涠洲岛","Weizhou Island","同一间悬崖房","Same cliffside room","","","海鲜市场、南湾街、远海海钓、鳄鱼山","Market, Nanwan, offshore fishing, Crocodile Mountain","巨鲸悬崖度假酒店 · 第二晚","Whale Cliff resort — second night","午餐：珊瑚石院子午餐
+晚餐：春夏静也晚餐","Lunch: coral-stone courtyard
+Dinner: Chunxia Jingye seaview dinner","海鲜市场
+南湾街风光
+斜阳岛远海海钓
+鳄鱼山公园
+蓝桥风光
+南湾品酒","Fishing harbour market
+Nanwan coast road
+Offshore fishing off Xiyang Island
+Crocodile Mountain
+Blue Bridge beach
+Wine by Nanwan bay","destinations/catba.jpg
+destinations/catba-wanderlost.jpg"
+"r3-D07 返程","r3","7","zh","hotel","","locals","返程","Depart","北海","Beihai","","","专车按返程时间提前一小时送达动车站／机场","Transfer to the station or airport one hour before departure","早晨退房","Morning checkout","酒店早餐","Breakfast at the hotel","下岛后专车送站／送机","Ferry back, then private transfer",""
