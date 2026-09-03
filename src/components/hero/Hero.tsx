@@ -45,6 +45,8 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
   const [bIdx, setBIdx] = useState(count > 1 ? 1 : 0);
   const [soundOn, setSoundOn] = useState(false);
   const [reduce, setReduce] = useState(false);
+  // 隐藏层是否已允许加载：首屏先不预载下一个，降低首屏流量；切换时立即放开
+  const [armed, setArmed] = useState(false);
 
   const aRef = useRef<HTMLVideoElement>(null);
   const bRef = useRef<HTMLVideoElement>(null);
@@ -72,6 +74,8 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
   const fadeTo = useCallback(
     (target: number, delta = 0) => {
       const tIdx = wrap(target, count);
+      // 用户开始切换 → 立即允许预载下一个，保证交叉淡入平滑
+      setArmed(true);
       if (tIdx === activeRef.current) return;
       if (fadingRef.current) {
         // 动画进行中：累积滑动意图，动画结束后继续翻，而不是丢弃手势
@@ -155,6 +159,17 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
   useEffect(() => {
     setReduce(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }, []);
+
+  // 首屏只拉当前那一个视频；1.2s 后再预载下一个，降低首屏流量。
+  // 之后轮播切换不受影响（隐藏层早已就位），用户主动滑动时 fadeTo 会立即 setArmed(true)。
+  useEffect(() => {
+    if (reduce) {
+      setArmed(true);
+      return;
+    }
+    const timer = window.setTimeout(() => setArmed(true), 1200);
+    return () => window.clearTimeout(timer);
+  }, [reduce]);
 
   useEffect(() => {
     if (reduce) {
@@ -282,7 +297,7 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
           }`}
           style={{ objectPosition: bSlide.pos }}
           poster={bSlide.poster}
-          src={bSlide.video || undefined}
+          src={armed ? bSlide.video || undefined : undefined}
           muted
           playsInline
           autoPlay={opaque === "b" && Boolean(bSlide.video) && !reduce}
