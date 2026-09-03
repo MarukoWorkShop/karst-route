@@ -234,6 +234,40 @@ html[lang|="zh"] body {
   cursor: pointer;
 }
 
+/* CTA 条光泽：一道高光缓慢扫过，克制不刺眼 */
+.cta-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.cta-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.26) 45%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  animation: cta-sheen 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes cta-sheen {
+  0%,
+  60% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-sheen::after {
+    animation: none;
+  }
+}
+
 /* 极简滚动条：2px 灰色轨道 + 墨绿色小滑块 */
 .scroll-thin {
   scrollbar-width: thin;

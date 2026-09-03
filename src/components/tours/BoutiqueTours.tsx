@@ -14,9 +14,11 @@ import {
 export function BoutiqueTours({
   route,
   onPick,
+  onQuote,
 }: {
   route: RouteId;
   onPick: (id: RouteId) => void;
+  onQuote: (id: RouteId) => void;
 }) {
   const { t } = useLocale();
   return (
@@ -37,6 +39,7 @@ export function BoutiqueTours({
             audience={t(copy.tours.r1For)}
             active={route === "r1"}
             onView={() => onPick("r1")}
+            onQuote={() => onQuote("r1")}
           />
           <RouteCard
             routeId="r2"
@@ -52,6 +55,7 @@ export function BoutiqueTours({
             audience={t(copy.tours.r2For)}
             active={route === "r2"}
             onView={() => onPick("r2")}
+            onQuote={() => onQuote("r2")}
           />
         </div>
       </div>
@@ -73,8 +77,10 @@ function RouteCard({
   audience,
   active,
   onView,
+  onQuote,
 }: {
   routeId: RouteId;
+  onQuote: () => void;
   src: string;
   badge: string;
   name: string;
@@ -182,6 +188,14 @@ function RouteCard({
           {t(copy.tours.quote)}
           <IconArrow />
         </a>
+        <button
+          type="button"
+          onClick={onQuote}
+          className="cta-sheen mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-cta px-4 py-[11px] text-[13px] font-medium text-paper transition-colors hover:bg-cta-press"
+        >
+          {t(copy.tours.quoteBar)}
+          <IconArrow />
+        </button>
       </div>
     </article>
   );

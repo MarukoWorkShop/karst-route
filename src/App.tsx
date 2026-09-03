@@ -52,7 +52,15 @@ export default function App() {
           }}
         />
         <TrustBar />
-        <BoutiqueTours route={route} onPick={pickRoute} />
+        <BoutiqueTours
+          route={route}
+          onPick={pickRoute}
+          onQuote={(id) => {
+            setRoute(id);
+            setIntent("boutique");
+            go("plan");
+          }}
+        />
         <Timeline
           routeId={route}
           onRoute={(id) => {

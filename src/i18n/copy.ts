@@ -116,6 +116,7 @@ export const copy = {
     included: { en: "What's included", zh: "费用包含" },
     excluded: { en: "Not included", zh: "费用不含" },
     quote: { en: "Get a quote", zh: "获取报价" },
+    quoteBar: { en: "Like this route? Get a quote now", zh: "喜欢这条线路？立刻获取报价" },
   },
   experience: {
     h2: { en: "Journeys that leave a mark", zh: "让旅途真正改变你" },
