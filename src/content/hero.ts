@@ -1,6 +1,7 @@
 import type { ThemeId } from "@/types";
 import type { HeroSlide } from "@/data/heroPanels";
 import { asset } from "@/lib/asset";
+import { heroVideoUrl } from "@/lib/media";
 import { globYaml, strOf, txOf } from "@/content/helpers";
 
 const files = import.meta.glob("../../content/hero.yaml", {
@@ -10,15 +11,6 @@ const files = import.meta.glob("../../content/hero.yaml", {
 }) as Record<string, string>;
 
 const THEMES: ThemeId[] = ["wild", "flavors", "villages", "locals"];
-const COS = "https://youxian-travel-1412422924.cos.ap-guangzhou.myqcloud.com";
-const videoOff = import.meta.env?.VITE_HERO_VIDEO_OFF === "1";
-
-function videoUrl(file: string) {
-  if (!file || videoOff) return "";
-  if (/^https?:\/\//i.test(file)) return file;
-  const path = file.replace(/^\//, "");
-  return `${import.meta.env?.DEV ? "/hero-media" : COS}/${path}`;
-}
 
 export function overlayHeroSlides(fallback: HeroSlide[]): HeroSlide[] {
   const doc = globYaml(files)[0];
@@ -34,7 +26,7 @@ export function overlayHeroSlides(fallback: HeroSlide[]): HeroSlide[] {
     const poster = strOf(rec.poster, "");
     return {
       id: strOf(rec.id, fb.id),
-      video: videoUrl(strOf(rec.video, "")),
+      video: heroVideoUrl(strOf(rec.video, "")),
       poster: poster ? asset(`/${poster.replace(/^\//, "")}`) : fb.poster,
       pos: strOf(rec.pos, fb.pos),
       alt: txOf(rec.alt, fb.alt, fileSrc),

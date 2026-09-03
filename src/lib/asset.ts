@@ -1,9 +1,11 @@
+import { cosUrl, isCosMedia } from "@/lib/media";
+
 /**
- * Public files under Vite `base`. GitHub Pages lives at `/karst-route/`;
- * Vercel is `/`. Destination photos stay in `public/destinations/` — do not
- * point them at COS while that bucket is in arrears (HTTP 451).
+ * Static asset URL. Destination photos and hero videos load from Tencent COS;
+ * brand / tours / literature stay on GitHub Pages until uploaded to the bucket.
  */
 export function asset(path: string) {
   const p = path.replace(/^\//, "");
+  if (isCosMedia(p)) return cosUrl(p);
   return `${import.meta.env?.BASE_URL ?? "/"}${p}`;
 }

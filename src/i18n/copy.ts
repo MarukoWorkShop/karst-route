@@ -57,8 +57,6 @@ export const copy = {
     },
     prev: { en: "Previous slide", zh: "上一张" },
     next: { en: "Next slide", zh: "下一张" },
-    soundOn: { en: "Sound on", zh: "开启音效" },
-    soundOff: { en: "Sound off", zh: "关闭音效" },
     benefits: {
       en: "China–Vietnam overland · Private group · Licensed guide · Unhurried",
       zh: "中越跨境 · 私人小团 · 持证向导 · 不赶路",

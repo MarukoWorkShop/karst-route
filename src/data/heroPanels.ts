@@ -1,29 +1,9 @@
 import type { ThemeId, Tx } from "@/types";
 import { asset } from "@/lib/asset";
 import { overlayHeroSlides } from "@/content/hero";
+import { heroVideoUrl } from "@/lib/media";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
-
-/**
- * 测试期开关：设 VITE_HERO_VIDEO_OFF=1 时停掉首页视频与 BGM，只显示 poster 静图，
- * 避免 COS 流量扣费。恢复播放时移除该环境变量即可，无需改动代码。
- * （无视频时 Hero 会自动走 POSTER_HOLD_MS 定时轮播 poster。）
- */
-const videoOff = import.meta.env?.VITE_HERO_VIDEO_OFF === "1";
-
-/** COS / CDN root. Empty until VITE_HERO_MEDIA_BASE is set — posters still show. */
-export function heroMedia(file: string): string {
-  if (/^https?:\/\//i.test(file)) return file;
-  const base = import.meta.env?.VITE_HERO_MEDIA_BASE?.replace(/\/$/, "") ?? "";
-  if (!base) return "";
-  return `${base}/${file.replace(/^\//, "")}`;
-}
-
-export const heroBgm = videoOff ? "" : heroMedia("hero/bgm.mp3");
-
-const COS = "https://youxian-travel-1412422924.cos.ap-guangzhou.myqcloud.com";
-const cosUrl = (file: string) =>
-  videoOff ? "" : `${import.meta.env?.DEV ? "/hero-media" : COS}/${file.replace(/^\//, "")}`;
 
 /** Full-bleed video slide. Poster holds the first paint; video URL comes from COS. */
 export type HeroSlide = {
@@ -40,7 +20,7 @@ export type HeroSlide = {
 const fallbackSlides: HeroSlide[] = [
   {
     id: "wild",
-    video: cosUrl("videos/1.mp4"),
+    video: heroVideoUrl("videos/1.mp4"),
     poster: asset("/destinations/chongzuo-mijing.jpg"),
     pos: "center 42%",
     alt: L("Karst peaks in mist", "云雾中的喀斯特峰丛"),
@@ -54,11 +34,10 @@ const fallbackSlides: HeroSlide[] = [
   {
     id: "wild-raft",
     // 首页轮播只播前 10 秒(CLIP_MAX_S)，用 12 秒精简版(9.3M)代替完整版(90.5M)，避免首页加载过慢
-    video: cosUrl("videos/2-hero.mp4"),
+    video: heroVideoUrl("videos/2-hero.mp4"),
     poster: asset("/destinations/hero-shot-2.jpg"),
     pos: "center 55%",
     alt: L("A bamboo raft drifting down the Li River", "竹筏顺漓江而下"),
-    // 素材实为漓江竹筏（原 2.MOV），归 wild 纵情山野，而非 flavors 地道风味
     themeId: "wild",
     title: L("Drifting the Li River", "漓江竹筏"),
     intro: L(
@@ -68,7 +47,7 @@ const fallbackSlides: HeroSlide[] = [
   },
   {
     id: "wild-air",
-    video: cosUrl("videos/3.mp4"),
+    video: heroVideoUrl("videos/3.mp4"),
     poster: asset("/destinations/hero-shot-3.jpg"),
     pos: "center 50%",
     alt: L("Aerial view of karst peaks", "航拍喀斯特峰丛"),
@@ -81,7 +60,7 @@ const fallbackSlides: HeroSlide[] = [
   },
   {
     id: "villages-living",
-    video: cosUrl("videos/4.mp4"),
+    video: heroVideoUrl("videos/4.mp4"),
     poster: asset("/destinations/hero-shot-4.jpg"),
     pos: "center 50%",
     alt: L("A village tucked among the hills", "山间的村落"),

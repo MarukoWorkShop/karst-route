@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { IconSparkles, IconVolume, IconVolumeOff } from "@/components/icons";
-import { heroBgm, heroSlides } from "@/data/heroPanels";
+import { IconSparkles } from "@/components/icons";
+import { heroSlides } from "@/data/heroPanels";
 import { themes } from "@/data/themes";
 
 const FADE_MS = 700;
@@ -43,14 +43,12 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
   const [opaque, setOpaque] = useState<Layer>("a");
   const [aIdx, setAIdx] = useState(0);
   const [bIdx, setBIdx] = useState(count > 1 ? 1 : 0);
-  const [soundOn, setSoundOn] = useState(false);
   const [reduce, setReduce] = useState(false);
   // 隐藏层是否已允许加载：首屏先不预载下一个，降低首屏流量；切换时立即放开
   const [armed, setArmed] = useState(false);
 
   const aRef = useRef<HTMLVideoElement>(null);
   const bRef = useRef<HTMLVideoElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const drag = useRef<{ x: number; y: number } | null>(null);
   const fadingRef = useRef(false);
   // 切换动画期间累积的滑动意图，动画结束后继续消化，避免连拨时手势被丢弃
@@ -187,15 +185,6 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
     return () => window.clearTimeout(timer);
   }, [active, reduce, fadeTo]);
 
-  useEffect(() => {
-    const node = audioRef.current;
-    if (!node || !heroBgm) return;
-    if (soundOn) void node.play().catch(() => setSoundOn(false));
-    else {
-      node.pause();
-    }
-  }, [soundOn]);
-
   function onVideoEnded(layer: Layer) {
     if (layer !== opaqueRef.current) return;
     fadeTo(activeRef.current + 1);
@@ -256,14 +245,17 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
         <img
           src={aSlide.poster}
           alt=""
+          fetchPriority={opaque === "a" ? "high" : "auto"}
+          decoding="async"
           className={`hero-video absolute inset-0 h-full w-full object-cover ${
             opaque === "a" ? "opacity-100" : "opacity-0"
           }`}
           style={{ objectPosition: aSlide.pos }}
         />
         <img
-          src={bSlide.poster}
+          src={armed || opaque === "b" ? bSlide.poster : undefined}
           alt=""
+          decoding="async"
           className={`hero-video absolute inset-0 h-full w-full object-cover ${
             opaque === "b" ? "opacity-100" : "opacity-0"
           }`}
@@ -321,21 +313,6 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
       </div>
 
       {/* 左右切换箭头已移除：移动端靠左右滑动，桌面端靠自动轮播（每 10 秒） */}
-
-      {heroBgm ? (
-        <>
-          <audio ref={audioRef} src={heroBgm} loop preload="none" />
-          <button
-            type="button"
-            aria-label={soundOn ? t(copy.hero.soundOff) : t(copy.hero.soundOn)}
-            aria-pressed={soundOn}
-            onClick={() => setSoundOn((on) => !on)}
-            className="pointer-events-auto absolute right-4 bottom-[calc(88px+env(safe-area-inset-bottom))] z-[3] flex h-11 w-11 items-center justify-center rounded-full border border-white/35 bg-night/40 text-white backdrop-blur-sm md:right-6 md:bottom-8 md:h-12 md:w-12"
-          >
-            {soundOn ? <IconVolume className="h-5 w-5" /> : <IconVolumeOff className="h-5 w-5" />}
-          </button>
-        </>
-      ) : null}
 
       <div className="pointer-events-none relative z-[1] flex min-h-[100svh] flex-col justify-end">
         <div className="page-col pb-[calc(74px+env(safe-area-inset-bottom))] md:pb-9">
