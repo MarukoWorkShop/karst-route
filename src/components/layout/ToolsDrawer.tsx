@@ -3,8 +3,27 @@ import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { IconClose, IconExternal } from "@/components/icons";
 
-const CNY_TO_VND = 3420;
-const CNY_TO_USD = 0.138;
+type Cur = "CNY" | "USD" | "VND";
+// Reference rates pegged to USD (1 USD ≈ 7.25 CNY ≈ 24,800 VND)
+const RATES: Record<Cur, number> = {
+  USD: 1,
+  CNY: 1 / 0.138,
+  VND: 3420 / 0.138,
+};
+const CUR_META: Record<Cur, { flag: string; symbol: string }> = {
+  CNY: { flag: "🇨🇳", symbol: "¥" },
+  USD: { flag: "🇺🇸", symbol: "$" },
+  VND: { flag: "🇻🇳", symbol: "₫" },
+};
+const ORDER: Cur[] = ["CNY", "USD", "VND"];
+
+function convert(amount: number, from: Cur, to: Cur): number {
+  if (from === to) return amount;
+  return (amount / RATES[from]) * RATES[to];
+}
+function fmtAmount(amount: number, cur: Cur): string {
+  return cur === "VND" ? Math.round(amount).toLocaleString() : amount.toFixed(2);
+}
 
 const MAP_PLACES = [
   { label: { en: "Guilin Li River", zh: "桂林漓江" }, q: "Li+River,Guilin,China" },
@@ -29,10 +48,9 @@ export function ToolsDrawer({
   onClose: () => void;
 }) {
   const { t } = useLocale();
-  const [cnyInput, setCnyInput] = useState("100");
-  const amount = Number(cnyInput) || 0;
-  const vnd = Math.round(amount * CNY_TO_VND).toLocaleString();
-  const usd = (amount * CNY_TO_USD).toFixed(2);
+  const [curInput, setCurInput] = useState("100");
+  const [baseCur, setBaseCur] = useState<Cur>("CNY");
+  const amount = Number(curInput) || 0;
 
   useEffect(() => {
     if (!open) return;
@@ -85,27 +103,45 @@ export function ToolsDrawer({
             <h3 className="mb-3 text-[11px] font-semibold tracking-[0.1em] text-cta uppercase">
               {t(copy.toolbox.currency)}
             </h3>
-            <p className="mb-2.5 text-[12px] text-ink-soft">{t(copy.toolbox.currencySub)}</p>
+            <p className="mb-2.5 text-[12px] text-ink-soft">
+              {baseCur} → {ORDER.filter((c) => c !== baseCur).join(" / ")}
+            </p>
+            <div className="mb-2.5 flex items-center gap-1 rounded-lg border border-line bg-paper p-0.5">
+              {ORDER.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setBaseCur(c)}
+                  className={`flex-1 rounded-md py-1.5 text-[12px] font-medium transition ${
+                    baseCur === c ? "bg-cta text-paper" : "text-ink-soft"
+                  }`}
+                >
+                  {CUR_META[c].flag} {c}
+                </button>
+              ))}
+            </div>
             <div className="mb-2.5 flex items-center gap-2">
-              <span className="shrink-0 text-[13px] text-ink-soft">¥</span>
+              <span className="shrink-0 text-[13px] text-ink-soft">{CUR_META[baseCur].symbol}</span>
               <input
                 type="number"
                 min={0}
-                value={cnyInput}
-                onChange={(e) => setCnyInput(e.target.value)}
+                value={curInput}
+                onChange={(e) => setCurInput(e.target.value)}
                 className="h-9 flex-1 rounded-lg border border-line bg-paper px-2.5 text-base text-ink outline-none"
               />
-              <span className="shrink-0 text-[13px] text-ink-soft">CNY</span>
+              <span className="shrink-0 text-[13px] text-ink-soft">{baseCur}</span>
             </div>
             <div className="grid grid-cols-2 gap-2">
-              <div className="rounded-lg bg-sage px-2.5 py-2">
-                <p className="mb-0.5 text-[11px] text-ink-soft">🇻🇳 VND</p>
-                <p className="text-[14px] font-semibold tracking-[-0.01em] text-ink">{vnd} ₫</p>
-              </div>
-              <div className="rounded-lg bg-sage px-2.5 py-2">
-                <p className="mb-0.5 text-[11px] text-ink-soft">🇺🇸 USD</p>
-                <p className="text-[14px] font-semibold tracking-[-0.01em] text-ink">$ {usd}</p>
-              </div>
+              {ORDER.filter((c) => c !== baseCur).map((c) => (
+                <div key={c} className="rounded-lg bg-sage px-2.5 py-2">
+                  <p className="mb-0.5 text-[11px] text-ink-soft">
+                    {CUR_META[c].flag} {c}
+                  </p>
+                  <p className="text-[14px] font-semibold tracking-[-0.01em] text-ink">
+                    {CUR_META[c].symbol} {fmtAmount(convert(amount, baseCur, c), c)}
+                  </p>
+                </div>
+              ))}
             </div>
             <p className="mt-2 text-[10px] text-ink-soft/70">{t(copy.toolbox.rateNote)}</p>
           </section>
