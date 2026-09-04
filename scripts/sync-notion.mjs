@@ -481,6 +481,43 @@ async function main() {
     }
   }
 
+  // --- 线路路书 PDF ---
+  if (dbs.guidebooks) {
+    const pages = (await queryAll(token, dbs.guidebooks)).filter(published);
+    const rel = "content/guidebooks.yaml";
+    if (pages.length && takeNotion(pages, rel)) {
+      const prev = existingYaml(rel);
+      const prevRoutes =
+        prev.routes && typeof prev.routes === "object" ? prev.routes : {};
+      const srcLang = text(pages[0], "src") || prev.src || "zh";
+      const routesOut = {};
+      for (const id of ["r1", "r2", "r3"]) {
+        const page = pages.find((p) => {
+          const rid = text(p, "id").trim() || text(p, "标题").trim();
+          return rid === id;
+        });
+        const prevRow = prevRoutes[id] ?? {};
+        if (!page) {
+          routesOut[id] = prevRow;
+          continue;
+        }
+        routesOut[id] = {
+          file: text(page, "file") || prevRow.file || "",
+          title:
+            keepTx(srcLang, text(page, "title_zh"), text(page, "title_en"), prevRow.title) ||
+            pair("", ""),
+          downloadName: text(page, "downloadName") || prevRow.downloadName || "",
+        };
+      }
+      writeYaml(
+        rel,
+        `# 线路路书 PDF（官网「下载路书」按钮）\n# file 只写 public 下相对路径，例如 guidebooks/r3/xxx.pdf\n# 有 file 则直接下载；空则回退为页面即时生成`,
+        { src: srcLang, routes: routesOut },
+      );
+      mark();
+    }
+  }
+
   // --- 评价 ---
   if (dbs.reviews) {
     const routesPages = dbs.routes ? await queryAll(token, dbs.routes) : [];

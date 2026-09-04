@@ -1,0 +1,24 @@
+# 线路路书 PDF（官网「下载路书」按钮）
+# file 只写 public 下相对路径，例如 guidebooks/r3/xxx.pdf
+# 有 file 则直接下载该文件；没有则回退为页面即时生成的行程 PDF
+
+src: zh
+routes:
+  r1:
+    file: ""
+    title:
+      en: Route 1 itinerary
+      zh: 路线一路书
+    downloadName: ""
+  r2:
+    file: ""
+    title:
+      en: Route 2 itinerary
+      zh: 路线二路书
+    downloadName: ""
+  r3:
+    file: guidebooks/r3/YouXian-Chongzuo-Weizhou-7D6N-Bilingual-Itinerary.pdf
+    title:
+      en: Chongzuo · Weizhou — 7D6N bilingual itinerary
+      zh: 崇左·涠洲 7天6晚 双语路书
+    downloadName: YouXian-Chongzuo-Weizhou-7D6N-Bilingual-Itinerary.pdf

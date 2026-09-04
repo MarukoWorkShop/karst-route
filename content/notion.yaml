@@ -8,6 +8,7 @@ databases:
   routes: "3d0d5dfd82c480b8b4a6e4e83fb2968e" # 路线卡片
   itineraries: "3d0d5dfd82c4808f9005c3f598f6a8cb" # 逐日行程
   destinations: "3d1d5dfd82c481f6b112d4c88ef6677a" # 目的地详情（体验/餐饮/住宿）
+  guidebooks: "3d1d5dfd82c481639c61e679ae6cb183" # 线路路书 PDF（r1/r2/r3）
   reviews: "3d0d5dfd82c480839d1cc9272e4a87bd" # 客人评价
   faqs: "" # FAQ
   partners: "" # 合作商家

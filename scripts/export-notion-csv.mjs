@@ -457,4 +457,29 @@ const credRows = (about.creds ?? []).map((c, i) => ({
 }));
 writeCsv("07b-关于我们-资质.csv", ["标题", "src", "icon", "zh", "en"], credRows);
 
+// --- 线路路书 ---
+let guideDoc = { src: "zh", routes: {} };
+try {
+  guideDoc = loadYaml("content/guidebooks.yaml") ?? guideDoc;
+} catch {
+  /* optional */
+}
+const guideRows = ["r1", "r2", "r3"].map((id) => {
+  const row = guideDoc.routes?.[id] ?? {};
+  return {
+    标题: id,
+    id,
+    src: guideDoc.src ?? "zh",
+    file: row.file ?? "",
+    downloadName: row.downloadName ?? "",
+    title_zh: tx(row.title, "zh"),
+    title_en: tx(row.title, "en"),
+  };
+});
+writeCsv(
+  "09-线路路书.csv",
+  ["标题", "id", "src", "file", "downloadName", "title_zh", "title_en"],
+  guideRows,
+);
+
 console.log(`\nCSV 已放到 content/notion-import/ 。导入步骤见该目录 README。`);

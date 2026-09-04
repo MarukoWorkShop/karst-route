@@ -87,8 +87,8 @@ Dinner: Nanning, whatever you still want","明仕田园","Mingshi Pastoral",""
 "r2-D10 结束","r2","10","zh","hotel","","locals","结束","Depart","南宁","Nanning","","","酒店送至吴圩机场，约 1 小时","Hotel to Nanning Wuxu Airport, ~1 h","早晨退房","Morning checkout","","","酒店早餐","Breakfast at the hotel","需要加住告诉我们","Ask us for extra night",""
 "r3-D01 南宁","r3","1","zh","hotel","nanning","locals,flavors","南宁","Nanning","夜市里的第一夜","Street food, first night","","","专车接机／接站，送往酒店","Airport or station pickup, transfer to the hotel","南宁香格里拉酒店","Shangri-La Nanning","有人说过，广西是中国饮食最复杂的地方。而南宁作为首府，把这份复杂变成了街头滋味。这座城的热情藏在巷弄里：酸嘢的清爽、老友粉的热辣、卷筒粉的软糯、糖水的甜蜜，暮色渐浓时，建政夜市灯火通明、人声鼎沸。","Someone once called Guangxi the most complicated place to eat in China, and Nanning — its capital — is where that complexity becomes street food. The city's warmth hides in its lanes: the sour-savoury smell of pickled fruit, the heat of a wok firing old friend noodles, the sweet hush of a sugar-water stall at dusk.","午餐：不含
 晚餐：建政夜市，自行寻觅","Lunch: not included
-Dinner: Jianzheng night market, explore on your own","三街两巷 · 畅游阁
-建政夜市","Sanjie Liangxiang · Changyou Pavilion
+Dinner: Jianzheng night market, at your own pace","三街两巷 · 畅游阁
+建政夜市","Three Streets & Two Lanes, Changyou Pavilion
 Jianzheng night market",""
 "r3-D02 崇左","r3","2","zh","hotel","chongzuo","wild","崇左","Chongzuo","黑水河边","By the Black Water River","南宁赴崇左","Nanning → Chongzuo","专车赴崇左，黑水河游船","Private car to Chongzuo, then the Black Water River boat","崇左秘境丽世度假村","LUX* Chongzuo","黑水河是崇左喀斯特最像画的一段：两岸峰林高耸、原始植被茂密，河水碧绿清澈，山的倒影静静铺在水面，船行其中，像驶进一幅水墨丹青。","The Black Water River is Chongzuo's karst at its most painterly — steep peaks and thick primaeval growth on both banks, water so clear the range lies doubled on the surface. Boating through it feels less like transport and more like drifting inside an ink painting.","午餐：小岛简餐
 晚餐：不含","Lunch: simple lunch on the island
@@ -98,7 +98,7 @@ Dinner: not included","黑水河游船
 Secret island, 3.6 km by kayak
 Funa: karst forest hike + kayak","destinations/chongzuo.jpg
 destinations/chongzuo-mijing.jpg"
-"r3-D03 崇左","r3","3","zh","hotel","chongzuo","wild,locals","崇左","Chongzuo","同一度假村，不拎箱子","Same resort, no suitcase","","","德天瀑布，之后蓝洞咖啡","Detian falls, then the Blue Cave café","崇左秘境丽世度假村 · 第二晚","LUX* Chongzuo — second night","德天瀑布与越南板约瀑布共享「亚洲第一大跨国瀑布」之名。归春河在这里冲破喀斯特断层，从 70 米高的崖壁分三级跌落，晴日里水雾中常常挂起一道彩虹。随后在边境线上的天然溶洞里喝一杯咖啡。","Detian shares the title of Asia's largest trans-national waterfall with Vietnam's Ban Gioc. The Guichun River breaks over a limestone fault and drops 70 metres in three tiers — on sunny days the spray throws a standing rainbow. Afterwards, coffee inside a natural karst cave right on the border line.","午餐：蓝洞简餐
+"r3-D03 崇左","r3","3","zh","hotel","chongzuo","wild,locals","崇左","Chongzuo","入住同一度假村","Same resort, no suitcase","","","德天瀑布，之后蓝洞咖啡","Detian falls, then the Blue Cave café","崇左秘境丽世度假村 · 第二晚","LUX* Chongzuo — second night","德天瀑布与越南板约瀑布共享「亚洲第一大跨国瀑布」之名。归春河在这里冲破喀斯特断层，从 70 米高的崖壁分三级跌落，晴日里水雾中常常挂起一道彩虹。随后在边境线上的天然溶洞里喝一杯咖啡。","Detian shares the title of Asia's largest trans-national waterfall with Vietnam's Ban Gioc. The Guichun River breaks over a limestone fault and drops 70 metres in three tiers — on sunny days the spray throws a standing rainbow. Afterwards, coffee inside a natural karst cave right on the border line.","午餐：蓝洞简餐
 晚餐：不含","Lunch: light lunch at the Blue Cave
 Dinner: not included","德天瀑布
 蓝洞咖啡
@@ -106,7 +106,7 @@ Dinner: not included","德天瀑布
 Blue Cave café
 LUX* at leisure: fishing, library, walks","destinations/detian.jpg"
 "r3-D04 北海","r3","4","zh","hotel","beihai","locals,flavors","北海","Beihai","银滩边","By Silver Beach","明仕赴北海","Mingshi → Beihai","观光车游览明仕田园，之后赴北海","Mingshi Pastoral by buggy, then drive to Beihai","北海万豪度假酒店","Beihai Marriott Resort","明仕田园最适合坐着看：观光车慢行，窗外山在转、水在流，成片稻田从身旁滑过，农舍炊烟慢慢升上天。傍晚交给海岸——银滩，还有侨港美食街，越南风味与广式海鲜在这里相遇。","Mingshi is best taken sitting down: a buggy rides past turning peaks, flowing water and rice fields sliding by while farmhouse smoke drifts up. By evening the coast takes over — Silver Beach, and Qiaogang's night market where Vietnamese flavours meet Cantonese seafood.","午餐：簸箕宴
-晚餐：侨港美食街，自行寻觅","Lunch: basket feast
+晚餐：（不含）侨港美食街，自行寻觅","Lunch: basket feast
 Dinner: Qiaogang food street, at your own pace","观光车游览明仕田园
 自由逛银滩
 侨港美食街","Mingshi Pastoral by buggy
