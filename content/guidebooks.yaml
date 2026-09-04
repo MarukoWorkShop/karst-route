@@ -11,11 +11,11 @@ routes:
       zh: 三境 14日 双语路书
     downloadName: YouXian-ThreeLands-14D-Bilingual-Itinerary.pdf
   r2:
-    file: ""
+    file: guidebooks/r2/YouXian-GuangxiVietnam-11D-Bilingual-Itinerary.pdf
     title:
-      en: Route 2 itinerary
-      zh: 路线二路书
-    downloadName: ""
+      en: Guangxi · Vietnam — 11D bilingual itinerary
+      zh: 广西·越南 11日 双语路书
+    downloadName: YouXian-GuangxiVietnam-11D-Bilingual-Itinerary.pdf
   r3:
     file: guidebooks/r3/YouXian-Chongzuo-Weizhou-7D6N-Bilingual-Itinerary.pdf
     title:

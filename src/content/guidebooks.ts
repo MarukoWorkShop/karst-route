@@ -19,9 +19,9 @@ const FALLBACK: Record<RouteId, RouteGuidebook> = {
     downloadName: "YouXian-ThreeLands-14D-Bilingual-Itinerary.pdf",
   },
   r2: {
-    file: "",
-    title: emptyTx("Route 2 itinerary", "路线二路书"),
-    downloadName: "",
+    file: "guidebooks/r2/YouXian-GuangxiVietnam-11D-Bilingual-Itinerary.pdf",
+    title: emptyTx("Guangxi · Vietnam — 11D bilingual itinerary", "广西·越南 11日 双语路书"),
+    downloadName: "YouXian-GuangxiVietnam-11D-Bilingual-Itinerary.pdf",
   },
   r3: {
     file: "guidebooks/r3/YouXian-Chongzuo-Weizhou-7D6N-Bilingual-Itinerary.pdf",
