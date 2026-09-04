@@ -10,6 +10,7 @@
     "content:lang": "node scripts/content-lang-report.mjs",
     "content:csv": "node scripts/export-notion-csv.mjs",
     "content:notion": "node scripts/sync-notion.mjs",
+    "content:keepTx": "node scripts/test-keepTx.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

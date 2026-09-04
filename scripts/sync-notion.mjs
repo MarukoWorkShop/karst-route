@@ -3,11 +3,16 @@
  * Pull Notion DBs and overwrite content/*.yaml when Notion is newer than Git.
  * Usage: NOTION_TOKEN=secret_... node scripts/sync-notion.mjs
  * Missing token/ids → skip (site keeps YAML).
+ *
+ * Bilingual fields use keepTx (scripts/lib/keepTx.mjs):
+ * - src language ← Notion (fallback YAML)
+ * - translation ← YAML unless Notion text is non-empty and differs from YAML
  */
 import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
+import { keepTx, pair } from "./lib/keepTx.mjs";
 
 const root = process.cwd();
 const VERSION = "2022-06-28";
@@ -37,15 +42,6 @@ function uuid(raw) {
   const h = hex.match(/^[0-9a-f]{32}$/i)?.[0];
   if (!h) return "";
   return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
-}
-
-function pair(zh, en) {
-  return { en: en ?? "", zh: zh ?? "" };
-}
-
-function nonemptyPair(zh, en) {
-  const p = pair(zh, en);
-  return p.en.trim() || p.zh.trim() ? p : null;
 }
 
 function splitLines(text) {
@@ -196,19 +192,6 @@ function writeYaml(rel, header, data) {
   fs.mkdirSync(path.dirname(abs), { recursive: true });
   fs.writeFileSync(abs, text, "utf8");
   console.log(`updated ${rel}`);
-}
-
-function pickSrc(srcLang, lang, fromNotion, fromPrev) {
-  const n = String(fromNotion ?? "");
-  const p = String(fromPrev ?? "");
-  if (srcLang === lang) return n || p;
-  return p || n;
-}
-
-function keepTx(srcLang, notionZh, notionEn, prev) {
-  const zh = pickSrc(srcLang, "zh", notionZh, prev?.zh);
-  const en = pickSrc(srcLang, "en", notionEn, prev?.en);
-  return nonemptyPair(zh, en);
 }
 
 function keepTxLines(srcLang, notionZhBlock, notionEnBlock, prevArr) {
