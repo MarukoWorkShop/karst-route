@@ -14,9 +14,9 @@ const emptyTx = (en: string, zh: string): Tx => ({ en, zh });
 
 const FALLBACK: Record<RouteId, RouteGuidebook> = {
   r1: {
-    file: "",
-    title: emptyTx("Route 1 itinerary", "路线一路书"),
-    downloadName: "",
+    file: "guidebooks/r1/YouXian-ThreeLands-14D-Bilingual-Itinerary.pdf",
+    title: emptyTx("Three Lands — 14D bilingual itinerary", "三境 14日 双语路书"),
+    downloadName: "YouXian-ThreeLands-14D-Bilingual-Itinerary.pdf",
   },
   r2: {
     file: "",
