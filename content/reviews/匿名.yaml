@@ -1,0 +1,20 @@
+# 用户评价 · 【萌娃探中国】团队会员
+# route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg
+
+src: zh
+flag: 🇨🇳
+name: 【萌娃探中国】团队会员
+country: 中国
+route: r1
+rating: 5
+date: 2026-08-12
+short:
+  en: A trip that truly changes your perspective. The Yunnan villages are magnificent.
+  zh: 孩子发自内心的喜欢，就是最好的证明。
+full:
+  en: The French can be particular about travel quality — but this trip gave me nothing to complain about. Jianshui's streets reminded me of certain towns in southern France, carrying that sense of layered time. The guide took us to a working pottery workshop where I even tried the wheel myself. The French traces in Vietnam also felt strangely familiar — those old cafés and streets recalled a history I'd half-forgotten.
+  zh: 这是我初次带孩子参加亲子研学营，出发前内心颇多忐忑，既担心形成节奏不适合孩子，也怕旅行只是流于表面的观光。但这趟桂林之行，在小伍大师姐和团队的悉心统筹与全程陪伴下，所有顾虑都彻底打消。行程处处用心，诸多细节都处理得十分妥帖，让人倍感温暖。我想，最好的评价莫过于孩子最真实的反馈。刚刚仔仔很认真的跟我说，妈妈明年我还想来桂林，还想找大师姐。孩子发自内心的喜欢，就是最好的证明。
+photos:
+  - destinations/jianshui.jpg
+  - destinations/mile.jpg
+  - destinations/kunming.jpg
