@@ -44,12 +44,12 @@ export const copy = {
   },
   hero: {
     ctaA: {
-      en: "Award-winning deep cultural boutique routes",
-      zh: "备受赞誉的深度人文精品路线",
+      en: "Our Boutique Routes",
+      zh: "最受欢迎的精品线路",
     },
     ctaB: {
-      en: "Design your own themes and routes",
-      zh: "自己设计游玩主题和线路",
+      en: "Craft Your Trip",
+      zh: "设计定制私家线路",
     },
     themesAria: {
       en: "Journey themes",
