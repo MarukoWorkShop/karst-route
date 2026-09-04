@@ -1,0 +1,38 @@
+# 目的地详情 · guantang
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Two nights, Tianqin, cane sea
+  zh: 连住，天琴，蔗海
+photo: destinations/guantang.jpg
+experience:
+  title:
+    en: Tianqin village and a bicycle in the cane
+    zh: 天琴寨，蔗海里骑行
+  body:
+    en: "The tianqin is a two-stringed Zhuang lute, plucked with a plectrum, used to carry antiphonal singing — call and response across a courtyard, older than the borders here. We sit in on a village performance rather than a staged show, then take bicycles into the cane that runs to the horizon: Guangxi's sugar country, shoulder-high and green, with karst standing in it like islands."
+    zh: 天琴是壮族的弹拨乐器，两根弦，用拨子弹，为对歌伴奏——一问一答隔着天井来回，比这里的国境线更老。我们不是看商业演出，是坐在村里听一场。然后骑车钻进甘蔗田：那种绿一直铺到天边，齐肩高，广西的糖在这里长出来，喀斯特的山立在中间像一座座岛。
+cuisine:
+  title:
+    en: Zhuang table, home rice
+    zh: 壮家的饭
+  body:
+    en: A Zhuang table is sticky rice dyed with plant colours, river snails, pickled vegetables, and a whole chicken cut at the table. It is served in the village, by the family — and because we stay two nights, you will be recognised by the second.
+    zh: 壮家的饭桌是五色糯米、河螺、酸菜，还有一整只在桌上分好的鸡。就在村里、就在家里人手上端出来——因为住两晚，第二顿他们已经认得你了。
+hotel:
+  title:
+    en: Guantang courtyard
+    zh: 观堂的院子
+  body:
+    en: Two nights in a courtyard house in the village. Slow mornings, cane at the door, and the tianqin rehearsal drifting over the wall.
+    zh: 村里院子里的两晚。早晨很慢，甘蔗就在门口，天琴的排练声会翻过墙来。
+  photo: destinations/hotel-d.jpg
+culture:
+  en: "Longzhou and Guantang sit behind Friendship Pass, where the border is a melody: the Zhuang tianqin, two strings and a question-and-answer song older than the line drawn on the map. Two nights so the cane sea becomes a morning you wake up to, not a window you frame."
+  zh: 龙州、观堂在友谊关背后，国境线在这里是一支旋律：壮族天琴，两根弦，一首比地图上的界线更老的问歌答歌。连住两晚，让蔗海变成你醒来的早晨，而不是你取景的窗口。
+slides:
+  - destinations/guantang.jpg
+  - destinations/hotel-d.jpg
+  - destinations/sapa.jpg

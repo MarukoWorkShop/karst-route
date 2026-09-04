@@ -1,0 +1,38 @@
+# 目的地详情 · mile
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Dongfengyun, then the spring
+  zh: 东风韵，然后温泉
+photo: destinations/mile.jpg
+experience:
+  title:
+    en: Colour-block town at dusk
+    zh: 黄昏的色块小镇
+  body:
+    en: "Dongfengyun is not old — it is a red-brick cluster built by the artist Luo Xu: bottle kilns and cone towers with no blueprints, only hand-drawn intuition, rising out of the vineyard fields outside Mile. It looks like a child's drawing built at full size. We arrive late, when the brick turns copper and the shadows do the rest — then the hot springs, because Mile sits on them."
+    zh: 东风韵不老，它是艺术家罗旭用红砖造出来的一片建筑——酒瓶窑、锥形塔，没有蓝图，只凭手绘的直觉，从弥勒城外的葡萄田里长出来。像有人把孩子的画按原尺寸盖了出来。我们傍晚到，砖变成铜色，剩下的交给影子。之后泡温泉——弥勒就坐在温泉上。
+cuisine:
+  title:
+    en: Yunnan rice, a cold beer
+    zh: 云南米饭，凉啤酒
+  body:
+    en: "Simple and good: rice from the terraces, a plate of vegetables, grilled tofu, and a cold beer after the hot spring. Yunnan cooking is mostly about ingredients that travelled a short distance."
+    zh: 简单，但好吃：梯田的米、一盘时蔬、烤豆腐，泡完温泉再来一瓶凉啤酒。云南菜的秘诀，多半不过是食材走得近。
+hotel:
+  title:
+    en: Hot-spring room
+    zh: 温泉房
+  body:
+    en: A room with its own spring water. Two weeks of walking ends here — this is the night that repairs you.
+    zh: 房间里就有自己的温泉水。走了两周的路在这里收尾——这一晚是用来把你修好的。
+  photo: destinations/hotel-b.jpg
+culture:
+  en: "Mile's Dongfengyun is what an artist built when he stopped asking permission — red-brick kilns and cone towers with no blueprints, set among the vineyards. We come for the dusk light, then leave the hot springs to do what they do: return us to a body that still works."
+  zh: 弥勒东风韵是位艺术家不要审批时盖出来的东西——没有图纸的红砖窑和锥形塔，立在葡萄田中间。我们来是为黄昏的光，然后把温泉的事留给温泉——把一具还能用的身体还给你。
+slides:
+  - destinations/mile.jpg
+  - destinations/hotel-b.jpg
+  - destinations/puzhehei.jpg

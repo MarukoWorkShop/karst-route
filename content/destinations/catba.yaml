@@ -1,0 +1,38 @@
+# 目的地详情 · catba
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Limestone, ferry, night on the island
+  zh: 石灰岩、轮渡、岛上过夜
+photo: destinations/catba.jpg
+experience:
+  title:
+    en: The island after the bay
+    zh: 湾之后的岛
+  body:
+    en: Cat Ba is the largest island in the archipelago and it is what hides Lan Ha Bay — around 300 limestone islets with a fraction of Ha Long's boat traffic. We kayak the lagoons in the morning, walk part of the national park in the afternoon, and climb to Cannon Fort before sunset to look back over the water.
+    zh: 吉婆岛是这片群岛里最大的一座，兰夏湾就藏在它身后——三百来座石灰岩小岛，船却只有下龙湾的零头。早上划皮划艇进湖，穿过只有一人高的溶洞；下午走一段国家公园，看猴子在林间过路；日落前爬上炮台，回头看那片水把天染红。
+cuisine:
+  title:
+    en: Squid on the coals
+    zh: 炭火鱿鱼
+  body:
+    en: The island's evenings smell of charcoal and squid. Whole squid grilled over coals, dipped in salt, pepper and lime, eaten at plastic tables as the boats come in.
+    zh: 岛上的傍晚是炭火和鱿鱼的味道。整只鱿鱼架上炭火，蘸盐、胡椒、青柠，在塑料桌边吃，看着船一条条回港。
+hotel:
+  title:
+    en: Bay-facing room
+    zh: 看湾的房间
+  body:
+    en: A quiet room on the waterfront in Cat Ba Town. This is where the bay finally slows down.
+    zh: 吉婆镇海边安静的房间。湾到这里，终于慢下来了。
+  photo: destinations/hotel-c.jpg
+culture:
+  en: Cat Ba is the bay's quieter side — same limestone, far fewer boats, an island that still goes to sea for fish at dawn. We come by ferry so the night is water rather than a highway hotel; the national park is the afternoon, Cannon Fort the last walk.
+  zh: 吉婆岛是湾的另一半安静——同样的石灰岩，船少得多，清晨还有人出海打鱼。我们坐轮渡来，让这一夜也是水，而不是高速旁的酒店；国家公园是下午，炮台是最后一走。
+slides:
+  - destinations/catba.jpg
+  - destinations/hotel-c.jpg
+  - destinations/mile.jpg

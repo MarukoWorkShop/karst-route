@@ -155,6 +155,12 @@ export const copy = {
       zh: "喜欢这条线路，点击查看路书",
     },
     reviews: { en: "{n} reviews", zh: "{n} 条评价" },
+    expandOpen: { en: "Expand route card", zh: "展开线路卡片" },
+    expandClose: { en: "Close", zh: "关闭" },
+    videoSoon: {
+      en: "Drop intro.mp4 in this route folder to show the video",
+      zh: "将 intro.mp4 放入本线路文件夹即可显示视频",
+    },
   },
   experience: {
     h2: { en: "Journeys that leave a mark", zh: "让旅途真正改变你" },
@@ -396,6 +402,33 @@ export const copy = {
     none: { en: "None", zh: "无" },
     dash: { en: "—", zh: "未选择" },
     peopleUnit: { en: "people", zh: "人" },
+    adults: { en: "Adults", zh: "成人" },
+    children: { en: "Children", zh: "儿童" },
+    estTitle: { en: "Instant estimate", zh: "即时估算" },
+    estForParty: {
+      en: "{n} travellers · {a} adults + {c} children",
+      zh: "出行 {n} 人（{a} 成人 + {c} 儿童）",
+    },
+    estPerAdult: { en: "Adult per person", zh: "成人人均" },
+    estPerChild: { en: "Child per person", zh: "儿童人均" },
+    estSubtotal: { en: "Estimated total", zh: "估算小计" },
+    estChildrenHint: {
+      en: "Child rate assumes sharing parents' room (no extra bed). Final age & room policy is confirmed at booking.",
+      zh: "儿童价按「不占床」口径估算；具体年龄与占床政策以预订确认为准。",
+    },
+    estDisclaimer: {
+      en: "Instant estimate for reference only — the final quote is confirmed by your travel concierge.",
+      zh: "即时估算仅供参考，最终报价以旅行顾问确认为准。",
+    },
+    estUnavailable: {
+      en: "This route is quoted per party — send the brief and we'll price it for your exact group.",
+      zh: "该线路按团队单独报价：提交需求后，顾问将按您的具体人数核算。",
+    },
+    estOversize: {
+      en: "Parties over 14 travellers are priced individually — send the brief and we'll confirm.",
+      zh: "超过 14 人的团队单独核算——请直接提交需求，我们会按实际人数报价。",
+    },
+    rowEstimate: { en: "Est. price", zh: "估算价格" },
     downloadPdf: { en: "Download PDF", zh: "下载 PDF" },
     downloadItin: { en: "Download itinerary PDF", zh: "下载定制行程 PDF" },
     pdfPreparing: { en: "Preparing PDF…", zh: "正在生成 PDF…" },

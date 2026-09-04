@@ -132,6 +132,8 @@ for (const id of ["r1", "r2", "r3"]) {
       transport_en: tx(day.transport, "en"),
       lodging_zh: tx(day.lodging, "zh"),
       lodging_en: tx(day.lodging, "en"),
+      blurb_zh: tx(day.blurb, "zh"),
+      blurb_en: tx(day.blurb, "en"),
       dining_zh: lines(day.dining, (x) => tx(x, "zh")),
       dining_en: lines(day.dining, (x) => tx(x, "en")),
       bullets_zh: lines(day.bullets, (x) => tx(x, "zh")),
@@ -160,6 +162,8 @@ writeCsv(
     "transport_en",
     "lodging_zh",
     "lodging_en",
+    "blurb_zh",
+    "blurb_en",
     "dining_zh",
     "dining_en",
     "bullets_zh",
@@ -167,6 +171,71 @@ writeCsv(
     "photos",
   ],
   dayRows,
+);
+
+// --- 目的地详情 ---
+const destDir = path.join(root, "content", "destinations");
+const destRows = fs.existsSync(destDir)
+  ? fs
+      .readdirSync(destDir)
+      .filter((f) => f.endsWith(".yaml"))
+      .sort()
+      .map((file) => {
+        const id = file.replace(/\.yaml$/, "");
+        const d = loadYaml(`content/destinations/${file}`);
+        return {
+          标题: id,
+          id,
+          src: d.src ?? "zh",
+          photo: d.photo ?? "",
+          hotel_photo: d.hotel?.photo ?? "",
+          tagline_zh: tx(d.tagline, "zh"),
+          tagline_en: tx(d.tagline, "en"),
+          experience_title_zh: tx(d.experience?.title, "zh"),
+          experience_title_en: tx(d.experience?.title, "en"),
+          experience_body_zh: tx(d.experience?.body, "zh"),
+          experience_body_en: tx(d.experience?.body, "en"),
+          cuisine_title_zh: tx(d.cuisine?.title, "zh"),
+          cuisine_title_en: tx(d.cuisine?.title, "en"),
+          cuisine_body_zh: tx(d.cuisine?.body, "zh"),
+          cuisine_body_en: tx(d.cuisine?.body, "en"),
+          hotel_title_zh: tx(d.hotel?.title, "zh"),
+          hotel_title_en: tx(d.hotel?.title, "en"),
+          hotel_body_zh: tx(d.hotel?.body, "zh"),
+          hotel_body_en: tx(d.hotel?.body, "en"),
+          culture_zh: tx(d.culture, "zh"),
+          culture_en: tx(d.culture, "en"),
+          slides: Array.isArray(d.slides) ? d.slides.join("\n") : "",
+        };
+      })
+  : [];
+writeCsv(
+  "08-目的地详情.csv",
+  [
+    "标题",
+    "id",
+    "src",
+    "photo",
+    "hotel_photo",
+    "tagline_zh",
+    "tagline_en",
+    "experience_title_zh",
+    "experience_title_en",
+    "experience_body_zh",
+    "experience_body_en",
+    "cuisine_title_zh",
+    "cuisine_title_en",
+    "cuisine_body_zh",
+    "cuisine_body_en",
+    "hotel_title_zh",
+    "hotel_title_en",
+    "hotel_body_zh",
+    "hotel_body_en",
+    "culture_zh",
+    "culture_en",
+    "slides",
+  ],
+  destRows,
 );
 
 // --- 评价 ---

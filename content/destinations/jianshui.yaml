@@ -1,0 +1,38 @@
+# 目的地详情 · jianshui
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Hekou in, old town dust
+  zh: 河口入境，古城的土
+photo: destinations/jianshui.jpg
+experience:
+  title:
+    en: Mini-train and Tuanshan
+    zh: 小火车与团山
+  body:
+    en: "Jianshui kept what many old towns lost: the Confucian temple still stands, and the narrow-gauge train still runs. We ride out to Tuanshan, a walled clan village of grey brick and tiled courtyards standing since the Qing, then walk the Seventeen-Arch Bridge at low water, its arches doubling in the river. In town the old streets are lived in rather than staged."
+    zh: 建水留下了许多古城弄丢的东西：文庙还在，米轨小火车还在开。我们坐小火车去团山——青砖灰瓦的宗族聚落，从清代立到今天，院墙围着一个个天井；再趁水位低时走十七孔桥，桥拱在河里成双。城里的老街是有人住的，不是布景。
+cuisine:
+  title:
+    en: Steam-pot chicken
+    zh: 汽锅鸡
+  body:
+    en: "Jianshui's signature is the steam pot: chicken sealed in clay with a central chimney, steamed until the broth condenses out of the bird itself — no water added, nothing but ginger and salt. It takes hours, and that patience is why the dish travelled."
+    zh: 建水的招牌是汽锅鸡：鸡封在陶锅里，中间一根汽柱，全靠蒸汽把汤从鸡身上逼出来——不加一滴水，只有姜和盐。要炖上几个钟头，这份耐心也是它走出去的原因。
+hotel:
+  title:
+    en: Courtyard inn
+    zh: 院子里的客栈
+  body:
+    en: A restored courtyard house inside the old town — tiled roof, wooden lattice, a tree in the middle. Evening is the hour to sit in it.
+    zh: 老城里修过的院子客栈——瓦顶、木格窗、中间一棵树。傍晚正是该坐在里头的时辰。
+  photo: destinations/hotel-d.jpg
+culture:
+  en: "Jianshui is one of the few Chinese old towns that still believes it's one: a Confucian temple still standing, courtyard houses still lived in, the narrow-gauge still running. The Yunnan after Hekou begins here as lanes and tofu, not as a highway plaza."
+  zh: 建水是少数还信自己是古城的古城：文庙还立着，院子还住着，米轨小火车还在开。过了河口，云南就从巷子和豆腐开始了，不是高速服务区。
+slides:
+  - destinations/jianshui.jpg
+  - destinations/hotel-d.jpg
+  - destinations/kunming.jpg

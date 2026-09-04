@@ -1,5 +1,6 @@
 # 逐日行程 · r3
 # 每一天：城市、住宿、交通、餐饮、活动 bullets、主题 themes
+# blurb 为当日介绍段；体验/餐饮/住宿深度文案见 content/destinations/{placeId}.yaml
 # photos 只写 public 下的相对路径
 
 src: zh
@@ -19,13 +20,16 @@ days:
     lodging:
       en: Shangri-La Nanning
       zh: 南宁香格里拉酒店
+    blurb:
+      en: "Someone once called Guangxi the most complicated place to eat in China, and Nanning — its capital — is where that complexity becomes street food. The city's warmth hides in its lanes: the sour-savoury smell of pickled fruit, the heat of a wok firing old friend noodles, the sweet hush of a sugar-water stall at dusk."
+      zh: 有人说过，广西是中国饮食最复杂的地方。而南宁作为首府，把这份复杂变成了街头滋味。这座城的热情藏在巷弄里：酸嘢的清爽、老友粉的热辣、卷筒粉的软糯、糖水的甜蜜，暮色渐浓时，建政夜市灯火通明、人声鼎沸。
     dining:
       - en: "Lunch: not included"
         zh: 午餐：不含
-      - en: "Dinner: Jianzheng night market, explore on your own"
+      - en: "Dinner: Jianzheng night market, at your own pace"
         zh: 晚餐：建政夜市，自行寻觅
     bullets:
-      - en: Sanjie Liangxiang · Changyou Pavilion
+      - en: Three Streets & Two Lanes, Changyou Pavilion
         zh: 三街两巷 · 畅游阁
       - en: Jianzheng night market
         zh: 建政夜市
@@ -50,6 +54,9 @@ days:
     lodging:
       en: LUX* Chongzuo
       zh: 崇左秘境丽世度假村
+    blurb:
+      en: The Black Water River is Chongzuo's karst at its most painterly — steep peaks and thick primaeval growth on both banks, water so clear the range lies doubled on the surface. Boating through it feels less like transport and more like drifting inside an ink painting.
+      zh: 黑水河是崇左喀斯特最像画的一段：两岸峰林高耸、原始植被茂密，河水碧绿清澈，山的倒影静静铺在水面，船行其中，像驶进一幅水墨丹青。
     dining:
       - en: "Lunch: simple lunch on the island"
         zh: 午餐：小岛简餐
@@ -73,7 +80,7 @@ days:
       zh: 崇左
     stay:
       en: Same resort, no suitcase
-      zh: 同一度假村，不拎箱子
+      zh: 入住同一度假村
     stayKind: hotel
     placeId: chongzuo
     transport:
@@ -82,6 +89,9 @@ days:
     lodging:
       en: LUX* Chongzuo — second night
       zh: 崇左秘境丽世度假村 · 第二晚
+    blurb:
+      en: Detian shares the title of Asia's largest trans-national waterfall with Vietnam's Ban Gioc. The Guichun River breaks over a limestone fault and drops 70 metres in three tiers — on sunny days the spray throws a standing rainbow. Afterwards, coffee inside a natural karst cave right on the border line.
+      zh: 德天瀑布与越南板约瀑布共享「亚洲第一大跨国瀑布」之名。归春河在这里冲破喀斯特断层，从 70 米高的崖壁分三级跌落，晴日里水雾中常常挂起一道彩虹。随后在边境线上的天然溶洞里喝一杯咖啡。
     dining:
       - en: "Lunch: light lunch at the Blue Cave"
         zh: 午餐：蓝洞简餐
@@ -117,11 +127,14 @@ days:
     lodging:
       en: Beihai Marriott Resort
       zh: 北海万豪度假酒店
+    blurb:
+      en: "Mingshi is best taken sitting down: a buggy rides past turning peaks, flowing water and rice fields sliding by while farmhouse smoke drifts up. By evening the coast takes over — Silver Beach, and Qiaogang's night market where Vietnamese flavours meet Cantonese seafood."
+      zh: 明仕田园最适合坐着看：观光车慢行，窗外山在转、水在流，成片稻田从身旁滑过，农舍炊烟慢慢升上天。傍晚交给海岸——银滩，还有侨港美食街，越南风味与广式海鲜在这里相遇。
     dining:
       - en: "Lunch: basket feast"
         zh: 午餐：簸箕宴
       - en: "Dinner: Qiaogang food street, at your own pace"
-        zh: 晚餐：侨港美食街，自行寻觅
+        zh: 晚餐：（不含）侨港美食街，自行寻觅
     bullets:
       - en: Mingshi Pastoral by buggy
         zh: 观光车游览明仕田园
@@ -150,6 +163,9 @@ days:
     lodging:
       en: Whale Cliff resort
       zh: 巨鲸悬崖度假酒店
+    blurb:
+      en: A century-old Catholic church built from the island's own coral stone; beside it, Bailing House, nearly two hundred years old, with wood-fired bread from the courtyard. Shiluokou bay is named for the spiral of its shoreline — snorkel and the tropical fish are right there.
+      zh: 百年天主教堂，用岛上特有的珊瑚石垒砌而成；旁边的百龄楼有近两百年历史，院子里柴窑烤的面包松软可口。石螺口因海湾形似螺口得名，浮潜就能看见热带鱼群。
     dining:
       - en: "Lunch: Bailing House"
         zh: 午餐：百龄楼午餐
@@ -185,6 +201,9 @@ days:
     lodging:
       en: Whale Cliff resort — second night
       zh: 巨鲸悬崖度假酒店 · 第二晚
+    blurb:
+      en: Crocodile Mountain is the island's volcanic geology at its purest — red-brown lava rock in every shape, white spray where the swell hits. There is a fishing harbour market to walk with the islanders, Nanwan's coast road, and the 2.3 km Blue Bridge reaching straight into a sea the colour of jelly.
+      zh: 鳄鱼山是涠洲岛火山地质最纯粹的一段：红褐色火山岩千姿百态，海浪拍打溅起雪白浪花。跟着岛民逛对渔船码头的海鲜市场，走南湾街的海岸公路，还有那条 2.3 公里直通入海的蓝桥，海水蓝绿得像果冻。
     dining:
       - en: "Lunch: coral-stone courtyard"
         zh: 午餐：珊瑚石院子午餐

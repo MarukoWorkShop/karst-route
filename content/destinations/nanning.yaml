@@ -1,0 +1,38 @@
+# 目的地详情 · nanning
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Garden city, before the border
+  zh: 绿城，过关前夜
+photo: destinations/nanning.jpg
+experience:
+  title:
+    en: Night market wander
+    zh: 夜市慢走
+  body:
+    en: Zhongshan Road after dark is not a food court — it is the city's living room. Grills smoke under the lamps, durian carts hold their ground beside snail-noodle stalls, and families eat on low stools with the pavement as their table. We walk it slowly, stop where the queue is local, and finish on the Yong River bank where the humidity finally lifts.
+    zh: 入夜的中山路不是美食街，是这座城的客厅。炭火在灯下冒烟，榴莲摊和螺蛳粉摊各占一方，一家人围着矮凳，把人行道当饭桌。我们慢慢走，哪里排着本地人就停哪里，最后走到邕江边——那里湿气终于散开，风是凉的。
+cuisine:
+  title:
+    en: Luosifen, the honest bowl
+    zh: 螺蛳粉，正经一碗
+  body:
+    en: "The broth is fermented and the smell announces itself three metres out, so the argument ends fast: you love it in three minutes, or you never forget it. Guangxi eats it for breakfast with pickled bamboo, peanuts, and chilli oil enough to make the morning honest. We skip the mall chains and sit where the steam has stained the walls."
+    zh: 汤是发酵过的，气味在三米外就先打招呼，喜不喜欢很快见分晓：三分钟爱上，或者记一辈子。广西人拿它当早饭，配酸笋、花生，再淋一勺辣油，把清晨叫醒。我们不进商场连锁，只坐那种蒸汽把墙熏黄了的老店。
+hotel:
+  title:
+    en: Riverside garden stay
+    zh: 江景花园酒店
+  body:
+    en: A quiet room by the Yong River, chosen so tomorrow's drive to Detian begins as a drive and not a scramble. Ask for the garden side.
+    zh: 邕江边安静的房间，是为了让明天去德天的路是'出车'，不是'赶路'。要花园那一侧。
+  photo: destinations/hotel-a.jpg
+culture:
+  en: Nanning is the south's quietest capital — green all year, sitting on the Yong River with Zhuang and Cantonese cooking on either side of the kitchen. Most travellers pass through; we use it as a soft first night by the river, slowing down before the long drive west.
+  zh: 南宁是华南最安静的省会——一年常绿，邕江从城边流过，壮味和粤味隔着一口锅各做各的。多数旅客把它当中转，我们用它做第一晚：住在江边，把节奏放慢，第二天再往西开。
+slides:
+  - destinations/nanning.jpg
+  - destinations/hotel-a.jpg
+  - destinations/kunming.jpg

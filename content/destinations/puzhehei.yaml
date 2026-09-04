@@ -1,0 +1,38 @@
+# 目的地详情 · puzhehei
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Karst lakes, sleep inside the park
+  zh: 喀斯特湖，住在园里
+photo: destinations/puzhehei.jpg
+experience:
+  title:
+    en: Willow-leaf boat at first light
+    zh: 晨光里的柳叶舟
+  body:
+    en: "Puzhehei is karst turned into water: some three hundred peaks standing in a net of lakes and channels, and the only way through is a narrow wooden boat shaped like a willow leaf. We go out at first light, before the tour boats start, when the water is flat enough to hold the peaks twice. Lotus fills the channels in summer; Yi villages sit at the field edges; the hills look exactly as they did in the films that made this place famous."
+    zh: 普者黑是喀斯特泡进水里的样子：三百来座孤峰立在一片湖泊水网中，进去只能靠那种窄窄的柳叶舟。我们天刚亮就出发，赶在游船之前——水面平得能把山影装两遍。夏天荷花把水道填满，彝族村子在田边，山和让它出名的那些电影里一模一样。
+cuisine:
+  title:
+    en: Lake fish, sour greens
+    zh: 湖鱼与酸菜
+  body:
+    en: "Fish from the lakes, two ways: steamed with pickled greens, or grilled whole at the water's edge. The sour note runs through everything here — Yi highland cooking, and it cuts the heat better than chilli does."
+    zh: 湖里的鱼两种做法：配酸菜清蒸，或者在岸边整条炭烤。酸味贯穿这里所有的菜——彝家的山地做法，解暑比辣椒更管用。
+hotel:
+  title:
+    en: Park lodge on the water
+    zh: 水边的园区住宿
+  body:
+    en: We sleep inside the park, not outside it. That is what buys you the empty water at dawn — the single best hour in Puzhehei, and the reason we stay.
+    zh: 我们住在园子里，不住园子外。只有这样才买得到黎明那片没人的水——那是普者黑最好的一个钟头，也是我们住下来的理由。
+  photo: destinations/hotel-a.jpg
+culture:
+  en: "Puzhehei is a lake that grew inside a karst forest: lotus threading between the peaks, a bamboo raft the only way in. The local Yi call it 'where fish and shrimp overflow' — once you are there, the name stops sounding like poetry and starts sounding like fact."
+  zh: 普者黑是长在喀斯特森林里的一湖水：荷花从峰丛之间穿过，进去了只能坐竹筏。当地彝族管这里叫'鱼虾满出来的地方'——到了之后，这名字就不像诗、像事实了。
+slides:
+  - destinations/chongzuo.jpg
+  - destinations/catba.jpg
+  - destinations/puzhehei.jpg

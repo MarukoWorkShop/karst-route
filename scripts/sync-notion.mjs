@@ -388,6 +388,8 @@ async function main() {
         if (transport) day.transport = transport;
         const lodging = keepTx(fileSrc, text(page, "lodging_zh"), text(page, "lodging_en"), prevDay.lodging);
         if (lodging) day.lodging = lodging;
+        const blurb = keepTx(fileSrc, text(page, "blurb_zh"), text(page, "blurb_en"), prevDay.blurb);
+        if (blurb) day.blurb = blurb;
         const dining = keepTxLines(fileSrc, text(page, "dining_zh"), text(page, "dining_en"), prevDay.dining);
         if (dining.length) day.dining = dining;
         const bullets = keepTxLines(fileSrc, text(page, "bullets_zh"), text(page, "bullets_en"), prevDay.bullets);
@@ -401,8 +403,79 @@ async function main() {
       });
       writeYaml(
         rel,
-        `# 逐日行程 · ${id}\n# 每一天：城市、住宿、交通、餐饮、活动 bullets、主题 themes\n# photos 只写 public 下的相对路径`,
+        `# 逐日行程 · ${id}\n# 每一天：城市、住宿、交通、餐饮、活动 bullets、主题 themes\n# blurb 为当日介绍段；体验/餐饮/住宿深度文案见 content/destinations/{placeId}.yaml\n# photos 只写 public 下的相对路径`,
         { src: fileSrc, days: dayObjs },
+      );
+      mark();
+    }
+  }
+
+  // --- 目的地详情（体验 / 餐饮 / 住宿 + culture 兜底）---
+  if (dbs.destinations) {
+    const pages = await queryAll(token, dbs.destinations);
+    const relDir = "content/destinations";
+    for (const page of pages) {
+      if (!published(page)) continue;
+      const id = (text(page, "id") || text(page, "标题")).trim().toLowerCase();
+      if (!id) continue;
+      const rel = `${relDir}/${id}.yaml`;
+      if (!takeNotion([page], rel)) continue;
+      const prev = existingYaml(rel);
+      const srcLang = text(page, "src") || prev.src || "zh";
+      const slides = splitLines(text(page, "slides"));
+      writeYaml(
+        rel,
+        `# 目的地详情 · ${id}\n# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍\n# photo / hotel_photo / slides 只写 public 下相对路径`,
+        {
+          src: srcLang,
+          tagline: keepTx(srcLang, text(page, "tagline_zh"), text(page, "tagline_en"), prev.tagline),
+          photo: text(page, "photo") || prev.photo || "",
+          experience: {
+            title: keepTx(
+              srcLang,
+              text(page, "experience_title_zh"),
+              text(page, "experience_title_en"),
+              prev.experience?.title,
+            ),
+            body: keepTx(
+              srcLang,
+              text(page, "experience_body_zh"),
+              text(page, "experience_body_en"),
+              prev.experience?.body,
+            ),
+          },
+          cuisine: {
+            title: keepTx(
+              srcLang,
+              text(page, "cuisine_title_zh"),
+              text(page, "cuisine_title_en"),
+              prev.cuisine?.title,
+            ),
+            body: keepTx(
+              srcLang,
+              text(page, "cuisine_body_zh"),
+              text(page, "cuisine_body_en"),
+              prev.cuisine?.body,
+            ),
+          },
+          hotel: {
+            title: keepTx(
+              srcLang,
+              text(page, "hotel_title_zh"),
+              text(page, "hotel_title_en"),
+              prev.hotel?.title,
+            ),
+            body: keepTx(
+              srcLang,
+              text(page, "hotel_body_zh"),
+              text(page, "hotel_body_en"),
+              prev.hotel?.body,
+            ),
+            photo: text(page, "hotel_photo") || prev.hotel?.photo || "",
+          },
+          culture: keepTx(srcLang, text(page, "culture_zh"), text(page, "culture_en"), prev.culture),
+          slides: slides.length ? slides : prev.slides || [],
+        },
       );
       mark();
     }

@@ -1,0 +1,38 @@
+# 目的地详情 · train
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Fansipan, then the rails
+  zh: 番西邦，然后上轨
+photo: destinations/train.jpg
+experience:
+  title:
+    en: Cable, Muong Hoa, sleep on the meter-gauge
+    zh: 缆车、芒花、米轨过夜
+  body:
+    en: "We cable up Fansipan — 3,143 metres, the roof of Indochina — for the cloud line, then come back down to ride the metre-gauge line south. The track is a century old, the compartments are wood and brass, and the journey works precisely because it is slow: dinner on a station platform, tea from a flask, and the border arriving while you sleep."
+    zh: 我们先坐缆车上番西邦——海拔3143米，中南半岛的屋顶，看云在脚下排成一线；再下来换乘南下的米轨。这条轨有一百年了，车厢是木头和黄铜的，慢就是它的道理：晚饭在站台吃，茶从保温瓶倒，国境线在你睡着的时候过去。
+cuisine:
+  title:
+    en: Station supper, tea in a flask
+    zh: 站上晚饭，瓶里的茶
+  body:
+    en: There is no dining car worth the name. We eat on the platform — whatever the stall is cooking — and drink tea from a flask while the compartments rock. Part of the appeal is that nothing is served to you.
+    zh: 这趟车没有像样的餐车。我们在站台吃——摊上在做什么就吃什么，茶从瓶里倒，车厢在脚下晃。有意思的地方正在于：没有人把东西端到面前。
+hotel:
+  title:
+    en: Soft sleeper berth
+    zh: 软卧铺
+  body:
+    en: Four berths, clean linen, a window that opens. Tonight the train is the hotel — that is the whole idea.
+    zh: 四个铺位，干净的床单，一扇能打开的窗。今晚火车就是酒店——这正是这趟车的意思。
+  photo: destinations/hotel-c.jpg
+culture:
+  en: The metre-gauge is a leftover of the Yunnan–Vietnam railway. Sleeping on it is the border in slow motion — not a gimmick, a way the geography still works. Tea from a flask, dinner at a station platform, and the next morning somewhere else.
+  zh: 米轨是滇越铁路剩下的。睡在上面，边境是慢动作——不是噱头，是地理还在用的方式。保温瓶里的茶，站台上的饭，第二天醒来已在另一处。
+slides:
+  - destinations/train.jpg
+  - destinations/hotel-c.jpg
+  - destinations/jianshui.jpg

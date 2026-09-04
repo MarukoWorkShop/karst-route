@@ -1,5 +1,6 @@
 # 逐日行程 · r1
 # 每一天：城市、住宿、交通、餐饮、活动 bullets、主题 themes
+# blurb 为当日介绍段；体验/餐饮/住宿深度文案见 content/destinations/{placeId}.yaml
 # photos 只写 public 下的相对路径
 
 src: zh
@@ -108,6 +109,9 @@ days:
         zh: 海上喀斯特风光
     themes:
       - wild
+    blurb:
+      en: "A full day on the water instead of a pass-through: the cruise eases into lagoons the big boats skip, and by evening the bay is yours again. Two nights is what lets you watch it leave and come back."
+      zh: 今天不赶路，整日在水上：游轮钻进大船绕开的湖，傍晚整座湾又交还给你。连住两晚，才看得见它「离开又回来」。
   - day: 5
     city:
       en: Cat Ba Island
@@ -133,6 +137,9 @@ days:
         zh: 海岛休闲
     themes:
       - wild
+    blurb:
+      en: A short ferry from Ha Long, then an island still keeping its own hours — kayaking the lagoons in the morning, the national park in the afternoon, harbour seafood at night. The night here is water, not a highway hotel.
+      zh: 从下龙坐一小段轮渡，便是一座还按自己节奏过的岛——上午划船进湖，下午走国家公园，夜里港边海鲜。这一夜是水，不是高速旁的酒店。
   - day: 6
     city:
       en: Hanoi
@@ -190,6 +197,9 @@ days:
     themes:
       - flavors
       - locals
+    blurb:
+      en: "The second day in the Old Quarter moves slower: a cyclo past the lake, Ba Dinh and St Joseph's, then Train Street as the light goes. Same restored house, no packing — the city is the itinerary."
+      zh: 在老城的第二天慢下来：三轮车绕湖，巴亭广场与河内大教堂，天暗了去火车街。同一栋老房子，不用收行李——这座城本身就是行程。
   - day: 8
     city:
       en: Sapa
@@ -244,6 +254,9 @@ days:
     themes:
       - wild
       - villages
+    blurb:
+      en: The second morning rides the cable up Fansipan, then comes down to Cat Cat on foot — terraces at shoulder height, a village that still farms them by hand. Two nights so the mist on the rice has somewhere to settle.
+      zh: 第二天上午缆车上番西邦，下午步行下猫猫村——梯田在肩膀的高度，村里还用手种着。连住两晚，雾在稻子上才有了落脚处。
   - day: 10
     city:
       en: Jianshui
@@ -303,6 +316,9 @@ days:
       - destinations/jianshui.jpg
       - destinations/chongzuo.jpg
       - destinations/puzhehei.jpg
+    blurb:
+      en: Puzhehei is a lake that grew inside a karst forest. Lotus flowers between the peaks, bamboo raft threading between them — this is the kind of landscape that makes you question whether it's real.
+      zh: 普者黑是长在喀斯特森林里的一湖水。峰丛之间开着荷花，竹筏从中间穿过去——这种风景会让人怀疑是不是真的。
   - day: 12
     city:
       en: Mile

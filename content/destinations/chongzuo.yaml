@@ -1,0 +1,38 @@
+# 目的地详情 · chongzuo
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Waterfall wonder
+  zh: 瀑布边的田园
+photo: destinations/chongzuo.jpg
+experience:
+  title:
+    en: Detian boat, both banks
+    zh: 德天游船，两岸
+  body:
+    en: Ban Gioc–Detian is Asia's largest transnational waterfall, and the border runs straight through it — Vietnam on one bank, China on the other, one curtain of white water shared by two countries. We take the raft close enough to feel the spray, then drive the Mingshi karst road while the light is still low, cycling a stretch between rice fields and peaks that stand up like green teeth.
+    zh: 德天瀑布是亚洲最大的跨国瀑布，国境线从水幕中间穿过——一边越南，一边中国，同一帘白水两国共看。我们坐竹筏靠近，水花直接打在脸上；然后趁光线还低、还软，走明仕那段喀斯特路，在稻田和峰丛之间骑一段车，山立得像一排绿牙。
+cuisine:
+  title:
+    en: River fish, sticky rice
+    zh: 河鱼与糯米
+  body:
+    en: "Chongzuo's table is the river and the paddy: fish pulled from the same water we rafted through, steamed with sour pickles; glutinous rice steamed in bamboo; greens from the fields beside the karst road. It is Guangxi home cooking — sour, fresh, unhurried — not a hotel buffet pretending to be regional."
+    zh: 崇左的饭桌就是河与田：鱼从我们刚漂过的水里捞起，配酸菜清蒸；糯米在竹筒里蒸熟；青菜来自喀斯特路边的地。这是广西的家常——酸、鲜、不赶时间，不是酒店自助装出来的'当地风味'。
+hotel:
+  title:
+    en: Karst-view lodge
+    zh: 看山的小住
+  body:
+    en: A simple lodge facing the peaks, chosen so the window frames karst rather than a car park. We sleep where the road goes quiet, not on the tourist strip.
+    zh: 对着峰丛的简单住宿，窗户框住的是山，不是停车场。我们住在路静下来的地方，不住游客街。
+  photo: destinations/hotel-b.jpg
+culture:
+  en: "Detian is the place where the map turns into spray: Vietnam and China on two banks of the same curtain of water. Mingshi is its quieter twin — karst, fields, a road so flat you forget the speed you built up to get here."
+  zh: 德天是地图变成水花的地方：中越两国隔着一帘白水各站一边。明仕是它更安静的孪生——喀斯特、稻田、一条平到让你忘了来时赶路的公路。
+slides:
+  - destinations/chongzuo.jpg
+  - destinations/hotel-b.jpg
+  - destinations/puzhehei.jpg

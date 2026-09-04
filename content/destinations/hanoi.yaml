@@ -1,0 +1,38 @@
+# 目的地详情 · hanoi
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Old Quarter, two nights
+  zh: 古城，连住两晚
+photo: destinations/hanoi.jpg
+experience:
+  title:
+    en: Cyclo, Train Street, West Lake after dark
+    zh: 三轮车、火车街、夜西湖
+  body:
+    en: "The Old Quarter is not a museum district frozen in time. It is a working neighbourhood where families have sold silk, silver and spices from the same narrow shopfronts for generations, and the streets still carry their trades: Hang Bac was silver, Hang Gai sold hemp then silk, Hang Ma fills with paper offerings before Tet. Behind the narrow façades the 'tube houses' run deep — built narrow to dodge a tax on street frontage, hiding courtyards and workshops behind. We go into Bach Ma Temple at incense hour, cross Dong Xuan's wholesale halls, and end on Long Bien Bridge, still carrying trains over the Red River."
+    zh: 老城不是冻在玻璃柜里的博物馆，是还在运转的街区——几代人守着同一间窄铺面卖丝绸、银器、香料。街名还留着老行当：Hang Bac是银器街，Hang Gai卖丝，Hang Ma春节前挂满纸扎。窄门面后是'管子屋'，进深极长——当年按门面宽收税，只好往里长，把天井作坊藏进去。我们在香火最旺时进白马寺，穿过同春市场的批发大厅，最后上龙边桥。
+cuisine:
+  title:
+    en: Lotus buffet and egg coffee
+    zh: 莲花餐与蛋咖啡
+  body:
+    en: "Hanoi eats early and often. Pho bo before nine, at a stall where office workers queue; bun cha at midday — grilled pork, herbs, and a bowl of dipping sauce; banh mi as a walking snack. Egg coffee is its own ritual: whipped yolk, condensed milk, strong Vietnamese drip, in a small cup on a plastic stool."
+    zh: 河内吃得早，也吃得勤。九点前来一碗牛肉河粉，找上班族排队的那种摊；中午吃烤肉米线——炭火猪肉、一把香草、一碗蘸水；法棍当走路的零嘴。蛋咖啡另有一套讲究：打发的蛋黄、炼乳、浓滴滤咖啡，装在小小的杯子里，配塑料矮凳。
+hotel:
+  title:
+    en: French-quarter hide
+    zh: 法租界小住
+  body:
+    en: Two nights on the quiet edge of the French Quarter — tree-lined boulevards, five minutes from the lake, far enough from Ta Hien's beer noise to actually sleep.
+    zh: 法租界边缘安静的两晚——林荫大道，离湖五分钟，又离Ta Hien的啤酒声足够远，能真的睡着。
+  photo: destinations/hotel-a.jpg
+culture:
+  en: "Hanoi is a city that is still writing itself: 36 trade streets in the Old Quarter, French shade a few blocks over, a lake the city walks around after work. Two nights so the morning broth, the late coffee and the evening beer street can all be Hanoi's, not a transit stop."
+  zh: 河内是一座还在写自己的城：老城三十六行街、几条街外的法式荫凉、下班后绕着走的湖。两晚，让早上的河粉、下午的咖啡、晚上的啤酒街都属于河内，不是中转站。
+slides:
+  - destinations/hanoi.jpg
+  - destinations/hotel-a.jpg
+  - destinations/sapa.jpg

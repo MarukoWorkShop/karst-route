@@ -1,0 +1,38 @@
+# 目的地详情 · halong
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Limestone sea, two nights on the bay
+  zh: 海上峰林，湾上连住
+photo: destinations/catba.jpg
+experience:
+  title:
+    en: A day among the isles
+    zh: 在岛群里过一天
+  body:
+    en: Nearly two thousand limestone islands rise out of emerald water, worn into towers and arches over some five hundred million years. Most visitors see it from a day boat; we stay two nights, so the bay empties at dusk and returns at dawn. We kayak into lagoons the big boats cannot enter, step inside Sung Sot's chambers of stalactites, and drift past floating villages where families have lived on the water for generations — around 1,600 people still do.
+    zh: 近两千座石灰岩岛从翡翠色的水里立起来，是五亿年雨水啃出来的塔和拱。多数人坐一日船看一眼就走，我们住两晚——黄昏时湾里空了，天亮时它又回来。我们划皮划艇进大船进不去的湖，钻进惊讶洞的钟乳石大厅，再从浮村旁漂过：那里的人家几代都住在水上，至今还有约一千六百人。
+cuisine:
+  title:
+    en: Squid, lime, the harbour
+    zh: 鱿鱼、青柠、港口
+  body:
+    en: Lunch on deck is grilled squid, lime and salt; dinner in town is the one you remember. The seafood is the point — landed that morning, cooked that evening, and no sauce heavy enough to hide it.
+    zh: 船上的午饭是炭烤鱿鱼配青柠和盐，简单；镇上的晚饭才是记得住的那一顿。海鲜是主角——早上捞的，晚上就下锅，没有任何酱料重到需要去盖住它。
+hotel:
+  title:
+    en: Bay-facing room in Ha Long
+    zh: 下龙看湾的房间
+  body:
+    en: Two nights with the bay outside the window rather than a harbour car park. Ask for a high floor facing the islands — dawn light on the karst is the whole reason we stayed.
+    zh: 两晚都把湾留在窗外，而不是港口停车场。要高楼层、面向群岛的房间——清晨打在喀斯特上的光，就是我们住下来的全部理由。
+  photo: destinations/hotel-c.jpg
+culture:
+  en: Ha Long is limestone that walked into the sea and forgot to come back — a thousand-odd islands standing in water that never learned to settle. We stay two nights so the cruise is a full day, and the bay belongs to you at dusk.
+  zh: 下龙湾是石灰岩走到海里忘了回头——一千多座岛立在水上，那水从来没学过平静。我们住两晚，让游轮变成一整天，让黄昏时整个湾都让给你。
+slides:
+  - destinations/catba.jpg
+  - destinations/hotel-c.jpg
+  - destinations/hanoi.jpg

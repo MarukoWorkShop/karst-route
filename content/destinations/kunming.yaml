@@ -1,0 +1,38 @@
+# 目的地详情 · kunming
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Green Lake, then the airport
+  zh: 翠湖，然后机场
+photo: destinations/kunming.jpg
+experience:
+  title:
+    en: Green Lake and the old street
+    zh: 翠湖与老街
+  body:
+    en: "Green Lake is where Kunming goes to be idle: willows, arched bridges, and from November the red-beaked gulls that fly in from Siberia and stay until March, thousands of them wheeling over the water for a scrap of bread. A few streets away the old quarter keeps Victory Hall and the wartime lanes of Xicangpo, where much of the city's intellectual history is written into the brick."
+    zh: 翠湖是昆明用来发呆的地方：柳树、拱桥，还有十一月飞来、待到三月的红嘴鸥——成千上万只从西伯利亚来，在水面上盘旋，为一块面包屑翻跟头。几条街之外是老城区，胜利堂还在，西仓坡的战时小巷也在，这座城的文人往事就砌在砖里。
+cuisine:
+  title:
+    en: Across-the-bridge noodles
+    zh: 过桥米线
+  body:
+    en: "The story is better than the dish and the dish is still good: a scholar's wife carrying broth across a bridge, the oil on top keeping it hot. You assemble it yourself — raw slices cooked by the boiling broth, then greens and herbs, noodles last."
+    zh: 故事比菜有名，菜也不差：秀才的妻子端着汤过桥去送饭，面上那层油替她保温。吃法要自己动手——滚汤把生肉片烫熟，再下青菜、香草，米线最后放。
+hotel:
+  title:
+    en: Lake or airport, your call
+    zh: 湖边或机场，你定
+  body:
+    en: Last night in Yunnan. A room by Green Lake if your flight is tomorrow afternoon, near the airport if it leaves early — we will tell you honestly which one makes sense.
+    zh: 云南最后一晚。明下午的飞机就住翠湖边，清早的飞机就住机场附近——哪种更合理，我们会老实说。
+  photo: destinations/hotel-c.jpg
+culture:
+  en: Kunming is the spring city — year-round twenty degrees, willows on Green Lake, gulls from Siberia in November. Most trips end here as a flight home; we end here as a last walk, the city easy enough to still receive you.
+  zh: 昆明是春城——常年二十度上下，翠湖的柳，十一月有从西伯利亚来的红嘴鸥。多数行程在这里结束于一趟回家的航班；我们在这里结束于最后一走，城市松到还接得住你。
+slides:
+  - destinations/kunming.jpg
+  - destinations/hotel-c.jpg
+  - destinations/jianshui.jpg

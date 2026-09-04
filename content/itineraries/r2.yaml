@@ -1,5 +1,6 @@
 # 逐日行程 · r2
 # 每一天：城市、住宿、交通、餐饮、活动 bullets、主题 themes
+# blurb 为当日介绍段；体验/餐饮/住宿深度文案见 content/destinations/{placeId}.yaml
 # photos 只写 public 下的相对路径
 
 src: zh
@@ -221,6 +222,9 @@ days:
     themes:
       - villages
       - wild
+    blurb:
+      en: The second morning belongs to the cane sea — bicycles between the stalks, then a walk to Tianqin village where two strings carry a song older than the border line. No suitcase, no plan beyond the light.
+      zh: 第二天早晨交给蔗海——蔗丛间骑车，再步行去天琴寨，两根弦挑着一支比国界更老的歌。不拎箱子，除了光，没别的计划。
   - day: 9
     city:
       en: Nanning

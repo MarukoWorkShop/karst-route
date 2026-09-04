@@ -1,23 +1,17 @@
 import type { PlaceId, Tx } from "@/types";
 import { asset } from "@/lib/asset";
+import {
+  overlayPlaces,
+  overlayPlaceStories,
+  type Place,
+  type PlaceDetail,
+} from "@/content/destinations";
+
+export type { Place, PlaceDetail };
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
 
-export type PlaceDetail = {
-  title: Tx;
-  body: Tx;
-};
-
-export type Place = {
-  id: PlaceId;
-  tagline: Tx;
-  photo: string;
-  experience: PlaceDetail;
-  cuisine: PlaceDetail;
-  hotel: PlaceDetail & { photo: string };
-};
-
-export const places: Record<PlaceId, Place> = {
+const placesFallback: Record<PlaceId, Place> = {
   nanning: {
     id: "nanning",
     tagline: L("Garden city, before the border", "绿城，过关前夜"),
@@ -344,7 +338,9 @@ export const places: Record<PlaceId, Place> = {
   },
 };
 
-export const placeStories: Record<PlaceId, { culture: Tx; slides: string[] }> = {
+export const places = overlayPlaces(placesFallback);
+
+const placeStoriesFallback: Record<PlaceId, { culture: Tx; slides: string[] }> = {
   nanning: {
     culture: L(
       "Nanning is the south's quietest capital — green all year, sitting on the Yong River with Zhuang and Cantonese cooking on either side of the kitchen. Most travellers pass through; we use it as a soft first night by the river, slowing down before the long drive west.",
@@ -434,6 +430,8 @@ export const placeStories: Record<PlaceId, { culture: Tx; slides: string[] }> = 
     slides: [asset("/destinations/guantang.jpg"), asset("/destinations/hotel-d.jpg"), asset("/destinations/sapa.jpg")],
   },
 };
+
+export const placeStories = overlayPlaceStories(placeStoriesFallback);
 
 // 注：原 animationStops 已移除 —— 它从未被引用（死代码），
 // 且其硬编码坐标与 geoMap.project() 的结果不一致（过时数据）。
