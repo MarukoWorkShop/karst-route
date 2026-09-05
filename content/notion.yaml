@@ -15,3 +15,6 @@ databases:
   hero: "" # 首页轮播
   about: "" # 关于我们
   aboutCreds: "" # 关于我们 · 资质
+  pricing: "3d2d5dfd82c480b1b104c824f3c391ef" # 线路定价参数（模块化估算器，每线路一行）
+  pricingModules: "3d2d5dfd82c480018a2bcd3af06da966" # 成本模块明细（每模块一行）
+  pricingAnchors: "3d2d5dfd82c48028abb6e302442a793c" # 发布价锚点（校准用，不同步给客人看）

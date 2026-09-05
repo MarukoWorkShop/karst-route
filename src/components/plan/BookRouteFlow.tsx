@@ -16,6 +16,8 @@ import {
   type BriefDay,
 } from "@/lib/briefPdf";
 import { ItinDays } from "@/components/plan/ItinDays";
+import { PriceEstimate } from "@/components/plan/PriceEstimate";
+import { estimateParty, estSummaryLine } from "@/lib/estimate";
 import {
   Chip,
   ConciergeForm,
@@ -68,7 +70,8 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   const [dateMode, setDateMode] = useState<DateMode | "">("");
   const [dateValue, setDateValue] = useState("");
   const [dateText, setDateText] = useState("");
-  const [travelers, setTravelers] = useState(2);
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
   const [groupTypes, setGroupTypes] = useState<string[]>([]);
   const [addOns, setAddOns] = useState<string[]>([]);
   const [notes, setNotes] = useState("");
@@ -89,6 +92,8 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
 
   const days = routeDays(baseRoute);
   const autoEnd = dateValue && days ? endIso(dateValue, days) : "";
+  const partyN = adults + children;
+  const est = baseRoute ? estimateParty(baseRoute as RouteId, adults, children) : null;
 
   function fmtDate(iso: string) {
     if (!iso) return "";
@@ -127,18 +132,24 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   function briefRows() {
     const groups = labelsOf(groupTypes, GROUP_TYPES, locale);
     const extras = labelsOf(addOns, ADD_ONS, locale);
-    return [
+    const rows: { label: string; value: string }[] = [
       { label: t(copy.plan.rowRoute), value: routeLabel(false) },
       { label: t(copy.plan.rowDateMode), value: dateModeLabel() },
       { label: t(copy.plan.rowDates), value: dateDisplay() },
-      { label: t(copy.plan.rowPeople), value: `${travelers} ${t(copy.plan.peopleUnit)}` },
+      { label: t(copy.plan.rowPeople), value: `${partyN} ${t(copy.plan.peopleUnit)}` },
       { label: t(copy.plan.rowGroup), value: listOrDash(groups) },
       { label: t(copy.plan.rowAddons), value: extras.length ? extras.join(locale === "zh" ? "、" : ", ") : t(copy.plan.none) },
       { label: t(copy.plan.rowNotes), value: notes.trim() || t(copy.plan.none) },
       { label: t(copy.plan.rowTweak), value: tweak.trim() || t(copy.plan.none) },
+    ];
+    if (est) {
+      rows.push({ label: t(copy.plan.rowEstimate), value: estSummaryLine(est, t, locale) });
+    }
+    rows.push(
       { label: t(copy.plan.rowName), value: name.trim() || t(copy.plan.dash) },
       { label: t(copy.plan.rowContact), value: contact.trim() || t(copy.plan.dash) },
-    ];
+    );
+    return rows;
   }
 
   function startIso() {
@@ -209,7 +220,10 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
       path: "book",
       route: baseRoute || "",
       dates: dateDisplay(),
-      travelers: String(travelers),
+      travelers: `${partyN} ${t(copy.plan.peopleUnit)} (${adults} ${t(copy.plan.adults)} / ${children} ${t(copy.plan.children)})`,
+      adults: String(adults),
+      children: String(children),
+      estimate: est ? estSummaryLine(est, t, locale) : "",
       groupTypes: labelsOf(groupTypes, GROUP_TYPES, "en").join(", "),
       addOns: labelsOf(addOns, ADD_ONS, "en").join(", "),
       notes: notes.trim(),
@@ -227,7 +241,10 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
     const rows: [string, string, boolean?][] = [
       [t(copy.plan.rowRoute), routeLabel(true)],
       [t(copy.plan.rowDates), dateDisplay(), true],
-      [t(copy.plan.rowPeople), `${travelers} ${t(copy.plan.peopleUnit)}`],
+      [t(copy.plan.rowPeople), `${partyN} ${t(copy.plan.peopleUnit)}`],
+      ...(est
+        ? ([[t(copy.plan.rowEstimate), estSummaryLine(est, t, locale), true]] as [string, string, boolean][])
+        : []),
       [
         t(copy.plan.rowGroup),
         groups.length ? groups.join(locale === "zh" ? "、" : ", ") : t(copy.plan.dash),
@@ -446,19 +463,24 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
           </div>
 
           <div>
-            <FieldLabel>{t(copy.plan.travelersN).replace("{n}", String(travelers))}</FieldLabel>
-            <input
-              type="range"
-              min={1}
-              max={20}
-              value={travelers}
-              onChange={(e) => setTravelers(Number(e.target.value))}
-              className="range-forest mt-2 w-full"
-            />
-            <div className="mt-1 flex justify-between text-[11px] text-ink-soft">
-              <span>1</span>
-              <span>20+</span>
+            <FieldLabel>{t(copy.plan.travelersN).replace("{n}", String(partyN))}</FieldLabel>
+            <div className="mt-2 grid grid-cols-2 gap-3">
+              <StepCounter
+                label={t(copy.plan.adults)}
+                value={adults}
+                min={1}
+                max={14}
+                onChange={setAdults}
+              />
+              <StepCounter
+                label={t(copy.plan.children)}
+                value={children}
+                min={0}
+                max={10}
+                onChange={setChildren}
+              />
             </div>
+            <PriceEstimate route={baseRoute} adults={adults} children={children} />
           </div>
         </div>
       ) : null}
@@ -513,6 +535,53 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
           else setPhase("ready");
         }}
       />
+    </div>
+  );
+}
+
+function StepCounter({
+  label,
+  value,
+  min,
+  max,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  onChange: (v: number) => void;
+}) {
+  const btn =
+    "flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-line text-[16px] font-medium leading-none text-ink transition-colors";
+  return (
+    <div>
+      <span className="mb-1.5 block text-[11px] font-medium tracking-[0.04em] text-ink-soft">
+        {label}
+      </span>
+      <div className="flex items-center gap-1 rounded-lg border-[1.5px] border-line bg-surface px-1.5 py-1">
+        <button
+          type="button"
+          aria-label={`${label} −`}
+          disabled={value <= min}
+          onClick={() => onChange(value - 1)}
+          className={`${btn} disabled:cursor-not-allowed disabled:opacity-30`}
+        >
+          −
+        </button>
+        <span className="min-w-[2ch] flex-1 text-center text-[16px] font-semibold text-ink">
+          {value}
+        </span>
+        <button
+          type="button"
+          aria-label={`${label} +`}
+          disabled={value >= max}
+          onClick={() => onChange(value + 1)}
+          className={`${btn} disabled:cursor-not-allowed disabled:opacity-30`}
+        >
+          ＋
+        </button>
+      </div>
     </div>
   );
 }

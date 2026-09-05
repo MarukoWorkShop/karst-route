@@ -518,6 +518,182 @@ async function main() {
     }
   }
 
+  // --- 定价（模块化估算器）：参数 / 成本模块 / 报价锚点 → content/pricing.yaml ---
+  if (dbs.pricing || dbs.pricingModules || dbs.pricingAnchors) {
+    const rel = "content/pricing.yaml";
+    // 写回时保持固定顺序，避免被 Notion 的返回顺序打乱
+    const MODULE_ORDER = ["stay", "tickets", "dining", "localTransport", "crossBorder", "insurance", "welcome"];
+    /** 中文列名优先，兼容旧英文列名 */
+    const COL = {
+      id: ["线路", "id"],
+      status: ["估算开关", "status"],
+      source: ["数据口径说明", "source"],
+      bandMax: (i) => [`车档${i}·人数上限`, `band${i}Max`],
+      bandPrice: (i) => [`车档${i}·整车包价(元)`, `band${i}Price`],
+      leader: ["领队成本(元/团)", "leader"],
+      ops: ["运营税费(元/团)", "ops"],
+      reserve: ["储备金(元/团)", "reserve"],
+      margin: ["加成率(如0.2=加20%)", "margin"],
+      roundBase: ["报价取整基数(元)", "roundBase"],
+      route: ["线路", "route", "路线", "id"],
+      moduleId: ["模块代号", "moduleId", "模块id"],
+      nameZh: ["模块名称·中文", "name_zh"],
+      nameEn: ["模块名称·英文", "name_en"],
+      basis: ["口径备注(不参与计算)", "basis"],
+      adult: ["成人人均成本(元)", "成人发布价(元)", "adult"],
+      child: ["儿童人均成本(元)", "儿童发布价(元)", "child"],
+      n: ["人数档(如2/4/6)", "n"],
+      anchorAdult: ["成人发布价(元)", "adult"],
+      anchorChild: ["儿童发布价(元)", "child"],
+    };
+    const firstText = (page, names) => {
+      if (!page) return "";
+      for (const n of names) {
+        const v = text(page, n).trim();
+        if (v) return v;
+      }
+      return "";
+    };
+    const firstNum = (page, names, dflt = 0) => {
+      if (!page) return dflt;
+      for (const n of names) {
+        const v = prop(page, n);
+        if (v === "" || v == null) continue;
+        const num = Number(v);
+        if (Number.isFinite(num)) return num;
+      }
+      return dflt;
+    };
+    /** 选择项可能是「stay·住宿」或中文开关文案 → 归一成代码 */
+    const normStatus = (raw) => {
+      const s = String(raw || "").trim();
+      if (["none", "demo", "confirmed"].includes(s)) return s;
+      if (/^关闭/.test(s) || s.includes("不显示")) return "none";
+      if (/^演示/.test(s) || s.includes("参考")) return "demo";
+      if (/^正式/.test(s) || s.includes("对外")) return "confirmed";
+      return "";
+    };
+    const normModuleId = (raw) => {
+      const s = String(raw || "").trim();
+      if (MODULE_ORDER.includes(s)) return s;
+      const head = s.split(/[·|｜]/)[0]?.trim();
+      if (MODULE_ORDER.includes(head)) return head;
+      const zhMap = {
+        住宿: "stay",
+        门票: "tickets",
+        门票体验: "tickets",
+        餐食: "dining",
+        境内交通: "localTransport",
+        跨境交通: "crossBorder",
+        保险: "insurance",
+        伴手礼: "welcome",
+        伴手礼服务包: "welcome",
+      };
+      for (const [zh, id] of Object.entries(zhMap)) {
+        if (s.includes(zh)) return id;
+      }
+      return head || s;
+    };
+    const normBasis = (raw) => {
+      const s = String(raw || "").trim();
+      if (["per_person", "per_room_night", "per_group_per_head"].includes(s)) return s;
+      if (s.includes("间夜")) return "per_room_night";
+      if (s.includes("团费")) return "per_group_per_head";
+      if (s.includes("按人") || s === "按人") return "per_person";
+      return "per_person";
+    };
+    const paramPages = dbs.pricing ? (await queryAll(token, dbs.pricing)).filter(published) : [];
+    const modulePages = dbs.pricingModules
+      ? (await queryAll(token, dbs.pricingModules)).filter(published)
+      : [];
+    const anchorPages = dbs.pricingAnchors
+      ? (await queryAll(token, dbs.pricingAnchors)).filter(published)
+      : [];
+    const all = [...paramPages, ...modulePages, ...anchorPages];
+    if (all.length && takeNotion(all, rel)) {
+      const prev = existingYaml(rel);
+      const prevRoutes = prev.routes && typeof prev.routes === "object" ? prev.routes : {};
+      const routeOf = (page) => {
+        const r = firstText(page, COL.route);
+        return /^r[123]$/.test(r) ? r : "";
+      };
+      const srcLang = firstText(paramPages[0], ["src"]) || prev.src || "zh";
+      const routesOut = {};
+      for (const id of ["r1", "r2", "r3"]) {
+        const p =
+          paramPages.find((x) => firstText(x, COL.id) === id || routeOf(x) === id) ||
+          paramPages.find((x) => routeOf(x) === id);
+        const prevRow = prevRoutes[id] ?? {};
+        const rawStatus = firstText(p, COL.status);
+        const status = normStatus(rawStatus) || prevRow.status || "none";
+        const bands = [];
+        for (const i of [1, 2, 3, 4]) {
+          const maxPax = firstNum(p, COL.bandMax(i), 0);
+          const price = firstNum(p, COL.bandPrice(i), 0);
+          if (maxPax > 0) bands.push({ maxPax, price });
+        }
+        bands.sort((a, b) => a.maxPax - b.maxPax);
+        const mods = modulePages
+          .filter((x) => routeOf(x) === id)
+          .map((x) => ({
+            id: normModuleId(firstText(x, COL.moduleId)),
+            name: pair(firstText(x, COL.nameZh), firstText(x, COL.nameEn)),
+            basis: normBasis(firstText(x, COL.basis)),
+            adult: firstNum(x, ["成人人均成本(元)", "adult"], 0),
+            child: firstNum(x, ["儿童人均成本(元)", "child"], 0),
+          }))
+          .filter((m) => m.id)
+          .sort((a, b) => {
+            const ia = MODULE_ORDER.indexOf(a.id);
+            const ib = MODULE_ORDER.indexOf(b.id);
+            return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+          });
+        const anchors = anchorPages
+          .filter((x) => routeOf(x) === id)
+          .map((x) => ({
+            n: firstNum(x, COL.n, 0),
+            adult: firstNum(x, COL.anchorAdult, 0),
+            child: firstNum(x, COL.anchorChild, 0),
+          }))
+          .filter((a) => a.n > 0)
+          .sort((a, b) => a.n - b.n);
+        routesOut[id] = {
+          status,
+          source: firstText(p, COL.source) || prevRow.source || "",
+          modules: mods.length ? mods : prevRow.modules || [],
+          vehicleBands: bands.length ? bands : prevRow.vehicleBands || [],
+          teamFixed: {
+            leader: firstNum(p, COL.leader, Number(prevRow.teamFixed?.leader) || 0),
+            ops: firstNum(p, COL.ops, Number(prevRow.teamFixed?.ops) || 0),
+            reserve: firstNum(p, COL.reserve, Number(prevRow.teamFixed?.reserve) || 0),
+          },
+          margin: firstNum(p, COL.margin, Number(prevRow.margin) || 0),
+          roundBase: firstNum(p, COL.roundBase, Number(prevRow.roundBase) || 10),
+          anchors: anchors.length ? anchors : prevRow.anchors || [],
+        };
+      }
+      writeYaml(
+        rel,
+        `# 线路定价 · 模块化估算器
+# 这是「即时估算」的唯一真源：主理人在 Notion 改 → npm run content:notion 同步回这里 → 网站生效。
+# 也可以直接改本文件；两边谁的时间戳新，谁生效。
+#
+# 报价公式（与 pricing-modules-template-v1.xlsx 一致）：
+#   n          = 成人数 + 儿童数（儿童占车位，参与车辆 / 领队分摊）
+#   成人人均(n) = [ 成人按人小计 + (车辆档费(n) + 团队固定 T) ÷ n ] × (1 + margin) → 按 roundBase 取整
+#   儿童人均(n) = [ 儿童按人小计 + (车辆档费(n) + 团队固定 T) ÷ n ] × (1 + margin) → 按 roundBase 取整
+#
+# status: none = 网站不显示估算（按团队询价）/ demo = 演示值 / confirmed = 正式对外
+# modules 的 adult / child = 该模块折算后的人均金额（元），不是单价。
+#   例：住宿 6 晚 × ¥1,000/间 ÷ 2 人 = 成人 3000、儿童 0（不占床）
+#   basis 只是口径备注（per_person / per_room_night / per_group_per_head），不参与计算
+# anchors 为校准锚点（已知发布价），不展示给客人`,
+        { src: srcLang, routes: routesOut },
+      );
+      mark();
+    }
+  }
+
   // --- 评价 ---
   if (dbs.reviews) {
     const routesPages = dbs.routes ? await queryAll(token, dbs.routes) : [];

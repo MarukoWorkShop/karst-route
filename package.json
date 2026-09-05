@@ -10,6 +10,8 @@
     "content:lang": "node scripts/content-lang-report.mjs",
     "content:csv": "node scripts/export-notion-csv.mjs",
     "content:notion": "node scripts/sync-notion.mjs",
+    "content:notion:init": "node scripts/notion-create-pricing.mjs",
+    "content:notion:rename-pricing": "node scripts/notion-rename-pricing-cols.mjs",
     "content:keepTx": "node scripts/test-keepTx.mjs",
     "preview": "vite preview"
   },

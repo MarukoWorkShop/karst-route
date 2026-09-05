@@ -482,4 +482,123 @@ writeCsv(
   guideRows,
 );
 
+// --- 定价（模块化估算器）---
+// 源：content/pricing.yaml。三张表：参数（每线路一行）/ 成本模块（每模块一行）/ 报价锚点（校准用）
+let pricing = { src: "zh", routes: {} };
+try {
+  pricing = loadYaml("content/pricing.yaml") ?? pricing;
+} catch {
+  /* optional */
+}
+const proutes = pricing.routes && typeof pricing.routes === "object" ? pricing.routes : {};
+
+const MODULE_TEMPLATE = [
+  { id: "stay", zh: "住宿（双人一间均摊）", en: "Stay (twin share, per head)", basis: "per_room_night" },
+  { id: "tickets", zh: "门票与体验", en: "Tickets & experiences", basis: "per_person" },
+  { id: "dining", zh: "餐食", en: "Dining", basis: "per_person" },
+  { id: "localTransport", zh: "境内交通（接驳 / 船票 / 用车）", en: "Local transport", basis: "per_person" },
+  { id: "crossBorder", zh: "跨境交通", en: "Cross-border transport", basis: "per_person" },
+  { id: "insurance", zh: "保险", en: "Insurance", basis: "per_person" },
+  { id: "welcome", zh: "伴手礼与服务包", en: "Welcome kit & service pack", basis: "per_person" },
+];
+const ANCHOR_TEMPLATE = [2, 4, 6];
+
+const bandAt = (r, i) => (Array.isArray(r.vehicleBands) && r.vehicleBands[i] ? r.vehicleBands[i] : {});
+const paramRows = ["r1", "r2", "r3"].map((id) => {
+  const r = proutes[id] ?? {};
+  const tf = r.teamFixed ?? {};
+  const b = [0, 1, 2, 3].map((i) => bandAt(r, i));
+  return {
+    标题: `${id} · 定价参数`,
+    id,
+    status: r.status ?? "none",
+    source: r.source ?? "",
+    band1Max: b[0].maxPax ?? "",
+    band1Price: b[0].price ?? "",
+    band2Max: b[1].maxPax ?? "",
+    band2Price: b[1].price ?? "",
+    band3Max: b[2].maxPax ?? "",
+    band3Price: b[2].price ?? "",
+    band4Max: b[3].maxPax ?? "",
+    band4Price: b[3].price ?? "",
+    leader: tf.leader ?? "",
+    ops: tf.ops ?? "",
+    reserve: tf.reserve ?? "",
+    margin: r.margin ?? "",
+    roundBase: r.roundBase ?? "",
+    note: r.note ?? "",
+  };
+});
+writeCsv(
+  "10-定价参数.csv",
+  [
+    "标题",
+    "id",
+    "status",
+    "source",
+    "band1Max",
+    "band1Price",
+    "band2Max",
+    "band2Price",
+    "band3Max",
+    "band3Price",
+    "band4Max",
+    "band4Price",
+    "leader",
+    "ops",
+    "reserve",
+    "margin",
+    "roundBase",
+    "note",
+  ],
+  paramRows,
+);
+
+const moduleRows = [];
+for (const id of ["r1", "r2", "r3"]) {
+  const r = proutes[id] ?? {};
+  const mods =
+    Array.isArray(r.modules) && r.modules.length
+      ? r.modules
+      : MODULE_TEMPLATE.map((m) => ({ id: m.id, name_zh: m.zh, name_en: m.en, basis: m.basis }));
+  for (const m of mods) {
+    moduleRows.push({
+      标题: `${id} · ${m.name_zh || m.id}`,
+      route: id,
+      moduleId: m.id ?? "",
+      name_zh: m.name_zh ?? "",
+      name_en: m.name_en ?? "",
+      basis: m.basis ?? "per_person",
+      adult: m.adult ?? "",
+      child: m.child ?? "",
+      note: m.note ?? "",
+    });
+  }
+}
+writeCsv(
+  "11-成本模块.csv",
+  ["标题", "route", "moduleId", "name_zh", "name_en", "basis", "adult", "child", "note"],
+  moduleRows,
+);
+
+const anchorRows = [];
+for (const id of ["r1", "r2", "r3"]) {
+  const r = proutes[id] ?? {};
+  const list =
+    Array.isArray(r.anchors) && r.anchors.length
+      ? r.anchors
+      : ANCHOR_TEMPLATE.map((n) => ({ n }));
+  for (const a of list) {
+    anchorRows.push({
+      标题: `${id} · ${a.n} 人`,
+      route: id,
+      n: a.n ?? "",
+      adult: a.adult ?? "",
+      child: a.child ?? "",
+      note: a.note ?? "",
+    });
+  }
+}
+writeCsv("12-报价锚点.csv", ["标题", "route", "n", "adult", "child", "note"], anchorRows);
+
 console.log(`\nCSV 已放到 content/notion-import/ 。导入步骤见该目录 README。`);
