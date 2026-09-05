@@ -148,13 +148,13 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
     return (
       <div>
         <p className="mb-5 text-[13px] leading-5 text-ink-soft">{t(copy.plan.designSubmitLead)}</p>
-        <div className="mb-5 overflow-hidden rounded-xl border border-line bg-surface px-4 py-1">
+        <div className="mb-5 overflow-hidden rounded-xl border border-cta/20 bg-paper/50 px-4 py-1">
           {briefRows()
             .filter((r) => r.label !== t(copy.plan.rowName) && r.label !== t(copy.plan.rowContact))
             .map((r) => (
               <div key={r.label} className="flex justify-between gap-3 border-t border-line py-2.5 first:border-t-0">
                 <span className="shrink-0 text-[12px] text-ink-soft">{r.label}</span>
-                <span className="text-right text-[13px] font-medium leading-5 text-ink">{r.value}</span>
+                <span className="text-right text-[13px] font-semibold leading-5 text-ink">{r.value}</span>
               </div>
             ))}
         </div>
@@ -177,7 +177,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
           <button
             type="button"
             onClick={() => setPhase("ask")}
-            className="mt-4 h-12 w-full rounded-lg border-[1.5px] border-line text-[15px] font-medium text-ink"
+            className="mt-4 h-12 w-full rounded-lg border-[1.5px] border-line text-[15px] font-semibold text-ink"
           >
             {t(copy.plan.back)}
           </button>
@@ -219,7 +219,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
                   setDuration(Math.min(Math.max(r.days, range.min), range.max));
                 }}
               >
-                <div className="mb-[3px] font-medium">{t(r.title)}</div>
+                <div className="mb-[3px] font-semibold">{t(r.title)}</div>
                 <div className={`text-[12px] ${on ? "text-cta" : "text-ink-soft"}`}>{t(r.sub)}</div>
               </OptionBtn>
             );
@@ -265,7 +265,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
             ))}
           </div>
           {extraDests.length > 0 ? (
-            <div className="mt-3.5 rounded-lg bg-sage px-3.5 py-2.5 text-[12px] text-ink-soft">{extraNote}</div>
+            <div className="mt-3.5 rounded-lg bg-paper/60 px-3.5 py-2.5 text-[12px] text-ink-soft">{extraNote}</div>
           ) : null}
         </div>
       ) : null}
@@ -276,7 +276,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
             const on = hotelTier === tier.id;
             return (
               <OptionBtn key={tier.id} active={on} onClick={() => setHotelTier(tier.id)}>
-                <div className="mb-0.5 font-medium">{t(tier.label)}</div>
+                <div className="mb-0.5 font-semibold">{t(tier.label)}</div>
                 <div className={`text-[12px] ${on ? "text-cta" : "text-ink-soft"}`}>{t(tier.sub)}</div>
               </OptionBtn>
             );
@@ -322,7 +322,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
               value={notes}
               placeholder={t(copy.plan.moreIdeasPh)}
               onChange={(e) => setNotes(e.target.value)}
-              className="mt-1.5 w-full resize-y rounded-lg border-[1.5px] border-line bg-surface px-3.5 py-3 text-[15px] leading-[1.6] text-ink placeholder:text-ink-soft/70 outline-none"
+              className="mt-1.5 w-full resize-y rounded-lg border-[1.5px] border-line/90 bg-paper/70 px-3.5 py-3 text-[15px] leading-[1.6] text-ink placeholder:text-ink-soft/70 outline-none"
             />
           </label>
         </div>

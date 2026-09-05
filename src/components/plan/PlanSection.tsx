@@ -14,32 +14,33 @@ export function PlanSection({
   route: RouteId;
 }) {
   const { t } = useLocale();
+  const boutique = tab === "boutique";
 
   return (
     <section id="plan" className="scroll-mt-24 border-y border-cta/20 bg-bone py-14 md:py-20">
       <div className="page-col">
-        <p className="text-[13px] font-medium tracking-[0.16em] text-cta uppercase">
+        <p className="text-[13px] font-semibold tracking-[0.16em] text-cta uppercase">
           {t(copy.plan.kicker)}
         </p>
-        <h2 className="mt-2 max-w-[720px] text-[26px] leading-tight font-medium text-balance text-ink md:text-[34px]">
+        <h2 className="mt-2 max-w-[720px] text-[26px] leading-tight font-semibold text-balance text-ink md:text-[34px]">
           {t(copy.plan.h2)}
         </h2>
         <p className="mt-3 max-w-[640px] text-[14px] leading-[22px] text-ink-soft">
           {t(copy.plan.h2Sub)}
         </p>
 
-        <div className="mx-auto mt-8 max-w-[680px] rounded-2xl border border-line bg-paper p-5 shadow-[0_10px_48px_rgba(47,83,68,0.1)] md:mt-10 md:p-8">
-          <div
-            role="tablist"
-            className="mb-8 flex overflow-hidden rounded-[10px] border-[1.5px] border-line bg-surface"
-          >
+        <div className="mt-8 w-full md:mt-10">
+          {/* 文件夹页签：与下方面板左右齐平，选中页签叠在面板顶边上消缝 */}
+          <div role="tablist" className="relative z-[1] flex items-end gap-1.5">
             <button
               type="button"
               role="tab"
-              aria-selected={tab === "boutique"}
+              aria-selected={boutique}
               onClick={() => onTab("boutique")}
-              className={`inline-flex min-h-12 flex-1 items-center justify-center px-2 py-2 text-center text-[12.5px] leading-[1.3] font-medium md:text-[14px] ${
-                tab === "boutique" ? "bg-cta text-paper" : "bg-transparent text-ink-soft"
+              className={`relative inline-flex min-h-[48px] flex-1 items-center justify-center rounded-t-[12px] border px-3 py-2.5 text-center text-[12.5px] leading-[1.3] font-semibold transition-colors md:min-h-[52px] md:px-5 md:text-[14px] ${
+                boutique
+                  ? "z-[2] -mb-px border-gold/40 border-b-paper bg-paper text-cta"
+                  : "z-[0] border-line/70 bg-bone/80 text-ink-soft hover:bg-bone-2 hover:text-ink"
               }`}
             >
               {t(copy.plan.tabBook)}
@@ -47,21 +48,32 @@ export function PlanSection({
             <button
               type="button"
               role="tab"
-              aria-selected={tab === "custom"}
+              aria-selected={!boutique}
               onClick={() => onTab("custom")}
-              className={`inline-flex min-h-12 flex-1 items-center justify-center px-2 py-2 text-center text-[12.5px] leading-[1.3] font-medium md:text-[14px] ${
-                tab === "custom" ? "bg-cta text-paper" : "bg-transparent text-ink-soft"
+              className={`relative inline-flex min-h-[48px] flex-1 items-center justify-center rounded-t-[12px] border-2 px-3 py-2.5 text-center text-[12.5px] leading-[1.3] font-semibold transition-colors md:min-h-[52px] md:px-5 md:text-[14px] ${
+                !boutique
+                  ? "z-[2] -mb-[2px] border-cta border-b-paper bg-cta text-paper"
+                  : "z-[0] border-2 border-line/70 bg-bone/80 text-ink-soft hover:bg-bone-2 hover:text-ink"
               }`}
             >
               {t(copy.plan.tabDesign)}
             </button>
           </div>
 
-          <div className={tab === "boutique" ? "" : "hidden"}>
-            <BookRouteFlow route={route} />
-          </div>
-          <div className={tab === "custom" ? "" : "hidden"}>
-            <DesignRouteFlow route={route} />
+          {/* 文件夹本体：定制与预订同 paper 底，仅用 2px 墨绿边区分 */}
+          <div
+            className={`relative rounded-b-2xl bg-paper p-5 md:p-8 shadow-[0_10px_36px_color-mix(in_srgb,var(--color-ink)_6%,transparent)] ${
+              boutique
+                ? "rounded-tr-2xl border border-gold/40"
+                : "rounded-tl-2xl border-2 border-cta"
+            }`}
+          >
+            <div className={boutique ? "" : "hidden"}>
+              <BookRouteFlow route={route} />
+            </div>
+            <div className={boutique ? "hidden" : ""}>
+              <DesignRouteFlow route={route} />
+            </div>
           </div>
         </div>
       </div>

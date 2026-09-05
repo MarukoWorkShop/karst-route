@@ -157,6 +157,8 @@ export const copy = {
     reviews: { en: "{n} reviews", zh: "{n} 条评价" },
     expandOpen: { en: "Expand route card", zh: "展开线路卡片" },
     expandClose: { en: "Close", zh: "关闭" },
+    featureMore: { en: "Show full description", zh: "展开全部介绍" },
+    featureLess: { en: "Show less", zh: "收起介绍" },
     videoSoon: {
       en: "Drop intro.mp4 in this route folder to show the video",
       zh: "将 intro.mp4 放入本线路文件夹即可显示视频",
@@ -337,8 +339,8 @@ export const copy = {
       zh: "如：2025年11月下旬，或春节后……",
     },
     dateBrowseNote: {
-      en: "No problem — we'll send you the route info and you can reach us when you're ready.",
-      zh: "没关系，我们先把路线信息发给您，您确定时间后再联系我们。",
+      en: "No rush — we'll share the route details first. Note that pricing and itineraries are seasonal; not every departure window is available year-round.",
+      zh: "没关系，我们先把路线信息发给您。报价与行程受季节影响，无法保证全年各时段均可出发。",
     },
     travelersN: { en: "Travellers: {n} people", zh: "出行人数：{n} 人" },
     groupHint: {

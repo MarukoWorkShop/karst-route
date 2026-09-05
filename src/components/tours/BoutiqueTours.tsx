@@ -9,6 +9,7 @@ import { reviewsForRoute } from "@/data/reviews";
 import { routeMedia } from "@/data/routeMedia";
 import { routeContent, type RouteContent } from "@/content/routes";
 import {
+  IconChevron,
   IconClock,
   IconClose,
   IconLanding,
@@ -192,14 +193,14 @@ function RouteCard({
         ) : null}
       </div>
 
-      <div className="flex-1 border-t border-line bg-paper px-4 py-4">
-        <FeatureParagraphs
-          text={t(content.feature)}
-          className="text-[12.5px] leading-[22px] text-ink-soft"
-        />
+      <div className="border-t border-line bg-paper px-4 py-4">
+        <FeatureParagraphs text={t(content.feature)} collapsible />
       </div>
 
-      <div className="mt-auto border-t border-line px-4 pt-3.5 pb-3.5">
+      {/* 等高卡片多余高度落在这里，避免介绍区被拉开、展开按钮悬空 */}
+      <div className="min-h-0 flex-1 bg-paper" aria-hidden />
+
+      <div className="border-t border-line px-4 pt-3.5 pb-3.5">
         <p className="mb-2 text-[10px] font-semibold tracking-[0.1em] text-cta uppercase">
           {t(copy.tours.included)}
         </p>
@@ -351,10 +352,7 @@ function RouteExpandModal({
           </div>
 
           <div className="mt-4">
-            <FeatureParagraphs
-              text={t(content.feature)}
-              className="text-[13px] leading-[22px] text-ink-soft"
-            />
+            <FeatureParagraphs text={t(content.feature)} />
           </div>
 
           <div className="mt-4 flex flex-wrap gap-1.5">
@@ -397,23 +395,52 @@ function RouteExpandModal({
 
 function FeatureParagraphs({
   text,
-  className = "",
+  collapsible = false,
 }: {
   text: string;
-  className?: string;
+  /** 首页列表卡：默认只显示第一段，点小图标展开全文 */
+  collapsible?: boolean;
 }) {
+  const { t } = useLocale();
+  const [open, setOpen] = useState(false);
+  // 只按空行分段；段内软换行收成空格（中英文同一套）
   const paras = text
-    .split(/\n+/)
-    .map((s) => s.trim())
+    .split(/\n\s*\n/)
+    .map((s) => s.replace(/\s*\n\s*/g, " ").replace(/\s+/g, " ").trim())
     .filter(Boolean);
   if (paras.length === 0) return null;
+
+  const canToggle = collapsible && paras.length > 1;
+  const shown = canToggle && !open ? paras.slice(0, 1) : paras;
+
   return (
-    <div className="flex flex-col gap-[1.75em]">
-      {paras.map((para, i) => (
-        <p key={i} className={className}>
-          {para}
-        </p>
-      ))}
+    <div className="border-l-2 border-gold pl-3">
+      <div className="flex flex-col gap-4">
+        {shown.map((para, i) => {
+          const isLast = i === shown.length - 1;
+          return (
+            <p key={i} className="text-[14px] leading-6 text-ink">
+              {para}
+              {canToggle && isLast ? (
+                <button
+                  type="button"
+                  aria-expanded={open}
+                  aria-label={t(open ? copy.tours.featureLess : copy.tours.featureMore)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setOpen((v) => !v);
+                  }}
+                  className="relative z-[2] ml-1 inline-flex h-4 w-4 translate-y-[-1px] items-center justify-center align-middle rounded-full text-ink-soft transition-colors hover:bg-cta/8 hover:text-cta"
+                >
+                  <IconChevron
+                    className={`h-3 w-3 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+                  />
+                </button>
+              ) : null}
+            </p>
+          );
+        })}
+      </div>
     </div>
   );
 }

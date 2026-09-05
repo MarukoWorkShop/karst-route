@@ -260,8 +260,8 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
 
     return (
       <div>
-        <div className="mb-1 rounded-xl border border-line bg-surface px-5 pt-5 pb-1">
-          <div className="mb-2.5 text-[13px] font-medium tracking-[0.06em] text-gold">
+        <div className="mb-1 rounded-xl border border-line/80 bg-bone/30 px-5 pt-5 pb-1">
+          <div className="mb-2.5 text-[13px] font-semibold tracking-[0.06em] text-gold">
             {t(copy.plan.summary)}
           </div>
           {rows.map(([k, v, wrap]) => (
@@ -272,7 +272,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
               }`}
             >
               <span className={`shrink-0 text-[12px] text-ink-soft ${wrap ? "pt-px" : ""}`}>{k}</span>
-              <span className="text-right text-[13px] font-medium leading-5 text-ink">{v}</span>
+              <span className="text-right text-[13px] font-semibold leading-5 text-ink">{v}</span>
             </div>
           ))}
           <div className="h-3" />
@@ -283,8 +283,8 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
         </div>
 
         <div className="mt-4 overflow-hidden rounded-[10px] border border-line">
-          <div className="bg-surface px-4 py-3.5">
-            <p className="text-[14px] font-medium leading-[1.55] text-ink">{t(copy.plan.tweakLabel)}</p>
+          <div className="bg-bone/25 px-4 py-3.5">
+            <p className="text-[14px] font-semibold leading-[1.55] text-ink">{t(copy.plan.tweakLabel)}</p>
           </div>
           <div className="flex flex-col gap-2 p-4">
             <textarea
@@ -292,7 +292,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
               value={tweak}
               placeholder={t(copy.plan.tweakPh)}
               onChange={(e) => setTweak(e.target.value)}
-              className="w-full resize-y rounded-lg border-[1.5px] border-line bg-surface px-3.5 py-3 text-[15px] leading-[1.6] text-ink placeholder:text-ink-soft/70 outline-none"
+              className="w-full resize-y rounded-lg border-[1.5px] border-line/90 bg-paper/70 px-3.5 py-3 text-[15px] leading-[1.6] text-ink placeholder:text-ink-soft/70 outline-none"
             />
             <p className="text-[12px] leading-5 text-ink-soft">{t(copy.plan.tweakHint)}</p>
           </div>
@@ -303,7 +303,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
             type="button"
             disabled={pdfBusy}
             onClick={() => void downloadPdf()}
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-[10px] border-[1.5px] border-cta bg-transparent text-[15px] font-medium text-cta disabled:opacity-60"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-[10px] border-[1.5px] border-cta bg-transparent text-[15px] font-semibold text-cta disabled:opacity-60"
           >
             <IconDownload />
             {pdfBusy
@@ -345,141 +345,152 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
       <StepKicker>{copy.plan.bookSteps[step] ? t(copy.plan.bookSteps[step]) : null}</StepKicker>
 
       {step === 0 ? (
-        <div className="flex flex-col gap-6">
-          <div>
-            <FieldLabel>{t(copy.plan.chooseRoute)}</FieldLabel>
-            <div className="mt-2 flex flex-col gap-2.5">
-              {(
-                [
-                  { val: "r1" as const, title: copy.plan.r1Title, sub: copy.plan.r1Sub },
-                  { val: "r2" as const, title: copy.plan.r2Title, sub: copy.plan.r2Sub },
-                  { val: "r3" as const, title: copy.plan.r3Title, sub: copy.plan.r3Sub },
-                ] as const
-              ).map((r) => {
-                const on = baseRoute === r.val;
-                return (
-                  <OptionBtn key={r.val} active={on} onClick={() => setBaseRoute(r.val)} className="flex items-center gap-3">
-                    <RadioDot on={on} />
-                    <span>
-                      <span className="block text-[14px] font-medium">{t(r.title)}</span>
-                      <span className={`mt-px block text-[12px] ${on ? "text-cta" : "text-ink-soft"}`}>
-                        {t(r.sub)}
+        <div className="grid items-start gap-6 md:grid-cols-[minmax(0,1.15fr)_minmax(280px,0.95fr)] md:gap-8">
+          {/* 左：路线 / 人数 / 时间 */}
+          <div className="flex min-w-0 flex-col gap-6">
+            <div>
+              <FieldLabel>{t(copy.plan.chooseRoute)}</FieldLabel>
+              <div className="mt-2 flex flex-col gap-2.5">
+                {(
+                  [
+                    { val: "r1" as const, title: copy.plan.r1Title, sub: copy.plan.r1Sub },
+                    { val: "r2" as const, title: copy.plan.r2Title, sub: copy.plan.r2Sub },
+                    { val: "r3" as const, title: copy.plan.r3Title, sub: copy.plan.r3Sub },
+                  ] as const
+                ).map((r) => {
+                  const on = baseRoute === r.val;
+                  return (
+                    <OptionBtn key={r.val} active={on} onClick={() => setBaseRoute(r.val)} className="flex items-center gap-3">
+                      <RadioDot on={on} />
+                      <span>
+                        <span className="block text-[14px] font-semibold">{t(r.title)}</span>
+                        <span className={`mt-px block text-[12px] ${on ? "text-cta" : "text-ink-soft"}`}>
+                          {t(r.sub)}
+                        </span>
                       </span>
-                    </span>
-                  </OptionBtn>
-                );
-              })}
+                    </OptionBtn>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
-          <div>
-            <FieldLabel>{t(copy.plan.travelDates)}</FieldLabel>
-            <div className={`mt-2 flex gap-2 ${dateMode ? "mb-3.5" : ""}`}>
-              {(
-                [
-                  ["picker", copy.plan.datePicker],
-                  ["text", copy.plan.dateText],
-                  ["undecided", copy.plan.dateBrowse],
-                ] as const
-              ).map(([mode, label]) => {
-                const on = dateMode === mode;
-                return (
-                  <button
-                    key={mode}
-                    type="button"
-                    onClick={() => {
-                      if (dateMode === mode) {
-                        setDateMode("");
-                        return;
-                      }
-                      if (mode === "picker") {
-                        flushSync(() => setDateMode("picker"));
-                        const el = dateInputRef.current;
-                        if (!el) return;
-                        el.focus();
-                        try {
-                          el.showPicker?.();
-                        } catch {
-                          /* showPicker needs a user gesture; focus still lands on the field */
+            <div>
+              <FieldLabel>{t(copy.plan.travelersN).replace("{n}", String(partyN))}</FieldLabel>
+              <div className="mt-2 grid grid-cols-2 gap-3">
+                <StepCounter
+                  label={t(copy.plan.adults)}
+                  icon="adult"
+                  value={adults}
+                  min={1}
+                  max={14}
+                  onChange={setAdults}
+                />
+                <StepCounter
+                  label={t(copy.plan.children)}
+                  icon="child"
+                  value={children}
+                  min={0}
+                  max={10}
+                  onChange={setChildren}
+                />
+              </div>
+            </div>
+
+            <div>
+              <FieldLabel>{t(copy.plan.travelDates)}</FieldLabel>
+              <div className={`mt-2 flex gap-2 ${dateMode ? "mb-3.5" : ""}`}>
+                {(
+                  [
+                    ["picker", copy.plan.datePicker],
+                    ["text", copy.plan.dateText],
+                    ["undecided", copy.plan.dateBrowse],
+                  ] as const
+                ).map(([mode, label]) => {
+                  const on = dateMode === mode;
+                  return (
+                    <button
+                      key={mode}
+                      type="button"
+                      onClick={() => {
+                        if (dateMode === mode) {
+                          setDateMode("");
+                          return;
                         }
-                        return;
-                      }
-                      setDateMode(mode);
-                    }}
-                    className={`flex-1 rounded-lg border-[1.5px] px-1.5 py-[9px] text-center text-[12px] font-medium ${
-                      on ? "border-cta bg-cta/8 text-cta" : "border-line bg-surface text-ink"
-                    }`}
-                  >
-                    {t(label)}
-                  </button>
-                );
-              })}
+                        if (mode === "picker") {
+                          flushSync(() => setDateMode("picker"));
+                          const el = dateInputRef.current;
+                          if (!el) return;
+                          el.focus();
+                          try {
+                            el.showPicker?.();
+                          } catch {
+                            /* showPicker needs a user gesture; focus still lands on the field */
+                          }
+                          return;
+                        }
+                        setDateMode(mode);
+                      }}
+                      className={`flex-1 rounded-lg border-[1.5px] px-1.5 py-[9px] text-center text-[12px] font-semibold ${
+                        on
+                          ? "border-cta bg-cta/10 text-cta"
+                          : "border-line/90 bg-transparent text-ink hover:border-cta/35"
+                      }`}
+                    >
+                      {t(label)}
+                    </button>
+                  );
+                })}
+              </div>
+              {dateMode === "picker" ? (
+                <div className="flex items-end gap-2.5">
+                  <label className="block flex-1">
+                    <span className="mb-1 block text-[11px] font-semibold text-ink-soft">{t(copy.plan.startDate)}</span>
+                    <input
+                      ref={dateInputRef}
+                      type="date"
+                      min={todayIso()}
+                      value={dateValue}
+                      onChange={(e) => {
+                        const next = e.target.value;
+                        const min = todayIso();
+                        setDateValue(next && next < min ? min : next);
+                      }}
+                      className={fieldClass}
+                    />
+                  </label>
+                  {autoEnd ? (
+                    <>
+                      <div className="pb-3 text-[18px] text-ink-soft">→</div>
+                      <div className="flex-1">
+                        <span className="mb-1 block text-[11px] font-semibold text-ink-soft">
+                          {t(copy.plan.endDateAuto)}
+                        </span>
+                        <div className={`${fieldClass} flex items-center bg-sage text-ink-soft`}>{autoEnd}</div>
+                      </div>
+                    </>
+                  ) : null}
+                </div>
+              ) : null}
+              {dateMode === "text" ? (
+                <input
+                  type="text"
+                  autoFocus
+                  value={dateText}
+                  placeholder={t(copy.plan.dateTextPh)}
+                  onChange={(e) => setDateText(e.target.value)}
+                  className={fieldClass}
+                />
+              ) : null}
+              {dateMode === "undecided" ? (
+                <div className="rounded-lg bg-sage px-3.5 py-2.5 text-[13px] leading-5 font-semibold text-ink">
+                  {t(copy.plan.dateBrowseNote)}
+                </div>
+              ) : null}
             </div>
-            {dateMode === "picker" ? (
-              <div className="flex items-end gap-2.5">
-                <label className="block flex-1">
-                  <span className="mb-1 block text-[11px] font-medium text-ink-soft">{t(copy.plan.startDate)}</span>
-                  <input
-                    ref={dateInputRef}
-                    type="date"
-                    min={todayIso()}
-                    value={dateValue}
-                    onChange={(e) => {
-                      const next = e.target.value;
-                      const min = todayIso();
-                      setDateValue(next && next < min ? min : next);
-                    }}
-                    className={fieldClass}
-                  />
-                </label>
-                {autoEnd ? (
-                  <>
-                    <div className="pb-3 text-[18px] text-ink-soft">→</div>
-                    <div className="flex-1">
-                      <span className="mb-1 block text-[11px] font-medium text-ink-soft">
-                        {t(copy.plan.endDateAuto)}
-                      </span>
-                      <div className={`${fieldClass} flex items-center bg-sage text-ink-soft`}>{autoEnd}</div>
-                    </div>
-                  </>
-                ) : null}
-              </div>
-            ) : null}
-            {dateMode === "text" ? (
-              <input
-                type="text"
-                autoFocus
-                value={dateText}
-                placeholder={t(copy.plan.dateTextPh)}
-                onChange={(e) => setDateText(e.target.value)}
-                className={fieldClass}
-              />
-            ) : null}
-            {dateMode === "undecided" ? (
-              <div className="rounded-lg bg-sage px-3.5 py-2.5 text-[13px] leading-5 text-ink-soft">
-                {t(copy.plan.dateBrowseNote)}
-              </div>
-            ) : null}
           </div>
 
-          <div>
-            <FieldLabel>{t(copy.plan.travelersN).replace("{n}", String(partyN))}</FieldLabel>
-            <div className="mt-2 grid grid-cols-2 gap-3">
-              <StepCounter
-                label={t(copy.plan.adults)}
-                value={adults}
-                min={1}
-                max={14}
-                onChange={setAdults}
-              />
-              <StepCounter
-                label={t(copy.plan.children)}
-                value={children}
-                min={0}
-                max={10}
-                onChange={setChildren}
-              />
-            </div>
+          {/* 右：参考报价（桌面 sticky；手机在下方） */}
+          <div className="min-w-0 md:sticky md:top-28">
             <PriceEstimate route={baseRoute} adults={adults} children={children} />
           </div>
         </div>
@@ -519,7 +530,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
               value={notes}
               placeholder={t(copy.plan.specialReqPh)}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full resize-y rounded-lg border-[1.5px] border-line bg-surface px-3.5 py-3 text-[15px] leading-[1.6] text-ink placeholder:text-ink-soft/70 outline-none"
+              className="w-full resize-y rounded-lg border-[1.5px] border-line/90 bg-paper/70 px-3.5 py-3 text-[15px] leading-[1.6] text-ink placeholder:text-ink-soft/70 outline-none"
             />
           </label>
         </div>
@@ -539,27 +550,67 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   );
 }
 
+function IconAdult({ className = "h-3.5 w-3.5" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <circle cx="8" cy="4.25" r="2.25" />
+      <path d="M3.5 13.5v-.75a4.5 4.5 0 0 1 9 0v.75" />
+    </svg>
+  );
+}
+
+function IconChild({ className = "h-3.5 w-3.5" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <circle cx="8" cy="5" r="2" />
+      <path d="M4.5 13.25v-.5a3.5 3.5 0 0 1 7 0v.5" />
+      <path d="M5.75 9.25h4.5" />
+    </svg>
+  );
+}
+
 function StepCounter({
   label,
+  icon,
   value,
   min,
   max,
   onChange,
 }: {
   label: string;
+  icon: "adult" | "child";
   value: number;
   min: number;
   max: number;
   onChange: (v: number) => void;
 }) {
   const btn =
-    "flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-line text-[16px] font-medium leading-none text-ink transition-colors";
+    "flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-line text-[16px] font-semibold leading-none text-ink transition-colors";
   return (
     <div>
-      <span className="mb-1.5 block text-[11px] font-medium tracking-[0.04em] text-ink-soft">
+      <span className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.04em] text-ink-soft">
+        {icon === "adult" ? <IconAdult /> : <IconChild />}
         {label}
       </span>
-      <div className="flex items-center gap-1 rounded-lg border-[1.5px] border-line bg-surface px-1.5 py-1">
+      <div className="flex items-center gap-1 rounded-lg border-[1.5px] border-line/90 bg-transparent px-1.5 py-1">
         <button
           type="button"
           aria-label={`${label} −`}
@@ -569,7 +620,7 @@ function StepCounter({
         >
           −
         </button>
-        <span className="min-w-[2ch] flex-1 text-center text-[16px] font-semibold text-ink">
+        <span className="min-w-[2ch] flex-1 text-center text-[16px] font-bold text-ink">
           {value}
         </span>
         <button
