@@ -89,13 +89,13 @@ export function BoutiqueTours({
   }
 
   return (
-    <section id="tours" className="scroll-mt-24 py-12 md:py-16">
-      <div className="mx-auto w-full max-w-[1180px] px-4 md:px-8">
+    <section id="tours" className="scroll-mt-24 py-8 md:py-16">
+      <div className="mx-auto w-full max-w-[1180px] px-3 md:px-8">
         {/*
+          手机：单列紧凑、内容自适应高度（不对齐留白）。
           lg 三列 subgrid：城市 / meta / 预算 / 文案 / 费用 各行取三卡最高。
-          封面 + 5 内容行 = row-span-6
         */}
-        <div className="grid gap-5 md:grid-cols-2 md:items-stretch lg:grid-cols-3 lg:grid-rows-[repeat(6,auto)] lg:gap-4 lg:pt-10 lg:pb-6">
+        <div className="grid grid-cols-1 items-start gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-3 lg:grid-rows-[repeat(6,auto)] lg:items-stretch lg:gap-4 lg:pt-10 lg:pb-6">
           {ROUTE_IDS.map((id) => (
             <RouteCard
               key={id}
@@ -144,7 +144,7 @@ function RouteCard({
 
   return (
     <article
-      className="group relative flex h-full flex-col overflow-hidden rounded-xl bg-surface text-left ring-1 ring-line shadow-[0_8px_22px_rgba(16,28,22,0.06)] will-change-transform transition-[transform,box-shadow,ring-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:-translate-y-3 hover:ring-gold/70 hover:shadow-[0_0_0_1px_rgba(168,140,86,0.45),0_0_28px_rgba(168,140,86,0.28),0_22px_44px_rgba(16,28,22,0.14)] lg:row-span-6 lg:grid lg:h-auto lg:grid-rows-subgrid"
+      className="group relative flex h-auto flex-col overflow-hidden rounded-xl bg-surface text-left ring-1 ring-line shadow-[0_8px_22px_rgba(16,28,22,0.06)] will-change-transform transition-[transform,box-shadow,ring-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:-translate-y-3 hover:ring-gold/70 hover:shadow-[0_0_0_1px_rgba(168,140,86,0.45),0_0_28px_rgba(168,140,86,0.28),0_22px_44px_rgba(16,28,22,0.14)] lg:row-span-6 lg:grid lg:h-auto lg:grid-rows-subgrid"
     >
       <button
         type="button"
@@ -154,8 +154,8 @@ function RouteCard({
         className="absolute inset-0 z-[1] cursor-zoom-in rounded-xl"
       />
 
-      {/* 1 · 封面 */}
-      <div className="relative block aspect-[4/3] overflow-hidden bg-bone">
+      {/* 1 · 封面：手机大竖图，桌面回 4:3 */}
+      <div className="relative block aspect-[3/4] overflow-hidden bg-bone md:aspect-[4/3]">
         <img
           loading="lazy"
           src={cover}
@@ -167,15 +167,15 @@ function RouteCard({
         </span>
         <span className="pointer-events-none absolute inset-0 bg-linear-to-t from-night/75 via-night/10 to-transparent" />
         <span className="absolute right-3.5 bottom-3.5 left-3.5">
-          <span className="block text-[20px] leading-tight font-medium text-paper md:text-2xl">
+          <span className="block text-[22px] leading-tight font-medium text-paper md:text-2xl">
             {t(content.name)}
           </span>
-          <span className="mt-1 block text-[11px] leading-4 text-paper/80">{t(content.tagline)}</span>
+          <span className="mt-1 block text-[12px] leading-4 text-paper/80 md:text-[11px]">{t(content.tagline)}</span>
         </span>
       </div>
 
       {/* 2 · 城市标签 */}
-      <div className="flex flex-wrap content-start gap-1.5 px-3.5 pt-3 pb-1">
+      <div className="flex flex-wrap content-start gap-1.5 px-3 pt-2.5 pb-1 md:px-3.5 md:pt-3">
         {t(content.regions).split(" · ").map((seg, i) => (
           <span
             key={`${seg}-${i}`}
@@ -187,7 +187,7 @@ function RouteCard({
       </div>
 
       {/* 3 · meta */}
-      <div className="mt-1 grid grid-cols-2 gap-px border-t border-line bg-line">
+      <div className="grid grid-cols-2 gap-px border-t border-line bg-line">
         <Meta icon={<IconClock className="h-4 w-4" />} label={t(copy.tours.duration)} value={t(content.days)} />
         <Meta icon={<IconTakeoff className="h-4 w-4" />} label={t(copy.tours.entry)} value={t(content.entry)} />
         <Meta icon={<IconLanding className="h-4 w-4" />} label={t(copy.tours.exit)} value={t(content.exit)} />
@@ -195,7 +195,7 @@ function RouteCard({
       </div>
 
       {/* 4 · 预算 */}
-      <div className="flex items-end justify-between gap-3 border-t border-line bg-paper px-4 py-3">
+      <div className="flex items-end justify-between gap-3 border-t border-line bg-paper px-3 py-2.5 md:px-4 md:py-3">
         <div className="min-w-0">
           <p className="text-[10px] tracking-[0.08em] text-ink-soft uppercase">{t(copy.tours.priceLabel)}</p>
           <p className="mt-0.5 text-[18px] font-semibold tracking-[-0.01em] text-cta">{t(content.price)}</p>
@@ -203,13 +203,13 @@ function RouteCard({
       </div>
 
       {/* 5 · 文案 */}
-      <div className="border-t border-line bg-paper px-4 py-4">
+      <div className="border-t border-line bg-paper px-3 py-3 md:px-4 md:py-4">
         <FeatureParagraphs text={t(content.feature)} collapsible />
       </div>
 
-      {/* 6 · 费用 + CTA（行高由 subgrid 对齐；CTA 贴底） */}
-      <div className="flex min-h-0 h-full flex-col border-t border-line px-4 pt-3.5 pb-3.5">
-        <p className="mb-2 text-[10px] font-semibold tracking-[0.1em] text-cta uppercase">
+      {/* 6 · 费用 + CTA（仅 lg subgrid 行内拉高贴底） */}
+      <div className="flex flex-col border-t border-line px-3 pt-2.5 pb-3 md:px-4 md:pt-3.5 md:pb-3.5 lg:h-full lg:min-h-0">
+        <p className="mb-1.5 text-[10px] font-semibold tracking-[0.1em] text-cta uppercase md:mb-2">
           {t(copy.tours.included)}
         </p>
         <ul className="flex flex-wrap gap-1.5">
@@ -223,7 +223,7 @@ function RouteCard({
             </li>
           ))}
         </ul>
-        <p className="mt-3.5 mb-2 text-[10px] font-semibold tracking-[0.1em] text-ink-soft uppercase">
+        <p className="mt-2.5 mb-1.5 text-[10px] font-semibold tracking-[0.1em] text-ink-soft uppercase md:mt-3.5 md:mb-2">
           {t(copy.tours.excluded)}
         </p>
         <ul className="flex flex-wrap gap-1.5">
@@ -237,7 +237,7 @@ function RouteCard({
             </li>
           ))}
         </ul>
-        <div className="relative z-[2] mt-auto pt-3.5">
+        <div className="relative z-[2] mt-3 pt-0 lg:mt-auto lg:pt-3.5">
           <button
             type="button"
             onClick={(e) => {
@@ -256,7 +256,7 @@ function RouteCard({
 }
 
 /**
- * 居中展开大卡：左 2×2 等分媒体格（3 图 + 视频），右文案完整呈现（无文案内滚动）。
+ * 展开详情：手机全屏；桌面居中双栏大卡。
  */
 function RouteExpandModal({
   routeId,
@@ -278,28 +278,28 @@ function RouteExpandModal({
   }, [routeId]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto px-4 py-10 md:py-14">
+    <div className="fixed inset-0 z-50 flex md:items-start md:justify-center md:overflow-y-auto md:px-4 md:py-14">
       <button
         type="button"
         aria-label={t(copy.tours.expandClose)}
-        className="absolute inset-0 bg-night/45 backdrop-blur-[2px]"
+        className="absolute inset-0 bg-night/55 backdrop-blur-[2px] md:bg-night/45"
         onClick={onClose}
       />
       <article
         role="dialog"
         aria-modal="true"
-        className="relative z-[1] my-auto grid w-[min(80vw,1080px)] grid-cols-1 gap-5 rounded-xl bg-surface p-5 pt-12 shadow-[0_24px_64px_rgba(16,28,22,0.22)] ring-1 ring-line md:grid-cols-[1.05fr_1fr] md:gap-6 md:p-6 md:pt-6"
+        className="relative z-[1] flex h-dvh w-full flex-col overflow-y-auto overscroll-contain bg-surface p-4 pt-14 shadow-none ring-0 md:my-auto md:grid md:h-auto md:max-h-none md:w-[min(92vw,1080px)] md:grid-cols-[1.05fr_1fr] md:gap-6 md:overflow-visible md:rounded-xl md:p-6 md:pt-6 md:shadow-[0_24px_64px_rgba(16,28,22,0.22)] md:ring-1 md:ring-line"
       >
         <button
           type="button"
           aria-label={t(copy.tours.expandClose)}
           onClick={onClose}
-          className="absolute top-3 right-3 z-[2] flex h-8 w-8 items-center justify-center rounded-full border border-line bg-paper text-ink-soft transition hover:border-cta/40 hover:text-cta"
+          className="absolute top-3 right-3 z-[2] flex h-10 w-10 items-center justify-center rounded-full border border-line bg-paper text-ink-soft transition hover:border-cta/40 hover:text-cta md:h-8 md:w-8"
         >
           <IconClose className="h-4 w-4" />
         </button>
 
-        <div className="grid grid-cols-2 gap-2 self-start">
+        <div className="grid grid-cols-2 gap-1.5 self-start md:gap-2">
           {media.gallery.map((path, i) => (
             <div key={path} className="relative aspect-square overflow-hidden rounded-md bg-bone">
               <img
@@ -331,9 +331,9 @@ function RouteExpandModal({
           </div>
         </div>
 
-        <div className="flex min-w-0 flex-col">
+        <div className="mt-4 flex min-w-0 flex-1 flex-col md:mt-0">
           <p className="text-[11px] font-bold tracking-[0.12em] text-cta uppercase">{t(content.badge)}</p>
-          <h3 className="mt-1 pr-8 text-[24px] leading-tight font-medium text-ink md:text-[26px]">
+          <h3 className="mt-1 pr-10 text-[24px] leading-tight font-medium text-ink md:pr-8 md:text-[26px]">
             {t(content.name)}
           </h3>
           <p className="mt-1.5 text-[13px] leading-5 text-ink-soft">{t(content.tagline)}</p>
@@ -372,7 +372,7 @@ function RouteExpandModal({
             ))}
           </div>
 
-          <div className="mt-5 flex flex-wrap items-end justify-between gap-3 border-t border-line pt-4">
+          <div className="mt-5 flex flex-col gap-3 border-t border-line pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:flex-row md:flex-wrap md:items-end md:justify-between md:pb-0">
             <div>
               <p className="text-[10px] tracking-[0.08em] text-ink-soft uppercase">{t(copy.tours.priceLabel)}</p>
               <p className="mt-0.5 text-[20px] font-semibold tracking-[-0.01em] text-cta">{t(content.price)}</p>
@@ -380,7 +380,7 @@ function RouteExpandModal({
             <button
               type="button"
               onClick={onOpenItinerary}
-              className="cta-sheen inline-flex shrink-0 items-center gap-2 rounded-lg bg-cta px-4 py-3 text-paper hover:bg-cta-press"
+              className="cta-sheen inline-flex w-full items-center justify-center gap-2 rounded-lg bg-cta px-4 py-3 text-paper hover:bg-cta-press md:w-auto md:shrink-0"
             >
               <QuoteBarLabel />
               <IconArrow className="shrink-0" />
@@ -453,7 +453,7 @@ function Meta({
   value: string;
 }) {
   return (
-    <span className="flex items-center gap-2 bg-surface px-3 py-2.5">
+    <span className="flex items-center gap-2 bg-surface px-2.5 py-2 md:px-3 md:py-2.5">
       <span className="shrink-0 text-ink-soft" aria-hidden>
         {icon}
       </span>
