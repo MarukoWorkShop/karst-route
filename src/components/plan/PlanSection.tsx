@@ -30,7 +30,10 @@ export function PlanSection({
         </p>
 
         <div className="mt-8 w-full md:mt-10">
-          {/* 文件夹页签：与下方面板左右齐平，选中页签叠在面板顶边上消缝 */}
+          {/*
+            文件夹页签：选中页签无底边，面板用负 margin 上叠，
+            避免 border-b 与顶边在拐角处出现台阶/白缝。
+          */}
           <div role="tablist" className="relative z-[1] flex items-end gap-1.5">
             <button
               type="button"
@@ -39,7 +42,7 @@ export function PlanSection({
               onClick={() => onTab("boutique")}
               className={`relative inline-flex min-h-[48px] flex-1 items-center justify-center rounded-t-[12px] border px-3 py-2.5 text-center text-[12.5px] leading-[1.3] font-semibold transition-colors md:min-h-[52px] md:px-5 md:text-[14px] ${
                 boutique
-                  ? "z-[2] -mb-px border-gold/40 border-b-paper bg-paper text-cta"
+                  ? "z-[2] border-gold/40 border-b-0 bg-paper text-cta after:pointer-events-none after:absolute after:inset-x-0 after:bottom-[-1px] after:h-[1px] after:bg-paper"
                   : "z-[0] border-line/70 bg-bone/80 text-ink-soft hover:bg-bone-2 hover:text-ink"
               }`}
             >
@@ -52,8 +55,8 @@ export function PlanSection({
               onClick={() => onTab("custom")}
               className={`relative inline-flex min-h-[48px] flex-1 items-center justify-center rounded-t-[12px] border-2 px-3 py-2.5 text-center text-[12.5px] leading-[1.3] font-semibold transition-colors md:min-h-[52px] md:px-5 md:text-[14px] ${
                 !boutique
-                  ? "z-[2] -mb-[2px] border-cta border-b-paper bg-cta text-paper"
-                  : "z-[0] border-2 border-line/70 bg-bone/80 text-ink-soft hover:bg-bone-2 hover:text-ink"
+                  ? "z-[2] border-cta border-b-0 bg-cta text-paper after:pointer-events-none after:absolute after:inset-x-0 after:bottom-[-2px] after:h-[2px] after:bg-cta"
+                  : "z-[0] border-line/70 bg-bone/80 text-ink-soft hover:bg-bone-2 hover:text-ink"
               }`}
             >
               {t(copy.plan.tabDesign)}
@@ -62,10 +65,10 @@ export function PlanSection({
 
           {/* 文件夹本体：定制与预订同 paper 底，仅用 2px 墨绿边区分 */}
           <div
-            className={`relative rounded-b-2xl bg-paper p-5 md:p-8 shadow-[0_10px_36px_color-mix(in_srgb,var(--color-ink)_6%,transparent)] ${
+            className={`relative z-0 rounded-b-2xl bg-paper p-5 md:p-8 shadow-[0_10px_36px_color-mix(in_srgb,var(--color-ink)_6%,transparent)] ${
               boutique
-                ? "rounded-tr-2xl border border-gold/40"
-                : "rounded-tl-2xl border-2 border-cta"
+                ? "-mt-px rounded-tr-2xl border border-gold/40"
+                : "-mt-[2px] rounded-tl-2xl border-2 border-cta"
             }`}
           >
             <div className={boutique ? "" : "hidden"}>

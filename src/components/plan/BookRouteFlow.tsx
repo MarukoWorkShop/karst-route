@@ -38,7 +38,7 @@ const WEEK_EN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 function routeDays(id: RouteId | ""): number | null {
   if (id === "r1") return 14;
-  if (id === "r2") return 10;
+  if (id === "r2") return 11;
   if (id === "r3") return 7;
   return null;
 }

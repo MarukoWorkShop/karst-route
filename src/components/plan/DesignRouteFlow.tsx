@@ -28,7 +28,7 @@ function toggle(arr: string[], val: string) {
 
 function defaultDays(id: RouteId) {
   if (id === "r1") return 14;
-  if (id === "r2") return 10;
+  if (id === "r2") return 11;
   return 7;
 }
 
@@ -204,7 +204,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
           {(
             [
               { val: "r1" as const, days: 14, title: copy.plan.r1Title, sub: copy.plan.r1SubLong },
-              { val: "r2" as const, days: 10, title: copy.plan.r2Title, sub: copy.plan.r2SubLong },
+              { val: "r2" as const, days: 11, title: copy.plan.r2Title, sub: copy.plan.r2SubLong },
               { val: "r3" as const, days: 7, title: copy.plan.r3Title, sub: copy.plan.r3SubLong },
             ] as const
           ).map((r) => {

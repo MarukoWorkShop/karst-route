@@ -18,7 +18,7 @@ export type TravelerReview = {
 };
 
 const r1 = L("Route 1 · 14 days", "路线一 · 14日");
-const r2 = L("Route 2 · 10 days", "路线二 · 10日");
+const r2 = L("Route 2 · 11 days", "路线二 · 11日");
 
 const fallbackReviews: TravelerReview[] = [
   {

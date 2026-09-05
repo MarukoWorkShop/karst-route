@@ -1,4 +1,4 @@
-# 逐日行程 · r2
+# 逐日行程 · r2（越北桂西 11 日 · 以南宁为闭环）
 # 每一天：城市、住宿、交通、餐饮、活动 bullets、主题 themes
 # blurb 为当日介绍段；体验/餐饮/住宿深度文案见 content/destinations/{placeId}.yaml
 # photos 只写 public 下的相对路径
@@ -10,30 +10,64 @@ days:
       en: Nanning
       zh: 南宁
     stay:
-      en: Yong River, before the border
-      zh: 夜市里的第一夜
+      en: Yong River, first Chinese night
+      zh: 邕江边，第一夜
     stayKind: hotel
     placeId: nanning
     transport:
       en: Airport pickup, then a brief city night
-      zh: 专车接机／接站，送往酒店
+      zh: 抵达南宁，专车接机／接站，送往酒店
     lodging:
-      en: Riverside garden stay
-      zh: 南宁香格里拉酒店
+      en: Nanning city hotel
+      zh: 南宁市区酒店
     dining:
       - en: "Lunch: depending on arrival"
         zh: 午餐：不含
-      - en: "Dinner: snail noodles on Zhongshan Road"
-        zh: 晚餐：建政夜市，自行寻觅
+      - en: "Dinner: Zhongshan Road or Three Streets & Two Lanes"
+        zh: 晚餐：中山路美食街／三街两巷（时间充裕可选）
     bullets:
-      - en: Brief city night
-        zh: 三街两巷 · 畅游阁
-      - en: Early border next day
-        zh: 建政夜市
+      - en: Night market if time allows
+        zh: 中山路美食街 · 三街两巷
     themes:
       - locals
       - flavors
+    blurb:
+      en: Nanning is Guangxi’s capital and China’s gateway toward ASEAN. Settle in, adjust to the climate, and — if you arrive early enough — taste the city’s night markets before the border road begins.
+      zh: 南宁，广西首府，中国面向东盟的门户之城。抵达后入住酒店，适应气候。若时间充裕，可前往中山路美食街感受邕城夜市的热烈。南宁不是终点，而是通往边境与远方的起点。
+
   - day: 2
+    city:
+      en: Ha Long
+      zh: 下龙
+    stay:
+      en: First night on the bay
+      zh: 湾上第一夜
+    stayKind: hotel
+    placeId: halong
+    drive:
+      en: Nanning → Dongxing ~2.5 h · Mong Cai → Ha Long ~3 h
+      zh: 南宁→东兴约 2.5 小时 · 芒街→下龙约 3 小时
+    transport:
+      en: Nanning → Dongxing (~190 km), cross at Mong Cai (~1–1.5 h), then to Ha Long (~180 km) — ~5.5 h driving total
+      zh: 南宁赴东兴口岸（约 190 公里），通关约 1–1.5 小时，再赴下龙（约 180 公里）；行车约 5.5 小时
+    lodging:
+      en: Bay-facing hotel in Ha Long
+      zh: 下龙看湾的酒店
+    dining:
+      - en: "Lunch: on the way / after the crossing"
+        zh: 午餐：途中／过关之后
+      - en: "Dinner: seafood facing the bay"
+        zh: 晚餐：面朝下龙湾的海鲜
+    bullets:
+      - en: Border crossing at Dongxing / Mong Cai
+        zh: 东兴／芒街口岸通关
+    themes:
+      - wild
+    blurb:
+      en: Leave Nanning for Dongxing, cross into Mong Cai, then drive the coastal road south to Ha Long. One bridge, and the street signs, coffee stalls and colonial façades already feel like another country. Overnight facing the bay — salt air before the islands.
+      zh: 自南宁出发，经东兴口岸过境至越南广宁省芒街市，再沿海岸南下赴下龙。一桥之隔，市井已悄然转换——法式骑楼、越南文招牌、街角炼乳咖啡的甜香。晚间面朝下龙湾入住，先闻海风里的咸味。
+
+  - day: 3
     city:
       en: Cat Ba Island
       zh: 吉婆岛
@@ -43,23 +77,29 @@ days:
     stayKind: hotel
     placeId: catba
     drive:
-      en: Full day transit
-      zh: 全天交通
+      en: Ferry · ~1 h
+      zh: 轮渡约 1 小时
     transport:
-      en: Cross at Mong Cai, then ferry to Cat Ba — full day, ~8 h door to door
-      zh: 芒街口岸通关，转轮渡赴吉婆岛；全程约 8 小时
+      en: Ferry from Ha Long to Cat Ba, ~1 h
+      zh: 下龙轮渡登陆吉婆岛，约 1 小时
     lodging:
       en: Bay-facing island hotel
       zh: 看湾的小岛酒店
     dining:
-      - en: "Lunch: border-town noodles on the way"
-        zh: 午餐：途中口岸小城的一碗面
-      - en: "Dinner: seafood on the harbour"
+      - en: "Lunch: on the island after landing"
+        zh: 午餐：登岛之后
+      - en: "Dinner: harbour seafood"
         zh: 晚餐：港边海鲜
-    bullets: []
+    bullets:
+      - en: Free island time — scooter, beach or kayak
+        zh: 岛内自由活动（租摩托环岛／沙滩／皮划艇）
     themes:
       - wild
-  - day: 3
+    blurb:
+      en: "A short ferry puts you on Cat Ba — the largest island in the Ha Long–Cat Ba World Heritage seascape. Quieter than the mainland town: rent a scooter, kayak the lagoons, or wait for sunset on the sand. The night here is water, not a highway hotel."
+      zh: 乘轮渡从下龙前往吉婆岛——下龙湾—吉婆群岛世界自然遗产的核心岛屿。比下龙市更安静：租摩托环岛、出海皮划艇，或在沙滩静候日落。这一夜是水，不是高速旁的酒店。
+
+  - day: 4
     city:
       en: Hanoi
       zh: 河内
@@ -68,83 +108,37 @@ days:
       zh: 古城，第一夜
     stayKind: hotel
     placeId: hanoi
+    drive:
+      en: Cable to Hai Phong · road ~2 h to Hanoi
+      zh: 跨海缆车至海防 · 公路约 2 小时赴河内
     transport:
-      en: Road from Hai Phong / Cat Ba, ~2.5 h
-      zh: 海防 / 吉婆岛公路进城，约 2.5 小时
+      en: Cat Ba cable to Hai Phong (~15–20 min), then road to Hanoi (~100 km, ~2 h)
+      zh: 吉婆岛跨海缆车至海防（约 15–20 分钟），再专车赴河内（约 100 公里，约 2 小时）
     lodging:
       en: French-quarter hide near the lake
       zh: 湖边法租界小住
     dining:
-      - en: "Lunch: on the road into the city"
-        zh: 午餐：进城途中
+      - en: "Lunch: Vietnamese drip coffee stop en route"
+        zh: 午餐：途中滴漏咖啡体验
       - en: "Dinner: Old Quarter street table"
         zh: 晚餐：古城街头一桌
     bullets:
-      - en: 36 Streets + cyclo, Train Street
-        zh: 三十六鼓街含三轮车，打卡火车街
+      - en: St Joseph’s Cathedral
+        zh: 圣若瑟大教堂
+      - en: Train Street
+        zh: 火车街
+      - en: 36 Streets + cyclo
+        zh: 三十六古街 · 三轮车
       - en: West Lake night bus
         zh: 观光巴士夜游西湖
     themes:
       - flavors
       - locals
-  - day: 4
-    city:
-      en: Hanoi
-      zh: 河内
-    stay:
-      en: Old Quarter, second night
-      zh: 古城，第二夜
-    stayKind: hotel
-    placeId: hanoi
-    transport:
-      en: On foot and cyclo in the Old Quarter
-      zh: 古城步行 + 三轮车
-    lodging:
-      en: Same restored house — no packing
-      zh: 同一栋修好的老房子，不用收行李
-    dining:
-      - en: "Lunch: lotus buffet"
-        zh: 午餐：莲花自助餐
-      - en: "Dinner: egg coffee, then a stall you pick"
-        zh: 晚餐：蛋咖啡，再选一摊
-    bullets:
-      - en: Ho Chi Minh & Ba Dinh
-        zh: 胡志明纪念堂、巴亭广场
-      - en: Free time or the market
-        zh: 自由活动或逛河内菜市场
-    themes:
-      - flavors
+    blurb:
+      en: Cable across the water to Hai Phong, then into Hanoi’s thousand-year capital. Cathedral brick, Train Street’s impossible closeness, a cyclo through the Old Quarter’s one-trade lanes, and a night bus around West Lake when the lights come on.
+      zh: 上午缆车跨越海面前往海防，再入河内千年古都。圣若瑟大教堂的斑驳灰砖、火车街几乎触手可及的铁轨、三十六古街的三轮车巷弄，晚间双层巴士夜游西湖——湖岸灯火与古寺倒影交汇。
+
   - day: 5
-    city:
-      en: Sapa
-      zh: 沙坝
-    stay:
-      en: Terraces above the town
-      zh: 镇上看田
-    stayKind: hotel
-    placeId: sapa
-    drive:
-      en: Road · 5–6 h
-      zh: 公路约 5–6 小时
-    transport:
-      en: Private car Hanoi → Sapa, 5–6 h
-      zh: 专车河内至沙坝，约 5–6 小时
-    lodging:
-      en: Terrace-facing mountain lodge
-      zh: 看田的山居
-    dining:
-      - en: "Lunch: on the mountain road"
-        zh: 午餐：山路途中
-      - en: "Dinner: highland hot pot"
-        zh: 晚餐：高地热锅
-    bullets:
-      - en: Rice terraces
-        zh: 沙坝梯田
-      - en: Cat Cat village
-        zh: 猫猫村
-    themes:
-      - villages
-  - day: 6
     city:
       en: Overnight train
       zh: 米轨过夜
@@ -154,23 +148,99 @@ days:
     stayKind: train
     placeId: train
     drive:
-      en: Overnight metre-gauge
-      zh: 米轨过夜列车
+      en: Overnight metre-gauge · ~8–9 h
+      zh: 米轨过夜列车 · 约 8–9 小时
     transport:
-      en: Fansipan cable up, then evening metre-gauge departure
-      zh: 上午番西邦缆车上山，晚上米轨发车过夜
+      en: "Hanoi city sights by day; evening soft sleeper Hanoi → Lao Cai (~296 km, dep. ~21:00)"
+      zh: "白天河内市内；晚间河内站登上米轨软卧赴老街（约 296 公里，约 21:00 发车）"
     lodging:
       en: Soft sleeper on the Yunnan–Vietnam line
-      zh: 滇越米轨软卧
+      zh: 滇越米轨软卧（河内—老街）
     dining:
-      - en: "Lunch: Sapa before the cable"
-        zh: 午餐：上山前在沙坝
+      - en: "Lunch: lotus buffet"
+        zh: 午餐：莲花自助餐
       - en: "Dinner: simple meal before boarding"
         zh: 晚餐：上车前简单一顿
-    bullets: []
+    bullets:
+      - en: Ba Dinh Square & Ho Chi Minh Mausoleum
+        zh: 巴亭广场 · 胡志明陵
+      - en: Free time / Hanoi market
+        zh: 自由活动／河内菜市场
     themes:
+      - flavors
       - wild
+    blurb:
+      en: Morning at Ba Dinh and the Mausoleum, lotus buffet at noon, then a market wander if you want the city’s real pulse. At night, board the century-old metre-gauge sleeper up the Red River corridor toward Lao Cai — slow, old, and unlike any hotel.
+      zh: 上午巴亭广场与胡志明陵，中午莲花自助餐，下午可逛河内菜市场。晚间登上百年米轨卧铺，沿河老铁路北上老街——枕着哐当声穿越红河三角洲的夜色，这是一种近乎消逝、却因此独一无二的旅行方式。
+
+  - day: 6
+    city:
+      en: Sapa
+      zh: 沙坝
+    stay:
+      en: Terraces above the town
+      zh: 镇上看田
+    stayKind: hotel
+    placeId: sapa
+    drive:
+      en: Lao Cai → Sapa · ~1 h mountain road
+      zh: 老街→沙坝 · 盘山约 1 小时
+    transport:
+      en: "Arrive Lao Cai ~06:00; private transfer to Sapa (~35 km, ~1 h)"
+      zh: 清晨抵达老街站；专车盘山赴沙坝（约 35 公里，约 1 小时）
+    lodging:
+      en: Terrace-facing mountain lodge
+      zh: 看田的山居
+    dining:
+      - en: "Lunch: after arrival in Sapa"
+        zh: 午餐：抵达沙坝之后
+      - en: "Dinner: highland table"
+        zh: 晚餐：高地一桌
+    bullets:
+      - en: Terrace afternoon tea & free time
+        zh: 梯田下午茶 · 自由修整
+    themes:
+      - villages
+    blurb:
+      en: Wake in Lao Cai — Vietnam’s northwest gate, across the river from China’s Hekou — then climb the mountain road to Sapa at 1,650 m. Mist, terraces, and a slow afternoon tea away from the market bustle.
+      zh: 清晨抵达老街（隔南溪河与中国河口相望），转乘盘山公路约一小时上沙坝。海拔约 1650 米，云雾与梯田包裹山城；下午在梯田景观中用下午茶，把节奏交给缓慢与质朴。
+
   - day: 7
+    city:
+      en: Sapa
+      zh: 沙坝
+    stay:
+      en: Second night in the clouds
+      zh: 云上第二夜
+    stayKind: hotel
+    placeId: sapa
+    drive:
+      en: Local transfers · ~1 h total
+      zh: 当地接驳 · 合计约 1 小时
+    transport:
+      en: Fansipan cable (~20 min each way) and Cat Cat village transfers
+      zh: 番西邦缆车（单程约 20 分钟）及猫猫村接驳
+    lodging:
+      en: Same mountain lodge — no packing
+      zh: 同一山居，不用收行李
+    dining:
+      - en: "Lunch: in Sapa or on the mountain"
+        zh: 午餐：沙坝／山上
+      - en: "Dinner: highland hot pot"
+        zh: 晚餐：高地热锅
+    bullets:
+      - en: Fansipan summit (cable + peak)
+        zh: 番西邦峰（缆车 + 山顶）
+      - en: Cat Cat village
+        zh: 猫猫村
+    themes:
+      - villages
+      - wild
+    blurb:
+      en: Morning for Fansipan — Indochina’s roof at 3,143 m, via one of the world’s longest three-cable rides through cloud and forest. Afternoon in Cat Cat, an old Hmong settlement of stilt houses and a waterfall the French once called CatScat.
+      zh: 上午登番西邦峰（海拔 3143 米，印度支那屋脊），缆车穿越云海与黄连山原始林。下午走猫猫村——沙坝最古老的黑苗聚落之一，吊脚楼依坡而建，瀑布与手工艺仍是日常，不是布景。
+
+  - day: 8
     city:
       en: Guantang
       zh: 观堂
@@ -179,24 +249,31 @@ days:
       zh: 村里连住的第一晚
     stayKind: base
     placeId: guantang
+    drive:
+      en: Sapa → Hanoi ~5.5–6 h · then to Friendship Pass · ~10 h total
+      zh: 沙坝→河内约 5.5–6 小时 · 全日车程约 10 小时
     transport:
-      en: Lang Son → Friendship Pass crossing, then Longzhou (~1.5 h)
-      zh: 谅山至友谊关出境，再赴龙州（约 1.5 小时）
+      en: Sapa → Hanoi → Lang Son → Friendship Pass crossing → Longzhou Guantang (~550 km total; pack road snacks)
+      zh: 沙坝返河内，再赴谅山、友谊关出境，转赴龙州观堂（总里程约 550 公里；全程最长行车日，建议备路餐）
     lodging:
       en: Guantang courtyard
       zh: 观堂的院子
     dining:
-      - en: "Lunch: after the pass"
-        zh: 午餐：过关之后
+      - en: "Lunch: on the road / after the pass"
+        zh: 午餐：途中／过关之后
       - en: "Dinner: Zhuang table at the courtyard"
         zh: 晚餐：院子里的壮家饭
     bullets:
-      - en: Lang Son & Dong Dang fair
-        zh: 谅山、同登庙会
+      - en: Dong Dang fair if in season
+        zh: 同登庙会（时节恰逢可选）
     themes:
       - locals
       - villages
-  - day: 8
+    blurb:
+      en: "The longest road day: down from Sapa, across Lang Son, and home through Friendship Pass — one of China’s nine great gates. Overnight at Guantang in Longzhou, a quiet courtyard to settle the border crossing behind you."
+      zh: 全程最长行车日：清晨告别沙坝，经河内转谅山，自友谊关（凭祥口岸）出境回国。当晚入住龙州观堂——壮乡干栏气息的精品小住，让一场跨越海域、平原与高山的越北之旅在关楼之下收束。
+
+  - day: 9
     city:
       en: Guantang
       zh: 观堂
@@ -205,9 +282,12 @@ days:
       zh: 同一院子，不拎箱子
     stayKind: base
     placeId: guantang
+    drive:
+      en: Local · ~1.5 h / ~50 km
+      zh: 当地约 1.5 小时／约 50 公里
     transport:
-      en: Bicycle in the cane, walk to Tianqin village
-      zh: 蔗海骑行，步行去天琴寨
+      en: Tianqin Zhuang village and sugarcane-sea cycling near Longzhou
+      zh: 天琴壮寨与龙州周边蔗海骑行
     lodging:
       en: Guantang courtyard — second night
       zh: 观堂的院子 · 第二晚
@@ -217,15 +297,20 @@ days:
       - en: "Dinner: oil tea and whatever came from the field"
         zh: 晚餐：油茶，和当天地里来的东西
     bullets:
-      - en: Free walk
-        zh: 自由散步
+      - en: Tianqin music in the Zhuang village
+        zh: 天琴壮寨 · 天琴弹唱
+      - en: Bicycle through the cane sea
+        zh: 骑行蔗海
+      - en: Free walk in the border town
+        zh: 边境小城自由散步
     themes:
       - villages
       - wild
     blurb:
-      en: The second morning belongs to the cane sea — bicycles between the stalks, then a walk to Tianqin village where two strings carry a song older than the border line. No suitcase, no plan beyond the light.
-      zh: 第二天早晨交给蔗海——蔗丛间骑车，再步行去天琴寨，两根弦挑着一支比国界更老的歌。不拎箱子，除了光，没别的计划。
-  - day: 9
+      en: The second morning belongs to the cane sea — bicycles between the stalks — and Tianqin village, where two strings carry a song older than the border line. No suitcase, no plan beyond the light.
+      zh: 第二天交给蔗海与天琴壮寨——干栏木楼、清亮的天琴，再骑行穿入喀斯特峰林间的甘蔗田。不拎箱子，享受边境小城的慢节奏。
+
+  - day: 10
     city:
       en: Nanning
       zh: 南宁
@@ -234,23 +319,32 @@ days:
       zh: 回到绿城
     stayKind: hotel
     placeId: chongzuo
+    drive:
+      en: Longzhou → Detian ~2 h · Mingshi ~1 h · Nanning ~3 h
+      zh: 龙州→德天约 2 小时 · 明仕约 1 小时 · 南宁约 3 小时
     transport:
-      en: Detian by car (~2 h), then return to Nanning (~3.5 h)
-      zh: 专车赴德天（约 2 小时），再返回南宁（约 3.5 小时）
+      en: Detian Falls (~100 km), Mingshi Pastoral (~35 km), then return to Nanning (~200 km) — ~6 h driving
+      zh: 专车赴德天瀑布（约 100 公里），再赴明仕田园（约 35 公里），晚返南宁（约 200 公里）；行车约 6 小时
     lodging:
-      en: Nanning riverside hotel
-      zh: 南宁江景酒店
+      en: Nanning city hotel
+      zh: 南宁市区酒店
     dining:
       - en: "Lunch: river fish at Detian"
         zh: 午餐：德天河鱼
       - en: "Dinner: Nanning, whatever you still want"
         zh: 晚餐：南宁，想吃什么吃什么
     bullets:
-      - en: Mingshi Pastoral
-        zh: 明仕田园
+      - en: Detian Falls (bamboo raft)
+        zh: 德天瀑布（含竹筏）
+      - en: Mingshi Pastoral (raft or cycle)
+        zh: 明仕田园（竹筏或骑行）
     themes:
       - wild
-  - day: 10
+    blurb:
+      en: Asia’s greatest cross-border waterfall — Detian on one bank, Ban Gioc on the other — then Mingshi’s quieter karst paddies and bamboo, before the loop closes back in Nanning.
+      zh: 德天瀑布横跨中越，归春河即为国界；水雾扑面，竹筏近岸。再赴明仕田园——峰林、稻田与壮锦日常比阳朔安静得多。晚返南宁入住。
+
+  - day: 11
     city:
       en: Depart
       zh: 结束
@@ -259,8 +353,8 @@ days:
       zh: 南宁
     stayKind: hotel
     transport:
-      en: Hotel to Nanning Wuxu Airport, ~1 h
-      zh: 酒店送至吴圩机场，约 1 小时
+      en: Hotel to Nanning Wuxu Airport, ~40 min–1 h
+      zh: 酒店送至吴圩机场，约 40 分钟–1 小时
     lodging:
       en: Morning checkout
       zh: 早晨退房
@@ -268,7 +362,12 @@ days:
       - en: Breakfast at the hotel
         zh: 酒店早餐
     bullets:
-      - en: Ask us for extra night
+      - en: Qingxiu Mountain if time allows
+        zh: 青秀山（航班时间充裕可选）
+      - en: Ask us for an extra night
         zh: 需要加住告诉我们
     themes:
       - locals
+    blurb:
+      en: Transfer to Nanning Wuxu International Airport by flight time. If the schedule allows, a last walk on Qingxiu Mountain — then the eleven-day loop from karst sea to cloud town is complete.
+      zh: 按航班时间前往南宁吴圩国际机场。若时间充裕，可登青秀山远眺，或选芒果干、菠萝蜜干作伴手礼。一场从海上喀斯特到云中山城的十一日纪行，到此落幕。
