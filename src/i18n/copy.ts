@@ -151,9 +151,11 @@ export const copy = {
     excluded: { en: "Not included", zh: "费用不含" },
     quote: { en: "Get a quote", zh: "获取报价" },
     quoteBar: {
-      en: "Like this route? View the day-by-day itinerary",
-      zh: "喜欢这条线路，点击查看路书",
+      en: "Like this route! View the itinerary and details",
+      zh: "喜欢这条线路！查看路书与详情",
     },
+    quoteBarLead: { en: "Like this route!", zh: "喜欢这条线路！" },
+    quoteBarDetail: { en: "View the itinerary and details", zh: "查看路书与详情" },
     reviews: { en: "{n} reviews", zh: "{n} 条评价" },
     expandOpen: { en: "Expand route card", zh: "展开线路卡片" },
     expandClose: { en: "Close", zh: "关闭" },

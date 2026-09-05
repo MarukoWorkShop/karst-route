@@ -5,7 +5,6 @@ import { useLocale } from "@/i18n/LocaleProvider";
 import { asset } from "@/lib/asset";
 import { cosUrl } from "@/lib/media";
 import { EXCL_LABELS, INCL_LABELS, routeFacts } from "@/data/tourFacts";
-import { reviewsForRoute } from "@/data/reviews";
 import { routeMedia } from "@/data/routeMedia";
 import { routeContent, type RouteContent } from "@/content/routes";
 import {
@@ -22,6 +21,16 @@ const ROUTE_IDS: RouteId[] = ["r1", "r2", "r3"];
 /** Images on Pages; intro.mp4 is gitignored → COS in production, local public/ in dev. */
 function routeVideoSrc(path: string) {
   return import.meta.env.DEV ? asset(`/${path}`) : cosUrl(path);
+}
+
+function QuoteBarLabel() {
+  const { t } = useLocale();
+  return (
+    <span className="flex min-w-0 flex-1 flex-col items-center text-center text-[14px] leading-snug font-bold">
+      <span>{t(copy.tours.quoteBarLead)}</span>
+      <span>{t(copy.tours.quoteBarDetail)}</span>
+    </span>
+  );
 }
 
 export function BoutiqueTours({
@@ -82,8 +91,11 @@ export function BoutiqueTours({
   return (
     <section id="tours" className="scroll-mt-24 py-12 md:py-16">
       <div className="mx-auto w-full max-w-[1180px] px-4 md:px-8">
-        {/* 原生三列竖条卡片：初始等高，hover 抬起 */}
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:items-stretch lg:gap-4 lg:pt-10 lg:pb-6">
+        {/*
+          lg 三列 subgrid：城市 / meta / 预算 / 文案 / 费用 各行取三卡最高。
+          封面 + 5 内容行 = row-span-6
+        */}
+        <div className="grid gap-5 md:grid-cols-2 md:items-stretch lg:grid-cols-3 lg:grid-rows-[repeat(6,auto)] lg:gap-4 lg:pt-10 lg:pb-6">
           {ROUTE_IDS.map((id) => (
             <RouteCard
               key={id}
@@ -113,7 +125,7 @@ export function BoutiqueTours({
   );
 }
 
-/** 列表态：完整竖条卡片（与原先三列布局一致） */
+/** 列表态：完整竖条卡片（lg 用 subgrid 跨卡对齐模块） */
 function RouteCard({
   routeId,
   content,
@@ -129,13 +141,11 @@ function RouteCard({
 }) {
   const { t } = useLocale();
   const cover = asset(`/${routeMedia[routeId].cover}`);
-  const reviewCount = reviewsForRoute(routeId).length;
 
   return (
     <article
-      className="group relative flex h-full flex-col overflow-hidden rounded-xl bg-surface text-left ring-1 ring-line shadow-[0_8px_22px_rgba(16,28,22,0.06)] will-change-transform transition-[transform,box-shadow,ring-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:-translate-y-3 hover:ring-gold/70 hover:shadow-[0_0_0_1px_rgba(168,140,86,0.45),0_0_28px_rgba(168,140,86,0.28),0_22px_44px_rgba(16,28,22,0.14)]"
+      className="group relative flex h-full flex-col overflow-hidden rounded-xl bg-surface text-left ring-1 ring-line shadow-[0_8px_22px_rgba(16,28,22,0.06)] will-change-transform transition-[transform,box-shadow,ring-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:-translate-y-3 hover:ring-gold/70 hover:shadow-[0_0_0_1px_rgba(168,140,86,0.45),0_0_28px_rgba(168,140,86,0.28),0_22px_44px_rgba(16,28,22,0.14)] lg:row-span-6 lg:grid lg:h-auto lg:grid-rows-subgrid"
     >
-      {/* 整卡可点展开（除底部 CTA）；cursor-zoom-in ≈ 放大/展开光标 */}
       <button
         type="button"
         onClick={onOpen}
@@ -144,6 +154,7 @@ function RouteCard({
         className="absolute inset-0 z-[1] cursor-zoom-in rounded-xl"
       />
 
+      {/* 1 · 封面 */}
       <div className="relative block aspect-[4/3] overflow-hidden bg-bone">
         <img
           loading="lazy"
@@ -162,7 +173,9 @@ function RouteCard({
           <span className="mt-1 block text-[11px] leading-4 text-paper/80">{t(content.tagline)}</span>
         </span>
       </div>
-      <div className="flex flex-wrap gap-1.5 px-3.5 pt-3 pb-1">
+
+      {/* 2 · 城市标签 */}
+      <div className="flex flex-wrap content-start gap-1.5 px-3.5 pt-3 pb-1">
         {t(content.regions).split(" · ").map((seg, i) => (
           <span
             key={`${seg}-${i}`}
@@ -173,6 +186,7 @@ function RouteCard({
         ))}
       </div>
 
+      {/* 3 · meta */}
       <div className="mt-1 grid grid-cols-2 gap-px border-t border-line bg-line">
         <Meta icon={<IconClock className="h-4 w-4" />} label={t(copy.tours.duration)} value={t(content.days)} />
         <Meta icon={<IconTakeoff className="h-4 w-4" />} label={t(copy.tours.entry)} value={t(content.entry)} />
@@ -180,27 +194,21 @@ function RouteCard({
         <Meta icon={<IconUsers className="h-4 w-4" />} label={t(copy.tours.for)} value={t(content.audience)} />
       </div>
 
+      {/* 4 · 预算 */}
       <div className="flex items-end justify-between gap-3 border-t border-line bg-paper px-4 py-3">
         <div className="min-w-0">
           <p className="text-[10px] tracking-[0.08em] text-ink-soft uppercase">{t(copy.tours.priceLabel)}</p>
           <p className="mt-0.5 text-[18px] font-semibold tracking-[-0.01em] text-cta">{t(content.price)}</p>
         </div>
-        {reviewCount > 0 ? (
-          <p className="shrink-0 pb-0.5 text-[11px] text-ink-soft">
-            <span className="text-gold">★</span>{" "}
-            {t(copy.tours.reviews).replace("{n}", String(reviewCount))}
-          </p>
-        ) : null}
       </div>
 
+      {/* 5 · 文案 */}
       <div className="border-t border-line bg-paper px-4 py-4">
         <FeatureParagraphs text={t(content.feature)} collapsible />
       </div>
 
-      {/* 等高卡片多余高度落在这里，避免介绍区被拉开、展开按钮悬空 */}
-      <div className="min-h-0 flex-1 bg-paper" aria-hidden />
-
-      <div className="border-t border-line px-4 pt-3.5 pb-3.5">
+      {/* 6 · 费用 + CTA（行高由 subgrid 对齐；CTA 贴底） */}
+      <div className="flex min-h-0 h-full flex-col border-t border-line px-4 pt-3.5 pb-3.5">
         <p className="mb-2 text-[10px] font-semibold tracking-[0.1em] text-cta uppercase">
           {t(copy.tours.included)}
         </p>
@@ -229,18 +237,19 @@ function RouteCard({
             </li>
           ))}
         </ul>
-        {/* 高于展开热区，保留手型光标 */}
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onOpenItinerary();
-          }}
-          className="cta-sheen relative z-[2] mt-3.5 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-cta px-4 py-[11px] text-[13px] font-medium text-paper transition-colors hover:bg-cta-press"
-        >
-          {t(copy.tours.quoteBar)}
-          <IconArrow />
-        </button>
+        <div className="relative z-[2] mt-auto pt-3.5">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenItinerary();
+            }}
+            className="cta-sheen flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-cta px-4 py-3 text-paper transition-colors hover:bg-cta-press"
+          >
+            <QuoteBarLabel />
+            <IconArrow className="shrink-0" />
+          </button>
+        </div>
       </div>
     </article>
   );
@@ -248,7 +257,6 @@ function RouteCard({
 
 /**
  * 居中展开大卡：左 2×2 等分媒体格（3 图 + 视频），右文案完整呈现（无文案内滚动）。
- * 整卡过高时由遮罩层滚动，介绍本身完整铺开。
  */
 function RouteExpandModal({
   routeId,
@@ -263,7 +271,6 @@ function RouteExpandModal({
 }) {
   const { t } = useLocale();
   const media = routeMedia[routeId];
-  const reviewCount = reviewsForRoute(routeId).length;
   const [videoOk, setVideoOk] = useState(false);
 
   useEffect(() => {
@@ -292,7 +299,6 @@ function RouteExpandModal({
           <IconClose className="h-4 w-4" />
         </button>
 
-        {/* 左：四个均等方格（圆角克制） */}
         <div className="grid grid-cols-2 gap-2 self-start">
           {media.gallery.map((path, i) => (
             <div key={path} className="relative aspect-square overflow-hidden rounded-md bg-bone">
@@ -325,7 +331,6 @@ function RouteExpandModal({
           </div>
         </div>
 
-        {/* 右：完整文案，不设文案内滚动 */}
         <div className="flex min-w-0 flex-col">
           <p className="text-[11px] font-bold tracking-[0.12em] text-cta uppercase">{t(content.badge)}</p>
           <h3 className="mt-1 pr-8 text-[24px] leading-tight font-medium text-ink md:text-[26px]">
@@ -371,20 +376,14 @@ function RouteExpandModal({
             <div>
               <p className="text-[10px] tracking-[0.08em] text-ink-soft uppercase">{t(copy.tours.priceLabel)}</p>
               <p className="mt-0.5 text-[20px] font-semibold tracking-[-0.01em] text-cta">{t(content.price)}</p>
-              {reviewCount > 0 ? (
-                <p className="mt-0.5 text-[11px] text-ink-soft">
-                  <span className="text-gold">★</span>{" "}
-                  {t(copy.tours.reviews).replace("{n}", String(reviewCount))}
-                </p>
-              ) : null}
             </div>
             <button
               type="button"
               onClick={onOpenItinerary}
-              className="cta-sheen inline-flex shrink-0 items-center gap-2 rounded-lg bg-cta px-4 py-2.5 text-[13px] font-medium text-paper hover:bg-cta-press"
+              className="cta-sheen inline-flex shrink-0 items-center gap-2 rounded-lg bg-cta px-4 py-3 text-paper hover:bg-cta-press"
             >
-              {t(copy.tours.quoteBar)}
-              <IconArrow />
+              <QuoteBarLabel />
+              <IconArrow className="shrink-0" />
             </button>
           </div>
         </div>
@@ -403,7 +402,6 @@ function FeatureParagraphs({
 }) {
   const { t } = useLocale();
   const [open, setOpen] = useState(false);
-  // 只按空行分段；段内软换行收成空格（中英文同一套）
   const paras = text
     .split(/\n\s*\n/)
     .map((s) => s.replace(/\s*\n\s*/g, " ").replace(/\s+/g, " ").trim())
@@ -483,9 +481,18 @@ function DashMark() {
   );
 }
 
-function IconArrow() {
+function IconArrow({ className = "" }: { className?: string }) {
   return (
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 13 13"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      className={className}
+      aria-hidden
+    >
       <path d="M2.5 6.5h7M7 4l2.5 2.5L7 9" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
