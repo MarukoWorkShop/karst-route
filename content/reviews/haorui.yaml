@@ -1,0 +1,39 @@
+# 用户评价 · 郝蕊
+# route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg
+
+src: zh
+flag: 🇨🇳
+name: 郝蕊
+country: 中国
+route: r3
+rating: 5
+date: 2026-09-01
+short:
+  en: On Weizhou, the most beautiful scenery is the people
+  zh: 涠洲岛，最美的风景是人
+full:
+  en: |-
+    Why has Weizhou been so loved lately? Three days on the island left me wanting to say it out loud: “On Weizhou, the most beautiful scenery is the people.” 😜
+
+    Besides Aliang and Asang, thank you to Sister Xiaochen for cooking a table just for us, to Ahao for letting us book out the island café, and to Runxia for quietly walking with us.
+
+    Your perseverance, hard work, warmth and kindness are what bring Weizhou’s beauty into view, piece by piece.
+
+    Talking face to face with you made our trip not only beautiful and full of care, but also truly and uniquely storied.
+
+    Thank you!
+  zh: |-
+    为什么涠洲岛近年不断被热捧？这次岛上三天所见所得，让人想说那句话“涠洲岛，最美的风景是人”😜
+
+    除了帅哥阿亮和小姐姐阿桑，还要感谢只做一桌好饭专门给我们吃的小宸姐，让我们包场环岛咖啡的阿昊，以及默默陪伴的润夏等等。
+
+    是你们的坚守、奋斗、热诚和纯善，才终将涠洲岛的美好与珍贵一一呈现。
+
+    与你们面对面的交流，让我们的旅程，不仅有美有爱，还拥有真实又独特的故事性。
+
+    谢谢！
+photos:
+  - destinations/chongzuo.jpg
+  - destinations/detian.jpg
+  - destinations/chongzuo-mijing.jpg
+  - destinations/nanning.jpg
