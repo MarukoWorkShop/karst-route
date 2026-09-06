@@ -38,6 +38,13 @@ export const IconChevron = (p: P) => (
     <path d="M7 10l5 5 5-5" />
   </I>
 );
+/** Double chevron pointing up (mobile dock affordance). */
+export const IconChevronsUp = (p: P) => (
+  <I {...p} strokeWidth={2}>
+    <path d="M7 15.5 12 10.5 17 15.5" />
+    <path d="M7 20 12 15 17 20" />
+  </I>
+);
 export const IconExternal = (p: P) => (
   <I {...p}>
     <path d="M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4M14 4h6v6M10 14 20 4" />

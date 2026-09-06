@@ -187,7 +187,7 @@ function DayRow({
         onClick={onToggle}
         className="flex min-h-14 w-full items-center gap-3 px-4 py-3 text-left"
       >
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cta text-[13px] font-medium text-cta">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-cta text-[12px] font-medium text-cta">
           {n}
         </span>
         <span className="min-w-0 flex-1 text-[17px] font-medium text-ink">{city}</span>
@@ -200,7 +200,8 @@ function DayRow({
       </button>
       {open ? (
         <div className="px-4">
-          <DayDetailContent day={day} showDetail={showDetail} />
+          {/* 手风琴行已有标题，详情里不再重复 */}
+          <DayDetailContent day={day} showDetail={showDetail} hideHeader />
         </div>
       ) : null}
     </li>
@@ -234,7 +235,7 @@ function DayListItem({
         }`}
       >
         <span
-          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-[13px] font-medium ${
+          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-[12px] font-medium ${
             selected ? "border-cta bg-cta text-paper" : "border-cta text-cta"
           }`}
         >
@@ -259,10 +260,17 @@ function DayListItem({
 }
 
 /** 一天的详情内容：图 + 讲解词 + 深度讲解 + 看点 + 交通/住宿/餐饮表。
- *  移动端展开态与桌面右栏共用。 */
-function DayDetailContent({ day, showDetail }: { day: DayStop; showDetail?: boolean }) {
+ *  移动端展开态与桌面右栏共用；移动端手风琴已自带标题时传 hideHeader。 */
+function DayDetailContent({
+  day,
+  showDetail,
+  hideHeader,
+}: {
+  day: DayStop;
+  showDetail?: boolean;
+  hideHeader?: boolean;
+}) {
   const { t } = useLocale();
-  const n = String(day.day).padStart(2, "0");
   const place = day.placeId ? places[day.placeId] : null;
   const story = day.placeId ? placeStories[day.placeId] : null;
   const city = t(day.city);
@@ -289,19 +297,20 @@ function DayDetailContent({ day, showDetail }: { day: DayStop; showDetail?: bool
       : [];
 
   return (
-    <div className="pb-5">
-      {/* 顶部：编号 chip + 城市 + 副标题 */}
-      <div className="mb-4 flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cta text-[13px] font-medium text-cta">
-          {n}
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-[20px] font-medium text-ink">{city}</p>
+    <div className={hideHeader ? "pt-1 pb-5" : "pb-5"}>
+      {!hideHeader ? (
+        <div className="mb-4 flex items-center gap-3">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-cta text-[12px] font-medium text-cta">
+            {String(day.day).padStart(2, "0")}
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[20px] font-medium text-ink">{city}</p>
+          </div>
+          <span className="max-w-[48%] shrink-0 truncate text-right text-[13px] text-ink-soft">
+            {subtitle}
+          </span>
         </div>
-        <span className="max-w-[48%] shrink-0 truncate text-right text-[13px] text-ink-soft">
-          {subtitle}
-        </span>
-      </div>
+      ) : null}
 
       {photos.length > 0 ? (
         <div

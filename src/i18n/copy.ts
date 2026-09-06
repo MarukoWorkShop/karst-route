@@ -568,6 +568,8 @@ export const copy = {
   dock: {
     tours: { en: "Tours", zh: "路线" },
     plan: { en: "Plan", zh: "定制" },
+    expand: { en: "Show route shortcuts", zh: "展开路线与定制" },
+    collapse: { en: "Hide route shortcuts", zh: "收起路线与定制" },
   },
   faq: {
     h2: { en: "Things you might want to know", zh: "出行前，您可能想知道" },
