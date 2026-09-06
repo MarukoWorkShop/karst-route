@@ -42,9 +42,11 @@ jobs:
             git commit -m "chore(content): sync from Notion [skip ci]"
             git push
           fi
+      # Custom domain (boutique-routes.guilinvillage.com) serves at site root.
+      # Building with /karst-route/ makes JS/CSS 404 and leaves only the HTML skeleton.
       - run: npm run build
         env:
-          PAGES_BASE: ${{ steps.pages.outputs.base_path }}
+          PAGES_BASE: /
           VITE_WEB3FORMS_ACCESS_KEY: ${{ secrets.VITE_WEB3FORMS_ACCESS_KEY }}
           VITE_MEDIA_BASE: https://youxian-travel-1412422924.cos.ap-guangzhou.myqcloud.com
           # 测试期：Hero 只轮播 poster，不拉 COS 视频流量
