@@ -127,7 +127,8 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           rewrite: (p) => p.replace(/^\/hero-media/, ""),
           headers: {
-            Referer: "https://marukoworkshop.github.io/karst-route/",
+            // Match production custom domain so local /hero-media proxy passes COS referer rules.
+            Referer: "https://boutique-routes.guilinvillage.com/",
           },
         },
       },

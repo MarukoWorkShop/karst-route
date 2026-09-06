@@ -1,9 +1,8 @@
 import { cosUrl, isCosMedia } from "@/lib/media";
 
 /**
- * Static asset URL. Hero videos load from Tencent COS;
- * destinations / brand / tours / literature / reviews stay on GitHub Pages
- * (local `public/`) until you intentionally move them to the bucket.
+ * Static asset URL. destinations / tours / reviews / videos load from Tencent COS;
+ * brand / literature / fonts stay on GitHub Pages (`public/`).
  */
 export function asset(path: string) {
   const p = path.replace(/^\//, "");

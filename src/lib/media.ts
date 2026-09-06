@@ -2,12 +2,11 @@
 export const COS_BASE = "https://youxian-travel-1412422924.cos.ap-guangzhou.myqcloud.com";
 
 /**
- * Only these prefixes load from COS.
- * `destinations/` stays on GitHub Pages / local `public/` so newly added jpgs
- * work as soon as they are in the repo — no separate COS upload required.
- * Hero videos remain on COS (large; gitignored).
+ * These prefixes load from COS (Guangzhou). Keep object keys identical to
+ * `public/<prefix>/…` so Notion/YAML paths stay as `destinations/foo.jpg`.
+ * Brand / literature / fonts stay on GitHub Pages.
  */
-const COS_PREFIXES = ["videos/"] as const;
+const COS_PREFIXES = ["videos/", "destinations/", "tours/", "reviews/"] as const;
 
 export const heroVideoOff = import.meta.env?.VITE_HERO_VIDEO_OFF === "1";
 
