@@ -1,0 +1,29 @@
+# 用户评价 · 【萌娃探中国】团队会员
+# route 只能填 r1 / r2 / r3；photos 写 reviews/文件名.jpg 或 .mp4（勿用 destinations）
+
+src: zh
+flag: 🇨🇳
+name: 【萌娃探中国】团队会员
+country: 中国
+route: r2
+rating: 5
+date: 2025-12-17
+short:
+  en: The itinerary was meticulous and considerate, taking great care of both adults and children in every respect. A special thanks to 'Big Sister' for capturing so many precious moments on camera for us throughout the journey.
+  zh: 行程安排贴心细致，方方面面都照顾到大人和孩子，也辛苦大师姐一路抓拍记录下很多珍贵瞬间。
+full:
+  en: |-
+    "Thank you to 'Big Sister', Xiao Wu, and the team for your attentive company and thoughtful arrangements over the past five days. ❤️
+    Our Guilin family trip was incredibly fulfilling and meaningful. It was far more than just a quick glance at the scenery. We enjoyed immersive experiences like picking passion fruit, building traditional stilt houses, night fishing with cormorants, riding bamboo rafts on the Li River (truly feeling like 'traveling within a painting'), and cave via ferrata. We also visited a century-old house where an 80-year-old grandmother shared the 170-year history of the home, allowing the children to learn and grow while having fun.
+    The itinerary was meticulous and considerate, taking great care of both adults and children in every respect. A special thanks to 'Big Sister' for capturing so many precious moments on camera for us throughout the journey.
+    A deeply rewarding journey through the mountains and rivers, and an exceptionally pleasant trip! We couldn't have asked for anything more, and we are so grateful for your hard work.
+    Wishing the team all the best, and we look forward to crossing paths again in beautiful Guilin in the future!”
+  zh: |-
+    感谢大师姐小伍和团队这五天的悉心陪伴与用心安排❤️
+    整个桂林亲子之旅充实又有意义，不只是走马观花看山水，摘百香果、搭建吊脚楼、鸬鹚夜捕、坐漓江竹筏感受“人在画中游”和岩洞飞拉达这些沉浸式体验，还有参观百年老屋听八旬句老奶奶讲诉170年老屋的岁月，让孩子在玩乐当中增长见识、收获成长。
+    行程安排贴心细致，方方面面都照顾到大人和孩子，也辛苦大师姐一路抓拍记录下很多珍贵瞬间。
+    山水一程，收获满满，非常愉快的一次出行！些许不周完全谈不上，非常感谢你们的付出。
+    祝团队一切顺遂，期待未来有缘再次相逢大美桂林！
+photos:
+  - reviews/babyinguilin5.jpg
+  - reviews/babyinguilin6.jpg

@@ -155,6 +155,7 @@ Notion 里现在可能还叫 `01-路线卡片.csv`。点标题，改成：
 | `src` | 选择：`zh` / `en` |
 | `route` | 选择：`r1` `r2` `r3`（或也改成关联「路线卡片」） |
 | `rating` | 数字 |
+| `photos` | 文本；一行一条路径，写 `reviews/文件名.jpg`（图放在仓库 `public/reviews/`）。**不要**写 `destinations/...` |
 
 **FAQ / 商家 / 轮播 / 关于我们**
 

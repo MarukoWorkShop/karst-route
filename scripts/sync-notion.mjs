@@ -6,7 +6,10 @@
  *
  * Bilingual fields use keepTx (scripts/lib/keepTx.mjs):
  * - src language ← Notion (fallback YAML)
- * - translation ← YAML unless Notion text is non-empty and differs from YAML
+ * - translation ← Notion when non-empty and different from YAML (intentional edit);
+ *   if src changed but Notion translation is empty or still the old companion text,
+ *   clear translation so deploy can re-translate. Empty Notion alone never clears
+ *   translation when src is unchanged.
  */
 import { execSync } from "node:child_process";
 import fs from "node:fs";
@@ -701,9 +704,25 @@ async function main() {
     const pages = await queryAll(token, dbs.reviews);
     const relDir = "content/reviews";
     const wanted = new Set();
+    /** slug 必须唯一；空 slug 或重名时用日期 / page id 后缀，避免互相覆盖。 */
+    const reviewSlug = (page) => {
+      let base = (text(page, "slug") || text(page, "标题")).trim().replace(/\s+/g, "-").toLowerCase();
+      if (!base) {
+        const name = text(page, "name").trim().replace(/\s+/g, "-").toLowerCase() || "review";
+        const date = text(page, "date") || page.id.replace(/-/g, "").slice(0, 8);
+        base = `${name}-${date}`;
+      }
+      let slug = base;
+      if (wanted.has(slug)) {
+        const date = text(page, "date") || page.id.replace(/-/g, "").slice(0, 8);
+        slug = `${base}-${date}`;
+      }
+      if (wanted.has(slug)) slug = `${base}-${page.id.replace(/-/g, "").slice(0, 8)}`;
+      if (slug !== base) console.log(`review slug 重名/空 → 使用 ${slug}.yaml`);
+      return slug;
+    };
     for (const page of pages) {
-      const slug = (text(page, "slug") || text(page, "标题")).trim().replace(/\s+/g, "-").toLowerCase();
-      if (!slug) continue;
+      const slug = reviewSlug(page);
       wanted.add(slug);
       const rel = `${relDir}/${slug}.yaml`;
       if (!published(page)) {
@@ -720,7 +739,7 @@ async function main() {
       const route = resolveRoute(page, titleByPageId) || prev.route || "r1";
       writeYaml(
         rel,
-        `# 用户评价 · ${text(page, "name") || slug}\n# route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg`,
+        `# 用户评价 · ${text(page, "name") || slug}\n# route 只能填 r1 / r2 / r3；photos 写 reviews/文件名.jpg 或 .mp4（勿用 destinations）`,
         {
           src: srcLang,
           flag: text(page, "flag"),

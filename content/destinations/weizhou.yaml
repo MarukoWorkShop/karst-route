@@ -1,0 +1,38 @@
+# 目的地详情 · weizhou
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Volcanic island, cliff above the sea
+  zh: 火山岛，悬崖上海
+photo: destinations/weizhoudao4.jpg
+experience:
+  title:
+    en: Coral church, Bailing House, the blue bridge
+    zh: 珊瑚教堂、百龄楼、蓝桥
+  body:
+    en: A century-old Catholic church built from the island's own coral stone; beside it, Bailing House, nearly two hundred years old, with wood-fired bread from the courtyard. Crocodile Mountain is the volcanic geology at its purest — and the Blue Bridge runs 2.3 km straight into a sea the colour of jelly.
+    zh: 百年天主教堂，用岛上特有的珊瑚石垒砌而成；旁边的百龄楼有近两百年历史，院子里柴窑烤的面包松软可口。鳄鱼山是火山地质最纯粹的一段，蓝桥则 2.3 公里直通入海，海水蓝绿得像果冻。
+cuisine:
+  title:
+    en: Island tables, harbour market
+    zh: 岛上的饭桌与海鲜市场
+  body:
+    en: "Walk the fishing-harbour market with the islanders, then eat where the catch is still named by the boat that brought it — cliffside dinners, coral-stone courtyards, and Nanwan at dusk."
+    zh: 跟着岛民逛对渔船码头的海鲜市场，再坐下来吃——船上叫得出名字的鲜货，悬崖晚餐、珊瑚石院子，还有暮色里的南湾。
+hotel:
+  title:
+    en: Cliffside above the sea
+    zh: 悬崖上的海景房
+  body:
+    en: "Two nights on the cliff so the island has a morning and an evening that are not ferry schedules — the sea stays in the window."
+    zh: 悬崖上连住两晚，让岛上有不属于船班表的早晨与黄昏——海一直在窗外。
+  photo: destinations/weizhoudao7.jpg
+culture:
+  en: "Weizhou is Guangxi's offshore chapter: coral stone, lava rock, and a harbour that still smells of diesel and salt. Two nights so the island is a place you wake up in, not a day trip you tick off."
+  zh: 涠洲是广西伸到海里的一章：珊瑚石、火山岩，码头还带着柴油和盐的气味。连住两晚，让岛变成你醒来的地方，而不是打卡一日游。
+slides:
+  - destinations/bailinglou1.jpg
+  - destinations/weizhoudao4.jpg
+  - destinations/weizhoudao8.jpg

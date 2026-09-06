@@ -1,0 +1,38 @@
+# 目的地详情 · beihai
+# 每日详情「体验 / 餐饮 / 住宿」与 culture 兜底介绍
+# photo / hotel_photo / slides 只写 public 下相对路径
+
+src: zh
+tagline:
+  en: Mingshi by day, Silver Beach by night
+  zh: 白天明仕，夜里银滩
+photo: destinations/mingshi-1.jpg
+experience:
+  title:
+    en: Mingshi by buggy, then the coast
+    zh: 明仕观光车，再赴海岸
+  body:
+    en: "Mingshi is best taken sitting down: a buggy rides past turning peaks, flowing water and rice fields sliding by while farmhouse smoke drifts up. By evening the road turns south to Beihai — Silver Beach and Qiaogang, where Vietnamese flavours meet Cantonese seafood."
+    zh: 明仕田园最适合坐着看：观光车慢行，窗外山在转、水在流，成片稻田从身旁滑过，农舍炊烟慢慢升上天。傍晚路往南折向北海——银滩与侨港，越南风味与广式海鲜在这里相遇。
+cuisine:
+  title:
+    en: Basket feast, then Qiaogang
+    zh: 簸箕宴，再逛侨港
+  body:
+    en: "Lunch is a basket feast in the Mingshi countryside — small dishes shared at a round table. Dinner belongs to Qiaogang food street: seafood stalls, Vietnamese herbs, and whatever the evening crowd is queueing for."
+    zh: 午餐是明仕乡下的簸箕宴，小菜围着圆桌转。晚餐交给侨港美食街：海鲜摊、越南香料，跟着人多的队伍走就对了。
+hotel:
+  title:
+    en: Resort by Silver Beach
+    zh: 银滩边的度假酒店
+  body:
+    en: "A Beihai resort night so tomorrow's ferry to Weizhou starts from the coast, not from another long drive inland."
+    zh: 北海度假一晚，是为了明天上涠洲从海岸出发，而不是再从内陆赶一程。
+  photo: destinations/hotel-c.jpg
+culture:
+  en: "Beihai is the hinge between Guangxi's karst west and the island day — Mingshi still in the rear-view, Silver Beach ahead, and Weizhou waiting offshore."
+  zh: 北海是广西西部喀斯特与海岛日之间的转轴——明仕还在后视镜里，银滩在前，涠洲在海上等着。
+slides:
+  - destinations/mingshi-1.jpg
+  - destinations/mingshi-2.jpg
+  - destinations/mingshi-3.jpg

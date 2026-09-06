@@ -13,6 +13,8 @@ const THEMES: ThemeId[] = ["wild", "flavors", "villages", "locals"];
 const PLACES: PlaceId[] = [
   "nanning",
   "chongzuo",
+  "beihai",
+  "weizhou",
   "halong",
   "catba",
   "hanoi",

@@ -1,0 +1,28 @@
+# 用户评价 · 匿名
+# route 只能填 r1 / r2 / r3；photos 写 reviews/文件名.jpg 或 .mp4（勿用 destinations）
+
+src: en
+flag: 🇺🇸
+name: 匿名
+country: "U.S.A "
+route: r2
+rating: 5
+date: 2026-04-05
+short:
+  en: With the assistance of our English speaking guides we learnt of the traditional and modern way of life in this fascinating country.
+  zh: 在英语导游的帮助下，我们了解了这个迷人国家传统与现代的生活方式。
+full:
+  en: |-
+    Highlights tour of China with a wheelchair
+    A visit to China was on the bucket list of my husband who is confined to a wheelchair. Despite our concerns about accessibility, we were pleasantly surprised to learn that Chanel could make it happen and she did.
+    With the assistance of our English speaking guides we learnt of the traditional and modern way of life in this fascinating country.
+    Alex, our guide throughout our entire 14 day highlights journey from Beijing to Shanghai worked extremely hard to ensure my husband could safely experience as much of the historic, geographic and cultural aspects as possible. Chanel was behind the scenes ensuring every detail was considered.
+    We were extremely impressed with this company and would travel with them to Asia again.
+  zh: |-
+    轮椅上的中国精华游
+    去中国旅游是我那需要坐轮椅的丈夫的愿望清单之一。尽管我们对无障碍设施有所担忧，但得知Chanel能够帮我们实现这个愿望时，我们感到非常惊喜，而且她确实做到了。
+    在英语导游的帮助下，我们了解了这个迷人国家传统与现代的生活方式。
+    Alex是我们从北京到上海这14天精华游全程的导游，他非常努力地确保我丈夫能够安全地体验尽可能多的历史、地理和文化风情。Chanel则在幕后确保每一个细节都考虑周全。
+    我们对这家公司印象极其深刻，并且愿意再次与他们一起前往亚洲旅游。
+photos:
+  - reviews/2.mp4

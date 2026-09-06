@@ -1,0 +1,17 @@
+# 用户评价 · Melarie
+# route 只能填 r1 / r2 / r3；photos 写 reviews/文件名.jpg 或 .mp4（勿用 destinations）
+
+src: en
+flag: 🇦🇺
+name: Melarie
+country: "Australia "
+route: r2
+rating: 5
+date: 2025-10-16
+short:
+  en: Thank you very much for organising our trip, booking our hotels and train tickets, answering all my questions so quickly, for being so flexible and changing the itinerary, rebooking the train tickets
+  zh: 非常感谢你为我们规划行程、预订酒店和火车票，如此迅速地解答我的所有问题，如此灵活地帮我们修改行程并重新预订火车票。
+full:
+  en: Thank you Chanel 💖 Thank you very much for organising our trip, booking our hotels and train tickets, answering all my questions so quickly, for being so flexible and changing the itinerary, rebooking the train tickets, for your very generous gift, and being so lovely, kind and considerate.
+  zh: 谢谢你，Chanel 💖 非常感谢你为我们规划行程、预订酒店和火车票，如此迅速地解答我的所有问题，如此灵活地帮我们修改行程并重新预订火车票。感谢你非常慷慨的礼物，以及你的可爱、友善和体贴。
+photos: []

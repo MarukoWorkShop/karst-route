@@ -625,8 +625,9 @@ const fallbackRoutes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
           "黑水河是崇左喀斯特最像画的一段：两岸峰林高耸、原始植被茂密，河水碧绿清澈，山的倒影静静铺在水面，船行其中，像驶进一幅水墨丹青。",
         ),
         photos: [
-          asset("/destinations/chongzuo.jpg"),
           asset("/destinations/chongzuo-mijing.jpg"),
+          asset("/destinations/chongzuo.jpg"),
+          asset("/destinations/chongzuo-rachel.jpg"),
         ],
         bullets: [
           L("Black Water River boat trip", "黑水河游船"),
@@ -651,7 +652,11 @@ const fallbackRoutes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
           "Detian shares the title of Asia's largest trans-national waterfall with Vietnam's Ban Gioc. The Guichun River breaks over a limestone fault and drops 70 metres in three tiers — on sunny days the spray throws a standing rainbow. Afterwards, coffee inside a natural karst cave right on the border line.",
           "德天瀑布与越南板约瀑布共享「亚洲第一大跨国瀑布」之名。归春河在这里冲破喀斯特断层，从 70 米高的崖壁分三级跌落，晴日里水雾中常常挂起一道彩虹。随后在边境线上的天然溶洞里喝一杯咖啡。",
         ),
-        photos: [asset("/destinations/detian.jpg")],
+        photos: [
+          asset("/destinations/chongzuo-detianfalls1.jpg"),
+          asset("/destinations/chongzuo-detianfalls2.jpg"),
+          asset("/destinations/chongzuo-detianfalls7.jpg"),
+        ],
         bullets: [
           L("Detian falls", "德天瀑布"),
           L("Blue Cave café", "蓝洞咖啡"),
@@ -664,6 +669,7 @@ const fallbackRoutes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
         city: L("Beihai", "北海"),
         stay: L("By Silver Beach", "银滩边"),
         stayKind: "hotel",
+        placeId: "beihai",
         drive: L("Mingshi → Beihai", "明仕赴北海"),
         transport: L("Mingshi Pastoral by buggy, then drive to Beihai", "观光车游览明仕田园，之后赴北海"),
         lodging: L("Beihai Marriott Resort", "北海万豪度假酒店"),
@@ -675,7 +681,11 @@ const fallbackRoutes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
           "Mingshi is best taken sitting down: a buggy rides past turning peaks, flowing water and rice fields sliding by while farmhouse smoke drifts up. By evening the coast takes over — Silver Beach, and Qiaogang's night market where Vietnamese flavours meet Cantonese seafood.",
           "明仕田园最适合坐着看：观光车慢行，窗外山在转、水在流，成片稻田从身旁滑过，农舍炊烟慢慢升上天。傍晚交给海岸——银滩，还有侨港美食街，越南风味与广式海鲜在这里相遇。",
         ),
-        photos: [asset("/destinations/chongzuo.jpg"), asset("/destinations/catba.jpg")],
+        photos: [
+          asset("/destinations/mingshi-1.jpg"),
+          asset("/destinations/mingshi-2.jpg"),
+          asset("/destinations/mingshi-3.jpg"),
+        ],
         bullets: [
           L("Mingshi Pastoral by buggy", "观光车游览明仕田园"),
           L("Silver Beach", "自由逛银滩"),
@@ -688,6 +698,7 @@ const fallbackRoutes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
         city: L("Weizhou Island", "涠洲岛"),
         stay: L("Cliffside above the sea", "悬崖上的海景房"),
         stayKind: "hotel",
+        placeId: "weizhou",
         transport: L("Ferry to Weizhou, then a circuit of the island", "乘船上岛，环岛游"),
         lodging: L("Whale Cliff resort", "巨鲸悬崖度假酒店"),
         dining: [
@@ -699,8 +710,9 @@ const fallbackRoutes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
           "百年天主教堂，用岛上特有的珊瑚石垒砌而成；旁边的百龄楼有近两百年历史，院子里柴窑烤的面包松软可口。石螺口因海湾形似螺口得名，浮潜就能看见热带鱼群。",
         ),
         photos: [
-          asset("/destinations/catba.jpg"),
-          asset("/destinations/halong-natgeo.jpg"),
+          asset("/destinations/bailinglou1.jpg"),
+          asset("/destinations/weizhoudao4.jpg"),
+          asset("/destinations/weizhoudao6.jpeg"),
         ],
         bullets: [
           L("Coral-stone Catholic church", "珊瑚石天主堂"),
@@ -715,6 +727,7 @@ const fallbackRoutes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
         city: L("Weizhou Island", "涠洲岛"),
         stay: L("Same cliffside room", "同一间悬崖房"),
         stayKind: "hotel",
+        placeId: "weizhou",
         transport: L("Market, Nanwan, offshore fishing, Crocodile Mountain", "海鲜市场、南湾街、远海海钓、鳄鱼山"),
         lodging: L("Whale Cliff resort — second night", "巨鲸悬崖度假酒店 · 第二晚"),
         dining: [
@@ -726,8 +739,9 @@ const fallbackRoutes: Record<RouteId, { id: RouteId; days: DayStop[] }> = {
           "鳄鱼山是涠洲岛火山地质最纯粹的一段：红褐色火山岩千姿百态，海浪拍打溅起雪白浪花。跟着岛民逛对渔船码头的海鲜市场，走南湾街的海岸公路，还有那条 2.3 公里直通入海的蓝桥，海水蓝绿得像果冻。",
         ),
         photos: [
-          asset("/destinations/catba.jpg"),
-          asset("/destinations/catba-wanderlost.jpg"),
+          asset("/destinations/weizhoudao7.jpg"),
+          asset("/destinations/weizhoudao8.jpg"),
+          asset("/destinations/weizhoudao11.jpg"),
         ],
         bullets: [
           L("Fishing harbour market", "海鲜市场"),

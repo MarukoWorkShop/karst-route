@@ -25,6 +25,8 @@ const files = import.meta.glob("../../content/destinations/*.yaml", {
 const PLACE_IDS: PlaceId[] = [
   "nanning",
   "chongzuo",
+  "beihai",
+  "weizhou",
   "halong",
   "catba",
   "hanoi",

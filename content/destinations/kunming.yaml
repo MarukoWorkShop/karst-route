@@ -6,7 +6,7 @@ src: zh
 tagline:
   en: Green Lake, then the airport
   zh: 翠湖，然后机场
-photo: destinations/kunming.jpg
+photo: destinations/kunming-cuihu-1.jpg
 experience:
   title:
     en: Green Lake and the old street
@@ -33,6 +33,6 @@ culture:
   en: Kunming is the spring city — year-round twenty degrees, willows on Green Lake, gulls from Siberia in November. Most trips end here as a flight home; we end here as a last walk, the city easy enough to still receive you.
   zh: 昆明是春城——常年二十度上下，翠湖的柳，十一月有从西伯利亚来的红嘴鸥。多数行程在这里结束于一趟回家的航班；我们在这里结束于最后一走，城市松到还接得住你。
 slides:
-  - destinations/kunming.jpg
-  - destinations/hotel-c.jpg
-  - destinations/jianshui.jpg
+  - destinations/kunming-xicangpo.jpg
+  - destinations/kunming-cuihu-2.jpg
+  - destinations/kunming-old-town.jpg

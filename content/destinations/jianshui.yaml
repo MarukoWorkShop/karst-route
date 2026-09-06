@@ -6,7 +6,7 @@ src: zh
 tagline:
   en: Hekou in, old town dust
   zh: 河口入境，古城的土
-photo: destinations/jianshui.jpg
+photo: destinations/jianshui-oldtown2.jpg
 experience:
   title:
     en: Mini-train and Tuanshan
@@ -33,6 +33,6 @@ culture:
   en: "Jianshui is one of the few Chinese old towns that still believes it's one: a Confucian temple still standing, courtyard houses still lived in, the narrow-gauge still running. The Yunnan after Hekou begins here as lanes and tofu, not as a highway plaza."
   zh: 建水是少数还信自己是古城的古城：文庙还立着，院子还住着，米轨小火车还在开。过了河口，云南就从巷子和豆腐开始了，不是高速服务区。
 slides:
-  - destinations/jianshui.jpg
-  - destinations/hotel-d.jpg
-  - destinations/kunming.jpg
+  - destinations/jianshui-twindragonbridge1.jpg
+  - destinations/jianshui-oldtown4.jpg
+  - destinations/jianshui-train4.jpg

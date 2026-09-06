@@ -1,21 +1,21 @@
-# 用户评价 · 林 晓燕
-# route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg
+# 用户评价 · 【萌娃探中国】团队会员
+# route 只能填 r1 / r2 / r3；photos 写 reviews/文件名.jpg 或 .mp4（勿用 destinations）
 
 src: zh
 flag: 🇨🇳
-name: 林 晓燕
-country: 上海
+name: 【萌娃探中国】团队会员
+country: 中国
 route: r2
 rating: 5
-date: 2025-12-17
+date: 2026-08-12
 short:
-  en: Thoughtfully arranged, excellent guide — the whole trip exceeded expectations.
-  zh: 行程安排得非常用心，向导很专业，整个旅途超出预期。
+  en: Just now, my son told me very seriously, 'Mom, I want to come back to Guilin next year, and I want to travel with Big Sister again.' A child's heartfelt affection is the greatest testament of all.
+  zh: 刚刚仔仔很认真的跟我说，妈妈明年我还想来桂林，还想找大师姐。孩子发自内心的喜欢，就是最好的证明。
 full:
-  en: Our family of four tried a cross-border journey for the first time — we were nervous before departure. But from the airport pickup on day one, every detail was handled. Our Vietnam guide was incredibly engaging; even the kids loved it. It rained lightly at Detian Falls and the bamboo rafting felt even more atmospheric for it. The old courtyard guesthouse in Jianshui was unforgettable — the tofu soup at breakfast was the best meal of the whole trip. Highly recommended for families.
-  zh: 我们一家四口第一次尝试跨境自驾游，出发前非常忐忑。但从第一天的接机开始，每个细节都被安排得妥妥当当。越南段的向导小明讲解特别生动，孩子们也很喜欢。德天瀑布那天下了点小雨，竹筏漂流更有感觉。最后在建水住的那家老宅客栈让人印象深刻，早餐的豆腐脑是全程最好吃的一顿。强烈推荐有小孩的家庭！
+  en: This was my first time taking my child on a family educational camp. I was quite anxious before departure, worrying that the pace might not suit him and fearing the trip would just be superficial sightseeing. However, during this trip to Guilin, all my concerns were completely dispelled thanks to the meticulous coordination and constant companionship of 'Xiao Wu Big Sister' and the team. Thoughtfulness was evident throughout the entire itinerary, and so many details were handled perfectly, making us feel incredibly cared for. I believe the best review comes from a child's most authentic feedback. Just now, my son told me very seriously, 'Mom, I want to come back to Guilin next year, and I want to travel with Big Sister again.' A child's heartfelt affection is the greatest testament of all.
+  zh: 这是我初次带孩子参加亲子研学营，出发前内心颇多忐忑，既担心形成节奏不适合孩子，也怕旅行只是流于表面的观光。但这趟桂林之行，在小伍大师姐和团队的悉心统筹与全程陪伴下，所有顾虑都彻底打消。行程处处用心，诸多细节都处理得十分妥帖，让人倍感温暖。我想，最好的评价莫过于孩子最真实的反馈。刚刚仔仔很认真的跟我说，妈妈明年我还想来桂林，还想找大师姐。孩子发自内心的喜欢，就是最好的证明。
 photos:
-  - destinations/chongzuo.jpg
-  - destinations/jianshui.jpg
-  - destinations/hotel-a.jpg
-  - destinations/nanning.jpg
+  - reviews/babyinguilin1.jpg
+  - reviews/babyinguilin2.jpg
+  - reviews/babyinguilin3.jpg
+  - reviews/babyinguilin4.jpg

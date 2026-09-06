@@ -42,7 +42,7 @@ const placesFallback: Record<PlaceId, Place> = {
   chongzuo: {
     id: "chongzuo",
     tagline: L("Waterfall wonder", "瀑布边的田园"),
-    photo: asset("/destinations/chongzuo.jpg"),
+    photo: asset("/destinations/chongzuo-mijing.jpg"),
     experience: {
       title: L("Detian boat, both banks", "德天游船，两岸"),
       body: L(
@@ -64,6 +64,60 @@ const placesFallback: Record<PlaceId, Place> = {
         "对着峰丛的简单住宿，窗户框住的是山，不是停车场。我们住在路静下来的地方，不住游客街。",
       ),
       photo: asset("/destinations/hotel-b.jpg"),
+    },
+  },
+  beihai: {
+    id: "beihai",
+    tagline: L("Mingshi by day, Silver Beach by night", "白天明仕，夜里银滩"),
+    photo: asset("/destinations/mingshi-1.jpg"),
+    experience: {
+      title: L("Mingshi by buggy, then the coast", "明仕观光车，再赴海岸"),
+      body: L(
+        "Mingshi is best taken sitting down: a buggy rides past turning peaks, flowing water and rice fields sliding by while farmhouse smoke drifts up. By evening the road turns south to Beihai — Silver Beach and Qiaogang.",
+        "明仕田园最适合坐着看：观光车慢行，窗外山在转、水在流。傍晚路往南折向北海——银滩与侨港。",
+      ),
+    },
+    cuisine: {
+      title: L("Basket feast, then Qiaogang", "簸箕宴，再逛侨港"),
+      body: L(
+        "Lunch is a basket feast in the Mingshi countryside. Dinner belongs to Qiaogang food street — seafood stalls and Vietnamese herbs.",
+        "午餐是明仕乡下的簸箕宴。晚餐交给侨港美食街：海鲜摊与越南香料。",
+      ),
+    },
+    hotel: {
+      title: L("Resort by Silver Beach", "银滩边的度假酒店"),
+      body: L(
+        "A Beihai resort night so tomorrow's ferry to Weizhou starts from the coast.",
+        "北海度假一晚，好让明天上涠洲从海岸出发。",
+      ),
+      photo: asset("/destinations/hotel-c.jpg"),
+    },
+  },
+  weizhou: {
+    id: "weizhou",
+    tagline: L("Volcanic island, cliff above the sea", "火山岛，悬崖上海"),
+    photo: asset("/destinations/weizhoudao4.jpg"),
+    experience: {
+      title: L("Coral church, Bailing House, the blue bridge", "珊瑚教堂、百龄楼、蓝桥"),
+      body: L(
+        "A century-old Catholic church built from coral stone; Bailing House with wood-fired bread; Crocodile Mountain's lava rock; the Blue Bridge into jelly-blue sea.",
+        "珊瑚石天主堂、百龄楼的柴窑面包、鳄鱼山的火山岩，还有伸进果冻色海里的蓝桥。",
+      ),
+    },
+    cuisine: {
+      title: L("Island tables, harbour market", "岛上的饭桌与海鲜市场"),
+      body: L(
+        "Walk the fishing-harbour market with the islanders, then eat cliffside or in a coral-stone courtyard.",
+        "跟着岛民逛海鲜市场，再坐悬崖或珊瑚石院子吃饭。",
+      ),
+    },
+    hotel: {
+      title: L("Cliffside above the sea", "悬崖上的海景房"),
+      body: L(
+        "Two nights on the cliff so the island has a morning that is not a ferry schedule.",
+        "悬崖上连住两晚，让岛上有不属于船班表的早晨。",
+      ),
+      photo: asset("/destinations/weizhoudao7.jpg"),
     },
   },
   halong: {
@@ -353,7 +407,33 @@ const placeStoriesFallback: Record<PlaceId, { culture: Tx; slides: string[] }> =
       "Detian is the place where the map turns into spray: Vietnam and China on two banks of the same curtain of water. Mingshi is its quieter twin — karst, fields, a road so flat you forget the speed you built up to get here.",
       "德天是地图变成水花的地方：中越两国隔着一帘白水各站一边。明仕是它更安静的孪生——喀斯特、稻田、一条平到让你忘了来时赶路的公路。",
     ),
-    slides: [asset("/destinations/chongzuo.jpg"), asset("/destinations/hotel-b.jpg"), asset("/destinations/puzhehei.jpg")],
+    slides: [
+      asset("/destinations/chongzuo-mijing.jpg"),
+      asset("/destinations/chongzuo-detianfalls1.jpg"),
+      asset("/destinations/chongzuo-detianfalls7.jpg"),
+    ],
+  },
+  beihai: {
+    culture: L(
+      "Beihai is the hinge between Guangxi's karst west and the island day — Mingshi still in the rear-view, Silver Beach ahead, and Weizhou waiting offshore.",
+      "北海是广西西部喀斯特与海岛日之间的转轴——明仕还在后视镜里，银滩在前，涠洲在海上等着。",
+    ),
+    slides: [
+      asset("/destinations/mingshi-1.jpg"),
+      asset("/destinations/mingshi-2.jpg"),
+      asset("/destinations/mingshi-3.jpg"),
+    ],
+  },
+  weizhou: {
+    culture: L(
+      "Weizhou is Guangxi's offshore chapter: coral stone, lava rock, and a harbour that still smells of diesel and salt. Two nights so the island is a place you wake up in, not a day trip you tick off.",
+      "涠洲是广西伸到海里的一章：珊瑚石、火山岩，码头还带着柴油和盐的气味。连住两晚，让岛变成你醒来的地方，而不是打卡一日游。",
+    ),
+    slides: [
+      asset("/destinations/bailinglou1.jpg"),
+      asset("/destinations/weizhoudao4.jpg"),
+      asset("/destinations/weizhoudao8.jpg"),
+    ],
   },
   halong: {
     culture: L(

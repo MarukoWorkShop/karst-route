@@ -46,12 +46,12 @@ export function ItineraryCtas({
 
   return (
     <div className="mt-6 pb-3">
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col gap-2.5 md:flex-row md:items-stretch md:gap-3">
         <button
           type="button"
           disabled={pdfBusy}
           onClick={handlePdf}
-          className="flex w-full items-center justify-center gap-2 rounded-lg border border-line bg-surface px-4 py-[11px] text-[13px] font-medium text-ink transition-colors hover:border-cta/40 disabled:opacity-60"
+          className="flex w-full items-center justify-center gap-2 rounded-lg border border-line bg-surface px-4 py-[11px] text-[13px] font-medium text-ink transition-colors hover:border-cta/40 disabled:opacity-60 md:min-w-0 md:flex-1"
         >
           <IconDownload />
           {pdfBusy ? t(copy.tours.book.downloadingPdf) : t(copy.tours.book.downloadRoutePdf)}
@@ -60,7 +60,7 @@ export function ItineraryCtas({
           type="button"
           aria-expanded={reviewsOpen}
           onClick={handleReviews}
-          className={`flex w-full items-center justify-center gap-1.5 rounded-lg border px-4 py-[11px] text-[13px] font-medium transition-colors ${
+          className={`flex w-full items-center justify-center gap-1.5 rounded-lg border px-4 py-[11px] text-[13px] font-medium transition-colors md:min-w-0 md:flex-1 ${
             reviewsOpen
               ? "border-cta bg-cta/8 text-cta"
               : "border-line bg-surface text-ink hover:border-cta/40"
@@ -73,7 +73,7 @@ export function ItineraryCtas({
         <button
           type="button"
           onClick={() => onPlanQuote(routeId)}
-          className="cta-sheen flex w-full items-center justify-center gap-2 rounded-lg bg-cta px-4 py-[11px] text-[13px] font-medium text-paper transition-colors hover:bg-cta-press"
+          className="cta-sheen flex w-full items-center justify-center gap-2 rounded-lg bg-cta px-4 py-[11px] text-[13px] font-medium text-paper transition-colors hover:bg-cta-press md:min-w-0 md:flex-1"
         >
           {t(copy.tours.book.customizeQuote)}
           <IconChevron className="h-3.5 w-3.5 -rotate-90" />

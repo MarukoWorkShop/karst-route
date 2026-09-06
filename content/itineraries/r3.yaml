@@ -72,8 +72,9 @@ days:
     themes:
       - wild
     photos:
-      - destinations/chongzuo.jpg
       - destinations/chongzuo-mijing.jpg
+      - destinations/chongzuo.jpg
+      - destinations/chongzuo-rachel.jpg
   - day: 3
     city:
       en: Chongzuo
@@ -108,7 +109,9 @@ days:
       - wild
       - locals
     photos:
-      - destinations/detian.jpg
+      - destinations/chongzuo-detianfalls1.jpg
+      - destinations/chongzuo-detianfalls2.jpg
+      - destinations/chongzuo-detianfalls7.jpg
   - day: 4
     city:
       en: Beihai
@@ -146,8 +149,9 @@ days:
       - locals
       - flavors
     photos:
-      - destinations/chongzuo.jpg
-      - destinations/catba.jpg
+      - destinations/mingshi-1.jpg
+      - destinations/mingshi-2.jpg
+      - destinations/mingshi-3.jpg
   - day: 5
     city:
       en: Weizhou Island
@@ -156,7 +160,7 @@ days:
       en: Cliffside above the sea
       zh: 悬崖上的海景房
     stayKind: hotel
-    placeId: Weizhou Island
+    placeId: weizhou
     transport:
       en: Ferry to Weizhou, then a circuit of the island
       zh: 乘船上岛，环岛游
@@ -184,8 +188,9 @@ days:
       - locals
       - wild
     photos:
-      - destinations/catba.jpg
-      - destinations/halong-natgeo.jpg
+      - destinations/bailinglou1.jpg
+      - destinations/weizhoudao4.jpg
+      - destinations/weizhoudao6.jpeg
   - day: 6
     city:
       en: Weizhou Island
@@ -194,7 +199,7 @@ days:
       en: Same cliffside room
       zh: 同一间悬崖房
     stayKind: hotel
-    placeId: Weizhou Island
+    placeId: weizhou
     transport:
       en: Market, Nanwan, offshore fishing, Crocodile Mountain
       zh: 海鲜市场、南湾街、远海海钓、鳄鱼山
@@ -227,8 +232,9 @@ days:
       - flavors
       - wild
     photos:
-      - destinations/catba.jpg
-      - destinations/catba-wanderlost.jpg
+      - destinations/weizhoudao7.jpg
+      - destinations/weizhoudao8.jpg
+      - destinations/weizhoudao11.jpg
   - day: 7
     city:
       en: Depart

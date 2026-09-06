@@ -11,3 +11,5 @@ dist
 *.mov
 *.webm
 *.m4v
+# Exception: guest-review clips live with the site
+!public/reviews/*.mp4

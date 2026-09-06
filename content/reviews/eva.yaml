@@ -1,5 +1,5 @@
 # 用户评价 · Eva
-# route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg
+# route 只能填 r1 / r2 / r3；photos 写 reviews/文件名.jpg 或 .mp4（勿用 destinations）
 
 src: zh
 flag: 🇨🇳
@@ -9,13 +9,13 @@ route: r3
 rating: 5
 date: 2022-09-01
 short:
-  en: '"Become an agave — hold back the storms of life." What stays with me is Asang, host of the cliff garden: she never stops believing in herself. That kind of beauty has force, and it reaches other people.'
-  zh: 成为一颗龙舌兰，挡住人生的风浪“，我觉得悬崖花园主人阿桑最强大的地方，在于永远相信自己，美好有力量，感染到了更多的人。
+  en: Be like an agave, standing resilient against the storms of life.' I believe her greatest strength lies in her unwavering belief in herself. The beauty she creates possesses a quiet power that deeply inspires everyone it touches
+  zh: “成为一颗龙舌兰，挡住人生的风浪“，我觉得悬崖花园主人阿桑最强大的地方，在于永远相信自己，美好有力量，感染到了更多的人。
 full:
-  en: At the cliff garden on Weizhou Island, being a guest only feels like calm seas. Then we saw the garden Asang had actually grown into life, and I was genuinely in awe. "Become an agave — hold back the storms of life." I think her greatest strength is that she never stops believing in herself. Beauty has force, and it has reached so many more people.
+  en: At the Cliff Garden on Weizhou Island, guests often only perceive the calm and tranquility. But upon seeing the vibrant garden that A Sang has nurtured to life, one is filled with profound admiration. 'Be like an agave, standing resilient against the storms of life.' I believe her greatest strength lies in her unwavering belief in herself. The beauty she creates possesses a quiet power that deeply inspires everyone it touches
   zh: 在涠洲岛的悬崖花园，作为客人只感受到风平浪静的时候，但当我们看到了阿桑种活的一座花园，真是非常佩服。”成为一颗龙舌兰，挡住人生的风浪“，我觉得她最强大的地方，在于永远相信自己，美好有力量，感染到了更多的人。
 photos:
-  - destinations/sapa.jpg
-  - destinations/guantang.jpg
-  - destinations/jianshui.jpg
-  - destinations/puzhehei.jpg
+  - reviews/cliffgarden1.jpg
+  - reviews/cliffgarden2.jpg
+  - reviews/cliffgarden3.jpg
+  - reviews/weizhoudao1.jpeg

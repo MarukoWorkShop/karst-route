@@ -144,16 +144,33 @@ export function ReviewsFold({
                   {t(copy.tours.book.tripPhotos)}
                 </p>
                 <div className="grid grid-cols-2 gap-1.5">
-                  {active.photos.map((src, i) => (
-                    <div
-                      key={src + i}
-                      className={`overflow-hidden rounded-lg bg-bone ${
-                        active.photos.length === 3 && i === 0 ? "col-span-2 aspect-[2/1]" : "aspect-square"
-                      }`}
-                    >
-                      <img loading="lazy" src={src} alt="" className="h-full w-full object-cover" />
-                    </div>
-                  ))}
+                  {active.photos.map((src, i) => {
+                    const isVideo = /\.(mp4|webm|mov)(\?|#|$)/i.test(src);
+                    return (
+                      <div
+                        key={src + i}
+                        className={`overflow-hidden rounded-lg bg-bone ${
+                          active.photos.length === 3 && i === 0
+                            ? "col-span-2 aspect-[2/1]"
+                            : isVideo
+                              ? "col-span-2 aspect-video"
+                              : "aspect-square"
+                        }`}
+                      >
+                        {isVideo ? (
+                          <video
+                            src={src}
+                            controls
+                            playsInline
+                            preload="metadata"
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <img loading="lazy" src={src} alt="" className="h-full w-full object-cover" />
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ) : null}

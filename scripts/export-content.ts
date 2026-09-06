@@ -119,7 +119,7 @@ for (const r of travelerReviews) {
       full: r.full,
       photos: r.photos.map(photoPath),
     },
-    `# 用户评价 · ${r.name}\n# route 只能填 r1 / r2 / r3；photos 写 destinations/文件名.jpg\n`,
+    `# 用户评价 · ${r.name}\n# route 只能填 r1 / r2 / r3；photos 写 reviews/文件名.jpg（勿用 destinations）\n`,
   );
 }
 

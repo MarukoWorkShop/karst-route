@@ -1,5 +1,4 @@
 import type { RouteId, Tx } from "@/types";
-import { asset } from "@/lib/asset";
 import { overlayReviews, reviewRouteId } from "@/content/reviews";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
@@ -38,12 +37,7 @@ const fallbackReviews: TravelerReview[] = [
       "Our family of four tried a cross-border journey for the first time — we were nervous before departure. But from the airport pickup on day one, every detail was handled. Our Vietnam guide was incredibly engaging; even the kids loved it. It rained lightly at Detian Falls and the bamboo rafting felt even more atmospheric for it. The old courtyard guesthouse in Jianshui was unforgettable — the tofu soup at breakfast was the best meal of the whole trip. Highly recommended for families.",
       "我们一家四口第一次尝试跨境自驾游，出发前非常忐忑。但从第一天的接机开始，每个细节都被安排得妥妥当当。越南段的向导小明讲解特别生动，孩子们也很喜欢。德天瀑布那天下了点小雨，竹筏漂流更有感觉。最后在建水住的那家老宅客栈让人印象深刻，早餐的豆腐脑是全程最好吃的一顿。强烈推荐有小孩的家庭！",
     ),
-    photos: [
-      asset("/destinations/chongzuo.jpg"),
-      asset("/destinations/jianshui.jpg"),
-      asset("/destinations/hotel-a.jpg"),
-      asset("/destinations/nanning.jpg"),
-    ],
+    photos: [],
   },
   {
     id: "michelle",
@@ -61,11 +55,7 @@ const fallbackReviews: TravelerReview[] = [
       "I thought the border crossing would be complicated, but the guide handled everything. The Sapa morning was the trip's highlight — trekking through mist felt like stepping into another world. I got addicted to Vietnamese coffee and have been sourcing beans to recreate it at home. Exceptional value overall. I'll recommend this to every friend who wants a deep travel experience.",
       "我以为跨境会很麻烦，但向导处理了一切。沙坝的早晨是整个旅程的亮点——我们在迷雾中徒步，感觉就像走进了另一个世界。越南咖啡让我上瘾了，已经在网上找了好几种豆子回来复刻。总体上性价比极高，会推荐给所有想要深度游的朋友。",
     ),
-    photos: [
-      asset("/destinations/sapa.jpg"),
-      asset("/destinations/hanoi.jpg"),
-      asset("/destinations/catba.jpg"),
-    ],
+    photos: [],
   },
   {
     id: "james",
@@ -83,12 +73,7 @@ const fallbackReviews: TravelerReview[] = [
       "I've travelled extensively, but the logical design of this itinerary stood out — it doesn't just string sights together, it tells a story from coast to plateau. The overnight metre-gauge train was an unexpected joy. Watching mountains through the window from a swaying bunk, everything slows down. The Yunnan section was my personal favourite — Jianshui's streets at 6am have an uncanny quiet.",
       "我去过很多地方，但这次路线设计的逻辑感让我印象深刻——它不是简单地把景点串起来，而是真的讲了一个从沿海到高原的故事。夜间米轨火车是意外之喜，在摇晃的卧铺上看窗外的山，整个人都慢下来了。云南段是我个人最喜欢的部分，建水的街道在清晨六点有一种不可思议的安静。",
     ),
-    photos: [
-      asset("/destinations/train.jpg"),
-      asset("/destinations/sapa.jpg"),
-      asset("/destinations/jianshui.jpg"),
-      asset("/destinations/kunming.jpg"),
-    ],
+    photos: [],
   },
   {
     id: "sarah",
@@ -106,11 +91,7 @@ const fallbackReviews: TravelerReview[] = [
       "As a food traveller, this route delivered completely. In every city, a local guide took us to the real places — not influencer restaurants, but the street corner stalls, the morning market, the elderly woman's home kitchen. The snail vermicelli in Ninh Bình was prepared in a way I've never seen in any recipe. This trip made me start learning Vietnamese seriously.",
       "作为一个美食旅行者，这条路线完全满足了我的期待。每一个城市都有当地向导带我们去「真正的」地方——不是网红餐厅，而是街角的小摊、菜市场、老奶奶家里的灶台。宁平的田螺米线是我从来没有在任何食谱上见过的做法。这趟旅行让我开始认真学越南语了。",
     ),
-    photos: [
-      asset("/destinations/hanoi.jpg"),
-      asset("/destinations/puzhehei.jpg"),
-      asset("/destinations/mile.jpg"),
-    ],
+    photos: [],
   },
   {
     id: "markus",
@@ -128,11 +109,7 @@ const fallbackReviews: TravelerReview[] = [
       "Germans value precision in travel planning — this trip met my standards completely, and then surpassed them. Every pickup was on time, no confusion ever arose. What made it remarkable was the warmth behind the efficiency — our guide explained local customs, helped us connect with villagers, gave us genuine human warmth rather than just sightseeing. The Ha Long Bay sunset was the most beautiful I've seen in my life.",
       "德国人向来注重行程的严谨性，这次旅行完全符合我的标准，甚至超出了。每天的接送时间精准，没有一次出现混乱。更难得的是，这种高效率背后不失人情味——向导会主动介绍当地风俗，帮我们和村民沟通，让我们感受到了真实的人文温度，而不只是走马观花。下龙湾的日落是我此生见过最美的。",
     ),
-    photos: [
-      asset("/destinations/catba.jpg"),
-      asset("/destinations/nanning.jpg"),
-      asset("/destinations/chongzuo.jpg"),
-    ],
+    photos: [],
   },
   {
     id: "tanaka",
@@ -150,12 +127,7 @@ const fallbackReviews: TravelerReview[] = [
       "Three months have passed since the trip ended, but I still think about that Sapa morning — clouds rising from the valley, the terraces lighting up one layer at a time. Our guide brought us to a viewpoint with no other tourists, saying it was his secret spot. Because of moments like that, the whole journey felt like being genuinely cared for. I will definitely return.",
       "旅行结束后已经过去了三个月，但我还是会时常想起沙坝那个清晨——云从山谷里升起来，梯田在光里一层一层地亮起来。向导阿伟提前带我们去了一个没有其他游客的观景点，说那是他的私藏。正因如此，整个旅程有一种被善待的感觉。一定会再来。",
     ),
-    photos: [
-      asset("/destinations/sapa.jpg"),
-      asset("/destinations/guantang.jpg"),
-      asset("/destinations/jianshui.jpg"),
-      asset("/destinations/puzhehei.jpg"),
-    ],
+    photos: [],
   },
   {
     id: "camille",
@@ -173,11 +145,7 @@ const fallbackReviews: TravelerReview[] = [
       "The French can be particular about travel quality — but this trip gave me nothing to complain about. Jianshui's streets reminded me of certain towns in southern France, carrying that sense of layered time. The guide took us to a working pottery workshop where I even tried the wheel myself. The French traces in Vietnam also felt strangely familiar — those old cafés and streets recalled a history I'd half-forgotten.",
       "法国人对旅行品质有些苛刻，但这次我没有任何可以抱怨的。建水古城的街道让我想起了某些南法小城，有一种时间感。当地向导带我们参观了一个正在进行手工陶器制作的工作坊，我甚至动手试了一下。越南段的法式痕迹也让我觉得亲切——那些旧咖啡馆和街道让我想起了一段被遗忘的历史。",
     ),
-    photos: [
-      asset("/destinations/jianshui.jpg"),
-      asset("/destinations/mile.jpg"),
-      asset("/destinations/kunming.jpg"),
-    ],
+    photos: [],
   },
   {
     id: "haorui",
@@ -215,12 +183,7 @@ Thank you!`,
 
 谢谢！`,
     ),
-    photos: [
-      asset("/destinations/chongzuo.jpg"),
-      asset("/destinations/detian.jpg"),
-      asset("/destinations/chongzuo-mijing.jpg"),
-      asset("/destinations/nanning.jpg"),
-    ],
+    photos: [],
   },
 ];
 

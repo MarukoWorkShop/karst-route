@@ -1,8 +1,13 @@
 /** Tencent COS bucket (Guangzhou). Dev uses Vite `/hero-media` proxy with Referer. */
 export const COS_BASE = "https://youxian-travel-1412422924.cos.ap-guangzhou.myqcloud.com";
 
-/** Paths confirmed on COS. Add `tours/` etc. after upload. */
-const COS_PREFIXES = ["destinations/", "videos/"] as const;
+/**
+ * Only these prefixes load from COS.
+ * `destinations/` stays on GitHub Pages / local `public/` so newly added jpgs
+ * work as soon as they are in the repo — no separate COS upload required.
+ * Hero videos remain on COS (large; gitignored).
+ */
+const COS_PREFIXES = ["videos/"] as const;
 
 export const heroVideoOff = import.meta.env?.VITE_HERO_VIDEO_OFF === "1";
 

@@ -25,7 +25,7 @@ routes:
           zh: 住宿（双人一间均摊）
         basis: per_room_night
         adult: 3000
-        child: 0
+        child: 1000
       - id: tickets
         name:
           en: Tickets & experiences
@@ -38,7 +38,7 @@ routes:
           en: Dining
           zh: 餐食
         basis: per_person
-        adult: 2400
+        adult: 2000
         child: 1200
       - id: localTransport
         name:
@@ -66,8 +66,8 @@ routes:
           en: Welcome kit & service pack
           zh: 伴手礼与服务包
         basis: per_person
-        adult: 500
-        child: 500
+        adult: 200
+        child: 200
     vehicleBands:
       - maxPax: 3
         price: 3000
@@ -102,29 +102,29 @@ routes:
           en: Stay (twin share, per head)
           zh: 住宿（双人一间均摊）
         basis: per_room_night
-        adult: 5000
-        child: 5000
+        adult: 2500
+        child: 1250
       - id: tickets
         name:
           en: Tickets & experiences
           zh: 门票与体验
         basis: per_person
-        adult: 200
-        child: 200
+        adult: 300
+        child: 150
       - id: dining
         name:
           en: Dining
           zh: 餐食
         basis: per_person
-        adult: 600
-        child: 300
+        adult: 1200
+        child: 600
       - id: localTransport
         name:
           en: Local transport
           zh: 境内交通（接驳 / 船票 / 用车）
         basis: per_person
-        adult: 300
-        child: 400
+        adult: 400
+        child: 300
       - id: crossBorder
         name:
           en: Cross-border transport
@@ -144,8 +144,8 @@ routes:
           en: Welcome kit & service pack
           zh: 伴手礼与服务包
         basis: per_person
-        adult: 400
-        child: 400
+        adult: 200
+        child: 200
     vehicleBands:
       - maxPax: 3
         price: 3000
@@ -180,15 +180,15 @@ routes:
           en: Stay (6 nights, twin share)
           zh: 住宿（6 晚，双人一间均摊）
         basis: per_room_night
-        adult: 3000
-        child: 1500
+        adult: 7000
+        child: 3000
       - id: tickets
         name:
           en: Tickets & experiences
           zh: 门票与体验
         basis: per_person
-        adult: 3600
-        child: 1800
+        adult: 1000
+        child: 500
       - id: dining
         name:
           en: Dining
@@ -201,15 +201,15 @@ routes:
           en: Local transport (transfers, ferry, island vehicle)
           zh: 境内交通（接驳 / 船票 / 岛内用车）
         basis: per_person
-        adult: 2200
-        child: 800
+        adult: 500
+        child: 500
       - id: crossBorder
         name:
           en: Cross-border transport
           zh: 跨境交通
         basis: per_person
-        adult: 1300
-        child: 300
+        adult: 0
+        child: 0
       - id: insurance
         name:
           en: Insurance
@@ -222,8 +222,8 @@ routes:
           en: Welcome kit & service pack
           zh: 伴手礼与服务包
         basis: per_person
-        adult: 350
-        child: 100
+        adult: 300
+        child: 300
     vehicleBands:
       - maxPax: 3
         price: 3000

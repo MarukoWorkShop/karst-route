@@ -123,17 +123,18 @@ short:
 1. **只保证原文有内容** — `src` 指出的那种语言必填；其它语言不必手填。
 2. **冒号后面空一格** — ✅ `name: "三境溯游"` ❌ `name:"三境溯游"`
 3. **缩进只用空格，不用 Tab** — 对齐现有行最稳。
-4. **图片只写相对路径** — ✅ `destinations/nanning.jpg` ❌ 不要写完整网址，也不要写成 `/destinations/...`
+4. **图片只写相对路径** — ✅ `reviews/haorui-1.jpg` ❌ 不要写完整网址，也不要写成 `/reviews/...`
 5. **引号里的中文引号** — 句子里如果要写「」或 “”，保持和现有文件一样即可。
 
 照片文件本身放在 `public/` 下：
 
-| 路径写法 | 实际文件夹 |
-|---|---|
-| `destinations/xxx.jpg` | `public/destinations/` |
-| `tours/xxx.jpg` | `public/tours/` |
+| 路径写法 | 实际文件夹 | 用途 |
+|---|---|---|
+| `reviews/xxx.jpg` | `public/reviews/` | **客人评价配图** |
+| `destinations/xxx.jpg` | `public/destinations/` | 目的地 / 行程 |
+| `tours/xxx.jpg` | `public/tours/` | 路线封面与图库 |
 
-新图先请技术把 jpg 放进对应文件夹，再把文件名写进 yaml。
+新图先请技术把 jpg 放进对应文件夹，再把文件名写进 yaml 或 Notion。
 
 ---
 
@@ -218,7 +219,7 @@ short:
 | `date` | 例如 `2024-11` |
 | `short` | 列表里的一句话 |
 | `full` | 点开后的全文 |
-| `photos` | 客人照片路径列表 |
+| `photos` | 客人照片路径列表（`reviews/xxx.jpg`，勿用 destinations） |
 
 **新增评价：** 复制任意一份现有 yaml → 文件名改成英文小写（如 `anna.yaml`，不要空格）→ 改字段 → 提交。页面会按文件自动出现。
 
@@ -286,7 +287,7 @@ short:
 | 需求 | 说明 |
 |---|---|
 | 新增第四条路线 | 需要技术人员加模板（`r4`） |
-| 换一张还没上传的图 | 把 jpg 放到 `public/destinations/` 或 `public/tours/`，路径写进 yaml |
+| 换一张还没上传的图 | 评价图放 `public/reviews/`；目的地/行程图放 `public/destinations/` 或 `public/tours/`，路径写进 yaml |
 | 改按钮、导航等界面词 | 仍在程序里，找技术人员 |
 | 文艺推荐 / 探索影像 | 仍在程序里，找技术人员 |
 | FAQ 顶栏用的 `tool-visa` 等 id | 不要改这些 id |

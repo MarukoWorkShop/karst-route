@@ -43,8 +43,10 @@ export function Timeline({
 
   function selectDay(index: number) {
     setSelectedIndex(index);
-    // 右栏内容更新后滚到顶
-    requestAnimationFrame(() => detailRef.current?.scrollTo({ top: 0 }));
+    // 详情已改为整页展开，滚到详情栏顶部即可
+    requestAnimationFrame(() => {
+      detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }
 
   return (
@@ -128,8 +130,8 @@ export function Timeline({
           ))}
         </ol>
 
-        {/* 桌面端：左列表 + 右详情。两栏都限高，评价才能紧贴模块下方居中，而不是被左栏 14 天撑到下一屏。 */}
-        <div className="hidden md:grid md:grid-cols-[0.82fr_1.3fr] md:gap-x-10">
+        {/* 桌面端：左列表限高可滚；右详情随内容完整展开，避免底栏被裁切 */}
+        <div className="hidden md:grid md:grid-cols-[0.82fr_1.3fr] md:items-start md:gap-x-10">
           <ol className="scroll-thin md:sticky md:top-[110px] md:max-h-[calc(100svh-130px)] md:overflow-y-auto md:py-1 md:pr-1">
             {route.days.map((day, i) => (
               <DayListItem
@@ -140,16 +142,13 @@ export function Timeline({
               />
             ))}
           </ol>
-          <div
-            ref={detailRef}
-            className="scroll-thin md:sticky md:top-[110px] md:max-h-[calc(100svh-130px)] md:overflow-y-auto md:py-1 md:pl-1"
-          >
+          <div ref={detailRef} className="md:py-1 md:pl-1">
             <div key={selectedIndex}>
               <DayDetailContent day={selectedStop} showDetail={firstVisitDays.has(selectedStop.day)} />
             </div>
           </div>
         </div>
-        <div className="mx-auto max-w-[640px]">
+        <div className="mx-auto max-w-[640px] md:max-w-none">
           <ItineraryCtas routeId={routeId} onPlanQuote={onPlanQuote} />
         </div>
       </div>
@@ -357,7 +356,7 @@ function DayDetailContent({ day, showDetail }: { day: DayStop; showDetail?: bool
       ) : null}
 
       {transport || lodging || dining ? (
-        <div className="mt-4 divide-y divide-paper overflow-hidden rounded-2xl bg-sage">
+        <div className="mt-4 divide-y divide-paper rounded-2xl bg-sage">
           {transport ? (
             <LogRow
               icons={
@@ -407,7 +406,7 @@ function LogRow({
       <span className="min-w-0 flex-1">
         <span className="block text-[14px] font-medium text-ink">{label}</span>
         {lines.map((line) => (
-          <span key={line} className="mt-0.5 block text-[13px] leading-5 text-ink-soft">
+          <span key={line} className="mt-0.5 block break-words text-[13px] leading-5 text-ink-soft">
             {line}
           </span>
         ))}

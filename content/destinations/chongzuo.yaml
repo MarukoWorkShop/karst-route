@@ -6,7 +6,7 @@ src: zh
 tagline:
   en: Waterfall wonder
   zh: 瀑布边的田园
-photo: destinations/chongzuo.jpg
+photo: destinations/chongzuo-mijing.jpg
 experience:
   title:
     en: Detian boat, both banks
@@ -33,6 +33,6 @@ culture:
   en: "Detian is the place where the map turns into spray: Vietnam and China on two banks of the same curtain of water. Mingshi is its quieter twin — karst, fields, a road so flat you forget the speed you built up to get here."
   zh: 德天是地图变成水花的地方：中越两国隔着一帘白水各站一边。明仕是它更安静的孪生——喀斯特、稻田、一条平到让你忘了来时赶路的公路。
 slides:
-  - destinations/chongzuo.jpg
-  - destinations/hotel-b.jpg
-  - destinations/puzhehei.jpg
+  - destinations/chongzuo-mijing.jpg
+  - destinations/chongzuo-detianfalls1.jpg
+  - destinations/chongzuo-detianfalls7.jpg
