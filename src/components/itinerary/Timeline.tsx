@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import type { DayStop, RouteId } from "@/types";
 import { routes } from "@/data/itinerary";
 import { places, placeStories } from "@/data/destinations";
@@ -26,6 +26,9 @@ export function Timeline({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const detailRef = useRef<HTMLDivElement>(null);
+  /** 手机端点开某日时，把该日标题钉在点击时的视口位置，避免上面手风琴收起导致整页乱跳 */
+  const mobileAnchorRef = useRef<{ index: number; top: number } | null>(null);
+  const dayHeaderRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   // 同一目的地连住多晚时，只在抵达当天展开完整讲解，后续日期不再重复
   const firstVisitDays = (() => {
@@ -41,12 +44,33 @@ export function Timeline({
 
   const selectedStop = route.days[selectedIndex] ?? route.days[0];
 
+  useLayoutEffect(() => {
+    const anchor = mobileAnchorRef.current;
+    if (!anchor) return;
+    mobileAnchorRef.current = null;
+    const el = dayHeaderRefs.current[anchor.index];
+    if (!el) return;
+    const topAfter = el.getBoundingClientRect().top;
+    const delta = topAfter - anchor.top;
+    if (Math.abs(delta) > 2) {
+      window.scrollBy({ top: delta, left: 0, behavior: "auto" });
+    }
+  }, [openIndex]);
+
   function selectDay(index: number) {
     setSelectedIndex(index);
     // 详情已改为整页展开，滚到详情栏顶部即可
     requestAnimationFrame(() => {
       detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+  }
+
+  function toggleMobileDay(index: number) {
+    const el = dayHeaderRefs.current[index];
+    if (el) {
+      mobileAnchorRef.current = { index, top: el.getBoundingClientRect().top };
+    }
+    setOpenIndex((cur) => (cur === index ? null : index));
   }
 
   return (
@@ -117,15 +141,18 @@ export function Timeline({
       </div>
 
       <div className="page-col mt-2">
-        {/* 移动端：手风琴，点开在下方展开 */}
-        <ol className="mx-auto max-w-[640px] md:hidden">
+        {/* 移动端：手风琴，点开在下方展开；标题行保持在点击位置附近 */}
+        <ol className="mx-auto max-w-[640px] [overflow-anchor:none] md:hidden">
           {route.days.map((day, i) => (
             <DayRow
               key={`${routeId}-${i}`}
               day={day}
               open={openIndex === i}
               showDetail={firstVisitDays.has(day.day)}
-              onToggle={() => setOpenIndex((cur) => (cur === i ? null : i))}
+              headerRef={(node) => {
+                dayHeaderRefs.current[i] = node;
+              }}
+              onToggle={() => toggleMobileDay(i)}
             />
           ))}
         </ol>
@@ -164,12 +191,14 @@ function DayRow({
   open,
   showDetail,
   onToggle,
+  headerRef,
 }: {
   day: DayStop;
   open: boolean;
   /** 抵达当天才展开完整讲解；连住的第二晚起不再重复 */
   showDetail?: boolean;
   onToggle: () => void;
+  headerRef?: (node: HTMLButtonElement | null) => void;
 }) {
   const { t } = useLocale();
   const n = String(day.day).padStart(2, "0");
@@ -179,8 +208,9 @@ function DayRow({
   const subtitle = stay === city && place ? t(place.tagline) : stay;
 
   return (
-    <li className="border-b border-line">
+    <li className="border-b border-line [overflow-anchor:none]">
       <button
+        ref={headerRef}
         type="button"
         data-place-node={day.day}
         aria-expanded={open}

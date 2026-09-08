@@ -6,7 +6,7 @@ src: zh
 tagline:
   en: Two nights, Tianqin, cane sea
   zh: 连住，天琴，蔗海
-photo: destinations/guantang.jpg
+photo: destinations/guantang1.jpg
 experience:
   title:
     en: Tianqin village and a bicycle in the cane
@@ -33,6 +33,6 @@ culture:
   en: "Longzhou and Guantang sit behind Friendship Pass, where the border is a melody: the Zhuang tianqin, two strings and a question-and-answer song older than the line drawn on the map. Two nights so the cane sea becomes a morning you wake up to, not a window you frame."
   zh: 龙州、观堂在友谊关背后，国境线在这里是一支旋律：壮族天琴，两根弦，一首比地图上的界线更老的问歌答歌。连住两晚，让蔗海变成你醒来的早晨，而不是你取景的窗口。
 slides:
-  - destinations/guantang.jpg
-  - destinations/hotel-d.jpg
-  - destinations/sapa.jpg
+  - destinations/guantang1.jpg
+  - destinations/guantang2.jpg
+  - destinations/guantang3.jpg
