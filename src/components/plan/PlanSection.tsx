@@ -13,7 +13,7 @@ export function PlanSection({
   onTab: (tab: "custom" | "boutique") => void;
   route: RouteId;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const boutique = tab === "boutique";
 
   return (
@@ -80,13 +80,15 @@ export function PlanSection({
           </div>
 
           <div className="mt-8 max-w-[720px] space-y-4 border-t border-cta/15 pt-7">
-            <p className="text-[12px] font-semibold tracking-[0.08em] text-cta uppercase">
+            <p className="text-[11px] font-semibold tracking-[0.08em] text-cta uppercase">
               {t(copy.plan.footNotesTitle)}
             </p>
-            <ul className="space-y-3.5">
+            <ul className="space-y-[1.125rem]">
               {copy.plan.footNotes.map((note, i) => (
-                <li key={i} className="text-[13px] leading-[1.65] text-ink-soft">
-                  {t(note)}
+                <li key={i} className="text-[12px] leading-[1.5] text-ink-soft">
+                  <span className="font-semibold text-ink">{t(note.title)}</span>
+                  {locale === "zh" ? "：" : ": "}
+                  {t(note.body)}
                 </li>
               ))}
             </ul>

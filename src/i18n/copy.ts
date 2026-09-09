@@ -443,27 +443,42 @@ export const copy = {
       zh: "人数超过单车载客：参考价已按换更大车型或加车估算，最终车队以管家确认为准。",
     },
     /** 行程定制模块下方说明 */
-    footNotesTitle: { en: "Before you compare or book", zh: "预订与比价前请了解" },
+    footNotesTitle: { en: "Booking Information & Quality Commitment", zh: "预订须知与品质承诺" },
     footNotes: [
       {
-        en: "Children under 3 travel free. Ages 4–11 are charged at the child rate. Children 12 and over are charged as adults (and occupy a bed). Please email us your children’s details.",
-        zh: "3 岁以下儿童免费；4–11 岁按儿童价；12 岁及以上按成人收费（占床）。请将儿童详细信息通过电子邮件发给我们。",
+        title: { en: "Child Policy", zh: "儿童政策" },
+        body: {
+          en: "Children under 3 travel free. Children aged 4–11 qualify for child rates, while those aged 12 and above are charged at the standard adult rate (with bed included). To help us provide the best possible care, please email us the details of any accompanying children after confirming your booking.",
+          zh: "3 岁以下儿童免费；4–11 岁享受儿童价；12 岁及以上按成人标准（占床）。为了提供更好的照顾，请在预订后通过邮件告知我们随行儿童的详细信息。",
+        },
       },
       {
-        en: "When comparing prices, make sure what you get matches what you pay. We do not earn commissions by taking you to shopping stops — a common practice on group tours that only wastes your time. Our guides and drivers are carefully selected, thoroughly trained, and fairly paid to be warm, patient travel companions. We are not the cheapest option — but we are among the best.",
-        zh: "比价时请留意：您所得到的，应与您所支付的相匹配。我们不会带您去购物点赚取佣金——这是跟团游中常见的做法，只会浪费您的时间。我们的导游与司机经过精心挑选、严格培训并享有合理薪酬，致力于成为友好而耐心的旅行伙伴。我们并非最便宜的选择，但我们是最好的之一。",
+        title: { en: "100% Pure Travel (No Shopping Stops)", zh: "纯玩无购物" },
+        body: {
+          en: "We strictly adhere to our no-shopping commitment. We will never take you to commission-based shopping spots, ensuring your valuable holiday time is spent entirely on enjoying the scenery. Our guides and drivers are carefully selected, professionally trained, and paid a fair wage. More than just service providers, they are friendly, patient companions for your journey. While we may not be the cheapest option, we pride ourselves on being one of the most trusted.",
+          zh: "我们坚守纯玩无购物的品质承诺，绝不带您去任何佣金购物点，把宝贵的旅行时间完全留给风景。我们的导游与司机均经过严格筛选与专业培训，享有合理的薪酬。他们不仅是服务者，更是您旅途中友好、耐心的陪伴者。我们或许不是价格最低的选择，但一定是您最值得信赖的旅行伙伴。",
+        },
       },
       {
-        en: "Meals: Apart from meals marked as included in the itinerary, your guide will recommend local restaurants where food is paid on site. You will also be advised the day before to bring snacks for between meals.",
-        zh: "餐食：除行程中注明包含的餐以外，导游会推荐当地特色餐馆，餐费需在餐馆自付。前一天也会提醒您准备非正餐时段的零食。",
+        title: { en: "Meals", zh: "关于餐食" },
+        body: {
+          en: "Aside from meals explicitly listed as included in the itinerary, your guide will recommend authentic local restaurants where you can order and pay according to your preferences. Your guide will also thoughtfully remind you the day before to prepare some snacks for between meals.",
+          zh: "除行程中已包含的餐食外，导游会为您推荐地道的当地特色餐厅，您可以根据喜好自由点餐并自付费用。此外，导游也会在前一天贴心提醒您准备一些随身零食。",
+        },
       },
       {
-        en: "Gifts and tips for locals, guides, and drivers are not required. If you feel your guide and driver did well at the end of the trip, a tip at your discretion is a welcome thank-you.",
-        zh: "给当地人、导游和司机的礼品与小费并非强制。若您认为导游和司机在行程结束时表现很好，可按自己的意愿给予小费以表感谢。",
+        title: { en: "Gratuities & Tipping", zh: "关于小费" },
+        body: {
+          en: "Gifts and tips for locals, guides, or drivers are entirely voluntary and never mandatory. If you are pleased with the exceptional service provided by your guide and driver, a tip at the end of the tour is a wonderful way to show your appreciation.",
+          zh: "行程中的礼品与小费纯属自愿，绝非强制。如果您对导游和司机的贴心服务感到满意，可在行程结束时适当给予小费以示鼓励。",
+        },
       },
       {
-        en: "Other personal expenses are not included and are at your own cost. A private room requires a single supplement. Thank you.",
-        zh: "其他个人开支请按需自理，不包含在团费内。如需包房，须补足单房差。谢谢。",
+        title: { en: "Other Expenses", zh: "其他费用" },
+        body: {
+          en: "Personal expenses are not included in the tour price. If you require a private room to yourself, a single supplement will apply. Thank you for choosing us. We look forward to embarking on a wonderful journey with you!",
+          zh: "团费不含个人消费。如您需要独享单间，请补足单房差。感谢您的信任，期待与您开启一段美好的旅程！",
+        },
       },
     ],
     rowEstimate: { en: "Reference quote", zh: "参考报价" },

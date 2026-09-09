@@ -60,19 +60,6 @@ export function Partners() {
             </article>
           ))}
         </div>
-
-        <div className="mt-6 flex items-center justify-between gap-3 rounded-[10px] border border-dashed border-line px-[18px] py-4">
-          <div>
-            <p className="text-[13px] font-medium text-ink">{t(copy.partners.ctaTitle)}</p>
-            <p className="mt-0.5 text-[11.5px] text-ink-soft">{t(copy.partners.ctaSub)}</p>
-          </div>
-          <a
-            href="#plan"
-            className="shrink-0 rounded-full border-[1.5px] border-cta px-3.5 py-1.5 text-[12px] font-medium whitespace-nowrap text-cta"
-          >
-            {t(copy.partners.contact)}
-          </a>
-        </div>
       </div>
     </section>
   );
