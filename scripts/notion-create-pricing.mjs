@@ -92,14 +92,6 @@ const DBS = [
       ...select("id", ROUTES),
       ...select("status", STATUSES),
       ...rich("source"),
-      ...num("band1Max"),
-      ...num("band1Price"),
-      ...num("band2Max"),
-      ...num("band2Price"),
-      ...num("band3Max"),
-      ...num("band3Price"),
-      ...num("band4Max"),
-      ...num("band4Price"),
       ...num("leader"),
       ...num("ops"),
       ...num("reserve"),
@@ -168,20 +160,11 @@ function rowsFor(key) {
     for (const id of ROUTES) {
       const r = routes[id] ?? {};
       const tf = r.teamFixed ?? {};
-      const b = [0, 1, 2, 3].map((i) => (Array.isArray(r.vehicleBands) ? r.vehicleBands[i] ?? {} : {}));
       out.push({
         标题: { title: [{ text: { content: `${id} · 定价参数` } }] },
         id: sl(id),
         status: sl(r.status ?? "none"),
         source: rt(r.source ?? ""),
-        band1Max: nb(b[0].maxPax ?? ""),
-        band1Price: nb(b[0].price ?? ""),
-        band2Max: nb(b[1].maxPax ?? ""),
-        band2Price: nb(b[1].price ?? ""),
-        band3Max: nb(b[2].maxPax ?? ""),
-        band3Price: nb(b[2].price ?? ""),
-        band4Max: nb(b[3].maxPax ?? ""),
-        band4Price: nb(b[3].price ?? ""),
         leader: nb(tf.leader ?? ""),
         ops: nb(tf.ops ?? ""),
         reserve: nb(tf.reserve ?? ""),

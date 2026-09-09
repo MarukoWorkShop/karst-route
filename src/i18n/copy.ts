@@ -419,8 +419,8 @@ export const copy = {
     estPerUnit: { en: "/ person", zh: "/ 人" },
     estSubtotal: { en: "Reference total", zh: "参考小计" },
     estChildrenHint: {
-      en: "Child rate assumes sharing parents' room (no extra bed). Age and bedding are confirmed at booking.",
-      zh: "儿童价按「不占床」口径估算；具体年龄与占床政策以预订确认为准。",
+      en: "Child rate in the quote is for ages 4–11; under 3 free; 12+ as adult (with bed). Email us the children’s details.",
+      zh: "报价中的儿童价适用于 4–11 岁；3 岁以下免费；12 岁及以上按成人（占床）。请邮件告知儿童详细信息。",
     },
     estDisclaimer: {
       en: "This is a reference quote only and does not constitute an offer. Your final price will be confirmed by the travel concierge.",
@@ -435,9 +435,37 @@ export const copy = {
       zh: "该线路按团队单独报价：提交需求后，管家将按您的具体人数核算。",
     },
     estOversize: {
-      en: "Parties over 14 travellers are priced individually — send the brief and we'll confirm.",
-      zh: "超过 14 人的团队单独核算——请直接提交需求，管家会按实际人数报价。",
+      en: "We couldn't build a reference quote for this party size — send the brief and the concierge will price it.",
+      zh: "暂无法自动估算该人数组合——请直接提交需求，管家会按实际人数报价。",
     },
+    estFleetHint: {
+      en: "Party size exceeds one vehicle — this reference assumes a larger vehicle or an extra car; the concierge will confirm the fleet.",
+      zh: "人数超过单车载客：参考价已按换更大车型或加车估算，最终车队以管家确认为准。",
+    },
+    /** 行程定制模块下方说明 */
+    footNotesTitle: { en: "Before you compare or book", zh: "预订与比价前请了解" },
+    footNotes: [
+      {
+        en: "Children under 3 travel free. Ages 4–11 are charged at the child rate. Children 12 and over are charged as adults (and occupy a bed). Please email us your children’s details.",
+        zh: "3 岁以下儿童免费；4–11 岁按儿童价；12 岁及以上按成人收费（占床）。请将儿童详细信息通过电子邮件发给我们。",
+      },
+      {
+        en: "When comparing prices, make sure what you get matches what you pay. We do not earn commissions by taking you to shopping stops — a common practice on group tours that only wastes your time. Our guides and drivers are carefully selected, thoroughly trained, and fairly paid to be warm, patient travel companions. We are not the cheapest option — but we are among the best.",
+        zh: "比价时请留意：您所得到的，应与您所支付的相匹配。我们不会带您去购物点赚取佣金——这是跟团游中常见的做法，只会浪费您的时间。我们的导游与司机经过精心挑选、严格培训并享有合理薪酬，致力于成为友好而耐心的旅行伙伴。我们并非最便宜的选择，但我们是最好的之一。",
+      },
+      {
+        en: "Meals: Apart from meals marked as included in the itinerary, your guide will recommend local restaurants where food is paid on site. You will also be advised the day before to bring snacks for between meals.",
+        zh: "餐食：除行程中注明包含的餐以外，导游会推荐当地特色餐馆，餐费需在餐馆自付。前一天也会提醒您准备非正餐时段的零食。",
+      },
+      {
+        en: "Gifts and tips for locals, guides, and drivers are not required. If you feel your guide and driver did well at the end of the trip, a tip at your discretion is a welcome thank-you.",
+        zh: "给当地人、导游和司机的礼品与小费并非强制。若您认为导游和司机在行程结束时表现很好，可按自己的意愿给予小费以表感谢。",
+      },
+      {
+        en: "Other personal expenses are not included and are at your own cost. A private room requires a single supplement. Thank you.",
+        zh: "其他个人开支请按需自理，不包含在团费内。如需包房，须补足单房差。谢谢。",
+      },
+    ],
     rowEstimate: { en: "Reference quote", zh: "参考报价" },
     downloadPdf: { en: "Download PDF", zh: "下载 PDF" },
     downloadItin: { en: "Download itinerary PDF", zh: "下载定制行程 PDF" },
@@ -586,9 +614,6 @@ export const copy = {
       en: "Each partner below has been visited in person and vetted through ongoing collaboration. Click to find them on the map or visit their site.",
       zh: "以下商家经过我们实地考察与长期合作，纳入路线推荐体系。点击可查看地图位置或访问其官网。",
     },
-    ctaTitle: { en: "Are you a local business on these routes?", zh: "您是沿线商家？" },
-    ctaSub: { en: "Get in touch to explore partnership", zh: "欢迎联系我们了解合作方式" },
-    contact: { en: "Contact us", zh: "联系我们" },
   },
   footer: {
     brand: { en: "有闲旅行", zh: "有闲旅行" },

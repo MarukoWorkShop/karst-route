@@ -503,24 +503,14 @@ const MODULE_TEMPLATE = [
 ];
 const ANCHOR_TEMPLATE = [2, 4, 6];
 
-const bandAt = (r, i) => (Array.isArray(r.vehicleBands) && r.vehicleBands[i] ? r.vehicleBands[i] : {});
 const paramRows = ["r1", "r2", "r3"].map((id) => {
   const r = proutes[id] ?? {};
   const tf = r.teamFixed ?? {};
-  const b = [0, 1, 2, 3].map((i) => bandAt(r, i));
   return {
     标题: `${id} · 定价参数`,
     id,
     status: r.status ?? "none",
     source: r.source ?? "",
-    band1Max: b[0].maxPax ?? "",
-    band1Price: b[0].price ?? "",
-    band2Max: b[1].maxPax ?? "",
-    band2Price: b[1].price ?? "",
-    band3Max: b[2].maxPax ?? "",
-    band3Price: b[2].price ?? "",
-    band4Max: b[3].maxPax ?? "",
-    band4Price: b[3].price ?? "",
     leader: tf.leader ?? "",
     ops: tf.ops ?? "",
     reserve: tf.reserve ?? "",
@@ -536,14 +526,6 @@ writeCsv(
     "id",
     "status",
     "source",
-    "band1Max",
-    "band1Price",
-    "band2Max",
-    "band2Price",
-    "band3Max",
-    "band3Price",
-    "band4Max",
-    "band4Price",
     "leader",
     "ops",
     "reserve",

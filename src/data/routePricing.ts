@@ -2,109 +2,186 @@ import { parse } from "yaml";
 import type { RouteId } from "@/types";
 
 /**
- * 模块化定价 —— 与仓库根目录 pricing-modules-template-v1.xlsx 的结构一一对应。
- *
- * 数据源：content/pricing.yaml（主理人在 Notion 或 GitHub 维护，时间戳新的那一边生效）。
- * 解析失败 / 字段缺失时逐字段回退到本文件里的代码默认值，页面不会白屏。
- *
- * 推导公式（Excel 使用指南中有完整说明）：
- *   n          = 成人数 + 儿童数（儿童占车位，参与车辆 / 领队分摊）
- *   成人人均(n) = [ 成人按人小计 + (车辆档费(n) + 团队固定 T) ÷ n ] × (1 + margin) → 取整
- *   儿童人均(n) = [ 儿童按人小计 + (车辆档费(n) + 团队固定 T) ÷ n ] × (1 + margin) → 取整
- *
- * status 含义：
- *   - none      : 主理人尚未给出成本结构 → 前端不显示估算，退回“按团队询价”
- *   - demo      : 成本已按现有发布价（2/4/6 人）校准、可精确复现；上线前需用真实成本复核
- *   - confirmed : 主理人已确认真实成本，可直接对外
+ * 三层报价：产品库 catalogs + 按日 days → estimateParty。
+ * 无按日明细则询价（不回退旧七模块）。
  */
 
 export type RoutePricingStatus = "none" | "demo" | "confirmed";
 
-export type VehicleBand = { maxPax: number; price: number };
+export type PriceAnchor = { n: number; adult: number; child: number };
 
-/** 成本模块：adult / child 是该模块折算后的**人均金额**，不是单价 */
-export type CostModule = {
+export type PricingLineSplit =
+  | "per_room_split"
+  | "per_vehicle_split"
+  | "per_person"
+  | "per_group_split";
+
+export type PricingLineType =
+  | "hotel"
+  | "vehicle"
+  | "guide"
+  | "ticket"
+  | "meal"
+  | "tip"
+  | "visa"
+  | "other";
+
+export type PricingHotel = {
   id: string;
   name?: { zh: string; en: string };
-  basis?: "per_person" | "per_room_night" | "per_group_per_head";
-  adult: number;
-  child: number;
+  twinRate: number;
+  city?: string;
 };
 
-export type PriceAnchor = { n: number; adult: number; child: number };
+export type PricingVehicle = {
+  id: string;
+  name?: { zh: string; en: string };
+  maxPax: number;
+  dayRate: number;
+  segment?: string;
+};
+
+export type PricingGuide = {
+  id: string;
+  name?: { zh: string; en: string };
+  dayRate: number;
+  split: "per_group" | "per_person";
+};
+
+export type PricingMeal = {
+  id: string;
+  name?: { zh: string; en: string };
+  mealType?: string;
+  adultRate: number;
+  childRate: number;
+};
+
+export type PricingTicket = {
+  id: string;
+  name?: { zh: string; en: string };
+  adultRate: number;
+  childRate: number;
+  payOnSiteDefault?: boolean;
+};
+
+export type PricingMisc = {
+  id: string;
+  name?: { zh: string; en: string };
+  category?: string;
+  split: PricingLineSplit | "per_group";
+  adultRate: number;
+  childRate: number;
+  groupRate?: number;
+};
+
+export type PricingDayLine = {
+  type: PricingLineType;
+  ref?: string;
+  label?: { zh: string; en: string };
+  rooms?: number;
+  qty?: number;
+  amount?: number;
+  payOnSite?: boolean;
+  split: PricingLineSplit;
+  adultApplicable?: boolean;
+  childApplicable?: boolean;
+};
+
+export type PricingDay = {
+  day: number;
+  title?: { zh: string; en: string };
+  lines: PricingDayLine[];
+};
+
+export type PricingCatalogs = {
+  hotels: PricingHotel[];
+  vehicles: PricingVehicle[];
+  guides: PricingGuide[];
+  meals: PricingMeal[];
+  tickets: PricingTicket[];
+  misc: PricingMisc[];
+};
+
+/** 领队费按团人数分档（元/团）。「10+」含 10 人；「5-10」用于 5–9。 */
+export type LeaderBands = {
+  "1-2": number;
+  "1-4": number;
+  "5-10": number;
+  "10+": number;
+};
+
+export type TeamFixedParts = {
+  /** 无分档时的扁平领队费；有分档时等于「1-4」档便于展示 */
+  leader: number;
+  leaderBands: LeaderBands;
+  ops: number;
+  reserve: number;
+};
 
 export type RoutePricing = {
   route: RouteId;
   status: RoutePricingStatus;
   source?: string;
-  modules: CostModule[];
-  /** ① 按人成本小计（由 modules 汇总） */
-  moduleCost: { adultPerPerson: number; childPerPerson: number };
-  /** ② 车辆档位整车包价（maxPax 为包含上限，按升序排列） */
-  vehicleBands: VehicleBand[];
-  /** ② 团队固定成本 T = 领队 + 运营税费 + 储备（一整团只发生一次） */
+  label?: { zh: string; en: string };
+  brief?: { zh: string; en: string };
+  /** 默认按 1-4 人档合计（仅展示/兼容）；估算请用 resolveTeamFixed */
   teamFixed: number;
-  teamFixedParts: { leader: number; ops: number; reserve: number };
-  /** ③ 加成率（成本 → 对外报价），0.2 = +20% */
+  teamFixedParts: TeamFixedParts;
   margin: number;
-  /** ③ 报价取整基数（¥） */
   roundBase: number;
-  /** 校准锚点：{人数, 发布成人价, 发布儿童价} —— 供开发期回归校验模型是否精确复现发布价 */
   anchors: PriceAnchor[];
+  occupancy: number;
+  maxPax: number;
+  catalogs: PricingCatalogs;
+  days: PricingDay[];
 };
 
-/** 代码默认值：线路暂无定价结构（主理人填表后由 YAML 覆盖） */
+export function resolveLeaderFee(parts: TeamFixedParts, n: number): number {
+  const b = parts.leaderBands;
+  const hasBands = b["1-2"] > 0 || b["1-4"] > 0 || b["5-10"] > 0 || b["10+"] > 0;
+  if (!hasBands) return parts.leader;
+  if (n <= 2) return b["1-2"] > 0 ? b["1-2"] : b["1-4"];
+  if (n <= 4) return b["1-4"];
+  // 「10人以上」含 10；「5-10」档用于 5–9，避免与大团档抢 10 人
+  if (n < 10) return b["5-10"];
+  return b["10+"];
+}
+
+export function resolveTeamFixed(parts: TeamFixedParts, n: number): number {
+  return resolveLeaderFee(parts, n) + parts.ops + parts.reserve;
+}
+
+const EMPTY_CATALOGS: PricingCatalogs = {
+  hotels: [],
+  vehicles: [],
+  guides: [],
+  meals: [],
+  tickets: [],
+  misc: [],
+};
+
+const EMPTY_LEADER_BANDS: LeaderBands = { "1-2": 0, "1-4": 0, "5-10": 0, "10+": 0 };
+
 const UNSET: Omit<RoutePricing, "route"> = {
   status: "none",
   source: "",
-  modules: [],
-  moduleCost: { adultPerPerson: 0, childPerPerson: 0 },
-  vehicleBands: [],
   teamFixed: 0,
-  teamFixedParts: { leader: 0, ops: 0, reserve: 0 },
+  teamFixedParts: { leader: 0, leaderBands: EMPTY_LEADER_BANDS, ops: 0, reserve: 0 },
   margin: 0,
   roundBase: 10,
   anchors: [],
-};
-
-/** 代码默认（YAML 缺失时的兜底）：线路三演示值，已能复现 2/4/6 人发布价 */
-const R3_FALLBACK: Omit<RoutePricing, "route"> = {
-  status: "demo",
-  source: "2026-09 主理人 2/4/6 人发布价校准；成本为演示值，上线前需真实成本复核",
-  modules: [
-    { id: "stay", name: { zh: "住宿（6 晚，双人一间均摊）", en: "Stay (6 nights, twin share)" }, basis: "per_room_night", adult: 3000, child: 0 },
-    { id: "tickets", name: { zh: "门票与体验", en: "Tickets & experiences" }, basis: "per_person", adult: 3600, child: 1800 },
-    { id: "dining", name: { zh: "餐食", en: "Dining" }, basis: "per_person", adult: 2400, child: 1100 },
-    { id: "localTransport", name: { zh: "境内交通（接驳 / 船票 / 岛内用车）", en: "Local transport" }, basis: "per_person", adult: 2200, child: 800 },
-    { id: "crossBorder", name: { zh: "跨境交通", en: "Cross-border transport" }, basis: "per_person", adult: 1300, child: 300 },
-    { id: "insurance", name: { zh: "保险", en: "Insurance" }, basis: "per_person", adult: 150, child: 150 },
-    { id: "welcome", name: { zh: "伴手礼与服务包", en: "Welcome kit & service pack" }, basis: "per_person", adult: 350, child: 100 },
-  ],
-  moduleCost: { adultPerPerson: 13000, childPerPerson: 4250 },
-  vehicleBands: [
-    { maxPax: 3, price: 5000 },
-    { maxPax: 5, price: 9967 },
-    { maxPax: 9, price: 13600 },
-    { maxPax: 14, price: 18000 },
-  ],
-  teamFixed: 3300,
-  teamFixedParts: { leader: 1800, ops: 800, reserve: 700 },
-  margin: 0.2,
-  roundBase: 10,
-  anchors: [
-    { n: 2, adult: 20580, child: 10080 },
-    { n: 4, adult: 19580, child: 9080 },
-    { n: 6, adult: 18980, child: 8480 },
-  ],
+  occupancy: 2,
+  maxPax: 0,
+  catalogs: EMPTY_CATALOGS,
+  days: [],
 };
 
 const FALLBACKS: Record<RouteId, Omit<RoutePricing, "route">> = {
   r1: UNSET,
   r2: UNSET,
-  r3: R3_FALLBACK,
+  r3: UNSET,
 };
 
-// --- 读取 content/pricing.yaml（与 content/routes/*.yaml 同一套机制）---
 const files = import.meta.glob("../../content/pricing.yaml", {
   eager: true,
   query: "?raw",
@@ -112,11 +189,16 @@ const files = import.meta.glob("../../content/pricing.yaml", {
 }) as Record<string, string>;
 
 let yamlRoutes: Record<string, Record<string, unknown>> = {};
+let yamlCatalogs: PricingCatalogs = EMPTY_CATALOGS;
 
 try {
   const raw = Object.values(files)[0] ?? "";
-  const doc = (parse(raw) ?? {}) as { routes?: Record<string, Record<string, unknown>> };
+  const doc = (parse(raw) ?? {}) as {
+    routes?: Record<string, Record<string, unknown>>;
+    catalogs?: Record<string, unknown>;
+  };
   yamlRoutes = doc.routes && typeof doc.routes === "object" ? doc.routes : {};
+  yamlCatalogs = catalogsOf(doc.catalogs, EMPTY_CATALOGS);
 } catch (err) {
   console.warn("[content] content/pricing.yaml 解析失败，已回退到代码默认值", err);
 }
@@ -134,42 +216,12 @@ function statusOf(v: unknown, fallback: RoutePricingStatus): RoutePricingStatus 
   return v === "none" || v === "demo" || v === "confirmed" ? v : fallback;
 }
 
-function modulesOf(v: unknown, fallback: CostModule[]): CostModule[] {
-  if (!Array.isArray(v)) return fallback;
-  const out: CostModule[] = [];
-  for (const raw of v) {
-    if (!isObj(raw) || typeof raw.id !== "string") continue;
-    out.push({
-      id: raw.id,
-      ...(isObj(raw.name)
-        ? {
-            name: {
-              zh: typeof raw.name.zh === "string" ? raw.name.zh : "",
-              en: typeof raw.name.en === "string" ? raw.name.en : "",
-            },
-          }
-        : {}),
-      basis:
-        raw.basis === "per_room_night" || raw.basis === "per_group_per_head" || raw.basis === "per_person"
-          ? raw.basis
-          : "per_person",
-      adult: num(raw.adult, 0),
-      child: num(raw.child, 0),
-    });
-  }
-  return out;
-}
-
-function bandsOf(v: unknown, fallback: VehicleBand[]): VehicleBand[] {
-  if (!Array.isArray(v)) return fallback;
-  const out: VehicleBand[] = [];
-  for (const raw of v) {
-    if (!isObj(raw)) continue;
-    const maxPax = num(raw.maxPax, 0);
-    const price = num(raw.price, 0);
-    if (maxPax > 0 && price >= 0) out.push({ maxPax, price });
-  }
-  return out.length ? out.sort((a, b) => a.maxPax - b.maxPax) : fallback;
+function txName(v: unknown): { zh: string; en: string } | undefined {
+  if (!isObj(v)) return undefined;
+  return {
+    zh: typeof v.zh === "string" ? v.zh : "",
+    en: typeof v.en === "string" ? v.en : "",
+  };
 }
 
 function anchorsOf(v: unknown, fallback: PriceAnchor[]): PriceAnchor[] {
@@ -184,35 +236,230 @@ function anchorsOf(v: unknown, fallback: PriceAnchor[]): PriceAnchor[] {
   return out;
 }
 
+function catalogsOf(v: unknown, fallback: PricingCatalogs): PricingCatalogs {
+  if (!isObj(v)) return fallback;
+  const hotels: PricingHotel[] = [];
+  const vehicles: PricingVehicle[] = [];
+  const guides: PricingGuide[] = [];
+  const meals: PricingMeal[] = [];
+  const tickets: PricingTicket[] = [];
+  const misc: PricingMisc[] = [];
+  if (Array.isArray(v.hotels)) {
+    for (const raw of v.hotels) {
+      if (!isObj(raw) || typeof raw.id !== "string") continue;
+      hotels.push({
+        id: raw.id,
+        ...(txName(raw.name) ? { name: txName(raw.name) } : {}),
+        twinRate: num(raw.twinRate, 0),
+        ...(typeof raw.city === "string" ? { city: raw.city } : {}),
+      });
+    }
+  }
+  if (Array.isArray(v.vehicles)) {
+    for (const raw of v.vehicles) {
+      if (!isObj(raw) || typeof raw.id !== "string") continue;
+      vehicles.push({
+        id: raw.id,
+        ...(txName(raw.name) ? { name: txName(raw.name) } : {}),
+        maxPax: num(raw.maxPax, 0),
+        dayRate: num(raw.dayRate, 0),
+        ...(typeof raw.segment === "string" ? { segment: raw.segment } : {}),
+      });
+    }
+  }
+  if (Array.isArray(v.guides)) {
+    for (const raw of v.guides) {
+      if (!isObj(raw) || typeof raw.id !== "string") continue;
+      guides.push({
+        id: raw.id,
+        ...(txName(raw.name) ? { name: txName(raw.name) } : {}),
+        dayRate: num(raw.dayRate, 0),
+        split: raw.split === "per_person" ? "per_person" : "per_group",
+      });
+    }
+  }
+  if (Array.isArray(v.meals)) {
+    for (const raw of v.meals) {
+      if (!isObj(raw) || typeof raw.id !== "string") continue;
+      const adultRate = num(raw.adultRate, 0);
+      meals.push({
+        id: raw.id,
+        ...(txName(raw.name) ? { name: txName(raw.name) } : {}),
+        ...(typeof raw.mealType === "string" ? { mealType: raw.mealType } : {}),
+        adultRate,
+        childRate: num(raw.childRate, adultRate),
+      });
+    }
+  }
+  if (Array.isArray(v.tickets)) {
+    for (const raw of v.tickets) {
+      if (!isObj(raw) || typeof raw.id !== "string") continue;
+      const adultRate = num(raw.adultRate, 0);
+      tickets.push({
+        id: raw.id,
+        ...(txName(raw.name) ? { name: txName(raw.name) } : {}),
+        adultRate,
+        childRate: num(raw.childRate, adultRate),
+        payOnSiteDefault: raw.payOnSiteDefault === true,
+      });
+    }
+  }
+  if (Array.isArray(v.misc)) {
+    for (const raw of v.misc) {
+      if (!isObj(raw) || typeof raw.id !== "string") continue;
+      const adultRate = num(raw.adultRate, 0);
+      const split =
+        raw.split === "per_group_split" ||
+        raw.split === "per_vehicle_split" ||
+        raw.split === "per_room_split" ||
+        raw.split === "per_person" ||
+        raw.split === "per_group"
+          ? raw.split
+          : "per_person";
+      misc.push({
+        id: raw.id,
+        ...(txName(raw.name) ? { name: txName(raw.name) } : {}),
+        ...(typeof raw.category === "string" ? { category: raw.category } : {}),
+        split,
+        adultRate,
+        childRate: num(raw.childRate, adultRate),
+        groupRate: num(raw.groupRate, 0),
+      });
+    }
+  }
+  return {
+    hotels: hotels.length ? hotels : fallback.hotels,
+    vehicles: vehicles.length ? vehicles : fallback.vehicles,
+    guides: guides.length ? guides : fallback.guides,
+    meals: meals.length ? meals : fallback.meals,
+    tickets: tickets.length ? tickets : fallback.tickets,
+    misc: misc.length ? misc : fallback.misc,
+  };
+}
+
+const LINE_TYPES: PricingLineType[] = [
+  "hotel",
+  "vehicle",
+  "guide",
+  "ticket",
+  "meal",
+  "tip",
+  "visa",
+  "other",
+];
+
+const SPLITS: PricingLineSplit[] = [
+  "per_room_split",
+  "per_vehicle_split",
+  "per_person",
+  "per_group_split",
+];
+
+function daysOf(v: unknown): PricingDay[] {
+  if (!Array.isArray(v)) return [];
+  const out: PricingDay[] = [];
+  for (const raw of v) {
+    if (!isObj(raw)) continue;
+    const day = num(raw.day, 0);
+    if (day <= 0) continue;
+    const lines: PricingDayLine[] = [];
+    if (Array.isArray(raw.lines)) {
+      for (const ln of raw.lines) {
+        if (!isObj(ln)) continue;
+        const type = LINE_TYPES.includes(ln.type as PricingLineType)
+          ? (ln.type as PricingLineType)
+          : null;
+        if (!type) continue;
+        const split = SPLITS.includes(ln.split as PricingLineSplit)
+          ? (ln.split as PricingLineSplit)
+          : type === "hotel"
+            ? "per_room_split"
+            : type === "vehicle"
+              ? "per_vehicle_split"
+              : type === "guide"
+                ? "per_group_split"
+                : "per_person";
+        lines.push({
+          type,
+          ...(typeof ln.ref === "string" ? { ref: ln.ref } : {}),
+          ...(txName(ln.label) ? { label: txName(ln.label) } : {}),
+          rooms: num(ln.rooms, 1),
+          qty: num(ln.qty, 1),
+          ...(ln.amount != null && ln.amount !== "" ? { amount: num(ln.amount, 0) } : {}),
+          payOnSite: ln.payOnSite === true,
+          split,
+          adultApplicable: ln.adultApplicable !== false,
+          childApplicable: ln.childApplicable !== false,
+        });
+      }
+    }
+    out.push({
+      day,
+      ...(txName(raw.title) ? { title: txName(raw.title) } : {}),
+      lines,
+    });
+  }
+  return out.sort((a, b) => a.day - b.day);
+}
+
+function teamFixedPartsOf(
+  raw: unknown,
+  fb: TeamFixedParts,
+): TeamFixedParts {
+  if (!isObj(raw)) return fb;
+  const ops = num(raw.ops, fb.ops);
+  const reserve = num(raw.reserve, fb.reserve);
+  const leaderRaw = raw.leader;
+  if (isObj(leaderRaw)) {
+    const bands: LeaderBands = {
+      "1-2": num(leaderRaw["1-2"] ?? leaderRaw.band1to2, fb.leaderBands["1-2"] || 0),
+      "1-4": num(leaderRaw["1-4"] ?? leaderRaw.band1to4, fb.leaderBands["1-4"] || fb.leader),
+      "5-10": num(leaderRaw["5-10"] ?? leaderRaw.band5to10, fb.leaderBands["5-10"] || fb.leader),
+      "10+": num(leaderRaw["10+"] ?? leaderRaw.bandOver10, fb.leaderBands["10+"] || fb.leader),
+    };
+    return { leader: bands["1-4"], leaderBands: bands, ops, reserve };
+  }
+  const flat = num(leaderRaw, fb.leader);
+  return {
+    leader: flat,
+    leaderBands: { "1-2": flat, "1-4": flat, "5-10": flat, "10+": flat },
+    ops,
+    reserve,
+  };
+}
+
 function build(id: RouteId): RoutePricing {
   const fb = FALLBACKS[id];
   const y = yamlRoutes[id];
   if (!isObj(y)) return { route: id, ...fb };
 
-  const modules = modulesOf(y.modules, fb.modules);
-  const adultPerPerson = modules.reduce((s, m) => s + m.adult, 0);
-  const childPerPerson = modules.reduce((s, m) => s + m.child, 0);
-  const parts = isObj(y.teamFixed)
-    ? {
-        leader: num(y.teamFixed.leader, fb.teamFixedParts.leader),
-        ops: num(y.teamFixed.ops, fb.teamFixedParts.ops),
-        reserve: num(y.teamFixed.reserve, fb.teamFixedParts.reserve),
-      }
-    : fb.teamFixedParts;
-  const teamFixed = parts.leader + parts.ops + parts.reserve;
+  const parts = teamFixedPartsOf(y.teamFixed, fb.teamFixedParts);
+  const teamFixed = resolveTeamFixed(parts, 4);
+  const routeCatalogs = catalogsOf(y.catalogs, yamlCatalogs);
+  const catalogs: PricingCatalogs = {
+    hotels: routeCatalogs.hotels.length ? routeCatalogs.hotels : yamlCatalogs.hotels,
+    vehicles: routeCatalogs.vehicles.length ? routeCatalogs.vehicles : yamlCatalogs.vehicles,
+    guides: routeCatalogs.guides.length ? routeCatalogs.guides : yamlCatalogs.guides,
+    meals: routeCatalogs.meals.length ? routeCatalogs.meals : yamlCatalogs.meals,
+    tickets: routeCatalogs.tickets.length ? routeCatalogs.tickets : yamlCatalogs.tickets,
+    misc: routeCatalogs.misc.length ? routeCatalogs.misc : yamlCatalogs.misc,
+  };
 
   return {
     route: id,
     status: statusOf(y.status, fb.status),
     source: typeof y.source === "string" ? y.source : fb.source,
-    modules,
-    moduleCost: { adultPerPerson, childPerPerson },
-    vehicleBands: bandsOf(y.vehicleBands, fb.vehicleBands),
+    ...(txName(y.label) ? { label: txName(y.label) } : txName(fb.label) ? { label: txName(fb.label) } : {}),
+    ...(txName(y.brief) ? { brief: txName(y.brief) } : txName(fb.brief) ? { brief: txName(fb.brief) } : {}),
     teamFixed,
     teamFixedParts: parts,
     margin: num(y.margin, fb.margin),
     roundBase: num(y.roundBase, fb.roundBase) || 10,
     anchors: anchorsOf(y.anchors, fb.anchors),
+    occupancy: num(y.occupancy, fb.occupancy) || 2,
+    maxPax: num(y.maxPax, fb.maxPax),
+    catalogs,
+    days: daysOf(y.days),
   };
 }
 
@@ -222,7 +469,24 @@ export const routePricing: Record<RouteId, RoutePricing> = {
   r3: build("r3"),
 };
 
-/** 该线路是否已具备可对外/演示的定价结构 */
+/** 该线路是否已具备可对外/演示的定价结构（需有按日明细） */
 export function pricingAvailable(id: RouteId): boolean {
-  return routePricing[id].status !== "none";
+  const p = routePricing[id];
+  if (p.status === "none") return false;
+  return p.days.some((d) => d.lines.length > 0);
+}
+
+/** 按日路径：人数是否超出车型/线路上限 */
+export function dayPricingMaxPax(p: RoutePricing): number {
+  if (p.maxPax > 0) return p.maxPax;
+  let max = 0;
+  const byId = new Map(p.catalogs.vehicles.map((v) => [v.id, v]));
+  for (const day of p.days) {
+    for (const line of day.lines) {
+      if (line.type !== "vehicle" || !line.ref) continue;
+      const v = byId.get(line.ref);
+      if (v && v.maxPax > max) max = v.maxPax;
+    }
+  }
+  return max;
 }

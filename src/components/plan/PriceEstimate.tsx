@@ -88,6 +88,9 @@ export function PriceEstimate({
       </div>
 
       <div className="space-y-2 border-t border-gold/20 bg-bone/35 px-4 py-3.5">
+        {est.fleetAdjusted ? (
+          <p className="text-[11px] leading-4 text-ink-soft">{t(copy.plan.estFleetHint)}</p>
+        ) : null}
         {children > 0 ? (
           <p className="text-[11px] leading-4 text-ink-soft">{t(copy.plan.estChildrenHint)}</p>
         ) : null}

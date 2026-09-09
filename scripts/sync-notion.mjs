@@ -16,6 +16,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
 import { keepTx, pair } from "./lib/keepTx.mjs";
+import { expandDaySheetRow } from "./lib/pricing-day-sheet.mjs";
+import { estimateRouteParty } from "./lib/estimate-from-yaml.mjs";
 
 const root = process.cwd();
 const VERSION = "2022-06-28";
@@ -521,30 +523,41 @@ async function main() {
     }
   }
 
-  // --- 定价（模块化估算器）：参数 / 成本模块 / 报价锚点 → content/pricing.yaml ---
-  if (dbs.pricing || dbs.pricingModules || dbs.pricingAnchors) {
+  // --- 定价：产品库 + 按日一行 + 验算 → content/pricing.yaml ---
+  if (
+    dbs.pricing ||
+    dbs.pricingAnchors ||
+    dbs.pricingHotels ||
+    dbs.pricingVehicles ||
+    dbs.pricingGuides ||
+    dbs.pricingMeals ||
+    dbs.pricingTickets ||
+    dbs.pricingMisc ||
+    dbs.pricingDaySheet ||
+    dbs.pricingValidate
+  ) {
     const rel = "content/pricing.yaml";
-    // 写回时保持固定顺序，避免被 Notion 的返回顺序打乱
-    const MODULE_ORDER = ["stay", "tickets", "dining", "localTransport", "crossBorder", "insurance", "welcome"];
     /** 中文列名优先，兼容旧英文列名 */
     const COL = {
       id: ["线路", "id"],
       status: ["估算开关", "status"],
       source: ["数据口径说明", "source"],
-      bandMax: (i) => [`车档${i}·人数上限`, `band${i}Max`],
-      bandPrice: (i) => [`车档${i}·整车包价(元)`, `band${i}Price`],
       leader: ["领队成本(元/团)", "leader"],
+      leader1to2: ["领队成本1-2人", "leader_1_2"],
+      leader1to4: ["领队成本1-4人", "leader_1_4"],
+      leader5to10: ["领队成本5-10人", "leader_5_10"],
+      leaderOver10: ["领队成本10人以上", "leader_10_plus"],
       ops: ["运营税费(元/团)", "ops"],
       reserve: ["储备金(元/团)", "reserve"],
       margin: ["加成率(如0.2=加20%)", "margin"],
       roundBase: ["报价取整基数(元)", "roundBase"],
+      occupancy: ["同房人数(默认2)", "occupancy"],
+      maxPax: ["人数上限", "maxPax"],
+      labelZh: ["线路名称·中文", "label_zh"],
+      labelEn: ["线路名称·英文", "label_en"],
+      briefZh: ["行程总览·中文", "brief_zh"],
+      briefEn: ["行程总览·英文", "brief_en"],
       route: ["线路", "route", "路线", "id"],
-      moduleId: ["模块代号", "moduleId", "模块id"],
-      nameZh: ["模块名称·中文", "name_zh"],
-      nameEn: ["模块名称·英文", "name_en"],
-      basis: ["口径备注(不参与计算)", "basis"],
-      adult: ["成人人均成本(元)", "成人发布价(元)", "adult"],
-      child: ["儿童人均成本(元)", "儿童发布价(元)", "child"],
       n: ["人数档(如2/4/6)", "n"],
       anchorAdult: ["成人发布价(元)", "adult"],
       anchorChild: ["儿童发布价(元)", "child"],
@@ -576,43 +589,49 @@ async function main() {
       if (/^正式/.test(s) || s.includes("对外")) return "confirmed";
       return "";
     };
-    const normModuleId = (raw) => {
-      const s = String(raw || "").trim();
-      if (MODULE_ORDER.includes(s)) return s;
-      const head = s.split(/[·|｜]/)[0]?.trim();
-      if (MODULE_ORDER.includes(head)) return head;
-      const zhMap = {
-        住宿: "stay",
-        门票: "tickets",
-        门票体验: "tickets",
-        餐食: "dining",
-        境内交通: "localTransport",
-        跨境交通: "crossBorder",
-        保险: "insurance",
-        伴手礼: "welcome",
-        伴手礼服务包: "welcome",
-      };
-      for (const [zh, id] of Object.entries(zhMap)) {
-        if (s.includes(zh)) return id;
-      }
-      return head || s;
-    };
-    const normBasis = (raw) => {
-      const s = String(raw || "").trim();
-      if (["per_person", "per_room_night", "per_group_per_head"].includes(s)) return s;
-      if (s.includes("间夜")) return "per_room_night";
-      if (s.includes("团费")) return "per_group_per_head";
-      if (s.includes("按人") || s === "按人") return "per_person";
-      return "per_person";
+    const catalogActive = (p) => {
+      const s = text(p, "状态");
+      return !s || s === "启用" || s === "已发布";
     };
     const paramPages = dbs.pricing ? (await queryAll(token, dbs.pricing)).filter(published) : [];
-    const modulePages = dbs.pricingModules
-      ? (await queryAll(token, dbs.pricingModules)).filter(published)
-      : [];
     const anchorPages = dbs.pricingAnchors
-      ? (await queryAll(token, dbs.pricingAnchors)).filter(published)
+      ? await (async () => {
+          try {
+            return (await queryAll(token, dbs.pricingAnchors)).filter(published);
+          } catch (e) {
+            console.warn("跳过报价锚点表:", e.message);
+            return [];
+          }
+        })()
       : [];
-    const all = [...paramPages, ...modulePages, ...anchorPages];
+    const hotelPages = dbs.pricingHotels ? (await queryAll(token, dbs.pricingHotels)).filter(catalogActive) : [];
+    const vehiclePages = dbs.pricingVehicles
+      ? (await queryAll(token, dbs.pricingVehicles)).filter(catalogActive)
+      : [];
+    const guidePages = dbs.pricingGuides ? (await queryAll(token, dbs.pricingGuides)).filter(catalogActive) : [];
+    const mealPages = dbs.pricingMeals ? (await queryAll(token, dbs.pricingMeals)).filter(catalogActive) : [];
+    const ticketPages = dbs.pricingTickets
+      ? (await queryAll(token, dbs.pricingTickets)).filter(catalogActive)
+      : [];
+    const miscPages = dbs.pricingMisc ? (await queryAll(token, dbs.pricingMisc)).filter(catalogActive) : [];
+    const daySheetPages = dbs.pricingDaySheet
+      ? (await queryAll(token, dbs.pricingDaySheet)).filter(published)
+      : [];
+    const validatePages = dbs.pricingValidate
+      ? (await queryAll(token, dbs.pricingValidate)).filter(published)
+      : [];
+    const all = [
+      ...paramPages,
+      ...anchorPages,
+      ...hotelPages,
+      ...vehiclePages,
+      ...guidePages,
+      ...mealPages,
+      ...ticketPages,
+      ...miscPages,
+      ...daySheetPages,
+      ...validatePages,
+    ];
     if (all.length && takeNotion(all, rel)) {
       const prev = existingYaml(rel);
       const prevRoutes = prev.routes && typeof prev.routes === "object" ? prev.routes : {};
@@ -621,6 +640,188 @@ async function main() {
         return /^r[123]$/.test(r) ? r : "";
       };
       const srcLang = firstText(paramPages[0], ["src"]) || prev.src || "zh";
+      const codeOf = (page) => text(page, "代号").trim();
+      const hotelByPageId = new Map();
+      const vehicleByPageId = new Map();
+      const guideByPageId = new Map();
+      const mealByPageId = new Map();
+      const ticketByPageId = new Map();
+      const miscByPageId = new Map();
+      const catalogs = {
+        hotels: hotelPages.map((p) => {
+          const id = codeOf(p) || text(p, "标题").trim();
+          const row = {
+            id,
+            name: pair(text(p, "标题"), text(p, "名称英文")),
+            twinRate: firstNum(p, ["双人间含早价", "twinRate"], 0),
+            city: text(p, "城市"),
+          };
+          hotelByPageId.set(p.id, row);
+          return row;
+        }),
+        vehicles: vehiclePages.map((p) => {
+          const id = codeOf(p) || text(p, "标题").trim();
+          const row = {
+            id,
+            name: pair(text(p, "标题"), text(p, "标题")),
+            maxPax: firstNum(p, ["最大载客", "maxPax"], 0),
+            dayRate: firstNum(p, ["日包价", "dayRate"], 0),
+            segment: text(p, "适用段"),
+          };
+          vehicleByPageId.set(p.id, row);
+          return row;
+        }),
+        guides: guidePages.map((p) => {
+          const id = codeOf(p) || text(p, "标题").trim();
+          const splitRaw = text(p, "分摊方式");
+          const row = {
+            id,
+            name: pair(text(p, "标题"), text(p, "标题")),
+            dayRate: firstNum(p, ["日费用", "dayRate"], 0),
+            split: splitRaw === "per_person" ? "per_person" : "per_group",
+          };
+          guideByPageId.set(p.id, row);
+          return row;
+        }),
+        meals: mealPages.map((p) => {
+          const id = codeOf(p) || text(p, "标题").trim();
+          const adultRate = firstNum(p, ["成人价"], 0);
+          const childRaw = firstNum(p, ["儿童价"], NaN);
+          const row = {
+            id,
+            name: pair(text(p, "标题"), text(p, "名称英文")),
+            mealType: text(p, "餐型"),
+            adultRate,
+            childRate: Number.isFinite(childRaw) ? childRaw : adultRate,
+          };
+          mealByPageId.set(p.id, row);
+          return row;
+        }),
+        tickets: ticketPages.map((p) => {
+          const id = codeOf(p) || text(p, "标题").trim();
+          const adultRate = firstNum(p, ["成人价"], 0);
+          const childRaw = firstNum(p, ["儿童价"], NaN);
+          const row = {
+            id,
+            name: pair(text(p, "标题"), text(p, "名称英文")),
+            adultRate,
+            childRate: Number.isFinite(childRaw) ? childRaw : adultRate,
+            payOnSiteDefault: prop(p, "默认可现付") === true,
+          };
+          ticketByPageId.set(p.id, row);
+          return row;
+        }),
+        misc: miscPages.map((p) => {
+          const id = codeOf(p) || text(p, "标题").trim();
+          const splitRaw = text(p, "分摊口径");
+          const adultRate = firstNum(p, ["成人价"], 0);
+          const childRaw = firstNum(p, ["儿童价"], NaN);
+          const row = {
+            id,
+            name: pair(text(p, "标题"), text(p, "名称英文")),
+            category: text(p, "类别"),
+            split: ["per_person", "per_group_split", "per_vehicle_split", "per_room_split"].includes(splitRaw)
+              ? splitRaw
+              : "per_person",
+            adultRate,
+            childRate: Number.isFinite(childRaw) ? childRaw : adultRate,
+            groupRate: firstNum(p, ["整团价"], 0),
+          };
+          miscByPageId.set(p.id, row);
+          return row;
+        }),
+      };
+      const daysByRoute = { r1: [], r2: [], r3: [] };
+      const relIds = (page, name) => {
+        const v = prop(page, name);
+        return Array.isArray(v) ? v : [];
+      };
+      const refOf = (pageId, map) => (pageId && map.get(pageId) ? map.get(pageId).id : "");
+      const optNum = (page, names) => {
+        const n = firstNum(page, names, NaN);
+        return Number.isFinite(n) ? n : null;
+      };
+      /** 标题如「路线一·r1 · D2 · 崇左」→ 线路/日序/日标题（列被删时仍可用） */
+      const parseSheetTitle = (page) => {
+        const title = text(page, "标题") || "";
+        const fromCol = routeOf(page);
+        const route =
+          fromCol ||
+          (title.match(/·\s*(r[123])\s*·/i) || title.match(/\b(r[123])\b/i) || [])[1]?.toLowerCase() ||
+          "";
+        const dayFromCol = firstNum(page, ["日序", "day"], 0);
+        const day =
+          dayFromCol > 0 ? dayFromCol : Number((title.match(/D(\d+)/i) || [])[1]) || 0;
+        const placeCol = text(page, "日标题");
+        const place =
+          placeCol ||
+          title
+            .split("·")
+            .map((s) => s.trim())
+            .filter(Boolean)
+            .pop() ||
+          title;
+        return { route, day, place };
+      };
+      for (const id of ["r1", "r2", "r3"]) {
+        const sheetRows = daySheetPages.filter((x) => parseSheetTitle(x).route === id);
+        if (!sheetRows.length) {
+          daysByRoute[id] = [];
+          continue;
+        }
+        const days = [];
+        for (const page of sheetRows) {
+          const { day: dayNum, place } = parseSheetTitle(page);
+          if (dayNum <= 0) continue;
+          const hotelRel = relIds(page, "酒店")[0];
+          const va = relIds(page, "车型A")[0];
+          const vb = relIds(page, "车型B")[0];
+          const guideRel = relIds(page, "导游")[0];
+          const breakfastRel = relIds(page, "早餐产品")[0];
+          const lunchRel = relIds(page, "中餐产品")[0];
+          const dinnerRel = relIds(page, "晚餐产品")[0];
+          const ticket1Rel = relIds(page, "门票1产品")[0];
+          const ticket2Rel = relIds(page, "门票2产品")[0];
+          const tipRel = relIds(page, "小费产品")[0];
+          const miscRels = [
+            ...relIds(page, "杂项产品"),
+            ...relIds(page, "小费产品"),
+          ];
+          const miscRefs = [];
+          const seenMisc = new Set();
+          for (const mid of miscRels) {
+            const code = refOf(mid, miscByPageId);
+            if (!code || seenMisc.has(code)) continue;
+            seenMisc.add(code);
+            miscRefs.push(code);
+          }
+          const flat = {
+            day: dayNum,
+            titleZh: place,
+            titleEn: place,
+            hotelRef: refOf(hotelRel, hotelByPageId),
+            rooms: firstNum(page, ["间数"], 1) || 1,
+            vehicleARef: refOf(va, vehicleByPageId),
+            vehicleBRef: refOf(vb, vehicleByPageId),
+            guideRef: refOf(guideRel, guideByPageId),
+            breakfastRef: refOf(breakfastRel, mealByPageId),
+            lunchRef: refOf(lunchRel, mealByPageId),
+            dinnerRef: refOf(dinnerRel, mealByPageId),
+            ticket1Ref: refOf(ticket1Rel, ticketByPageId),
+            ticket2Ref: refOf(ticket2Rel, ticketByPageId),
+            ticket1PayOnSite:
+              prop(page, "门票1现付") === true ||
+              (!!ticket1Rel && ticketByPageId.get(ticket1Rel)?.payOnSiteDefault === true),
+            ticket2PayOnSite:
+              prop(page, "门票2现付") === true ||
+              (!!ticket2Rel && ticketByPageId.get(ticket2Rel)?.payOnSiteDefault === true),
+            tipRef: refOf(tipRel, miscByPageId),
+            miscRefs: miscRefs.filter((r) => r !== refOf(tipRel, miscByPageId)),
+          };
+          days.push(expandDaySheetRow(flat));
+        }
+        daysByRoute[id] = days.sort((a, b) => a.day - b.day);
+      }
       const routesOut = {};
       for (const id of ["r1", "r2", "r3"]) {
         const p =
@@ -629,28 +830,6 @@ async function main() {
         const prevRow = prevRoutes[id] ?? {};
         const rawStatus = firstText(p, COL.status);
         const status = normStatus(rawStatus) || prevRow.status || "none";
-        const bands = [];
-        for (const i of [1, 2, 3, 4]) {
-          const maxPax = firstNum(p, COL.bandMax(i), 0);
-          const price = firstNum(p, COL.bandPrice(i), 0);
-          if (maxPax > 0) bands.push({ maxPax, price });
-        }
-        bands.sort((a, b) => a.maxPax - b.maxPax);
-        const mods = modulePages
-          .filter((x) => routeOf(x) === id)
-          .map((x) => ({
-            id: normModuleId(firstText(x, COL.moduleId)),
-            name: pair(firstText(x, COL.nameZh), firstText(x, COL.nameEn)),
-            basis: normBasis(firstText(x, COL.basis)),
-            adult: firstNum(x, ["成人人均成本(元)", "adult"], 0),
-            child: firstNum(x, ["儿童人均成本(元)", "child"], 0),
-          }))
-          .filter((m) => m.id)
-          .sort((a, b) => {
-            const ia = MODULE_ORDER.indexOf(a.id);
-            const ib = MODULE_ORDER.indexOf(b.id);
-            return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
-          });
         const anchors = anchorPages
           .filter((x) => routeOf(x) === id)
           .map((x) => ({
@@ -660,40 +839,142 @@ async function main() {
           }))
           .filter((a) => a.n > 0)
           .sort((a, b) => a.n - b.n);
+        const days = daysByRoute[id];
+        const labelZh = firstText(p, COL.labelZh);
+        const labelEn = firstText(p, COL.labelEn);
+        const briefZh = firstText(p, COL.briefZh);
+        const briefEn = firstText(p, COL.briefEn);
+        const prevLabel =
+          prevRow.label && typeof prevRow.label === "object" && !Array.isArray(prevRow.label)
+            ? prevRow.label
+            : {};
+        const prevBrief =
+          prevRow.brief && typeof prevRow.brief === "object" && !Array.isArray(prevRow.brief)
+            ? prevRow.brief
+            : {};
         routesOut[id] = {
           status,
           source: firstText(p, COL.source) || prevRow.source || "",
-          modules: mods.length ? mods : prevRow.modules || [],
-          vehicleBands: bands.length ? bands : prevRow.vehicleBands || [],
-          teamFixed: {
-            leader: firstNum(p, COL.leader, Number(prevRow.teamFixed?.leader) || 0),
-            ops: firstNum(p, COL.ops, Number(prevRow.teamFixed?.ops) || 0),
-            reserve: firstNum(p, COL.reserve, Number(prevRow.teamFixed?.reserve) || 0),
-          },
+          label: pair(labelZh || prevLabel.zh || "", labelEn || prevLabel.en || ""),
+          brief: pair(briefZh || prevBrief.zh || "", briefEn || prevBrief.en || ""),
+          teamFixed: (() => {
+            const flat = firstNum(p, COL.leader, 0);
+            const prevL = prevRow.teamFixed?.leader;
+            const prevBands =
+              prevL && typeof prevL === "object"
+                ? prevL
+                : {
+                    "1-2": Number(prevL) || flat,
+                    "1-4": Number(prevL) || flat,
+                    "5-10": Number(prevL) || flat,
+                    "10+": Number(prevL) || flat,
+                  };
+            const b12 = firstNum(p, COL.leader1to2, NaN);
+            const b14 = firstNum(p, COL.leader1to4, NaN);
+            const b510 = firstNum(p, COL.leader5to10, NaN);
+            const b10p = firstNum(p, COL.leaderOver10, NaN);
+            const hasBandCols = [b12, b14, b510, b10p].some((x) => Number.isFinite(x));
+            const fallbackFlat = flat || Number(prevL) || 0;
+            return {
+              leader: hasBandCols
+                ? {
+                    "1-2": Number.isFinite(b12) ? b12 : prevBands["1-2"] || 0,
+                    "1-4": Number.isFinite(b14) ? b14 : prevBands["1-4"] || fallbackFlat,
+                    "5-10": Number.isFinite(b510) ? b510 : prevBands["5-10"] || fallbackFlat,
+                    "10+": Number.isFinite(b10p) ? b10p : prevBands["10+"] || fallbackFlat,
+                  }
+                : prevL && typeof prevL === "object"
+                  ? prevL
+                  : fallbackFlat,
+              ops: firstNum(p, COL.ops, Number(prevRow.teamFixed?.ops) || 0),
+              reserve: firstNum(p, COL.reserve, Number(prevRow.teamFixed?.reserve) || 0),
+            };
+          })(),
           margin: firstNum(p, COL.margin, Number(prevRow.margin) || 0),
           roundBase: firstNum(p, COL.roundBase, Number(prevRow.roundBase) || 10),
+          occupancy: firstNum(p, COL.occupancy, Number(prevRow.occupancy) || 2) || 2,
+          maxPax: firstNum(p, COL.maxPax, Number(prevRow.maxPax) || 0),
           anchors: anchors.length ? anchors : prevRow.anchors || [],
+          days: days.length ? days : [],
         };
       }
+      const hasCats =
+        catalogs.hotels.length ||
+        catalogs.vehicles.length ||
+        catalogs.guides.length ||
+        catalogs.meals.length ||
+        catalogs.tickets.length ||
+        catalogs.misc.length;
       writeYaml(
         rel,
-        `# 线路定价 · 模块化估算器
-# 这是「即时估算」的唯一真源：主理人在 Notion 改 → npm run content:notion 同步回这里 → 网站生效。
-# 也可以直接改本文件；两边谁的时间戳新，谁生效。
-#
-# 报价公式（与 pricing-modules-template-v1.xlsx 一致）：
-#   n          = 成人数 + 儿童数（儿童占车位，参与车辆 / 领队分摊）
-#   成人人均(n) = [ 成人按人小计 + (车辆档费(n) + 团队固定 T) ÷ n ] × (1 + margin) → 按 roundBase 取整
-#   儿童人均(n) = [ 儿童按人小计 + (车辆档费(n) + 团队固定 T) ÷ n ] × (1 + margin) → 按 roundBase 取整
-#
-# status: none = 网站不显示估算（按团队询价）/ demo = 演示值 / confirmed = 正式对外
-# modules 的 adult / child = 该模块折算后的人均金额（元），不是单价。
-#   例：住宿 6 晚 × ¥1,000/间 ÷ 2 人 = 成人 3000、儿童 0（不占床）
-#   basis 只是口径备注（per_person / per_room_night / per_group_per_head），不参与计算
-# anchors 为校准锚点（已知发布价），不展示给客人`,
-        { src: srcLang, routes: routesOut },
+        `# 线路定价 · 三层架构（产品库 → 按日一行 → 人数验算）
+# 真源：Notion 产品库 +「报价·按日一行」→ npm run content:notion → 本文件 → 网站。
+# 同步后写入「报价·人数验算」2/4/6/8/10 人单价与全成人总价。
+# 无按日明细则不估算（询价）。status: none / demo / confirmed；anchors 不展示给客人`,
+        {
+          src: srcLang,
+          ...(hasCats ? { catalogs } : prev.catalogs ? { catalogs: prev.catalogs } : {}),
+          routes: routesOut,
+        },
       );
       mark();
+
+      if (dbs.pricingValidate && validatePages.length) {
+        const cats = hasCats
+          ? catalogs
+          : prev.catalogs || { hotels: [], vehicles: [], guides: [], meals: [], tickets: [], misc: [] };
+        const NS = [2, 4, 6, 8, 10];
+        /** 验算行可能已删「线路」列：从标题「路线一·r1 · 2人验算」解析 */
+        const validateRouteOf = (page) => {
+          const fromCol = routeOf(page);
+          if (/^r[123]$/.test(fromCol)) return fromCol;
+          const title = text(page, "标题") || "";
+          return (title.match(/·\s*(r[123])\s*·/i) || title.match(/\b(r[123])\b/i) || [])[1]?.toLowerCase() || "";
+        };
+        let validateMetaProps = null;
+        try {
+          validateMetaProps = (
+            await notionFetch(token, `https://api.notion.com/v1/databases/${uuid(dbs.pricingValidate)}`)
+          ).properties;
+        } catch {
+          validateMetaProps = {};
+        }
+        let patched = 0;
+        for (const page of validatePages) {
+          const rid = validateRouteOf(page);
+          const n = firstNum(page, ["人数", "n"], 0);
+          if (!/^r[123]$/.test(rid) || !NS.includes(n)) continue;
+          const est = estimateRouteParty(routesOut[rid], cats, n, 0);
+          if (!est) continue;
+          const properties = {};
+          if (validateMetaProps["成人单价"]) properties["成人单价"] = { number: est.adultPerPerson };
+          if (validateMetaProps["儿童单价"]) properties["儿童单价"] = { number: est.childPerPerson };
+          if (validateMetaProps["全成人总价"]) properties["全成人总价"] = { number: est.subtotalAllAdults };
+          if (validateMetaProps["口径说明"]) {
+            properties["口径说明"] = {
+              rich_text: [
+                {
+                  text: {
+                    content: `按日×(1+margin=${routesOut[rid]?.margin ?? "?"})取整；同步 ${new Date().toISOString().slice(0, 16)}`,
+                  },
+                },
+              ],
+            };
+          }
+          if (!Object.keys(properties).length) continue;
+          await notionFetch(token, `https://api.notion.com/v1/pages/${page.id}`, {
+            method: "PATCH",
+            body: JSON.stringify({ properties }),
+          });
+          patched++;
+        }
+        console.log(
+          `updated Notion 报价·人数验算 ${patched} 行` +
+            (patched
+              ? `（r1 margin=${routesOut.r1?.margin}）`
+              : " — 0 行：检查标题是否含 r1/r2/r3 与人数 2/4/6/8/10"),
+        );
+      }
     }
   }
 
