@@ -156,7 +156,7 @@ catalogs:
       name:
         en: 国内司机兼向导
         zh: 国内司机兼向导
-      dayRate: 0
+      dayRate: 600
       split: per_group
     - id: guide-vn
       name:
