@@ -24,6 +24,9 @@
     "content:notion:day-sheet-products-only": "node scripts/notion-day-sheet-products-only.mjs",
     "content:notion:drop-vehicle-bands": "node scripts/notion-drop-vehicle-bands.mjs",
     "content:notion:patch-leader-buses": "node scripts/notion-patch-leader-buses.mjs",
+    "content:notion:patch-scaffold-cols": "node scripts/notion-patch-day-sheet-scaffold-cols.mjs",
+    "content:pricing-align": "node scripts/pricing-align-from-itinerary.mjs",
+    "content:pricing-scaffold": "node scripts/pricing-scaffold-from-itinerary.mjs",
     "content:keepTx": "node scripts/test-keepTx.mjs",
     "preview": "vite preview"
   },

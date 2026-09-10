@@ -1,0 +1,25 @@
+# placeId → 酒店产品代号（报价二期 scaffold）
+# 禁止用 lodging 文案模糊匹配写入；未命中则酒店格留空 + align 报 unmapped
+
+src: zh
+default:
+  nanning: nanning-nalian
+  chongzuo: chongzuo-nali
+  halong: halong-wason
+  catba: catba-tbd
+  hanoi: hanoi-splendid
+  sapa: sapa-coupole
+  jianshui: jianshui-linan
+  puzhehei: puzhehei-xiyuan
+  mile: mile-juren
+  kunming: kunming-kaichen
+  # 下列行程已有 placeId，产品库暂缺 → scaffold 建空行，酒店待选
+  # guantang:
+  # beihai:
+  # weizhou:
+  # train:  # 米轨过夜，非酒店
+
+routes:
+  r1: {}
+  r2: {}
+  r3: {}
