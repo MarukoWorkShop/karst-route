@@ -22,6 +22,9 @@ databases:
   pricingMisc: 3d6d5dfd82c481e78186e482308ad352
   pricingDaySheet: 3d6d5dfd82c481a1a429c0d9c06a1b2b
   pricingValidate: 3d6d5dfd82c48164b473f7a0ff073b05
+  pricingMarketTiers: 3d7d5dfd82c48177adf9f3f3e45865be
+  pricingRoomDiff: 3d7d5dfd82c4810594f9da195a9f8175
+  lightExperiences: 3d7d5dfd82c481a28137f44e66039154
 pricingSections:
   hub: 3d6d5dfd82c481bf8d1cf82a10b2ab40
   products: 3d6d5dfd82c4814e973ac3e56be0800f

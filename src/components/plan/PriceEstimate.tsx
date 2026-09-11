@@ -2,11 +2,11 @@ import type { RouteId } from "@/types";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { estimateParty, fmtCny } from "@/lib/estimate";
-import { pricingAvailable } from "@/data/routePricing";
+import { pricingAvailable, resolveMarketTier } from "@/data/routePricing";
 
 /**
  * 参考报价面板（预订流程 · 人数旁 / 下方）。
- * 任何金额都必须标明仅供参考，并引导留下邮箱 / WhatsApp 由管家出具正式报价。
+ * 优先展示 Word「市场报价」（加粗）；无档位时回退公式测算。
  */
 export function PriceEstimate({
   route,
@@ -30,15 +30,24 @@ export function PriceEstimate({
     );
   }
 
+  const n = adults + children;
+  const market = resolveMarketTier(route, n);
   const est = estimateParty(route, adults, children);
 
-  if (!est) {
+  if (!market && !est) {
     return (
       <aside className={`rounded-lg border border-line/80 bg-bone/40 px-4 py-3.5 ${className}`}>
         <p className="text-[12.5px] leading-5 text-ink-soft">{t(copy.plan.estOversize)}</p>
       </aside>
     );
   }
+
+  const adultPer = market?.adult ?? est!.adultPerPerson;
+  const childPer = market?.child ?? est!.childPerPerson;
+  const subtotal = adults * adultPer + children * childPer;
+  const partyN = est?.n ?? n;
+  const partyA = est?.adults ?? adults;
+  const partyC = est?.children ?? children;
 
   return (
     <aside
@@ -54,26 +63,26 @@ export function PriceEstimate({
         </div>
         <p className="text-[11.5px] leading-4 text-ink-soft">
           {t(copy.plan.estForParty)
-            .replace("{n}", String(est.n))
-            .replace("{a}", String(est.adults))
-            .replace("{c}", String(est.children))}
+            .replace("{n}", String(partyN))
+            .replace("{a}", String(partyA))
+            .replace("{c}", String(partyC))}
         </p>
       </div>
 
       <div className="px-4 pt-1 pb-2">
         <div className="flex items-baseline justify-between gap-3 border-b border-line/70 py-2.5">
-          <span className="text-[12px] text-ink-soft">{t(copy.plan.estPerAdult)}</span>
-          <span className="font-mono text-[15px] tabular-nums text-ink">
-            {fmtCny(est.adultPerPerson)}
+          <span className="text-[12px] text-ink-soft">{t(copy.plan.estMarketAdult)}</span>
+          <span className="font-mono text-[15px] font-bold tabular-nums text-ink">
+            {fmtCny(adultPer)}
             <span className="ml-1 text-[11px] font-sans font-normal text-ink-soft">
               {t(copy.plan.estPerUnit)}
             </span>
           </span>
         </div>
         <div className="flex items-baseline justify-between gap-3 border-b border-line/70 py-2.5">
-          <span className="text-[12px] text-ink-soft">{t(copy.plan.estPerChild)}</span>
-          <span className="font-mono text-[15px] tabular-nums text-ink">
-            {fmtCny(est.childPerPerson)}
+          <span className="text-[12px] text-ink-soft">{t(copy.plan.estMarketChild)}</span>
+          <span className="font-mono text-[15px] font-bold tabular-nums text-ink">
+            {fmtCny(childPer)}
             <span className="ml-1 text-[11px] font-sans font-normal text-ink-soft">
               {t(copy.plan.estPerUnit)}
             </span>
@@ -82,13 +91,13 @@ export function PriceEstimate({
         <div className="flex items-baseline justify-between gap-3 py-3">
           <span className="text-[12px] font-semibold text-ink">{t(copy.plan.estSubtotal)}</span>
           <span className="font-mono text-[22px] leading-none font-bold tracking-[-0.02em] tabular-nums text-cta">
-            {fmtCny(est.subtotal)}
+            {fmtCny(subtotal)}
           </span>
         </div>
       </div>
 
       <div className="space-y-2 border-t border-gold/20 bg-bone/35 px-4 py-3.5">
-        {est.fleetAdjusted ? (
+        {est?.fleetAdjusted ? (
           <p className="text-[11px] leading-4 text-ink-soft">{t(copy.plan.estFleetHint)}</p>
         ) : null}
         {children > 0 ? (

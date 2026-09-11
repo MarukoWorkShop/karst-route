@@ -10,6 +10,9 @@ export type RoutePricingStatus = "none" | "demo" | "confirmed";
 
 export type PriceAnchor = { n: number; adult: number; child: number };
 
+/** Word「网络卖价」档位：出行人数 ≤ maxN 时用该档成人/儿童市场报价 */
+export type MarketTier = { maxN: number; adult: number; child: number };
+
 export type PricingLineSplit =
   | "per_room_split"
   | "per_vehicle_split"
@@ -102,7 +105,7 @@ export type PricingCatalogs = {
   misc: PricingMisc[];
 };
 
-/** 领队费按团人数分档（元/团）。「10+」含 10 人；「5-10」用于 5–9。 */
+/** 领队费（元/团）；空/0 表示不计入。历史分档已废弃，仅兼容旧 YAML。 */
 export type LeaderBands = {
   "1-2": number;
   "1-4": number;
@@ -111,8 +114,8 @@ export type LeaderBands = {
 };
 
 export type TeamFixedParts = {
-  /** 无分档时的扁平领队费；有分档时等于「1-4」档便于展示 */
   leader: number;
+  /** @deprecated 仅兼容旧 YAML；估算一律用扁平 leader */
   leaderBands: LeaderBands;
   ops: number;
   reserve: number;
@@ -124,27 +127,24 @@ export type RoutePricing = {
   source?: string;
   label?: { zh: string; en: string };
   brief?: { zh: string; en: string };
-  /** 默认按 1-4 人档合计（仅展示/兼容）；估算请用 resolveTeamFixed */
   teamFixed: number;
   teamFixedParts: TeamFixedParts;
+  /** 卖价毛利率：卖价 = 成本 / (1 - margin)；0.3 → ÷0.70（对齐报价单） */
   margin: number;
   roundBase: number;
   anchors: PriceAnchor[];
+  /** Word 市场报价档位（成人市场报价 / 儿童市场报价） */
+  marketTiers: MarketTier[];
+  /** 线路房差：各住宿日 双人间×间数÷同房人数 之和（附注儿童价=成人−房差） */
+  roomDiff: number;
   occupancy: number;
   maxPax: number;
   catalogs: PricingCatalogs;
   days: PricingDay[];
 };
 
-export function resolveLeaderFee(parts: TeamFixedParts, n: number): number {
-  const b = parts.leaderBands;
-  const hasBands = b["1-2"] > 0 || b["1-4"] > 0 || b["5-10"] > 0 || b["10+"] > 0;
-  if (!hasBands) return parts.leader;
-  if (n <= 2) return b["1-2"] > 0 ? b["1-2"] : b["1-4"];
-  if (n <= 4) return b["1-4"];
-  // 「10人以上」含 10；「5-10」档用于 5–9，避免与大团档抢 10 人
-  if (n < 10) return b["5-10"];
-  return b["10+"];
+export function resolveLeaderFee(parts: TeamFixedParts, _n?: number): number {
+  return Number(parts.leader) || 0;
 }
 
 export function resolveTeamFixed(parts: TeamFixedParts, n: number): number {
@@ -170,6 +170,8 @@ const UNSET: Omit<RoutePricing, "route"> = {
   margin: 0,
   roundBase: 10,
   anchors: [],
+  marketTiers: [],
+  roomDiff: 0,
   occupancy: 2,
   maxPax: 0,
   catalogs: EMPTY_CATALOGS,
@@ -234,6 +236,18 @@ function anchorsOf(v: unknown, fallback: PriceAnchor[]): PriceAnchor[] {
     out.push({ n, adult: num(raw.adult, 0), child: num(raw.child, 0) });
   }
   return out;
+}
+
+function marketTiersOf(v: unknown, fallback: MarketTier[]): MarketTier[] {
+  if (!Array.isArray(v)) return fallback;
+  const out: MarketTier[] = [];
+  for (const raw of v) {
+    if (!isObj(raw)) continue;
+    const maxN = num(raw.maxN, 0);
+    if (maxN <= 0) continue;
+    out.push({ maxN, adult: num(raw.adult, 0), child: num(raw.child, 0) });
+  }
+  return out.length ? out.sort((a, b) => a.maxN - b.maxN) : fallback;
 }
 
 function catalogsOf(v: unknown, fallback: PricingCatalogs): PricingCatalogs {
@@ -411,18 +425,24 @@ function teamFixedPartsOf(
   const reserve = num(raw.reserve, fb.reserve);
   const leaderRaw = raw.leader;
   if (isObj(leaderRaw)) {
-    const bands: LeaderBands = {
-      "1-2": num(leaderRaw["1-2"] ?? leaderRaw.band1to2, fb.leaderBands["1-2"] || 0),
-      "1-4": num(leaderRaw["1-4"] ?? leaderRaw.band1to4, fb.leaderBands["1-4"] || fb.leader),
-      "5-10": num(leaderRaw["5-10"] ?? leaderRaw.band5to10, fb.leaderBands["5-10"] || fb.leader),
-      "10+": num(leaderRaw["10+"] ?? leaderRaw.bandOver10, fb.leaderBands["10+"] || fb.leader),
+    // 旧分档 YAML：不再按人数取档，一律视为未启用领队费（除非调用方已扁化为数字）
+    const flat = num(leaderRaw["1-4"] ?? leaderRaw.band1to4, 0);
+    return {
+      leader: 0,
+      leaderBands: {
+        "1-2": num(leaderRaw["1-2"], 0),
+        "1-4": flat,
+        "5-10": num(leaderRaw["5-10"], 0),
+        "10+": num(leaderRaw["10+"], 0),
+      },
+      ops,
+      reserve,
     };
-    return { leader: bands["1-4"], leaderBands: bands, ops, reserve };
   }
   const flat = num(leaderRaw, fb.leader);
   return {
     leader: flat,
-    leaderBands: { "1-2": flat, "1-4": flat, "5-10": flat, "10+": flat },
+    leaderBands: EMPTY_LEADER_BANDS,
     ops,
     reserve,
   };
@@ -444,6 +464,13 @@ function build(id: RouteId): RoutePricing {
     tickets: routeCatalogs.tickets.length ? routeCatalogs.tickets : yamlCatalogs.tickets,
     misc: routeCatalogs.misc.length ? routeCatalogs.misc : yamlCatalogs.misc,
   };
+  const days = daysOf(y.days);
+  const occupancy = num(y.occupancy, fb.occupancy) || 2;
+  const fromYamlDiff = num(y.roomDiff, NaN);
+  const roomDiff =
+    Number.isFinite(fromYamlDiff) && fromYamlDiff >= 0
+      ? fromYamlDiff
+      : sumRoomDiff(days, catalogs, occupancy);
 
   return {
     route: id,
@@ -456,11 +483,36 @@ function build(id: RouteId): RoutePricing {
     margin: num(y.margin, fb.margin),
     roundBase: num(y.roundBase, fb.roundBase) || 10,
     anchors: anchorsOf(y.anchors, fb.anchors),
-    occupancy: num(y.occupancy, fb.occupancy) || 2,
+    marketTiers: marketTiersOf(y.marketTiers, fb.marketTiers),
+    occupancy,
     maxPax: num(y.maxPax, fb.maxPax),
     catalogs,
-    days: daysOf(y.days),
+    days,
+    roomDiff,
   };
+}
+
+/** 线路房差：有酒店日 双人间×间数÷同房人数 */
+export function sumRoomDiff(
+  days: PricingDay[],
+  catalogs: PricingCatalogs,
+  occupancy = 2,
+): number {
+  const occ = occupancy > 0 ? occupancy : 2;
+  const byId = new Map(catalogs.hotels.map((h) => [h.id, h]));
+  let total = 0;
+  for (const day of days) {
+    for (const line of day.lines || []) {
+      if (line.type !== "hotel" || !line.ref) continue;
+      const twin =
+        line.amount != null && Number.isFinite(line.amount)
+          ? Number(line.amount)
+          : byId.get(line.ref)?.twinRate ?? 0;
+      const rooms = line.rooms && line.rooms > 0 ? line.rooms : 1;
+      total += (twin * rooms) / occ;
+    }
+  }
+  return total;
 }
 
 export const routePricing: Record<RouteId, RoutePricing> = {
@@ -468,6 +520,33 @@ export const routePricing: Record<RouteId, RoutePricing> = {
   r2: build("r2"),
   r3: build("r3"),
 };
+
+/** 按出行总人数取 Word「网络卖价」档位；无档位返回 null */
+export function resolveMarketTier(id: RouteId, n: number): MarketTier | null {
+  const tiers = routePricing[id].marketTiers;
+  if (!tiers.length || n <= 0) return null;
+  const hit = tiers.find((t) => n <= t.maxN);
+  return hit ?? tiers[tiers.length - 1] ?? null;
+}
+
+/** 路线卡片：10 人档→2–3 人档的成人/儿童市场价区间（低→高） */
+export function marketPriceRange(id: RouteId): {
+  adultFrom: number;
+  adultTo: number;
+  childFrom: number;
+  childTo: number;
+} | null {
+  const tiers = routePricing[id].marketTiers.filter((t) => t.adult > 0);
+  if (!tiers.length) return null;
+  const adults = tiers.map((t) => t.adult);
+  const children = tiers.map((t) => t.child);
+  return {
+    adultFrom: Math.min(...adults),
+    adultTo: Math.max(...adults),
+    childFrom: Math.min(...children),
+    childTo: Math.max(...children),
+  };
+}
 
 /** 该线路是否已具备可对外/演示的定价结构（需有按日明细） */
 export function pricingAvailable(id: RouteId): boolean {

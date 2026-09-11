@@ -534,7 +534,9 @@ async function main() {
     dbs.pricingTickets ||
     dbs.pricingMisc ||
     dbs.pricingDaySheet ||
-    dbs.pricingValidate
+    dbs.pricingValidate ||
+    dbs.pricingRoomDiff ||
+    dbs.pricingMarketTiers
   ) {
     const rel = "content/pricing.yaml";
     /** 中文列名优先，兼容旧英文列名 */
@@ -543,10 +545,6 @@ async function main() {
       status: ["估算开关", "status"],
       source: ["数据口径说明", "source"],
       leader: ["领队成本(元/团)", "leader"],
-      leader1to2: ["领队成本1-2人", "leader_1_2"],
-      leader1to4: ["领队成本1-4人", "leader_1_4"],
-      leader5to10: ["领队成本5-10人", "leader_5_10"],
-      leaderOver10: ["领队成本10人以上", "leader_10_plus"],
       ops: ["运营税费(元/团)", "ops"],
       reserve: ["储备金(元/团)", "reserve"],
       margin: ["加成率(如0.2=加20%)", "margin"],
@@ -620,6 +618,9 @@ async function main() {
     const validatePages = dbs.pricingValidate
       ? (await queryAll(token, dbs.pricingValidate)).filter(published)
       : [];
+    const marketTierPages = dbs.pricingMarketTiers
+      ? (await queryAll(token, dbs.pricingMarketTiers)).filter(published)
+      : [];
     const all = [
       ...paramPages,
       ...anchorPages,
@@ -631,6 +632,7 @@ async function main() {
       ...miscPages,
       ...daySheetPages,
       ...validatePages,
+      ...marketTierPages,
     ];
     if (all.length && takeNotion(all, rel)) {
       const prev = existingYaml(rel);
@@ -822,6 +824,49 @@ async function main() {
         }
         daysByRoute[id] = days.sort((a, b) => a.day - b.day);
       }
+      /** 验算行可能已删「线路」列：从标题「路线一·r1 · 2人验算」解析 */
+      const validateRouteOf = (page) => {
+        const fromCol = routeOf(page);
+        if (/^r[123]$/.test(fromCol)) return fromCol;
+        const title = text(page, "标题") || "";
+        return (title.match(/·\s*(r[123])\s*·/i) || title.match(/\b(r[123])\b/i) || [])[1]?.toLowerCase() || "";
+      };
+      /** 市场报价档表（真源）→ marketTiers；无表时回退验算列 / YAML */
+      const marketTiersFromDb = (rid) => {
+        const rows = marketTierPages
+          .filter((x) => {
+            const r = text(x, "线路") || "";
+            return r === rid;
+          })
+          .map((x) => ({
+            maxN: firstNum(x, ["人数上限", "maxN"], 0),
+            adult: firstNum(x, ["成人市场报价"], 0),
+            child: firstNum(x, ["儿童市场报价"], 0),
+            band: text(x, "人数档"),
+          }))
+          .filter((t) => t.maxN > 0 && t.adult > 0)
+          .sort((a, b) => a.maxN - b.maxN);
+        return rows.map(({ maxN, adult, child }) => ({ maxN, adult, child }));
+      };
+      /** 兼容：从验算表人数行推断三档（旧路径） */
+      const marketTiersFromValidate = (rid) => {
+        const byN = {};
+        for (const page of validatePages) {
+          if (validateRouteOf(page) !== rid) continue;
+          const n = firstNum(page, ["人数", "n"], 0);
+          const adult = firstNum(page, ["成人市场报价"], 0);
+          const child = firstNum(page, ["儿童市场报价"], 0);
+          if (!n || !(adult > 0)) continue;
+          byN[n] = { adult, child };
+        }
+        const tiers = [];
+        if (byN[2]) tiers.push({ maxN: 3, adult: byN[2].adult, child: byN[2].child });
+        const mid = byN[6] || byN[4];
+        if (mid) tiers.push({ maxN: 6, adult: mid.adult, child: mid.child });
+        const hi = byN[10] || byN[8];
+        if (hi) tiers.push({ maxN: 10, adult: hi.adult, child: hi.child });
+        return tiers;
+      };
       const routesOut = {};
       for (const id of ["r1", "r2", "r3"]) {
         const p =
@@ -852,50 +897,63 @@ async function main() {
           prevRow.brief && typeof prevRow.brief === "object" && !Array.isArray(prevRow.brief)
             ? prevRow.brief
             : {};
+        const fromMarketDb = marketTiersFromDb(id);
+        const fromValidate = marketTiersFromValidate(id);
+        const marketTiers = fromMarketDb.length
+          ? fromMarketDb
+          : fromValidate.length
+            ? fromValidate
+            : Array.isArray(prevRow.marketTiers) && prevRow.marketTiers.length
+              ? prevRow.marketTiers
+              : [];
         routesOut[id] = {
           status,
           source: firstText(p, COL.source) || prevRow.source || "",
           label: pair(labelZh || prevLabel.zh || "", labelEn || prevLabel.en || ""),
           brief: pair(briefZh || prevBrief.zh || "", briefEn || prevBrief.en || ""),
-          teamFixed: (() => {
-            const flat = firstNum(p, COL.leader, 0);
-            const prevL = prevRow.teamFixed?.leader;
-            const prevBands =
-              prevL && typeof prevL === "object"
-                ? prevL
-                : {
-                    "1-2": Number(prevL) || flat,
-                    "1-4": Number(prevL) || flat,
-                    "5-10": Number(prevL) || flat,
-                    "10+": Number(prevL) || flat,
-                  };
-            const b12 = firstNum(p, COL.leader1to2, NaN);
-            const b14 = firstNum(p, COL.leader1to4, NaN);
-            const b510 = firstNum(p, COL.leader5to10, NaN);
-            const b10p = firstNum(p, COL.leaderOver10, NaN);
-            const hasBandCols = [b12, b14, b510, b10p].some((x) => Number.isFinite(x));
-            const fallbackFlat = flat || Number(prevL) || 0;
-            return {
-              leader: hasBandCols
-                ? {
-                    "1-2": Number.isFinite(b12) ? b12 : prevBands["1-2"] || 0,
-                    "1-4": Number.isFinite(b14) ? b14 : prevBands["1-4"] || fallbackFlat,
-                    "5-10": Number.isFinite(b510) ? b510 : prevBands["5-10"] || fallbackFlat,
-                    "10+": Number.isFinite(b10p) ? b10p : prevBands["10+"] || fallbackFlat,
-                  }
-                : prevL && typeof prevL === "object"
-                  ? prevL
-                  : fallbackFlat,
-              ops: firstNum(p, COL.ops, Number(prevRow.teamFixed?.ops) || 0),
-              reserve: firstNum(p, COL.reserve, Number(prevRow.teamFixed?.reserve) || 0),
-            };
-          })(),
+          teamFixed: {
+            leader: firstNum(p, COL.leader, 0),
+            // 运营税费/储备金已改为产品库「杂费」「境外操作费」，不再读线路参数
+            ops: 0,
+            reserve: 0,
+          },
           margin: firstNum(p, COL.margin, Number(prevRow.margin) || 0),
           roundBase: firstNum(p, COL.roundBase, Number(prevRow.roundBase) || 10),
           occupancy: firstNum(p, COL.occupancy, Number(prevRow.occupancy) || 2) || 2,
           maxPax: firstNum(p, COL.maxPax, Number(prevRow.maxPax) || 0),
+          // 市场报价档表（真源）→ marketTiers
+          ...(marketTiers.length ? { marketTiers } : {}),
           anchors: anchors.length ? anchors : prevRow.anchors || [],
           days: days.length ? days : [],
+          ...(() => {
+            const hotelMap = new Map((catalogs.hotels || []).map((h) => [h.id, h]));
+            const roomDiffDays = [];
+            let roomDiff = 0;
+            for (const day of days) {
+              for (const line of day.lines || []) {
+                if (line.type !== "hotel" || !line.ref) continue;
+                const h = hotelMap.get(line.ref);
+                const twin =
+                  line.amount != null && Number.isFinite(line.amount)
+                    ? Number(line.amount)
+                    : Number(h?.twinRate) || 0;
+                const rooms = line.rooms > 0 ? line.rooms : 1;
+                // 房差对齐附注：双人间÷同房人数（默认2）×间数
+                const occ = firstNum(p, COL.occupancy, Number(prevRow.occupancy) || 2) || 2;
+                const dayDiff = (twin * rooms) / occ;
+                roomDiff += dayDiff;
+                roomDiffDays.push({
+                  day: day.day,
+                  hotelRef: line.ref,
+                  hotelName: h?.name?.zh || line.ref,
+                  twinRate: twin,
+                  rooms,
+                  dayDiff,
+                });
+              }
+            }
+            return roomDiffDays.length ? { roomDiff, roomDiffDays } : { roomDiff: 0 };
+          })(),
         };
       }
       const hasCats =
@@ -924,13 +982,6 @@ async function main() {
           ? catalogs
           : prev.catalogs || { hotels: [], vehicles: [], guides: [], meals: [], tickets: [], misc: [] };
         const NS = [2, 4, 6, 8, 10];
-        /** 验算行可能已删「线路」列：从标题「路线一·r1 · 2人验算」解析 */
-        const validateRouteOf = (page) => {
-          const fromCol = routeOf(page);
-          if (/^r[123]$/.test(fromCol)) return fromCol;
-          const title = text(page, "标题") || "";
-          return (title.match(/·\s*(r[123])\s*·/i) || title.match(/\b(r[123])\b/i) || [])[1]?.toLowerCase() || "";
-        };
         let validateMetaProps = null;
         try {
           validateMetaProps = (
@@ -955,7 +1006,7 @@ async function main() {
               rich_text: [
                 {
                   text: {
-                    content: `按日×(1+margin=${routesOut[rid]?.margin ?? "?"})取整；同步 ${new Date().toISOString().slice(0, 16)}`,
+                    content: `成人÷(1-margin=${routesOut[rid]?.margin ?? "?"})；儿童=成人−房差${routesOut[rid]?.roomDiff ?? "?"}；同步 ${new Date().toISOString().slice(0, 16)}`,
                   },
                 },
               ],
@@ -974,6 +1025,206 @@ async function main() {
               ? `（r1 margin=${routesOut.r1?.margin}）`
               : " — 0 行：检查标题是否含 r1/r2/r3 与人数 2/4/6/8/10"),
         );
+      }
+
+      // --- 房差算法表：双人间÷同房人数（默认2），对齐报价单附注 ---
+      if (dbs.pricingRoomDiff) {
+        const roomPages = (await queryAll(token, dbs.pricingRoomDiff)).filter((p) => !p.archived);
+        let roomMeta = {};
+        try {
+          roomMeta = (
+            await notionFetch(token, `https://api.notion.com/v1/databases/${uuid(dbs.pricingRoomDiff)}`)
+          ).properties;
+        } catch {
+          roomMeta = {};
+        }
+        const badge = { r1: "路线一", r2: "路线二", r3: "路线三" };
+        const keyOf = (page) => {
+          const rid = text(page, "线路") || "";
+          const kind = text(page, "行类") || "";
+          const day = firstNum(page, ["日序"], 0);
+          return `${rid}|${kind}|${day}`;
+        };
+        const existing = new Map(roomPages.map((p) => [keyOf(p), p]));
+        const wanted = new Set();
+        let roomPatched = 0;
+        let roomCreated = 0;
+
+        const upsert = async (key, properties) => {
+          wanted.add(key);
+          const hit = existing.get(key);
+          if (hit) {
+            await notionFetch(token, `https://api.notion.com/v1/pages/${hit.id}`, {
+              method: "PATCH",
+              body: JSON.stringify({ properties }),
+            });
+            roomPatched++;
+          } else {
+            await notionFetch(token, "https://api.notion.com/v1/pages", {
+              method: "POST",
+              body: JSON.stringify({
+                parent: { database_id: uuid(dbs.pricingRoomDiff) },
+                properties,
+              }),
+            });
+            roomCreated++;
+          }
+        };
+
+        for (const rid of ["r1", "r2", "r3"]) {
+          const row = routesOut[rid];
+          const days = Array.isArray(row?.roomDiffDays) ? row.roomDiffDays : [];
+          const total = Number(row?.roomDiff) || 0;
+          for (const d of days) {
+            const props = {};
+            if (roomMeta["标题"])
+              props["标题"] = {
+                title: [{ text: { content: `${badge[rid]}·${rid} · D${d.day} · 房差` } }],
+              };
+            if (roomMeta["线路"]) props["线路"] = { select: { name: rid } };
+            if (roomMeta["行类"]) props["行类"] = { select: { name: "按日" } };
+            if (roomMeta["日序"]) props["日序"] = { number: d.day };
+            if (roomMeta["酒店名称"])
+              props["酒店名称"] = { rich_text: [{ text: { content: String(d.hotelName || "") } }] };
+            if (roomMeta["酒店代号"])
+              props["酒店代号"] = { rich_text: [{ text: { content: String(d.hotelRef || "") } }] };
+            if (roomMeta["双人间价"]) props["双人间价"] = { number: d.twinRate };
+            if (roomMeta["间数"]) props["间数"] = { number: d.rooms };
+            if (roomMeta["当日房差"]) props["当日房差"] = { number: d.dayDiff };
+            if (roomMeta["线路房差"]) props["线路房差"] = { number: null };
+            if (roomMeta["口径说明"])
+              props["口径说明"] = {
+                rich_text: [
+                  {
+                    text: {
+                      content: "对齐附注：当日房差=双人间价×间数÷同房人数(默认2)",
+                    },
+                  },
+                ],
+              };
+            if (roomMeta["状态"]) props["状态"] = { select: { name: "已发布" } };
+            await upsert(`${rid}|按日|${d.day}`, props);
+          }
+          const sumProps = {};
+          if (roomMeta["标题"])
+            sumProps["标题"] = {
+              title: [{ text: { content: `${badge[rid]}·${rid} · 线路房差合计` } }],
+            };
+          if (roomMeta["线路"]) sumProps["线路"] = { select: { name: rid } };
+          if (roomMeta["行类"]) sumProps["行类"] = { select: { name: "线路合计" } };
+          if (roomMeta["日序"]) sumProps["日序"] = { number: null };
+          if (roomMeta["酒店名称"]) sumProps["酒店名称"] = { rich_text: [] };
+          if (roomMeta["酒店代号"]) sumProps["酒店代号"] = { rich_text: [] };
+          if (roomMeta["双人间价"]) sumProps["双人间价"] = { number: null };
+          if (roomMeta["间数"]) sumProps["间数"] = { number: null };
+          if (roomMeta["当日房差"]) sumProps["当日房差"] = { number: null };
+          if (roomMeta["线路房差"]) sumProps["线路房差"] = { number: total };
+          if (roomMeta["口径说明"])
+            sumProps["口径说明"] = {
+              rich_text: [
+                {
+                  text: {
+                    content: `各日房差(双人间÷2)加总=${total}；附注儿童价≈成人市场价−本合计。同步 ${new Date().toISOString().slice(0, 16)}`,
+                  },
+                },
+              ],
+            };
+          if (roomMeta["状态"]) sumProps["状态"] = { select: { name: "已发布" } };
+          await upsert(`${rid}|线路合计|0`, sumProps);
+        }
+
+        let archived = 0;
+        for (const [key, page] of existing) {
+          if (wanted.has(key)) continue;
+          await notionFetch(token, `https://api.notion.com/v1/pages/${page.id}`, {
+            method: "PATCH",
+            body: JSON.stringify({ archived: true }),
+          });
+          archived++;
+        }
+        console.log(
+          `updated Notion 报价·房差算法 改${roomPatched}/建${roomCreated}/归档${archived}` +
+            `（r1合计=${routesOut.r1?.roomDiff ?? "?"}）`,
+        );
+      }
+    }
+  }
+
+  // --- 轻旅行体验（首页六张小产品卡）→ content/experiences.yaml ---
+  if (dbs.lightExperiences) {
+    const rel = "content/experiences.yaml";
+    const pages = (await queryAll(token, dbs.lightExperiences)).filter(published);
+    if (pages.length && takeNotion(pages, rel)) {
+      const prev = existingYaml(rel);
+      const prevItems = Array.isArray(prev.items) ? prev.items : [];
+      const srcLang = text(pages[0], "src") || prev.src || "zh";
+      const items = [];
+      for (const page of pages) {
+        const id = text(page, "id").trim();
+        if (!/^(hike|photo|village|foodfilm|craft|wellness)$/.test(id)) continue;
+        const prevItem = prevItems.find((x) => x && x.id === id) ?? {};
+        const pairOf = (key, prevVal) =>
+          keepTx(srcLang, text(page, `${key}_zh`), text(page, `${key}_en`), prevVal) || pair("", "");
+        const listOf = (key) => {
+          const zh = splitLines(text(page, `${key}_zh`));
+          const en = splitLines(text(page, `${key}_en`));
+          const prevList = Array.isArray(prevItem[key]) ? prevItem[key] : [];
+          const n = Math.max(zh.length, en.length, prevList.length);
+          const out = [];
+          for (let i = 0; i < n; i++) {
+            const one = keepTx(srcLang, zh[i] ?? "", en[i] ?? "", prevList[i]);
+            if (one) out.push(one);
+          }
+          return out;
+        };
+        const gallery = splitLines(text(page, "gallery"));
+        items.push({
+          id,
+          badge: text(page, "badge") || prevItem.badge || "",
+          title: pairOf("title", prevItem.title),
+          tagline: pairOf("tagline", prevItem.tagline),
+          duration: pairOf("duration", prevItem.duration),
+          group: pairOf("group", prevItem.group),
+          season: pairOf("season", prevItem.season),
+          cover: text(page, "cover") || prevItem.cover || "",
+          gallery: gallery.length ? gallery : prevItem.gallery || [],
+          desc: [pairOf("desc1", prevItem.desc?.[0]), pairOf("desc2", prevItem.desc?.[1])].filter(
+            (x) => x.en || x.zh,
+          ),
+          highlights: listOf("highlights"),
+          included: listOf("included"),
+        });
+      }
+      if (items.length) {
+        // 固定栏目顺序，避免被 Notion 的返回顺序打乱
+        const ORDER = ["hike", "photo", "village", "foodfilm", "craft", "wellness"];
+        items.sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
+        writeYaml(
+          rel,
+          `# 轻旅行体验 · 小产品栏目（首页「让旅途真正改变你」区块的六张卡 + 详情大卡）
+# 修改方式二选一：
+#   1. Notion「轻体验栏目」表 → npm run content:notion 同步回本文件
+#   2. 直接在 GitHub 改本文件
+# 两边谁的时间戳新，谁生效。改完需要重新构建才会上线。
+#
+# 字段 ↔ 网站位置：
+#   badge      卡片右上角小标签 / 详情大卡顶部（中英同一串英文即可）
+#   title      卡片主标题 / 详情大卡标题
+#   tagline    卡片副标题 / 详情大卡标题下一行
+#   duration / group / season   详情大卡里的三格参数
+#   cover      卡片封面图（public/ 下的相对路径）
+#   gallery    详情大卡图片：第一张为主图，后两张为小图
+#   desc       详情正文，两段
+#   highlights 「体验内容」列表
+#   included   「费用包含」标签
+#
+# 注意：
+#   - id 只能用 hike / photo / village / foodfilm / craft / wellness，不要改
+#   - 图片路径只写 public/ 下相对路径，例如 destinations/sapa.jpg
+#   - 这里不写价格：网站统一显示「按人数与日期报价」，避免展示未确认的报价`,
+          { src: srcLang, items },
+        );
+        mark();
       }
     }
   }

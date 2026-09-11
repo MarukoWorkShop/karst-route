@@ -1,0 +1,282 @@
+# 轻旅行体验 · 小产品栏目（首页「让旅途真正改变你」区块的六张卡 + 详情大卡）
+# 修改方式二选一：
+#   1. Notion「轻体验栏目」表 → npm run content:notion 同步回本文件
+#   2. 直接在 GitHub 改本文件
+# 两边谁的时间戳新，谁生效。改完需要重新构建才会上线。
+#
+# 字段 ↔ 网站位置：
+#   badge      卡片右上角小标签 / 详情大卡顶部（中英同一串英文即可）
+#   title      卡片主标题 / 详情大卡标题
+#   tagline    卡片副标题 / 详情大卡标题下一行
+#   duration / group / season   详情大卡里的三格参数
+#   cover      卡片封面图（public/ 下的相对路径）
+#   gallery    详情大卡图片：第一张为主图，后两张为小图
+#   desc       详情正文，两段
+#   highlights 「体验内容」列表
+#   included   「费用包含」标签
+#
+# 注意：
+#   - id 只能用 hike / photo / village / foodfilm / craft / wellness，不要改
+#   - 图片路径只写 public/ 下相对路径，例如 destinations/sapa.jpg
+#   - 这里不写价格：网站统一显示「按人数与日期报价」，避免展示未确认的报价
+
+src: zh
+items:
+  - id: hike
+    badge: HIKING & CYCLING
+    title:
+      en: Hiking & Cycling
+      zh: 徒步 · 骑行活动
+    tagline:
+      en: Half-day to full-day routes on foot or two wheels
+      zh: 半日到一日的徒步与骑行线路
+    duration:
+      en: Half day – full day
+      zh: 半日 – 一日
+    group:
+      en: 2–8 travellers
+      zh: 2–8 人小团
+    season:
+      en: Year-round
+      zh: 全年可订
+    cover: destinations/sapa.jpg
+    gallery:
+      - destinations/sapa.jpg
+      - destinations/puzhehei3.jpg
+      - destinations/chongzuo-mijing.jpg
+    desc:
+      - en: Terraced footpaths, karst back roads and coastal loops — we pick the route to your legs and the weather, then take you out with a guide who knows where the shade is and which stretch is worth the climb.
+        zh: 梯田田埂、喀斯特乡道、环岛公路——我们按你的体力和当天天气选线，再由熟悉路况的向导带路：哪段有树荫、哪段值得爬，他们心里有数。
+      - en: Every outing is paced, not punished. Support vehicle, water and a proper meal are arranged in advance; bikes are sized the day before. You bring shoes you trust.
+        zh: 每一次出行都讲究节奏，不比拼强度。保障车、饮水与正餐提前安排，自行车提前一天调试到位。你只需要带一双自己信得过的鞋。
+    highlights:
+      - en: Terrace trekking through Hmong and Yao villages
+        zh: 穿越苗寨与瑶寨的梯田徒步
+      - en: Karst back roads by e-bike or road bike
+        zh: 喀斯特乡道骑行（电助力 / 公路车可选）
+      - en: Coastal loop on Weizhou Island at low traffic hours
+        zh: 涠洲岛环岛骑行，避开人流时段
+      - en: Sunrise summit option with a guide-led descent
+        zh: 可选日出登顶，向导带队下撤
+    included:
+      - en: Local guide throughout
+        zh: 全程在地向导
+      - en: Bike / helmet rental and support vehicle
+        zh: 自行车与头盔租赁、保障车
+      - en: Drinking water and one main meal
+        zh: 饮用水与一顿正餐
+  - id: photo
+    badge: PHOTO WALKS
+    title:
+      en: Professional Photo Walks
+      zh: 专业旅拍
+    tagline:
+      en: A photographer-guide, not a photographer-tour
+      zh: 跟着摄影师走，而不是被摄影师拍
+    duration:
+      en: 2–4 hours
+      zh: 2–4 小时
+    group:
+      en: 1–6 travellers
+      zh: 1–6 人
+    season:
+      en: Year-round · best at golden hour
+      zh: 全年可订 · 黄金光线最佳
+    cover: destinations/chongzuo-rachel.jpg
+    gallery:
+      - destinations/chongzuo-rachel.jpg
+      - destinations/weizhoudao3.jpeg
+      - destinations/catba.jpg
+    desc:
+      - en: Our photographer-guides shoot the region every week, so they know which lane catches the light at 5pm and which pier is empty before 7am. They take the pictures and they teach you to see the same frame.
+        zh: 我们的摄影向导每周都在这一带拍摄，知道哪条巷子五点有光、哪个码头七点前没人。他们既替你拍，也教你怎么看这个画面。
+      - en: You get a same-day preview and a full edited set afterwards — no watermark, no upsell, yours to print.
+        zh: 当天给预览，随后交付整套精修：无水印、无二次推销，版权归你，可直接打印。
+    highlights:
+      - en: Golden-hour route planned around the day's light
+        zh: 按当天光线规划的黄金时刻路线
+      - en: Portrait set for couples
+        zh: 情侣 / 亲子 / 单人皆可的人像套系
+      - en: Edited photos delivered in a private gallery
+        zh: 精修照片私密相册交付
+      - en: Light coaching on composition
+        zh: 构图指导，手机同样用得上
+    included:
+      - en: Photographer-guide for the session
+        zh: 摄影师向导全程
+      - en: Edited digital photos
+        zh: 精修数字照片（可打印）
+      - en: Private online gallery
+        zh: 私密线上相册
+  - id: village
+    badge: VILLAGE STUDY
+    title:
+      en: Village & Heritage Study
+      zh: 村落人文考察
+    tagline:
+      en: Half-day field visits with people who live there
+      zh: 半日田野走访，由住在村里的人带路
+    duration:
+      en: Half day
+      zh: 半日
+    group:
+      en: 2–10 travellers
+      zh: 2–10 人
+    season:
+      en: Year-round
+      zh: 全年可订
+    cover: destinations/jianshui-oldtown3.jpg
+    gallery:
+      - destinations/jianshui-oldtown3.jpg
+      - destinations/guantang2.jpg
+      - destinations/jianshui-twindragonbridge1.jpg
+    desc:
+      - en: Not a photo stop. A half day inside a working village — the well that still feeds it, the hall where decisions get made, the family that has fired the same kiln for four generations.
+        zh: 不是拍照打卡点。是半个白天待在一个还在运转的村子里：仍在使用的水井、商量事情的祠堂、烧了四代人的那口窑。
+      - en: Visits are hosted by residents and sized small on purpose. We brief you on what to ask, what to photograph, and what to leave alone.
+        zh: 走访由村民自己接待，刻意控制人数。出发前我们会说明：可以问什么、可以拍什么、什么应当回避。
+    highlights:
+      - en: Old-town walk with a resident host
+        zh: 由原住民带路的老城行走
+      - en: Handicraft household visit (pottery
+        zh: 手作人家走访（制陶 / 织布 / 造纸）
+      - en: Village meal or tea with the host family
+        zh: 与接待家庭共餐或饮茶
+      - en: Briefing notes on local customs and etiquette
+        zh: 在地习俗与礼仪行前说明
+    included:
+      - en: Resident host and interpreter
+        zh: 村民接待与随行翻译
+      - en: Visit fees shared with the households
+        zh: 走访费用与村民共享
+      - en: Round-trip transfer from your hotel
+        zh: 酒店往返接送
+  - id: foodfilm
+    badge: FOOD & FILM
+    title:
+      en: Food & Film
+      zh: 美食与电影
+    tagline:
+      en: Eat the scene, then watch the place on screen
+      zh: 先吃到那个场景，再在银幕上看见它
+    duration:
+      en: 3–5 hours
+      zh: 3–5 小时
+    group:
+      en: 2–12 travellers
+      zh: 2–12 人
+    season:
+      en: Year-round · evenings preferred
+      zh: 全年可订 · 建议傍晚
+    cover: destinations/hanoi.jpg
+    gallery:
+      - destinations/hanoi.jpg
+      - destinations/guilin-mifen.jpg
+      - destinations/kunming-dengdeng.jpg
+    desc:
+      - en: A market walk, the dishes that define a city, then a film shot in the streets you just walked — screened over dinner or in a small room with the windows open.
+        zh: 先逛一趟菜市场，吃这座城市真正拿得出手的几道菜，再看一部就拍在你刚走过那些街上的电影——配着晚餐，或在一扇开着窗的小屋里放映。
+      - en: "The pairing is the point: pho tastes different after you've seen the 5am broth run, and a karst skyline lands harder once you've stood under it that afternoon."
+        zh: 搭配本身就是重点：看过凌晨五点熬汤的场面，河粉的味道不一样；下午亲自站在那片喀斯特天际线下，晚上银幕上的画面才落得下来。
+    highlights:
+      - en: Morning market walk with a food writer or chef
+        zh: 由 food writer 或主厨带队的早市
+      - en: Six-to-eight tastings
+        zh: 6–8 处品鉴，不安排游客菜单
+      - en: Film screening tied to the location
+        zh: 与取景地呼应的电影放映
+      - en: Evening option with drinks and open-air screen
+        zh: 可选傍晚场：酒水 + 露天银幕
+    included:
+      - en: Food host for the whole session
+        zh: 全程美食向导
+      - en: All tastings and one drink
+        zh: 全部品鉴与一杯饮品
+      - en: Screening setup and subtitles
+        zh: 放映设备与字幕
+  - id: craft
+    badge: HANDICRAFT
+    title:
+      en: Handicraft Workshops
+      zh: 手作与非遗工坊
+    tagline:
+      en: Make one thing properly, with the person who teaches it
+      zh: 跟真正做这行的人，好好做完一件东西
+    duration:
+      en: 2–4 hours
+      zh: 2–4 小时
+    group:
+      en: 1–8 travellers
+      zh: 1–8 人
+    season:
+      en: Year-round
+      zh: 全年可订
+    cover: destinations/dongfengyun2.jpg
+    gallery:
+      - destinations/dongfengyun2.jpg
+      - destinations/mile.jpg
+      - destinations/jianshuioldtown1.jpg
+    desc:
+      - en: "Two to four hours at one bench: throwing clay, dyeing cloth, pressing tea, shaping paper. The instructor is the maker, and the pace is the pace the craft actually needs."
+        zh: 两到四个小时，守在一张工作台前：拉坯、扎染、压茶、抄纸。教你的人是做这行的人，节奏也是这门手艺真正需要的节奏。
+      - en: You leave with the object you made — fired, dried or boxed for shipping. Nothing is a demo piece someone else finished for you.
+        zh: 你带走的是自己做的那件：烧好、晾干或打包寄回。没有哪一件是别人替你收尾的样品。
+    highlights:
+      - en: Pottery on the wheel at a working kiln
+        zh: 在仍在烧窑的作坊里拉坯
+      - en: Indigo dyeing and natural pigment mixing
+        zh: 蓝靛扎染与植物染料调制
+      - en: Tea pressing
+        zh: 压茶、焙火与品鉴
+      - en: Take home what you made
+        zh: 作品带走，可安排寄送
+    included:
+      - en: Maker-led instruction
+        zh: 手艺人全程教学
+      - en: All materials
+        zh: 全部材料、烧制与包装
+      - en: Shipping to your home address
+        zh: 成品寄送到家
+  - id: wellness
+    badge: WELLNESS & SPA
+    title:
+      en: Healing & Unwinding
+      zh: 疗愈与放松
+    tagline:
+      en: Massage, meditation and slow hours — built into the day
+      zh: 按摩、冥想与慢下来的几个小时，写进当天行程
+    duration:
+      en: 2–3 hours
+      zh: 2–3 小时
+    group:
+      en: 1–6 travellers
+      zh: 1–6 人
+    season:
+      en: Year-round · best at dusk
+      zh: 全年可订 · 傍晚最佳
+    cover: destinations/hotel-c.jpg
+    gallery:
+      - destinations/hotel-c.jpg
+      - destinations/guantang3.jpg
+      - destinations/mingshi-2.jpg
+    desc:
+      - en: Recovery is part of the journey, not a reward for finishing it. We book the therapists who still work with local herbs, and the rooms that are quiet at six in the evening — so a long drive or a steep trail ends with warm oil, not a queue.
+        zh: 恢复体力是旅程的一部分，不是走完之后的奖励。我们只约仍用本地草药的理疗师，只订傍晚六点依旧安静的房间——一整天车程或山路之后，等着你的是热毛巾与精油，而不是排队取号。
+      - en: "Sessions run at your pace: a foot soak after the morning market, a full-body herbal massage after a trek, or twenty quiet minutes of guided breathing before dinner. No upsell, no membership talk."
+        zh: 节奏由你定：逛完早市泡个脚，徒步之后做一次全身草药按摩，或者晚餐前跟着引导做二十分钟呼吸。没有推销，也不办卡。
+    highlights:
+      - en: Herbal compress and full-body massage by local therapists
+        zh: 在地理疗师的草药热敷与全身按摩
+      - en: Guided meditation and breathwork
+        zh: 冥想与呼吸引导，室内或临水
+      - en: Foot soak and hot-stone ritual after long walking days
+        zh: 徒步日后的足浴与热石
+      - en: Sound bath or evening stretching as an optional add-on
+        zh: 颂钵音疗或傍晚拉伸（可选加项）
+    included:
+      - en: Therapist or meditation guide for the session
+        zh: 理疗师 / 冥想引导师全程
+      - en: Herbs
+        zh: 草药、精油、毛巾与热石
+      - en: Private quiet room and tea afterwards
+        zh: 独立安静房间与事后茶饮

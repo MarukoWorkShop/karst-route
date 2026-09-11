@@ -6,6 +6,36 @@
 src: zh
 catalogs:
   hotels:
+    - id: weizhou-whale
+      name:
+        en: Weizhou Whale Ocean View
+        zh: 涠洲岛·巨鲸海景房
+      twinRate: 4200
+      city: 涠洲岛
+    - id: beihai-marriott
+      name:
+        en: Beihai Marriott Ocean View
+        zh: 北海·万豪尊贵海景
+      twinRate: 1364
+      city: 北海
+    - id: chongzuo-lux
+      name:
+        en: LUX* Chongzuo
+        zh: 崇左·秘境丽世
+      twinRate: 5300
+      city: 崇左
+    - id: nanning-shangri-la
+      name:
+        en: Shangri-La Nanning
+        zh: 南宁·香格里拉
+      twinRate: 1400
+      city: 南宁
+    - id: guantang-view
+      name:
+        en: Guantang Hotel, Chongzuo
+        zh: 崇左·观堂酒店
+      twinRate: 600
+      city: 观堂
     - id: kunming-kaichen
       name:
         en: Kaichen Hotel, Kunming
@@ -44,9 +74,9 @@ catalogs:
       city: 河内
     - id: catba-tbd
       name:
-        en: Cat Ba (TBD)
-        zh: 吉婆岛
-      twinRate: 1000
+        en: Cat Ba hotel (ref)
+        zh: 吉婆岛·参考酒店
+      twinRate: 700
       city: 吉婆岛
     - id: halong-wason
       name:
@@ -67,61 +97,96 @@ catalogs:
       twinRate: 880
       city: 南宁
   vehicles:
+    - id: bus25
+      name:
+        en: 25座包车
+        zh: 25座包车
+      maxPax: 25
+      dayRate: 2500
+      segment: 国内
+    - id: bus19
+      name:
+        en: 19座包车
+        zh: 19座包车
+      maxPax: 19
+      dayRate: 2500
+      segment: 国内
+    - id: van-r3-800
+      name:
+        en: 线路三用车·日包800
+        zh: 线路三用车·日包800
+      maxPax: 6
+      dayRate: 800
+      segment: 国内
+    - id: ""
+      name:
+        en: ""
+        zh: ""
+      maxPax: 0
+      dayRate: 0
+      segment: ""
+    - id: van-cn-1000
+      name:
+        en: 国内用车·线路二参考
+        zh: 国内用车·线路二参考
+      maxPax: 6
+      dayRate: 1000
+      segment: 国内
     - id: car4-cn
       name:
-        en: 4座小车·国内（2人小团）
-        zh: 4座小车·国内（2人小团）
-      maxPax: 2
-      dayRate: 1600
+        en: 4座小车·国内（≤3人）
+        zh: 4座小车·国内（≤3人）
+      maxPax: 3
+      dayRate: 1400
       segment: 国内
     - id: car4-gx
       name:
-        en: 4座小车·广西段（2人小团）
-        zh: 4座小车·广西段（2人小团）
-      maxPax: 2
-      dayRate: 1100
+        en: 4座小车·广西段（≤3人）
+        zh: 4座小车·广西段（≤3人）
+      maxPax: 3
+      dayRate: 980
       segment: 国内
     - id: car4-border
       name:
-        en: 4座小车·跨境（2人小团）
-        zh: 4座小车·跨境（2人小团）
-      maxPax: 2
-      dayRate: 950
+        en: 4座小车·跨境（≤3人）
+        zh: 4座小车·跨境（≤3人）
+      maxPax: 3
+      dayRate: 840
       segment: 国内
     - id: car4-vn
       name:
-        en: 4座小车·越南段（2人小团）
-        zh: 4座小车·越南段（2人小团）
-      maxPax: 2
-      dayRate: 900
+        en: 4座小车·越南段（≤3人）
+        zh: 4座小车·越南段（≤3人）
+      maxPax: 3
+      dayRate: 770
       segment: 越南
     - id: bus14-cn
       name:
         en: 14座巴士·国内参考
         zh: 14座巴士·国内参考
       maxPax: 14
-      dayRate: 2800
+      dayRate: 2600
       segment: 国内
     - id: bus14-gx
       name:
         en: 14座巴士·广西段参考
         zh: 14座巴士·广西段参考
       maxPax: 14
-      dayRate: 1960
+      dayRate: 1820
       segment: 国内
     - id: bus14-border
       name:
         en: 14座巴士·跨境参考
         zh: 14座巴士·跨境参考
       maxPax: 14
-      dayRate: 1680
+      dayRate: 1560
       segment: 国内
     - id: bus14-vn
       name:
         en: 14座巴士·越南段参考
         zh: 14座巴士·越南段参考
       maxPax: 14
-      dayRate: 1540
+      dayRate: 1430
       segment: 越南
     - id: van7-vn
       name:
@@ -165,11 +230,39 @@ catalogs:
       dayRate: 600
       split: per_group
   meals:
+    - id: meal-r3-d6
+      name:
+        en: 涠洲午餐+晚餐包
+        zh: 涠洲午餐+晚餐包
+      mealType: ""
+      adultRate: 400
+      childRate: 400
+    - id: meal-cliff-dinner
+      name:
+        en: 巨鲸悬崖晚餐
+        zh: 巨鲸悬崖晚餐
+      mealType: ""
+      adultRate: 350
+      childRate: 350
+    - id: meal-boji
+      name:
+        en: 簸箕宴午餐
+        zh: 簸箕宴午餐
+      mealType: ""
+      adultRate: 150
+      childRate: 150
+    - id: meal-landong
+      name:
+        en: 蓝洞简餐
+        zh: 蓝洞简餐
+      mealType: ""
+      adultRate: 100
+      childRate: 100
     - id: meal-dinner
       name:
         en: "Dinner "
         zh: 法棍套餐晚餐
-      mealType: 通用
+      mealType: 晚餐
       adultRate: 100
       childRate: 50
     - id: meal-lunch-lotus
@@ -203,11 +296,53 @@ catalogs:
     - id: meal-breakfast
       name:
         en: Breakfast
-        zh: 通用早餐
+        zh: 通用早餐（无酒店自助时）
       mealType: 早餐
       adultRate: 50
       childRate: 30
   tickets:
+    - id: ticket-r3-fishing
+      name:
+        en: 斜阳岛海钓+景交
+        zh: 斜阳岛海钓+景交
+      adultRate: 540
+      childRate: 540
+      payOnSiteDefault: false
+    - id: ticket-weizhou-v
+      name:
+        en: 涠洲岛V仓
+        zh: 涠洲岛V仓
+      adultRate: 578
+      childRate: 578
+      payOnSiteDefault: false
+    - id: ticket-r3-detian-landong
+      name:
+        en: 德天竹筏+蓝洞
+        zh: 德天竹筏+蓝洞
+      adultRate: 221
+      childRate: 221
+      payOnSiteDefault: false
+    - id: ticket-r3-island-funa
+      name:
+        en: 小岛简餐含饮+伏那秘境
+        zh: 小岛简餐含饮+伏那秘境
+      adultRate: 450
+      childRate: 450
+      payOnSiteDefault: false
+    - id: ticket-tianqin-bike
+      name:
+        en: Tianqin village + sugarcane cycling
+        zh: 天琴壮寨+骑行蔗海
+      adultRate: 0
+      childRate: 0
+      payOnSiteDefault: false
+    - id: ticket-train-sleeper
+      name:
+        en: Meter-gauge sleeper berth
+        zh: 米轨卧铺
+      adultRate: 200
+      childRate: 200
+      payOnSiteDefault: false
     - id: ticket-mile-pack
       name:
         en: Mile pack
@@ -237,14 +372,113 @@ catalogs:
       childRate: 90
       payOnSiteDefault: false
   misc:
-    - id: ""
+    - id: misc-ops-overseas-1000
       name:
-        en: ""
-        zh: ""
-      category: ""
+        en: Overseas operations fee
+        zh: 境外操作费
+      category: 接送
       split: per_person
+      adultRate: 1000
+      childRate: 1000
+      groupRate: 0
+    - id: misc-sundry-1000
+      name:
+        en: Sundry / contingency
+        zh: 杂费
+      category: 接送
+      split: per_person
+      adultRate: 1000
+      childRate: 1000
+      groupRate: 0
+    - id: misc-r3-mingshi-cart
+      name:
+        en: 名仕观光车（线三）
+        zh: 名仕观光车（线三）
+      category: ""
+      split: per_group_split
       adultRate: 0
       childRate: 0
+      groupRate: 300
+    - id: misc-r3-heishui-boat
+      name:
+        en: 黑水河包船+伏那讲解
+        zh: 黑水河包船+伏那讲解
+      category: ""
+      split: per_group_split
+      adultRate: 0
+      childRate: 0
+      groupRate: 720
+    - id: misc-youyiguan-cart
+      name:
+        en: 友谊关电瓶车
+        zh: 友谊关电瓶车
+      category: 接送
+      split: per_person
+      adultRate: 5
+      childRate: 5
+      groupRate: 0
+    - id: misc-pingxiang-photo
+      name:
+        en: 凭祥相片费
+        zh: 凭祥相片费
+      category: 接送
+      split: per_person
+      adultRate: 5
+      childRate: 5
+      groupRate: 0
+    - id: misc-pingxiang-pickup
+      name:
+        en: 凭祥接关
+        zh: 凭祥接关
+      category: 接送
+      split: per_person
+      adultRate: 150
+      childRate: 150
+      groupRate: 0
+    - id: misc-youyiguan-escort
+      name:
+        en: 友谊关送关员
+        zh: 友谊关送关员
+      category: 接送
+      split: per_person
+      adultRate: 100
+      childRate: 100
+      groupRate: 0
+    - id: misc-dongxing-gate-transfer
+      name:
+        en: 东兴站-关口用车(含二桥电瓶)
+        zh: 东兴站-关口用车(含二桥电瓶)
+      category: 接送
+      split: per_person
+      adultRate: 50
+      childRate: 50
+      groupRate: 0
+    - id: misc-nanning-dongxing-train
+      name:
+        en: 南宁-东兴动车
+        zh: 南宁-东兴动车
+      category: 接送
+      split: per_person
+      adultRate: 100
+      childRate: 100
+      groupRate: 0
+    - id: misc-nanning-station
+      name:
+        en: 南宁送动车站
+        zh: 南宁送动车站
+      category: 接送
+      split: per_person
+      adultRate: 100
+      childRate: 100
+      groupRate: 0
+    - id: misc-dropoff
+      name:
+        en: 送站/送机
+        zh: 送站/送机
+      category: 接送
+      split: per_person
+      adultRate: 100
+      childRate: 100
       groupRate: 0
     - id: misc-halong-pack
       name:
@@ -260,10 +494,10 @@ catalogs:
         en: Airport pickup
         zh: 南宁接机
       category: 接送
-      split: per_group_split
-      adultRate: 0
-      childRate: 0
-      groupRate: 100
+      split: per_person
+      adultRate: 100
+      childRate: 100
+      groupRate: 0
     - id: misc-tip-daily
       name:
         en: Daily tip
@@ -292,17 +526,23 @@ routes:
         卖点摘要：下龙五星游轮、吉婆/米轨、沙坝番西邦与猫猫村、云南古城与普者黑荷塘。
         —— 以下为按日费用明细（筛「线路=r1」查看）。
     teamFixed:
-      leader:
-        1-2: 12000
-        1-4: 18000
-        5-10: 45000
-        10+: 63000
-      ops: 800
-      reserve: 2000
-    margin: 0.28
+      leader: 0
+      ops: 0
+      reserve: 0
+    margin: 0.3
     roundBase: 100
     occupancy: 2
     maxPax: 14
+    marketTiers:
+      - maxN: 3
+        adult: 32500
+        child: 27000
+      - maxN: 6
+        adult: 29500
+        child: 24000
+      - maxN: 10
+        adult: 26500
+        child: 21000
     anchors:
       - n: 2
         adult: 0
@@ -330,10 +570,20 @@ routes:
             ref: misc-airport-pickup
             adultApplicable: true
             childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-sundry-1000
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-ops-overseas-1000
+            adultApplicable: true
+            childApplicable: true
       - day: 2
         title:
-          zh: 崇左
-          en: 崇左
+          zh: 德天/明仕·崇左
+          en: 德天/明仕·崇左
         lines:
           - type: hotel
             split: per_room_split
@@ -344,22 +594,6 @@ routes:
           - type: vehicle
             split: per_vehicle_split
             ref: van7-gx
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-breakfast
-            label:
-              zh: 早餐
-              en: 早餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-dinner-hotpot
-            label:
-              zh: 晚餐
-              en: 晚餐
             adultApplicable: true
             childApplicable: true
           - type: ticket
@@ -397,23 +631,7 @@ routes:
             childApplicable: true
           - type: meal
             split: per_person
-            ref: meal-breakfast
-            label:
-              zh: 早餐
-              en: 早餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-lunch-lotus
-            label:
-              zh: 中餐
-              en: 中餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-dinner-hotpot
+            ref: meal-dinner
             label:
               zh: 晚餐
               en: 晚餐
@@ -425,11 +643,6 @@ routes:
             label:
               zh: 小费
               en: Tip
-            adultApplicable: true
-            childApplicable: true
-          - type: other
-            split: per_person
-            ref: misc-halong-pack
             adultApplicable: true
             childApplicable: true
       - day: 4
@@ -455,22 +668,6 @@ routes:
             childApplicable: true
           - type: meal
             split: per_person
-            ref: meal-breakfast
-            label:
-              zh: 早餐
-              en: 早餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-lunch
-            label:
-              zh: 中餐
-              en: 中餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
             ref: meal-dinner-hotpot
             label:
               zh: 晚餐
@@ -492,9 +689,15 @@ routes:
             childApplicable: true
       - day: 5
         title:
-          zh: 吉婆岛
-          en: 吉婆岛
+          zh: 下龙→吉婆
+          en: 下龙→吉婆
         lines:
+          - type: hotel
+            split: per_room_split
+            ref: catba-tbd
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
           - type: vehicle
             split: per_vehicle_split
             ref: van7-vn
@@ -505,20 +708,33 @@ routes:
             ref: guide-vn
             adultApplicable: true
             childApplicable: true
-          - type: meal
+          - type: tip
             split: per_person
-            ref: meal-breakfast
+            ref: misc-tip-daily
             label:
-              zh: 早餐
-              en: 早餐
+              zh: 小费
+              en: Tip
             adultApplicable: true
             childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-lunch
-            label:
-              zh: 中餐
-              en: 中餐
+      - day: 6
+        title:
+          zh: 吉婆→河内
+          en: 吉婆→河内
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: hanoi-splendid
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van7-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: guide
+            split: per_group_split
+            ref: guide-vn
             adultApplicable: true
             childApplicable: true
           - type: meal
@@ -537,16 +753,17 @@ routes:
               en: Tip
             adultApplicable: true
             childApplicable: true
-          - type: other
-            split: per_person
-            ref: misc-halong-pack
-            adultApplicable: true
-            childApplicable: true
-      - day: 6
+      - day: 7
         title:
-          zh: 吉婆→河内
-          en: 吉婆→河内
+          zh: 河内市区
+          en: 河内市区
         lines:
+          - type: hotel
+            split: per_room_split
+            ref: hanoi-splendid
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
           - type: vehicle
             split: per_vehicle_split
             ref: van7-vn
@@ -559,73 +776,10 @@ routes:
             childApplicable: true
           - type: meal
             split: per_person
-            ref: meal-breakfast
-            label:
-              zh: 早餐
-              en: 早餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-lunch
+            ref: meal-lunch-lotus
             label:
               zh: 中餐
               en: 中餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-dinner-hotpot
-            label:
-              zh: 晚餐
-              en: 晚餐
-            adultApplicable: true
-            childApplicable: true
-          - type: tip
-            split: per_person
-            ref: misc-tip-daily
-            label:
-              zh: 小费
-              en: Tip
-            adultApplicable: true
-            childApplicable: true
-          - type: other
-            split: per_person
-            ref: misc-halong-pack
-            adultApplicable: true
-            childApplicable: true
-      - day: 7
-        title:
-          zh: 河内市区
-          en: 河内市区
-        lines:
-          - type: guide
-            split: per_group_split
-            ref: guide-vn
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-breakfast
-            label:
-              zh: 早餐
-              en: 早餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-lunch
-            label:
-              zh: 中餐
-              en: 中餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-dinner-hotpot
-            label:
-              zh: 晚餐
-              en: 晚餐
             adultApplicable: true
             childApplicable: true
           - type: tip
@@ -641,6 +795,12 @@ routes:
           zh: 河内→沙坝
           en: 河内→沙坝
         lines:
+          - type: hotel
+            split: per_room_split
+            ref: sapa-coupole
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
           - type: vehicle
             split: per_vehicle_split
             ref: van7-vn
@@ -649,30 +809,6 @@ routes:
           - type: guide
             split: per_group_split
             ref: guide-vn
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-breakfast
-            label:
-              zh: 早餐
-              en: 早餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-lunch
-            label:
-              zh: 中餐
-              en: 中餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-dinner-emperor
-            label:
-              zh: 晚餐
-              en: 晚餐
             adultApplicable: true
             childApplicable: true
           - type: tip
@@ -685,9 +821,15 @@ routes:
             childApplicable: true
       - day: 9
         title:
-          zh: 沙坝游览
-          en: 沙坝游览
+          zh: 沙坝全天
+          en: 沙坝全天
         lines:
+          - type: hotel
+            split: per_room_split
+            ref: sapa-coupole
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
           - type: vehicle
             split: per_vehicle_split
             ref: van7-vn
@@ -696,30 +838,6 @@ routes:
           - type: guide
             split: per_group_split
             ref: guide-vn
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-breakfast
-            label:
-              zh: 早餐
-              en: 早餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-lunch
-            label:
-              zh: 中餐
-              en: 中餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-dinner-hotpot
-            label:
-              zh: 晚餐
-              en: 晚餐
             adultApplicable: true
             childApplicable: true
           - type: tip
@@ -743,47 +861,17 @@ routes:
             childApplicable: false
           - type: vehicle
             split: per_vehicle_split
-            ref: van7-cn
+            ref: van7-vn
             adultApplicable: true
             childApplicable: true
           - type: vehicle
             split: per_vehicle_split
-            ref: van7-vn
+            ref: van7-cn
             adultApplicable: true
             childApplicable: true
           - type: guide
             split: per_group_split
             ref: guide-vn
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-breakfast
-            label:
-              zh: 早餐
-              en: 早餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-lunch-lotus
-            label:
-              zh: 中餐
-              en: 中餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-dinner-hotpot
-            label:
-              zh: 晚餐
-              en: 晚餐
-            adultApplicable: true
-            childApplicable: true
-          - type: ticket
-            split: per_person
-            ref: ticket-jianshui-puzhehei
-            payOnSite: false
             adultApplicable: true
             childApplicable: true
           - type: tip
@@ -810,42 +898,10 @@ routes:
             ref: van7-cn
             adultApplicable: true
             childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-breakfast
-            label:
-              zh: 早餐
-              en: 早餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-lunch
-            label:
-              zh: 中餐
-              en: 中餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-dinner-hotpot
-            label:
-              zh: 晚餐
-              en: 晚餐
-            adultApplicable: true
-            childApplicable: true
           - type: ticket
             split: per_person
             ref: ticket-jianshui-puzhehei
             payOnSite: false
-            adultApplicable: true
-            childApplicable: true
-          - type: tip
-            split: per_person
-            ref: misc-tip-daily
-            label:
-              zh: 小费
-              en: Tip
             adultApplicable: true
             childApplicable: true
       - day: 12
@@ -864,42 +920,10 @@ routes:
             ref: van7-cn
             adultApplicable: true
             childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-breakfast
-            label:
-              zh: 早餐
-              en: 早餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-lunch
-            label:
-              zh: 中餐
-              en: 中餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-dinner-hotpot
-            label:
-              zh: 晚餐
-              en: 晚餐
-            adultApplicable: true
-            childApplicable: true
           - type: ticket
             split: per_person
             ref: ticket-mile-pack
             payOnSite: false
-            adultApplicable: true
-            childApplicable: true
-          - type: tip
-            split: per_person
-            ref: misc-tip-daily
-            label:
-              zh: 小费
-              en: Tip
             adultApplicable: true
             childApplicable: true
       - day: 13
@@ -918,52 +942,96 @@ routes:
             ref: van7-cn
             adultApplicable: true
             childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-breakfast
-            label:
-              zh: 早餐
-              en: 早餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-lunch
-            label:
-              zh: 中餐
-              en: 中餐
-            adultApplicable: true
-            childApplicable: true
-          - type: meal
-            split: per_person
-            ref: meal-dinner-hotpot
-            label:
-              zh: 晚餐
-              en: 晚餐
-            adultApplicable: true
-            childApplicable: true
-          - type: ticket
-            split: per_person
-            ref: ticket-mile-pack
-            payOnSite: false
-            adultApplicable: true
-            childApplicable: true
       - day: 14
         title:
           zh: 昆明送机
           en: 昆明送机
         lines:
-          - type: hotel
-            split: per_room_split
-            ref: kunming-kaichen
-            rooms: 1
-            adultApplicable: true
-            childApplicable: false
           - type: vehicle
             split: per_vehicle_split
             ref: van7-cn
             adultApplicable: true
             childApplicable: true
+    roomDiff: 4555
+    roomDiffDays:
+      - day: 1
+        hotelRef: nanning-nalian
+        hotelName: 南宁·龙光那莲
+        twinRate: 880
+        rooms: 1
+        dayDiff: 440
+      - day: 2
+        hotelRef: chongzuo-nali
+        hotelName: 崇左·那里酒店
+        twinRate: 1000
+        rooms: 1
+        dayDiff: 500
+      - day: 3
+        hotelRef: halong-wason
+        hotelName: 下龙·沃森 THE WASON
+        twinRate: 450
+        rooms: 1
+        dayDiff: 225
+      - day: 4
+        hotelRef: halong-wason
+        hotelName: 下龙·沃森 THE WASON
+        twinRate: 450
+        rooms: 1
+        dayDiff: 225
+      - day: 5
+        hotelRef: catba-tbd
+        hotelName: 吉婆岛·参考酒店
+        twinRate: 700
+        rooms: 1
+        dayDiff: 350
+      - day: 6
+        hotelRef: hanoi-splendid
+        hotelName: 河内·华丽高级 Splendid Premium
+        twinRate: 1000
+        rooms: 1
+        dayDiff: 500
+      - day: 7
+        hotelRef: hanoi-splendid
+        hotelName: 河内·华丽高级 Splendid Premium
+        twinRate: 1000
+        rooms: 1
+        dayDiff: 500
+      - day: 8
+        hotelRef: sapa-coupole
+        hotelName: 沙坝·穹顶美憬阁
+        twinRate: 1000
+        rooms: 1
+        dayDiff: 500
+      - day: 9
+        hotelRef: sapa-coupole
+        hotelName: 沙坝·穹顶美憬阁
+        twinRate: 1000
+        rooms: 1
+        dayDiff: 500
+      - day: 10
+        hotelRef: jianshui-linan
+        hotelName: 建水·临安酒店
+        twinRate: 480
+        rooms: 1
+        dayDiff: 240
+      - day: 11
+        hotelRef: puzhehei-xiyuan
+        hotelName: 普者黑·兮院云上彝居
+        twinRate: 350
+        rooms: 1
+        dayDiff: 175
+      - day: 12
+        hotelRef: mile-juren
+        hotelName: 弥勒·巨人雅阁
+        twinRate: 400
+        rooms: 1
+        dayDiff: 200
+      - day: 13
+        hotelRef: kunming-kaichen
+        hotelName: 昆明·开臣酒店
+        twinRate: 400
+        rooms: 1
+        dayDiff: 200
   r2:
     status: demo
     source: ""
@@ -982,17 +1050,23 @@ routes:
         卖点摘要：下龙/吉婆、河内老街、米轨卧铺、沙坝梯田、观堂天琴与蔗海、德天/明仕后回邕。
         —— 按日费用明细待录入（筛「线路=r2」）；先维护本行总览。
     teamFixed:
-      leader:
-        1-2: 12000
-        1-4: 18000
-        5-10: 45000
-        10+: 63000
-      ops: 800
-      reserve: 700
-    margin: 0.28
+      leader: 0
+      ops: 0
+      reserve: 0
+    margin: 0.3
     roundBase: 100
     occupancy: 2
     maxPax: 0
+    marketTiers:
+      - maxN: 3
+        adult: 23200
+        child: 18300
+      - maxN: 6
+        adult: 21200
+        child: 16400
+      - maxN: 10
+        adult: 19200
+        child: 14400
     anchors:
       - n: 2
         adult: 0
@@ -1003,7 +1077,429 @@ routes:
       - n: 6
         adult: 0
         child: 0
-    days: []
+    days:
+      - day: 1
+        title:
+          zh: 南宁
+          en: 南宁
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: nanning-nalian
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: other
+            split: per_person
+            ref: misc-airport-pickup
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-sundry-1000
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-ops-overseas-1000
+            adultApplicable: true
+            childApplicable: true
+      - day: 2
+        title:
+          zh: 南宁→下龙
+          en: 南宁→下龙
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: halong-wason
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van7-border
+            adultApplicable: true
+            childApplicable: true
+          - type: guide
+            split: per_group_split
+            ref: guide-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: meal
+            split: per_person
+            ref: meal-dinner
+            label:
+              zh: 晚餐
+              en: 晚餐
+            adultApplicable: true
+            childApplicable: true
+          - type: tip
+            split: per_person
+            ref: misc-tip-daily
+            label:
+              zh: 小费
+              en: Tip
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-nanning-station
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-nanning-dongxing-train
+            adultApplicable: true
+            childApplicable: true
+      - day: 3
+        title:
+          zh: 下龙→吉婆
+          en: 下龙→吉婆
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: catba-tbd
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van7-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: guide
+            split: per_group_split
+            ref: guide-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: meal
+            split: per_person
+            ref: meal-dinner-hotpot
+            label:
+              zh: 晚餐
+              en: 晚餐
+            adultApplicable: true
+            childApplicable: true
+          - type: tip
+            split: per_person
+            ref: misc-tip-daily
+            label:
+              zh: 小费
+              en: Tip
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-halong-pack
+            adultApplicable: true
+            childApplicable: true
+      - day: 4
+        title:
+          zh: 吉婆→河内
+          en: 吉婆→河内
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: hanoi-splendid
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van7-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: guide
+            split: per_group_split
+            ref: guide-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: meal
+            split: per_person
+            ref: meal-lunch-lotus
+            label:
+              zh: 中餐
+              en: 中餐
+            adultApplicable: true
+            childApplicable: true
+          - type: tip
+            split: per_person
+            ref: misc-tip-daily
+            label:
+              zh: 小费
+              en: Tip
+            adultApplicable: true
+            childApplicable: true
+      - day: 5
+        title:
+          zh: 河内·米轨过夜
+          en: 河内·米轨过夜
+        lines:
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van7-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: guide
+            split: per_group_split
+            ref: guide-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: meal
+            split: per_person
+            ref: meal-lunch-lotus
+            label:
+              zh: 中餐
+              en: 中餐
+            adultApplicable: true
+            childApplicable: true
+          - type: ticket
+            split: per_person
+            ref: ticket-train-sleeper
+            payOnSite: false
+            adultApplicable: true
+            childApplicable: true
+          - type: tip
+            split: per_person
+            ref: misc-tip-daily
+            label:
+              zh: 小费
+              en: Tip
+            adultApplicable: true
+            childApplicable: true
+      - day: 6
+        title:
+          zh: 老街→沙坝
+          en: 老街→沙坝
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: sapa-coupole
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van7-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: guide
+            split: per_group_split
+            ref: guide-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: tip
+            split: per_person
+            ref: misc-tip-daily
+            label:
+              zh: 小费
+              en: Tip
+            adultApplicable: true
+            childApplicable: true
+      - day: 7
+        title:
+          zh: 沙坝全天
+          en: 沙坝全天
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: sapa-coupole
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van7-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: guide
+            split: per_group_split
+            ref: guide-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: tip
+            split: per_person
+            ref: misc-tip-daily
+            label:
+              zh: 小费
+              en: Tip
+            adultApplicable: true
+            childApplicable: true
+      - day: 8
+        title:
+          zh: 沙坝→友谊关→观堂
+          en: 沙坝→友谊关→观堂
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: guantang-view
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van7-border
+            adultApplicable: true
+            childApplicable: true
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van-cn-1000
+            adultApplicable: true
+            childApplicable: true
+          - type: guide
+            split: per_group_split
+            ref: guide-vn
+            adultApplicable: true
+            childApplicable: true
+          - type: tip
+            split: per_person
+            ref: misc-tip-daily
+            label:
+              zh: 小费
+              en: Tip
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-youyiguan-escort
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-dongxing-gate-transfer
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-pingxiang-pickup
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-pingxiang-photo
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-youyiguan-cart
+            adultApplicable: true
+            childApplicable: true
+      - day: 9
+        title:
+          zh: 天琴壮寨·观堂
+          en: 天琴壮寨·观堂
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: guantang-view
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van7-border
+            adultApplicable: true
+            childApplicable: true
+          - type: ticket
+            split: per_person
+            ref: ticket-tianqin-bike
+            payOnSite: false
+            adultApplicable: true
+            childApplicable: true
+      - day: 10
+        title:
+          zh: 德天/明仕·南宁
+          en: 德天/明仕·南宁
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: nanning-nalian
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van7-border
+            adultApplicable: true
+            childApplicable: true
+          - type: ticket
+            split: per_person
+            ref: ticket-detian
+            payOnSite: false
+            adultApplicable: true
+            childApplicable: true
+          - type: ticket
+            split: per_person
+            ref: ticket-mingshi
+            payOnSite: false
+            adultApplicable: true
+            childApplicable: true
+      - day: 11
+        title:
+          zh: 送站结束
+          en: 送站结束
+        lines:
+          - type: other
+            split: per_person
+            ref: misc-dropoff
+            adultApplicable: true
+            childApplicable: true
+    roomDiff: 3555
+    roomDiffDays:
+      - day: 1
+        hotelRef: nanning-nalian
+        hotelName: 南宁·龙光那莲
+        twinRate: 880
+        rooms: 1
+        dayDiff: 440
+      - day: 2
+        hotelRef: halong-wason
+        hotelName: 下龙·沃森 THE WASON
+        twinRate: 450
+        rooms: 1
+        dayDiff: 225
+      - day: 3
+        hotelRef: catba-tbd
+        hotelName: 吉婆岛·参考酒店
+        twinRate: 700
+        rooms: 1
+        dayDiff: 350
+      - day: 4
+        hotelRef: hanoi-splendid
+        hotelName: 河内·华丽高级 Splendid Premium
+        twinRate: 1000
+        rooms: 1
+        dayDiff: 500
+      - day: 6
+        hotelRef: sapa-coupole
+        hotelName: 沙坝·穹顶美憬阁
+        twinRate: 1000
+        rooms: 1
+        dayDiff: 500
+      - day: 7
+        hotelRef: sapa-coupole
+        hotelName: 沙坝·穹顶美憬阁
+        twinRate: 1000
+        rooms: 1
+        dayDiff: 500
+      - day: 8
+        hotelRef: guantang-view
+        hotelName: 崇左·观堂酒店
+        twinRate: 600
+        rooms: 1
+        dayDiff: 300
+      - day: 9
+        hotelRef: guantang-view
+        hotelName: 崇左·观堂酒店
+        twinRate: 600
+        rooms: 1
+        dayDiff: 300
+      - day: 10
+        hotelRef: nanning-nalian
+        hotelName: 南宁·龙光那莲
+        twinRate: 880
+        rooms: 1
+        dayDiff: 440
   r3:
     status: demo
     source: 2026-09 主理人 2/4/6 人发布价校准；成本为演示值，上线前需真实成本复核
@@ -1022,17 +1518,23 @@ routes:
         卖点摘要：崇左秘境丽世观瀑、涠洲方岛巨鲸悬崖、果冻海与观鲸节奏。
         —— 按日费用明细待录入（筛「线路=r3」）；先维护本行总览。
     teamFixed:
-      leader:
-        1-2: 12000
-        1-4: 18000
-        5-10: 45000
-        10+: 63000
-      ops: 800
-      reserve: 700
-    margin: 0.28
+      leader: 0
+      ops: 0
+      reserve: 0
+    margin: 0.3
     roundBase: 100
     occupancy: 2
     maxPax: 0
+    marketTiers:
+      - maxN: 3
+        adult: 25688
+        child: 13808
+      - maxN: 6
+        adult: 23688
+        child: 11808
+      - maxN: 10
+        adult: 21688
+        child: 9808
     anchors:
       - n: 2
         adult: 20580
@@ -1043,4 +1545,219 @@ routes:
       - n: 6
         adult: 18980
         child: 8480
-    days: []
+    days:
+      - day: 1
+        title:
+          zh: 南宁·香格里拉
+          en: 南宁·香格里拉
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: nanning-shangri-la
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van-r3-800
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-sundry-1000
+            adultApplicable: true
+            childApplicable: true
+      - day: 2
+        title:
+          zh: 黑水河·丽世
+          en: 黑水河·丽世
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: chongzuo-lux
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van-r3-800
+            adultApplicable: true
+            childApplicable: true
+          - type: ticket
+            split: per_person
+            ref: ticket-r3-island-funa
+            payOnSite: false
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-r3-heishui-boat
+            adultApplicable: true
+            childApplicable: true
+      - day: 3
+        title:
+          zh: 德天·丽世
+          en: 德天·丽世
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: chongzuo-lux
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van-r3-800
+            adultApplicable: true
+            childApplicable: true
+          - type: meal
+            split: per_person
+            ref: meal-landong
+            label:
+              zh: 晚餐
+              en: 晚餐
+            adultApplicable: true
+            childApplicable: true
+          - type: ticket
+            split: per_person
+            ref: ticket-r3-detian-landong
+            payOnSite: false
+            adultApplicable: true
+            childApplicable: true
+      - day: 4
+        title:
+          zh: 名仕→北海万豪
+          en: 名仕→北海万豪
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: beihai-marriott
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van-r3-800
+            adultApplicable: true
+            childApplicable: true
+          - type: meal
+            split: per_person
+            ref: meal-boji
+            label:
+              zh: 中餐
+              en: 中餐
+            adultApplicable: true
+            childApplicable: true
+          - type: other
+            split: per_person
+            ref: misc-r3-mingshi-cart
+            adultApplicable: true
+            childApplicable: true
+      - day: 5
+        title:
+          zh: 上岛·巨鲸
+          en: 上岛·巨鲸
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: weizhou-whale
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van-r3-800
+            adultApplicable: true
+            childApplicable: true
+          - type: meal
+            split: per_person
+            ref: meal-cliff-dinner
+            label:
+              zh: 晚餐
+              en: 晚餐
+            adultApplicable: true
+            childApplicable: true
+          - type: ticket
+            split: per_person
+            ref: ticket-weizhou-v
+            payOnSite: false
+            adultApplicable: true
+            childApplicable: true
+      - day: 6
+        title:
+          zh: 涠洲全天·巨鲸
+          en: 涠洲全天·巨鲸
+        lines:
+          - type: hotel
+            split: per_room_split
+            ref: weizhou-whale
+            rooms: 1
+            adultApplicable: true
+            childApplicable: false
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van-r3-800
+            adultApplicable: true
+            childApplicable: true
+          - type: meal
+            split: per_person
+            ref: meal-r3-d6
+            label:
+              zh: 中餐
+              en: 中餐
+            adultApplicable: true
+            childApplicable: true
+          - type: ticket
+            split: per_person
+            ref: ticket-r3-fishing
+            payOnSite: false
+            adultApplicable: true
+            childApplicable: true
+      - day: 7
+        title:
+          zh: 下岛送站
+          en: 下岛送站
+        lines:
+          - type: vehicle
+            split: per_vehicle_split
+            ref: van-r3-800
+            adultApplicable: true
+            childApplicable: true
+    roomDiff: 10882
+    roomDiffDays:
+      - day: 1
+        hotelRef: nanning-shangri-la
+        hotelName: 南宁·香格里拉
+        twinRate: 1400
+        rooms: 1
+        dayDiff: 700
+      - day: 2
+        hotelRef: chongzuo-lux
+        hotelName: 崇左·秘境丽世
+        twinRate: 5300
+        rooms: 1
+        dayDiff: 2650
+      - day: 3
+        hotelRef: chongzuo-lux
+        hotelName: 崇左·秘境丽世
+        twinRate: 5300
+        rooms: 1
+        dayDiff: 2650
+      - day: 4
+        hotelRef: beihai-marriott
+        hotelName: 北海·万豪尊贵海景
+        twinRate: 1364
+        rooms: 1
+        dayDiff: 682
+      - day: 5
+        hotelRef: weizhou-whale
+        hotelName: 涠洲岛·巨鲸海景房
+        twinRate: 4200
+        rooms: 1
+        dayDiff: 2100
+      - day: 6
+        hotelRef: weizhou-whale
+        hotelName: 涠洲岛·巨鲸海景房
+        twinRate: 4200
+        rooms: 1
+        dayDiff: 2100

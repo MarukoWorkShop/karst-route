@@ -2,6 +2,8 @@ import type { Tx } from "@/i18n/copy";
 
 export type { Tx };
 export type ThemeId = "wild" | "flavors" | "villages" | "locals";
+/** 轻旅行体验 · 小产品栏目 */
+export type LightId = "hike" | "photo" | "village" | "foodfilm" | "craft" | "wellness";
 export type RouteId = "r1" | "r2" | "r3";
 export type StayKind = "hotel" | "train" | "park" | "base";
 

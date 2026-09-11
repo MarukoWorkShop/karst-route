@@ -1,0 +1,39 @@
+# 报价二期：默认车型 / 导游 / 地域分段
+
+src: zh
+vehicles:
+  china: van7-cn
+  guangxi: van7-gx
+  border: van7-border
+  vietnam: van7-vn
+  # 线路二分列「国内用车 1000/团·日」
+  chinaLite: van-cn-1000
+
+guides:
+  china: guide-cn-driver
+  vietnam: guide-vn
+
+# placeId → 车段（用于默认车/导）
+segmentByPlace:
+  nanning: china
+  chongzuo: guangxi
+  beihai: china
+  weizhou: china
+  guantang: guangxi
+  kunming: china
+  jianshui: china
+  puzhehei: china
+  mile: china
+  # 越南
+  halong: vietnam
+  catba: vietnam
+  hanoi: vietnam
+  sapa: vietnam
+  # 米轨过夜：偏越南段司导
+  train: vietnam
+
+# 标题前缀（写入按日一行「标题」）
+routeTitlePrefix:
+  r1: 路线一·r1
+  r2: 路线二·r2
+  r3: 路线三·r3

@@ -337,19 +337,25 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
               {t(slide.intro)}
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3 md:mt-8">
+            <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-3 md:mt-8">
               <a
                 href="#tours"
-                className="pointer-events-auto inline-flex min-h-12 flex-1 items-center justify-center rounded-lg bg-cta px-5 text-center text-[13px] font-medium text-white md:min-h-[52px] md:px-8 md:text-[14px]"
+                className="pointer-events-auto inline-flex min-h-12 flex-1 items-center justify-center rounded-lg bg-cta px-5 text-center text-[13px] font-medium text-white md:min-h-[52px] md:flex-none md:px-8 md:text-[14px]"
               >
                 {t(copy.hero.ctaA)}
               </a>
               <a
+                href="#experience"
+                className="pointer-events-auto inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg bg-cta px-5 text-center text-[13px] font-medium text-white md:min-h-[52px] md:flex-none md:px-8 md:text-[14px]"
+              >
+                {t(copy.light.cta)}
+                <IconSparkles className="h-3.5 w-3.5 shrink-0" />
+              </a>
+              <a
                 href="#plan"
                 onClick={onPlanOwn}
-                className="pointer-events-auto inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg border border-white/40 bg-white/10 px-5 text-center text-[13px] font-medium text-white backdrop-blur-md md:min-h-[52px] md:px-8 md:text-[14px]"
+                className="pointer-events-auto inline-flex items-center text-[12px] font-medium tracking-[0.02em] text-white/85 underline-offset-4 transition-colors hover:text-white hover:underline md:text-[13px]"
               >
-                <IconSparkles className="h-3.5 w-3.5 shrink-0" />
                 {t(copy.hero.ctaB)}
               </a>
             </div>
