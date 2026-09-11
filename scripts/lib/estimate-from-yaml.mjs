@@ -69,7 +69,9 @@ function resolveVehicleGross(line, catalogs, n) {
     ? fit(vehicles.filter((v) => v.segment === selected.segment))
     : allFit;
 
+  // 14+ → 19座（日包=点选车+500）；20+ → 25座（同价）；否则升 catalog / 加车
   if (cap > 0 && n > cap) {
+    if (n >= 14) return baseRate + 500;
     const bySize = [...(sameSeg.length ? sameSeg : allFit)].sort(
       (a, b) => a.maxPax - b.maxPax || a.dayRate - b.dayRate,
     );
@@ -78,14 +80,7 @@ function resolveVehicleGross(line, catalogs, n) {
     return baseRate * Math.ceil(n / cap);
   }
 
-  // 仅 2 人小团降到 maxPax≤2 的 4 座小车
-  if (n <= 2) {
-    const small = sameSeg
-      .filter((v) => v.maxPax <= 2 && v.dayRate < baseRate)
-      .sort((a, b) => a.dayRate - b.dayRate)[0];
-    if (small) return small.dayRate;
-  }
-
+  // 4 座自动降档已关闭：≤6 人一律用日表点选车型（通常为 7 座）
   return baseRate;
 }
 
@@ -120,17 +115,9 @@ function lineCost(line, catalogs, n, occupancy) {
   };
 }
 
-function resolveLeaderFee(tf, n) {
+function resolveLeaderFee(tf, _n) {
   const leader = tf?.leader;
-  if (leader != null && typeof leader === "object") {
-    const b12 = Number(leader["1-2"] ?? leader.band1to2) || 0;
-    const b14 = Number(leader["1-4"] ?? leader.band1to4) || 0;
-    if (n <= 2) return b12 > 0 ? b12 : b14;
-    if (n <= 4) return b14;
-    // 「10人以上」含 10；「5-10」档用于 5–9
-    if (n < 10) return Number(leader["5-10"] ?? leader.band5to10) || 0;
-    return Number(leader["10+"] ?? leader.bandOver10) || 0;
-  }
+  if (leader != null && typeof leader === "object") return 0;
   return Number(leader) || 0;
 }
 
@@ -157,9 +144,28 @@ export function estimateRouteParty(routeRow, catalogs, adults, children) {
     }
   }
   const share = teamFixed / n;
-  const m = 1 + margin;
-  const adultPerPerson = mround((adult + share) * m, roundBase);
-  const childPerPerson = mround((child + share) * m, roundBase);
+  // margin = 卖价毛利率（0.3 → 成本/0.7，对齐报价单）
+  const denom = margin > 0 && margin < 1 ? 1 - margin : 1;
+  const adultPerPerson = mround((adult + share) / denom, roundBase);
+  // 儿童单价 = 成人单价 − 房差（双人间÷同房人数加总）
+  let roomDiff = Number(routeRow.roomDiff);
+  if (!Number.isFinite(roomDiff) || roomDiff < 0) {
+    const occ = occupancy > 0 ? occupancy : 2;
+    const hotelById = new Map((catalogs.hotels || []).map((h) => [h.id, h]));
+    roomDiff = 0;
+    for (const day of days) {
+      for (const line of day.lines || []) {
+        if (line.type !== "hotel" || !line.ref) continue;
+        const twin =
+          line.amount != null && Number.isFinite(line.amount)
+            ? Number(line.amount)
+            : Number(hotelById.get(line.ref)?.twinRate) || 0;
+        const rooms = line.rooms > 0 ? line.rooms : 1;
+        roomDiff += (twin * rooms) / occ;
+      }
+    }
+  }
+  const childPerPerson = Math.max(0, adultPerPerson - Math.round(roomDiff));
   return {
     n,
     adultPerPerson,
@@ -167,5 +173,6 @@ export function estimateRouteParty(routeRow, catalogs, adults, children) {
     subtotalAllAdults: adultPerPerson * n,
     teamFixed,
     leaderFee: resolveLeaderFee(tf, n),
+    roomDiff: Math.round(roomDiff),
   };
 }

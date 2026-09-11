@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { RouteId, ThemeId } from "@/types";
+import type { RouteId } from "@/types";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileDock } from "@/components/layout/MobileDock";
@@ -20,7 +20,6 @@ function go(id: string) {
 export default function App() {
   const [route, setRoute] = useState<RouteId>("r1");
   const [intent, setIntent] = useState<"boutique" | "custom">("boutique");
-  const [experienceOpen, setExperienceOpen] = useState<ThemeId | null>(null);
 
   // 首屏（Hero）占据视野时收起底部导航，让画面整屏呈现
   const [heroInView, setHeroInView] = useState(true);
@@ -66,7 +65,12 @@ export default function App() {
             go("plan");
           }}
         />
-        <Experience openId={experienceOpen} onOpenId={setExperienceOpen} />
+        <Experience
+          onQuote={() => {
+            setIntent("custom");
+            go("plan");
+          }}
+        />
         <About />
         <PlanSection tab={intent} onTab={setIntent} route={route} />
         <Explore />

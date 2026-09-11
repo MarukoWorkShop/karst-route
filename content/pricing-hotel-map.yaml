@@ -13,13 +13,13 @@ default:
   puzhehei: puzhehei-xiyuan
   mile: mile-juren
   kunming: kunming-kaichen
-  # 下列行程已有 placeId，产品库暂缺 → scaffold 建空行，酒店待选
-  # guantang:
-  # beihai:
-  # weizhou:
-  # train:  # 米轨过夜，非酒店
-
+  # beihai / weizhou 默认见 routes.r3
+  guantang: guantang-view
 routes:
   r1: {}
   r2: {}
-  r3: {}
+  r3:
+    nanning: nanning-shangri-la
+    chongzuo: chongzuo-lux
+    beihai: beihai-marriott
+    weizhou: weizhou-whale

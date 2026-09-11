@@ -317,3 +317,21 @@ CSV：`17-报价线路总览.csv`（三线路名称与 brief 模板）。
 **录入顺序**：打开该线路「定价参数」看清行程总览 → 切到按日视图筛该线路 → 按日序填房/车/导/票/其他。
 
 填完后：`npm run content:notion` → 写入 `content/pricing.yaml` 的 `label` / `brief` / `catalogs` / `days`。
+
+---
+
+## 轻体验栏目（首页六张小产品卡）
+
+官网首页「让旅途真正改变你」区块的六张卡片 + 详情大卡，数据源是 `content/experiences.yaml`。
+
+Notion 两个入口：
+
+| 名称 | 用途 |
+|---|---|
+| **轻体验栏目**（数据表） | 一行一个栏目，改文案、图片、时长/成团/季节 |
+| **轻体验 · YAML 映射说明**（文档页） | 列 ↔ YAML 字段 ↔ 网页位置的对照说明，改动前先看它 |
+
+栏目顺序固定为 `hike → photo → village → foodfilm → craft → wellness`，`id` 不要新增或改名。
+
+改完跑 `npm run content:notion` → 写入 `content/experiences.yaml` → 网站更新。  
+手工导入备选：`18-轻体验栏目.csv`（6 行）。

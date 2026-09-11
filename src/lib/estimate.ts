@@ -11,8 +11,10 @@ import {
 /**
  * 按日报价纯函数（无 React 依赖）。
  * 仅 days 路径；无按日明细则返回 null（询价）。
- * 人数超过单车载客时：优先换更大车型，否则按 ceil(n/maxPax) 加车；
- * 人数偏少时：同段可换更便宜的小车（如 2 人 → 4 座）。
+ * 人数超过单车载客时：优先换更大车型，否则按 ceil(n/maxPax) 加车。
+ * 6 人及以下默认按日表点选的 7 座计价（不自动降 4 座）。
+ * ≥14 人按 19 座（当日点选车日包 +500）；≥20 人按 25 座（同价）。
+ * 儿童单价 = 成人单价 − 线路房差（双人间÷2 加总，对齐报价单附注）。
  */
 
 export type EstimateResult = {
@@ -105,8 +107,11 @@ export function resolveVehicleGross(
     ? fit(pricing.catalogs.vehicles.filter((v) => v.segment === selected.segment))
     : allFit;
 
-  // 超载：同段优先升更大车；否则加车（按最小够用载客，其次日价）
+  // 超载：14+ → 19座（日包=点选车+500）；20+ → 25座（同价）；否则升 catalog 更大车 / 加车
   if (cap > 0 && n > cap) {
+    if (n >= 14) {
+      return { gross: baseRate + 500, adjusted: true };
+    }
     const bySize = [...(sameSeg.length ? sameSeg : allFit)].sort(
       (a, b) => a.maxPax - b.maxPax || a.dayRate - b.dayRate,
     );
@@ -118,16 +123,7 @@ export function resolveVehicleGross(
     return { gross: baseRate * units, adjusted: units > 1 };
   }
 
-  // 仅 2 人小团：同段降到 4 座等更小车型（maxPax≤2），不跨档误用更便宜的 7 座
-  if (n <= 2) {
-    const small = sameSeg
-      .filter((v) => v.maxPax <= 2 && v.dayRate < baseRate)
-      .sort((a, b) => a.dayRate - b.dayRate)[0];
-    if (small) {
-      return { gross: small.dayRate, adjusted: true };
-    }
-  }
-
+  // 4 座自动降档已关闭：≤6 人一律用日表点选车型（通常为 7 座）
   return { gross: baseRate, adjusted: false };
 }
 
@@ -207,11 +203,15 @@ export function estimateParty(
   if (n <= 0) return null;
   if (!pricing.days.some((d) => d.lines.length > 0)) return null;
 
-  const m = 1 + pricing.margin;
-  const { adult, child, vehicleGross, fleetAdjusted } = sumDaysCost(pricing, n);
+  // margin = 卖价毛利率（如 0.3 → 卖价 = 成本 / 0.7，与报价单 ÷0.70 一致）
+  const margin = Number(pricing.margin) || 0;
+  const denom = margin > 0 && margin < 1 ? 1 - margin : 1;
+  const { adult, vehicleGross, fleetAdjusted } = sumDaysCost(pricing, n);
   const share = resolveTeamFixed(pricing.teamFixedParts, n) / n;
-  const adultPerPerson = mround((adult + share) * m, pricing.roundBase);
-  const childPerPerson = mround((child + share) * m, pricing.roundBase);
+  const adultPerPerson = mround((adult + share) / denom, pricing.roundBase);
+  // 对齐附注：儿童价 = 成人单价 − 房差（不再对儿童成本单独加成）
+  const roomDiff = Number(pricing.roomDiff) || 0;
+  const childPerPerson = Math.max(0, adultPerPerson - Math.round(roomDiff));
   const subtotal = adults * adultPerPerson + children * childPerPerson;
   return {
     route,

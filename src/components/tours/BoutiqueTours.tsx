@@ -7,6 +7,8 @@ import { cosUrl } from "@/lib/media";
 import { EXCL_LABELS, INCL_LABELS, routeFacts } from "@/data/tourFacts";
 import { routeMedia } from "@/data/routeMedia";
 import { routeContent, type RouteContent } from "@/content/routes";
+import { fmtCny } from "@/lib/estimate";
+import { marketPriceRange } from "@/data/routePricing";
 import {
   IconChevron,
   IconClock,
@@ -194,12 +196,9 @@ function RouteCard({
         <Meta icon={<IconUsers className="h-4 w-4" />} label={t(copy.tours.for)} value={t(content.audience)} />
       </div>
 
-      {/* 4 · 预算 */}
-      <div className="flex items-end justify-between gap-3 border-t border-line bg-paper px-3 py-2.5 md:px-4 md:py-3">
-        <div className="min-w-0">
-          <p className="text-[10px] tracking-[0.08em] text-ink-soft uppercase">{t(copy.tours.priceLabel)}</p>
-          <p className="mt-0.5 text-[18px] font-semibold tracking-[-0.01em] text-cta">{t(content.price)}</p>
-        </div>
+      {/* 4 · 预算（市场报价档：10 人→2–3 人区间） */}
+      <div className="border-t border-line bg-paper px-3 py-2.5 md:px-4 md:py-3">
+        <MarketBudget routeId={routeId} fallback={content.price} size="card" />
       </div>
 
       {/* 5 · 文案 */}
@@ -373,10 +372,7 @@ function RouteExpandModal({
           </div>
 
           <div className="mt-5 flex flex-col gap-3 border-t border-line pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:flex-row md:flex-wrap md:items-end md:justify-between md:pb-0">
-            <div>
-              <p className="text-[10px] tracking-[0.08em] text-ink-soft uppercase">{t(copy.tours.priceLabel)}</p>
-              <p className="mt-0.5 text-[20px] font-semibold tracking-[-0.01em] text-cta">{t(content.price)}</p>
-            </div>
+            <MarketBudget routeId={routeId} fallback={content.price} size="modal" />
             <button
               type="button"
               onClick={onOpenItinerary}
@@ -438,6 +434,62 @@ function FeatureParagraphs({
             </p>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+function MarketBudget({
+  routeId,
+  fallback,
+  size,
+}: {
+  routeId: RouteId;
+  fallback: RouteContent["price"];
+  size: "card" | "modal";
+}) {
+  const { t } = useLocale();
+  const range = marketPriceRange(routeId);
+  const titleCls = "text-[10px] tracking-[0.08em] text-ink-soft uppercase";
+  const priceCls =
+    size === "modal"
+      ? "font-semibold tracking-[-0.01em] text-cta text-[17px] tabular-nums"
+      : "font-semibold tracking-[-0.01em] text-cta text-[15px] md:text-[16px] tabular-nums";
+
+  if (!range) {
+    return (
+      <div className="min-w-0">
+        <p className={titleCls}>{t(copy.tours.priceLabel)}</p>
+        <p className={`mt-0.5 ${size === "modal" ? "text-[20px]" : "text-[18px]"} font-semibold tracking-[-0.01em] text-cta`}>
+          {t(fallback)}
+        </p>
+      </div>
+    );
+  }
+
+  const adult =
+    range.adultFrom === range.adultTo
+      ? fmtCny(range.adultFrom)
+      : `${fmtCny(range.adultFrom)}–${fmtCny(range.adultTo)}`;
+  const child =
+    range.childFrom === range.childTo
+      ? fmtCny(range.childFrom)
+      : `${fmtCny(range.childFrom)}–${fmtCny(range.childTo)}`;
+
+  return (
+    <div className="min-w-0">
+      <p className={titleCls}>{t(copy.tours.priceLabel)}</p>
+      <div className="mt-1.5 space-y-0.5">
+        <p className={priceCls}>
+          <span className="mr-1.5 text-[11px] font-normal text-ink-soft">{t(copy.tours.priceAdult)}</span>
+          {adult}
+          <span className="ml-1 text-[11px] font-normal text-ink-soft">{t(copy.tours.pricePerPerson)}</span>
+        </p>
+        <p className={priceCls}>
+          <span className="mr-1.5 text-[11px] font-normal text-ink-soft">{t(copy.tours.priceChild)}</span>
+          {child}
+          <span className="ml-1 text-[11px] font-normal text-ink-soft">{t(copy.tours.pricePerPerson)}</span>
+        </p>
       </div>
     </div>
   );

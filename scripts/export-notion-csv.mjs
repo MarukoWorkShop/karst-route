@@ -583,4 +583,71 @@ for (const id of ["r1", "r2", "r3"]) {
 }
 writeCsv("12-报价锚点.csv", ["标题", "route", "n", "adult", "child", "note"], anchorRows);
 
+// --- 轻旅行体验（首页「让旅途真正改变你」六张小产品卡）---
+let light = { src: "zh", items: [] };
+try {
+  light = loadYaml("content/experiences.yaml") ?? light;
+} catch {
+  /* optional */
+}
+const lightRows = (light.items ?? []).map((it) => {
+  const d = Array.isArray(it.desc) ? it.desc : [];
+  return {
+    标题: `${it.id} · ${tx(it.title, "zh") || it.id}`,
+    id: it.id ?? "",
+    badge: it.badge ?? "",
+    title_zh: tx(it.title, "zh"),
+    title_en: tx(it.title, "en"),
+    tagline_zh: tx(it.tagline, "zh"),
+    tagline_en: tx(it.tagline, "en"),
+    duration_zh: tx(it.duration, "zh"),
+    duration_en: tx(it.duration, "en"),
+    group_zh: tx(it.group, "zh"),
+    group_en: tx(it.group, "en"),
+    season_zh: tx(it.season, "zh"),
+    season_en: tx(it.season, "en"),
+    cover: it.cover ?? "",
+    gallery: Array.isArray(it.gallery) ? it.gallery.join("\n") : "",
+    desc1_zh: tx(d[0], "zh"),
+    desc1_en: tx(d[0], "en"),
+    desc2_zh: tx(d[1], "zh"),
+    desc2_en: tx(d[1], "en"),
+    highlights_zh: lines(it.highlights, (x) => tx(x, "zh")),
+    highlights_en: lines(it.highlights, (x) => tx(x, "en")),
+    included_zh: lines(it.included, (x) => tx(x, "zh")),
+    included_en: lines(it.included, (x) => tx(x, "en")),
+    note: it.note ?? "",
+  };
+});
+writeCsv(
+  "18-轻体验栏目.csv",
+  [
+    "标题",
+    "id",
+    "badge",
+    "title_zh",
+    "title_en",
+    "tagline_zh",
+    "tagline_en",
+    "duration_zh",
+    "duration_en",
+    "group_zh",
+    "group_en",
+    "season_zh",
+    "season_en",
+    "cover",
+    "gallery",
+    "desc1_zh",
+    "desc1_en",
+    "desc2_zh",
+    "desc2_en",
+    "highlights_zh",
+    "highlights_en",
+    "included_zh",
+    "included_en",
+    "note",
+  ],
+  lightRows,
+);
+
 console.log(`\nCSV 已放到 content/notion-import/ 。导入步骤见该目录 README。`);

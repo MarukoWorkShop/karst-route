@@ -6,6 +6,8 @@ vehicles:
   guangxi: van7-gx
   border: van7-border
   vietnam: van7-vn
+  # 线路二分列「国内用车 1000/团·日」
+  chinaLite: van-cn-1000
 
 guides:
   china: guide-cn-driver
