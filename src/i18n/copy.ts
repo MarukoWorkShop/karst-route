@@ -204,6 +204,16 @@ export const copy = {
     quote: { en: "Enquire", zh: "咨询报价" },
     view: { en: "View details", zh: "查看详情" },
     back: { en: "All experiences", zh: "全部体验" },
+    routes: { en: "Route options", zh: "路线小产品" },
+    routesSub: {
+      en: "Five village encounters you can book on their own or pair with a longer trip.",
+      zh: "五档可单独加订的村落相遇——可单独体验，也可挂在长线前后。",
+    },
+    meals: { en: "Meals along the route", zh: "线路餐食" },
+    mealsSub: {
+      en: "Village tables you can pair with a study day — hearth, riverside, or hillside feast.",
+      zh: "可与考察日搭配的村落餐桌——火塘、江边或半山家宴。",
+    },
   },
   about: {
     kicker: { en: "About Us", zh: "关于我们" },

@@ -241,19 +241,58 @@ function ItemBody({
   onQuote: () => void;
 }) {
   const { t } = useLocale();
+  const routes = item.routes ?? [];
+  const meals = item.meals ?? [];
   return (
     <>
-      <div className="grid grid-cols-1 gap-2 self-start">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-bone">
-          <img src={item.gallery[0]} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      <div className="flex min-w-0 flex-col gap-5 self-start">
+        <div className="grid grid-cols-1 gap-2">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-bone">
+            <img src={item.gallery[0]} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {item.gallery.slice(1, 3).map((src) => (
+              <div key={src} className="relative aspect-square overflow-hidden rounded-md bg-bone">
+                <img loading="lazy" src={src} alt="" className="absolute inset-0 h-full w-full object-cover" />
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-2 gap-2">
-          {item.gallery.slice(1, 3).map((src) => (
-            <div key={src} className="relative aspect-square overflow-hidden rounded-md bg-bone">
-              <img loading="lazy" src={src} alt="" className="absolute inset-0 h-full w-full object-cover" />
-            </div>
-          ))}
-        </div>
+
+        {routes.length ? (
+          <div className="border-t border-line pt-4 md:border-t-0 md:pt-0">
+            <p className="text-[11px] font-bold tracking-[0.12em] text-cta uppercase">
+              {t(copy.light.routes)}
+            </p>
+            <p className="mt-1 text-[12px] leading-5 text-ink-soft">{t(copy.light.routesSub)}</p>
+            <ul className="mt-3 flex flex-col gap-4">
+              {routes.map((route) => (
+                <li key={route.id} className="rounded-[10px] border border-line bg-paper/60 p-3">
+                  <h4 className="text-[15px] leading-snug font-medium text-ink">{t(route.title)}</h4>
+                  <div className="mt-2.5 grid grid-cols-3 gap-1.5">
+                    {route.images.slice(0, 3).map((src) => (
+                      <div key={src} className="relative aspect-[4/3] overflow-hidden rounded-md bg-bone">
+                        <img
+                          loading="lazy"
+                          src={src}
+                          alt=""
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-2.5 space-y-1.5">
+                    {route.blurb.map((p) => (
+                      <p key={p.zh || p.en} className="text-[12.5px] leading-5 text-ink-soft">
+                        {t(p)}
+                      </p>
+                    ))}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </div>
 
       <div className="mt-4 flex min-w-0 flex-1 flex-col md:mt-0">
@@ -319,6 +358,41 @@ function ItemBody({
             ))}
           </div>
         </div>
+
+        {meals.length ? (
+          <div className="mt-5 border-t border-line pt-4">
+            <p className="text-[11px] font-bold tracking-[0.12em] text-cta uppercase">
+              {t(copy.light.meals)}
+            </p>
+            <p className="mt-1 text-[12px] leading-5 text-ink-soft">{t(copy.light.mealsSub)}</p>
+            <ul className="mt-3 flex flex-col gap-4">
+              {meals.map((meal) => (
+                <li key={meal.id} className="rounded-[10px] border border-line bg-paper/60 p-3">
+                  <h4 className="text-[15px] leading-snug font-medium text-ink">{t(meal.title)}</h4>
+                  <div className="mt-2.5 grid grid-cols-3 gap-1.5">
+                    {meal.images.slice(0, 3).map((src) => (
+                      <div key={src} className="relative aspect-[4/3] overflow-hidden rounded-md bg-bone">
+                        <img
+                          loading="lazy"
+                          src={src}
+                          alt=""
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-2.5 space-y-1.5">
+                    {meal.blurb.map((p) => (
+                      <p key={p.zh || p.en} className="text-[12.5px] leading-5 text-ink-soft">
+                        {t(p)}
+                      </p>
+                    ))}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         <div className="mt-5 flex flex-col gap-2 border-t border-line pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:flex-row sm:items-center sm:justify-between md:pb-0">
           <p className="text-[12px] leading-5 text-ink-soft">{t(copy.light.priceNote)}</p>
