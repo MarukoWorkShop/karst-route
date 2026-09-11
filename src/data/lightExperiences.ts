@@ -11,6 +11,16 @@ const L = (en: string, zh: string): Tx => ({ en, zh });
  * 页面不展示价格 —— 按人数与日期核算，走询单（见 copy.light.priceNote）。
  * duration / group / season 目前是建议值，等主理人确认后替换。
  */
+/** 详情展开里的路线小产品（目前用于「村落人文考察」） */
+export type LightRoute = {
+  id: string;
+  title: Tx;
+  /** 2–3 句短文案 */
+  blurb: Tx[];
+  /** 2–3 张配图 */
+  images: string[];
+};
+
 export type LightExperience = {
   id: LightId;
   /** 英文小标签，如 HIKING & CYCLING */
@@ -26,6 +36,10 @@ export type LightExperience = {
   desc: Tx[];
   highlights: Tx[];
   included: Tx[];
+  /** 可选：详情展开中的路线小产品列表 */
+  routes?: LightRoute[];
+  /** 可选：详情右侧的线路餐食 */
+  meals?: LightRoute[];
 };
 
 /** 代码默认值：content/experiences.yaml 缺失或写错时的兜底 */
@@ -119,11 +133,11 @@ const FALLBACK: LightExperience[] = [
     duration: L("Half day", "半日"),
     group: L("2–10 travellers", "2–10 人"),
     season: L("Year-round", "全年可订"),
-    cover: asset("/destinations/jianshui-oldtown3.jpg"),
+    cover: asset("/light/village/yao-visit-1.jpeg"),
     gallery: [
-      asset("/destinations/jianshui-oldtown3.jpg"),
-      asset("/destinations/guantang2.jpg"),
-      asset("/destinations/jianshui-twindragonbridge1.jpg"),
+      asset("/light/village/yao-visit-1.jpeg"),
+      asset("/light/village/oil-tea-2.jpeg"),
+      asset("/light/village/dong-song-2.jpeg"),
     ],
     desc: [
       L(
@@ -145,6 +159,200 @@ const FALLBACK: LightExperience[] = [
       L("Resident host and interpreter", "村民接待与随行翻译"),
       L("Visit fees shared with the households", "走访费用与村民共享"),
       L("Round-trip transfer from your hotel", "酒店往返接送"),
+    ],
+    routes: [
+      {
+        id: "yao-visit",
+        title: L("Hong Yao Homestay Visit", "红瑶人家 · 山歌唱进家门"),
+        blurb: [
+          L(
+            "Stilt houses still cling to the valley sides, and farming ways that look ancient are simply how people live here. Yao hosts meet you with mountain songs and walk you into their story.",
+            "依山而建的吊脚楼仍在，刀耕火种的农耕文明也并未变成展陈——瑶族阿嫂阿哥唱着山歌迎你进门，把红瑶人家的故事讲给你听。",
+          ),
+          L(
+            "It is a rare, sincere exchange: not a staged show, but a living household in the gorge offering a memory you can only get by sitting down with them.",
+            "这是遗落在峡谷里的真诚邀约：不是舞台表演，而是与当地人真正坐在一起，带走一份只能在这里发生的记忆。",
+          ),
+        ],
+        images: [
+          asset("/light/village/yao-visit-1.jpeg"),
+          asset("/light/village/yao-visit-2.jpeg"),
+          asset("/light/village/yao-visit-3.jpeg"),
+        ],
+      },
+      {
+        id: "oil-tea",
+        title: L("Zhuang Oil Tea by the Hearth", "一杯苦来四杯香 · 打油茶"),
+        blurb: [
+          L(
+            "Follow a Zhuang auntie through every step of hand-beaten oil tea — from frying the leaves to crisp oil fritters — the living taste of northern Guangxi.",
+            "跟随壮族阿嫂手打油茶：从炒茶到油果，一道工序接着一道，把桂北传统饮食文化摊开在火塘边。",
+          ),
+          L(
+            "First cup bitter, second astringent, third and fourth suddenly fragrant — then you understand why this bowl is everyday life, not a souvenir.",
+            "一杯苦，二杯涩，三杯四杯才见好油茶。亲自喝过，才懂这碗茶为什么是生活，而不是纪念品。",
+          ),
+        ],
+        images: [
+          asset("/light/village/oil-tea-1.jpeg"),
+          asset("/light/village/oil-tea-2.jpeg"),
+          asset("/light/village/oil-tea-3.jpeg"),
+        ],
+      },
+      {
+        id: "embroidered-ball",
+        title: L("Make a Zhuang Embroidered Ball", "绣球里的山水心意"),
+        blurb: [
+          L(
+            "Sit with a Zhuang auntie and stitch Guangxi’s iconic embroidered ball — a compact piece of intangible heritage held in the palm.",
+            "跟着壮族阿嫂亲手制作广西的瑰宝——绣球，学习传统针法，感受少数民族非遗如何落在指尖。",
+          ),
+          L(
+            "A small ball carries big wishes: courtship, blessing, and the warmth of wanting a good life for the people you love.",
+            "小小绣球寓意很深：寄托情意与祝福，也装着人们对美好生活的热情。",
+          ),
+        ],
+        images: [
+          asset("/light/village/embroidered-ball-1.jpeg"),
+          asset("/light/village/embroidered-ball-2.jpeg"),
+          asset("/light/village/embroidered-ball-3.jpeg"),
+        ],
+      },
+      {
+        id: "dong-song",
+        title: L("Dong Grand Song Gathering", "侗族大歌 · 无指挥的自然和声"),
+        blurb: [
+          L(
+            "Meet a heritage Dong song troupe face to face: many voices, no conductor, no accompaniment, no score — birdsong and mountain water folded into harmony.",
+            "与侗族大歌传承歌班面对面：多声部、无指挥、无伴奏、无曲谱，把鸟叫虫鸣、高山流水织进和声。",
+          ),
+          L(
+            "Open that sonic world with them and feel how close Dong music sits to the natural soundscape of the hills.",
+            "打开侗族大歌的奇幻魔盒，感受侗族人民对自然界的亲近，以及传统音乐如何在村寨里继续生长。",
+          ),
+        ],
+        images: [
+          asset("/light/village/dong-song-1.jpeg"),
+          asset("/light/village/dong-song-2.jpeg"),
+          asset("/light/village/dong-song-3.jpeg"),
+        ],
+      },
+      {
+        id: "stilt-tea",
+        title: L("Tea in a Restored Stilt Granary", "吊脚楼粮仓 · 一席老茶"),
+        blurb: [
+          L(
+            "A host walks you through a stilt-house granary’s second life — from ruin to loft garden, packed with carefully kept antiques.",
+            "主理人带你走进一座吊脚楼粮仓的故事：从破旧不堪到阁楼花园，满屋精心收藏的老物件。",
+          ),
+          L(
+            "Warmth and persistence, timber tradition meeting present-day living — then a quiet VIP tea table: pitched-pot games, whisked tea, unhurried talk.",
+            "温情与坚守，传统木构与现代生活交错。再入一席 VIP 茶室：投壶、点茶，把时间放慢。",
+          ),
+        ],
+        images: [
+          asset("/light/village/stilt-tea-1.jpeg"),
+          asset("/light/village/stilt-tea-2.jpeg"),
+          asset("/light/village/stilt-tea-3.jpeg"),
+        ],
+      },
+    ],
+    meals: [
+      {
+        id: "nianzhu",
+        title: L("Winter Hog & Hearth Hotpot", "年味年猪 · 围炉泡汤"),
+        blurb: [
+          L(
+            "Deep in the terraces in the coldest month, Zhuang villages kill a hog for the year — then gather by the fire for their traditional paotang feast.",
+            "寒冬腊月，梯田深处的壮族古村落年味渐浓：家家杀猪庆祝，开启独特的刨汤生活。",
+          ),
+          L(
+            "Sit by the hearth in a stilt-house inn: meat still warm, cured pork rich, and mountain rice wine poured soft — the New Year flavour you thought you'd lost.",
+            "民宿火塘边围炉而坐，新鲜猪肉还温热，腊肉淳厚，再喝两杯温好的山里米酒——久违的年味就在这一桌。",
+          ),
+        ],
+        images: [
+          asset("/light/village/meals/nianzhu-1.jpeg"),
+          asset("/light/village/meals/nianzhu-2.jpeg"),
+          asset("/light/village/meals/nianzhu-3.jpeg"),
+        ],
+      },
+      {
+        id: "yanhua",
+        title: L("Hillside Courtyard Firework Feast", "半山小院 · 烟花家宴"),
+        blurb: [
+          L(
+            "At dusk in a hillside hideaway above the valley, a courtyard dinner faces open karst — elegant, quiet, and set for celebration.",
+            "傍晚在大面山秘境的半山小院享用家宴：面对开豁山谷，环境优雅，美景与美食同桌。",
+          ),
+          L(
+            "Then fireworks bloom over the peaks — the moment travel actually feels like travel.",
+            "漫天烟花亮起时，这一顿就更像一场真正的旅行。",
+          ),
+        ],
+        images: [
+          asset("/light/village/meals/yanhua-1.jpeg"),
+          asset("/light/village/meals/yanhua-2.jpeg"),
+          asset("/light/village/meals/yanhua-3.jpeg"),
+        ],
+      },
+      {
+        id: "lijiang-table",
+        title: L("A Li River Table from the Banks", "漓江餐桌 · 鱼虾与田园"),
+        blurb: [
+          L(
+            "Local hosts cook a Li River table worth boasting about — fish and shrimp from the river you just watched, greens from the fields beside it.",
+            "当地老乡土著做一顿值得吹嘘的漓江餐桌：鱼虾来自眼前的江，菜蔬来自身边的田园。",
+          ),
+          L(
+            "Wild, seasonal, and tied to the water — not a restaurant menu, but a meal that belongs to this bend of the river.",
+            "野趣、当季、贴着江水——不是餐馆菜单，而是属于这一湾漓江的一餐。",
+          ),
+        ],
+        images: [
+          asset("/light/village/meals/lijiang-1.jpeg"),
+          asset("/light/village/meals/lijiang-2.jpeg"),
+          asset("/light/village/meals/lijiang-3.jpeg"),
+        ],
+      },
+      {
+        id: "zhuang-feast",
+        title: L("Zhuang Homestead Feast by Season", "壮族家宴 · 四时风物"),
+        blurb: [
+          L(
+            "A Zhuang auntie brings the village kitchen to the table — wild greens in spring, creek fish in summer, osmanthus in autumn, hotpot in winter.",
+            "壮族阿嫂把当地美食搬上家宴：春天野菜餐，夏天野生溪鱼，秋天桂花餐，冬天泡汤宴。",
+          ),
+          L(
+            "Different season, different plate — one long table of living Zhuang foodways, including the famous raw fish.",
+            "什么季节来，就吃什么——一桌活着的壮族饮食文化，也少不了那盘鱼生。",
+          ),
+        ],
+        images: [
+          asset("/light/village/meals/zhuang-1.jpeg"),
+          asset("/light/village/meals/zhuang-2.jpeg"),
+          asset("/light/village/meals/zhuang-3.jpeg"),
+        ],
+      },
+      {
+        id: "riverside",
+        title: L("Private Riverside Garden Dinner", "遇龙河畔 · 私家晚宴"),
+        blurb: [
+          L(
+            "A riverside private garden on the Yulong — the kind of house kitchen you only reach through introduction.",
+            "在遇龙河私家花园享用河畔晚宴：非熟人预约不到的私房菜馆，美食美景，仪式感十足。",
+          ),
+          L(
+            "The chef cooks what the season gives — river, Li River banks, and hillside fields — under starlight on the water.",
+            "主厨选用当季风物：遇龙河、漓江与山间田野入菜，河畔星光下慢慢吃完这一顿。",
+          ),
+        ],
+        images: [
+          asset("/light/village/meals/riverside-1.jpeg"),
+          asset("/light/village/meals/riverside-2.jpeg"),
+          asset("/light/village/meals/riverside-3.jpeg"),
+        ],
+      },
     ],
   },
   {
@@ -336,6 +544,9 @@ function build(): LightExperience[] {
         desc: txListOf(it.desc, fb.desc),
         highlights: txListOf(it.highlights, fb.highlights),
         included: txListOf(it.included, fb.included),
+        // YAML 暂未建模 routes / meals；村落小产品与餐食先以代码为准
+        ...(fb.routes?.length ? { routes: fb.routes } : {}),
+        ...(fb.meals?.length ? { meals: fb.meals } : {}),
       });
     }
     return out.length ? out : FALLBACK;

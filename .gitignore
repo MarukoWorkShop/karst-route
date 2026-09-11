@@ -16,4 +16,5 @@ dist
 
 # Local scratch / archives
 .tmp_docx/
+tmp/
 *.tgz

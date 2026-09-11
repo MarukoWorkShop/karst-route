@@ -125,11 +125,11 @@ items:
     season:
       en: Year-round
       zh: 全年可订
-    cover: destinations/jianshui-oldtown3.jpg
+    cover: light/village/yao-visit-1.jpeg
     gallery:
-      - destinations/jianshui-oldtown3.jpg
-      - destinations/guantang2.jpg
-      - destinations/jianshui-twindragonbridge1.jpg
+      - light/village/yao-visit-1.jpeg
+      - light/village/oil-tea-2.jpeg
+      - light/village/dong-song-2.jpeg
     desc:
       - en: Not a photo stop. A half day inside a working village — the well that still feeds it, the hall where decisions get made, the family that has fired the same kiln for four generations.
         zh: 不是拍照打卡点。是半个白天待在一个还在运转的村子里：仍在使用的水井、商量事情的祠堂、烧了四代人的那口窑。
