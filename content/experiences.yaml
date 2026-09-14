@@ -39,32 +39,32 @@ items:
     season:
       en: Year-round
       zh: 全年可订
-    cover: destinations/sapa.jpg
+    cover: light/hike/hike-1.jpeg
     gallery:
-      - destinations/sapa.jpg
-      - destinations/puzhehei3.jpg
-      - destinations/chongzuo-mijing.jpg
+      - light/hike/hike-1.jpeg
+      - light/hike/scooter-1.jpeg
+      - light/hike/raft-1.jpeg
     desc:
-      - en: Terraced footpaths, karst back roads and coastal loops — we pick the route to your legs and the weather, then take you out with a guide who knows where the shade is and which stretch is worth the climb.
-        zh: 梯田田埂、喀斯特乡道、环岛公路——我们按你的体力和当天天气选线，再由熟悉路况的向导带路：哪段有树荫、哪段值得爬，他们心里有数。
-      - en: Every outing is paced, not punished. Support vehicle, water and a proper meal are arranged in advance; bikes are sized the day before. You bring shoes you trust.
-        zh: 每一次出行都讲究节奏，不比拼强度。保障车、饮水与正餐提前安排，自行车提前一天调试到位。你只需要带一双自己信得过的鞋。
+      - en: Karst valleys, bamboo shade and river paths — we match the outing to your legs and the weather, then go out with a guide who knows which bend is worth the climb and which stretch stays cool.
+        zh: 喀斯特山谷、竹荫乡道、沿河小径——我们按体力和当天天气选线，再由熟悉路况的向导带路：哪段值得爬、哪段更凉快，他们心里有数。
+      - en: Every outing is paced, not punished. Safety briefing, gear and a proper meal are arranged in advance. You bring shoes you trust.
+        zh: 每一次出行都讲究节奏，不比拼强度。安全说明、装备与正餐提前安排。你只需要带一双自己信得过的鞋。
     highlights:
-      - en: Terrace trekking through Hmong and Yao villages
-        zh: 穿越苗寨与瑶寨的梯田徒步
-      - en: Karst back roads by e-bike or road bike
-        zh: 喀斯特乡道骑行（电助力 / 公路车可选）
-      - en: Coastal loop on Weizhou Island at low traffic hours
-        zh: 涠洲岛环岛骑行，避开人流时段
-      - en: Sunrise summit option with a guide-led descent
-        zh: 可选日出登顶，向导带队下撤
+      - en: Countryside walks above glass fields and karst viewpoints
+        zh: 玻璃田与喀斯特观景台的田园徒步
+      - en: Guided creek tracing with swim pools and natural slides
+        zh: 教练带领的山谷溯溪：碧潭与天然水滑
+      - en: Vintage scooters along the Yulong River promenade
+        zh: 遇龙河网红步道复古机车骑行
+      - en: ATV off-road through streams and valley tracks
+        zh: 全地形车山谷冲滩越野
     included:
-      - en: Local guide throughout
-        zh: 全程在地向导
-      - en: Bike / helmet rental and support vehicle
-        zh: 自行车与头盔租赁、保障车
-      - en: Drinking water and one main meal
-        zh: 饮用水与一顿正餐
+      - en: Local guide / coach throughout
+        zh: 全程在地向导 / 户外教练
+      - en: Activity gear as listed (helmet, life jacket, vehicle)
+        zh: 活动所列装备（头盔、救生衣、车辆等）
+      - en: Drinking water and one main meal when stated
+        zh: 饮用水；行程写明时含一顿正餐
   - id: photo
     badge: PHOTO WALKS
     title:

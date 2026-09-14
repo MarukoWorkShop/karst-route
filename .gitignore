@@ -18,3 +18,4 @@ dist
 .tmp_docx/
 tmp/
 *.tgz
+.tmp_preview/

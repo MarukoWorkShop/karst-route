@@ -262,9 +262,11 @@ function ItemBody({
         {routes.length ? (
           <div className="border-t border-line pt-4 md:border-t-0 md:pt-0">
             <p className="text-[11px] font-bold tracking-[0.12em] text-cta uppercase">
-              {t(copy.light.routes)}
+              {t(item.routesLabel ?? copy.light.routes)}
             </p>
-            <p className="mt-1 text-[12px] leading-5 text-ink-soft">{t(copy.light.routesSub)}</p>
+            <p className="mt-1 text-[12px] leading-5 text-ink-soft">
+              {t(item.routesSub ?? copy.light.routesSub)}
+            </p>
             <ul className="mt-3 flex flex-col gap-4">
               {routes.map((route) => (
                 <li key={route.id} className="rounded-[10px] border border-line bg-paper/60 p-3">
