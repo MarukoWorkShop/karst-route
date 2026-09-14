@@ -206,8 +206,8 @@ export const copy = {
     back: { en: "All experiences", zh: "全部体验" },
     routes: { en: "Route options", zh: "路线小产品" },
     routesSub: {
-      en: "Five village encounters you can book on their own or pair with a longer trip.",
-      zh: "五档可单独加订的村落相遇——可单独体验，也可挂在长线前后。",
+      en: "Bookable add-ons — alone or paired with a longer trip.",
+      zh: "可单独加订的小产品——可单独体验，也可挂在长线前后。",
     },
     meals: { en: "Meals along the route", zh: "线路餐食" },
     mealsSub: {

@@ -38,6 +38,9 @@ export type LightExperience = {
   included: Tx[];
   /** 可选：详情展开中的路线小产品列表 */
   routes?: LightRoute[];
+  /** 覆盖默认「路线小产品」标题 / 副标题 */
+  routesLabel?: Tx;
+  routesSub?: Tx;
   /** 可选：详情右侧的线路餐食 */
   meals?: LightRoute[];
 };
@@ -55,32 +58,153 @@ const FALLBACK: LightExperience[] = [
     duration: L("Half day – full day", "半日 – 一日"),
     group: L("2–8 travellers", "2–8 人小团"),
     season: L("Year-round", "全年可订"),
-    cover: asset("/destinations/sapa.jpg"),
+    cover: asset("/light/hike/hike-1.jpeg"),
     gallery: [
-      asset("/destinations/sapa.jpg"),
-      asset("/destinations/puzhehei3.jpg"),
-      asset("/destinations/chongzuo-mijing.jpg"),
+      asset("/light/hike/hike-1.jpeg"),
+      asset("/light/hike/scooter-1.jpeg"),
+      asset("/light/hike/raft-1.jpeg"),
     ],
     desc: [
       L(
-        "Terraced footpaths, karst back roads and coastal loops — we pick the route to your legs and the weather, then take you out with a guide who knows where the shade is and which stretch is worth the climb.",
-        "梯田田埂、喀斯特乡道、环岛公路——我们按你的体力和当天天气选线，再由熟悉路况的向导带路：哪段有树荫、哪段值得爬，他们心里有数。",
+        "Karst valleys, bamboo shade and river paths — we match the outing to your legs and the weather, then go out with a guide who knows which bend is worth the climb and which stretch stays cool.",
+        "喀斯特山谷、竹荫乡道、沿河小径——我们按体力和当天天气选线，再由熟悉路况的向导带路：哪段值得爬、哪段更凉快，他们心里有数。",
       ),
       L(
-        "Every outing is paced, not punished. Support vehicle, water and a proper meal are arranged in advance; bikes are sized the day before. You bring shoes you trust.",
-        "每一次出行都讲究节奏，不比拼强度。保障车、饮水与正餐提前安排，自行车提前一天调试到位。你只需要带一双自己信得过的鞋。",
+        "Every outing is paced, not punished. Safety briefing, gear and a proper meal are arranged in advance. You bring shoes you trust.",
+        "每一次出行都讲究节奏，不比拼强度。安全说明、装备与正餐提前安排。你只需要带一双自己信得过的鞋。",
       ),
     ],
     highlights: [
-      L("Terrace trekking through Hmong and Yao villages", "穿越苗寨与瑶寨的梯田徒步"),
-      L("Karst back roads by e-bike or road bike", "喀斯特乡道骑行（电助力 / 公路车可选）"),
-      L("Coastal loop on Weizhou Island at low traffic hours", "涠洲岛环岛骑行，避开人流时段"),
-      L("Sunrise summit option with a guide-led descent", "可选日出登顶，向导带队下撤"),
+      L("Countryside walks above glass fields and karst viewpoints", "玻璃田与喀斯特观景台的田园徒步"),
+      L("Guided creek tracing with swim pools and natural slides", "教练带领的山谷溯溪：碧潭与天然水滑"),
+      L("Vintage scooters along the Yulong River promenade", "遇龙河网红步道复古机车骑行"),
+      L("ATV off-road through streams and valley tracks", "全地形车山谷冲滩越野"),
     ],
     included: [
-      L("Local guide throughout", "全程在地向导"),
-      L("Bike / helmet rental and support vehicle", "自行车与头盔租赁、保障车"),
-      L("Drinking water and one main meal", "饮用水与一顿正餐"),
+      L("Local guide / coach throughout", "全程在地向导 / 户外教练"),
+      L("Activity gear as listed (helmet, life jacket, vehicle)", "活动所列装备（头盔、救生衣、车辆等）"),
+      L("Drinking water and one main meal when stated", "饮用水；行程写明时含一顿正餐"),
+    ],
+    routesLabel: L("Activity options", "活动小产品"),
+    routesSub: L(
+      "Six Guilin–Yangshuo outings you can book alone or pair with a longer trip.",
+      "六档桂林阳朔户外活动——可单独体验，也可挂在长线前后。",
+    ),
+    routes: [
+      {
+        id: "wulong-hike",
+        title: L("Wulongquan Countryside Walk", "乌龙泉山径 · 田园徒步"),
+        blurb: [
+          L(
+            "Walk the paths around Wulongquan’s glass fields and karst viewpoints — the same countryside frames photographers chase at golden hour.",
+            "沿乌龙泉玻璃田与喀斯特观景台的山径慢走，把摄影向导眼中的田园风光，一步一步走进展平线。",
+          ),
+          L(
+            "No rush, no bus tour: soft trails, village roofs below, and peaks stacked to the horizon.",
+            "不赶场、不跟大巴：缓坡小径、脚下村舍，远山一层层叠到天边。",
+          ),
+        ],
+        images: [
+          asset("/light/hike/hike-1.jpeg"),
+          asset("/light/hike/hike-2.jpeg"),
+          asset("/light/hike/hike-3.jpeg"),
+        ],
+      },
+      {
+        id: "creek",
+        title: L("Valley Creek Tracing", "山谷溯溪 · 碧潭戏水"),
+        blurb: [
+          L(
+            "With outdoor coaches, climb rock, ford shallows and follow the stream upstream to jelly-clear swimming pools in a green gorge.",
+            "在专业户外教练带领下开启山谷溯溪：攀岩趟滩、逆流而上，找到泉水清凉的果冻碧潭。",
+          ),
+          L(
+            "Jump, swim and ride natural water slides in the shade — playful and challenging, cool underfoot like early autumn.",
+            "阴凉处跳潭游泳，还能玩天然水上滑梯：既好玩又有挑战，脚下凉意恍如初秋。",
+          ),
+        ],
+        images: [
+          asset("/light/hike/creek-1.jpeg"),
+          asset("/light/hike/creek-2.jpeg"),
+          asset("/light/hike/creek-3.jpeg"),
+        ],
+      },
+      {
+        id: "scooter",
+        title: L("Vintage Scooter on the Yulong Path", "复古机车 · 遇龙河步道"),
+        blurb: [
+          L(
+            "Ride sidecar and vintage scooters along the Yulong River promenade — rice fields on both sides, karst peaks all around.",
+            "挎斗机车骑行遇龙河网红步道：水稻田边蜿蜒乡路，喀斯特峰丛环绕的广阔田园。",
+          ),
+          L(
+            "Pause at Shuangliu ferry pavilion for a popsicle, splash at the weir, and take the photos the valley asks for.",
+            "双流义渡亭歇凉吃根老冰棍，堤坝上玩水嬉戏，在山水之间拍美美照、释放活力。",
+          ),
+        ],
+        images: [
+          asset("/light/hike/scooter-1.jpeg"),
+          asset("/light/hike/scooter-2.jpeg"),
+          asset("/light/hike/scooter-3.jpeg"),
+        ],
+      },
+      {
+        id: "atv",
+        title: L("ATV Valley Off-Road", "全地形车 · 山谷越野"),
+        blurb: [
+          L(
+            "Hop on an ATV with your host: ford streams, splash through caves and feel summer in Yangshuo’s valleys — two per vehicle, coach-taught before you roll.",
+            "跨上 ATV 全地形车，跟随管家在阳朔山谷冲滩、溯溪、山洞戏水；两人一台，教练实操教学，学会再出发。",
+          ),
+          L(
+            "A new skill and a wet, laughing afternoon — gear and briefing included.",
+            "学会一种新技能，再带走一个湿透又痛快的午后；装备与行前说明都安排好。",
+          ),
+        ],
+        images: [
+          asset("/light/hike/atv-1.jpeg"),
+          asset("/light/hike/atv-2.jpeg"),
+          asset("/light/hike/atv-3.jpeg"),
+        ],
+      },
+      {
+        id: "raft",
+        title: L("Yulong River Bamboo Raft", "遇龙河竹筏 · 古桥峰丛"),
+        blurb: [
+          L(
+            "Pole-driven bamboo rafts on the clear Yulong — old bridges, karst peaks and rice paddies drawn into one quiet scroll.",
+            "手撑竹筏游遇龙河：河水清澈见底，古桥、峰丛与水稻田共同画出诗意田园。",
+          ),
+          L(
+            "Shoot the weir with your raftsman, splash in a water fight, or simply sit and watch the green hills pass.",
+            "筏工师傅带你体验冲坝与打水仗，也可以安静坐着，看两岸连绵青山慢慢过去。",
+          ),
+        ],
+        images: [
+          asset("/light/hike/raft-1.jpeg"),
+          asset("/light/hike/raft-2.jpeg"),
+          asset("/light/hike/raft-3.jpeg"),
+        ],
+      },
+      {
+        id: "chicken",
+        title: L("Bamboo Grove Chickens & Bamboo Rice", "竹林捉鸡 · 竹筒饭香"),
+        blurb: [
+          L(
+            "In a terraced village, hosts walk you into the bamboo to catch chickens and gather eggs — then cook the day’s catch.",
+            "深入梯田环绕的自然村寨，民宿阿嫂阿哥带你漫步山谷，在竹林里捉鸡、捡鸡蛋。",
+          ),
+          L(
+            "Evening turns the harvest into bamboo-tube chicken and sticky rice — labour you can taste.",
+            "晚上，劳动收获变成竹筒鸡与竹筒饭——亲手忙过的一餐，特别香。",
+          ),
+        ],
+        images: [
+          asset("/light/hike/chicken-1.jpeg"),
+          asset("/light/hike/chicken-2.jpeg"),
+          asset("/light/hike/chicken-3.jpeg"),
+        ],
+      },
     ],
   },
   {
@@ -160,6 +284,11 @@ const FALLBACK: LightExperience[] = [
       L("Visit fees shared with the households", "走访费用与村民共享"),
       L("Round-trip transfer from your hotel", "酒店往返接送"),
     ],
+    routesLabel: L("Route options", "路线小产品"),
+    routesSub: L(
+      "Five village encounters you can book on their own or pair with a longer trip.",
+      "五档可单独加订的村落相遇——可单独体验，也可挂在长线前后。",
+    ),
     routes: [
       {
         id: "yao-visit",
@@ -544,8 +673,10 @@ function build(): LightExperience[] {
         desc: txListOf(it.desc, fb.desc),
         highlights: txListOf(it.highlights, fb.highlights),
         included: txListOf(it.included, fb.included),
-        // YAML 暂未建模 routes / meals；村落小产品与餐食先以代码为准
+        // YAML 暂未建模 routes / meals；小产品与餐食先以代码为准
         ...(fb.routes?.length ? { routes: fb.routes } : {}),
+        ...(fb.routesLabel ? { routesLabel: fb.routesLabel } : {}),
+        ...(fb.routesSub ? { routesSub: fb.routesSub } : {}),
         ...(fb.meals?.length ? { meals: fb.meals } : {}),
       });
     }
