@@ -1,7 +1,7 @@
 import { cosUrl, isCosMedia } from "@/lib/media";
 
 /**
- * Static asset URL. destinations / tours / reviews / videos load from Tencent COS;
+ * Static asset URL. destinations / tours / reviews / videos / light load from Tencent COS;
  * brand / literature / fonts stay on GitHub Pages (`public/`).
  */
 export function asset(path: string) {

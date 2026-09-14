@@ -6,7 +6,7 @@ export const COS_BASE = "https://youxian-travel-1412422924.cos.ap-guangzhou.myqc
  * `public/<prefix>/…` so Notion/YAML paths stay as `destinations/foo.jpg`.
  * Brand / literature / fonts stay on GitHub Pages.
  */
-const COS_PREFIXES = ["videos/", "destinations/", "tours/", "reviews/"] as const;
+const COS_PREFIXES = ["videos/", "destinations/", "tours/", "reviews/", "light/"] as const;
 
 export const heroVideoOff = import.meta.env?.VITE_HERO_VIDEO_OFF === "1";
 
