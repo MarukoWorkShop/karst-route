@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Upload public/destinations|tours|reviews to Tencent COS (same object keys).
+"""Upload public/destinations|tours|reviews|light to Tencent COS (same object keys).
 
 Credentials: macOS dialog (never printed), or TENCENTCLOUD_SECRET_ID / TENCENTCLOUD_SECRET_KEY.
+Optional args: only sync listed dirs, e.g. `python3 scripts/cos-sync-public.py light`
 """
 from __future__ import annotations
 
@@ -16,7 +17,7 @@ from qcloud_cos import CosConfig, CosS3Client
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "public"
-DIRS = ("destinations", "tours", "reviews")
+DIRS = ("destinations", "tours", "reviews", "light")
 BUCKET = "youxian-travel-1412422924"
 REGION = "ap-guangzhou"
 SKIP_SUFFIXES = {".md", ".txt", ".DS_Store"}
@@ -46,9 +47,9 @@ def ask_gui(prompt: str, hidden: bool = False) -> str | None:
         return None
 
 
-def collect_files() -> list[tuple[Path, str]]:
+def collect_files(dirs: tuple[str, ...] = DIRS) -> list[tuple[Path, str]]:
     out: list[tuple[Path, str]] = []
-    for d in DIRS:
+    for d in dirs:
         base = PUBLIC / d
         if not base.is_dir():
             continue
@@ -85,8 +86,9 @@ def main() -> int:
     # discard locals ASAP from further prints
     secret_id = secret_key = None
 
-    files = collect_files()
-    print(f"准备上传 {len(files)} 个文件到 {BUCKET} …")
+    dirs = tuple(a for a in sys.argv[1:] if a in DIRS) or DIRS
+    files = collect_files(dirs)
+    print(f"准备上传 {len(files)} 个文件到 {BUCKET}（目录：{', '.join(dirs)}）…")
     ok = fail = 0
     for i, (path, key) in enumerate(files, 1):
         size_kb = path.stat().st_size / 1024
