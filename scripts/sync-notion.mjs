@@ -221,6 +221,17 @@ function dumpTxMap(page, keys, prev, srcLang) {
   return out;
 }
 
+/** 从「¥12,800–18,600 / 人」解析人民币区间，供路线卡片 priceCny */
+function parsePriceCnyYaml(text) {
+  if (!text || typeof text !== "string") return null;
+  const nums = [...text.replace(/,/g, "").matchAll(/(\d{3,})/g)].map((m) => Number(m[1]));
+  if (!nums.length) return null;
+  if (nums.length === 1) return { from: nums[0] };
+  const from = Math.min(nums[0], nums[1]);
+  const to = Math.max(nums[0], nums[1]);
+  return from === to ? { from } : { from, to };
+}
+
 function routeIdMap(routesPages) {
   const map = new Map();
   for (const p of routesPages) {
@@ -325,18 +336,24 @@ async function main() {
       const prev = existingYaml(rel);
       const srcLang = text(page, "src") || prev.src || "zh";
       const days = daysPair(page, prev, srcLang);
+      const priceZh = text(page, "price_zh");
+      const priceCny =
+        parsePriceCnyYaml(priceZh) ||
+        (prev.priceCny && typeof prev.priceCny === "object" ? prev.priceCny : null) ||
+        parsePriceCnyYaml(prev.price?.zh);
       writeYaml(
         rel,
-        `# 路线卡片 · ${id}\n# 改名称、价格、卖点、封面。逐日行程请改 content/itineraries/${id}.yaml\n# cover 只写 public 下的相对路径`,
+        `# 路线卡片 · ${id}\n# 改名称、价格、卖点、封面。逐日行程请改 content/itineraries/${id}.yaml\n# cover 只写 public 下的相对路径\n# 参考预算只维护 priceCny（人民币数字）；英文站按汇率换算，不要再写美元文案`,
         {
           src: srcLang,
           cover: text(page, "cover"),
           ...dumpTxMap(
             page,
-            ["badge", "name", "tagline", "regions", "feature", "entry", "exit", "audience", "price"],
+            ["badge", "name", "tagline", "regions", "feature", "entry", "exit", "audience"],
             prev,
             srcLang,
           ),
+          ...(priceCny ? { priceCny } : {}),
           ...(days ? { days } : {}),
           included: list(page, "included"),
           excluded: list(page, "excluded"),

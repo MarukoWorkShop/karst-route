@@ -2,14 +2,9 @@ import { useEffect, useState } from "react";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { IconClose, IconExternal } from "@/components/icons";
+import { convertFx, FALLBACK_RATES, loadRates, type FxCur, type FxRates } from "@/lib/fx";
 
-type Cur = "CNY" | "USD" | "VND";
-// Reference rates pegged to USD (1 USD ≈ 7.25 CNY ≈ 24,800 VND)
-const FALLBACK_RATES: Record<Cur, number> = {
-  USD: 1,
-  CNY: 1 / 0.138,
-  VND: 3420 / 0.138,
-};
+type Cur = Extract<FxCur, "CNY" | "USD" | "VND">;
 const CUR_META: Record<Cur, { symbol: string }> = {
   CNY: { symbol: "¥" },
   USD: { symbol: "$" },
@@ -17,10 +12,6 @@ const CUR_META: Record<Cur, { symbol: string }> = {
 };
 const ORDER: Cur[] = ["CNY", "USD", "VND"];
 
-function convert(amount: number, from: Cur, to: Cur, rates: Record<Cur, number>): number {
-  if (from === to) return amount;
-  return (amount / rates[from]) * rates[to];
-}
 function fmtAmount(amount: number, cur: Cur): string {
   return cur === "VND" ? Math.round(amount).toLocaleString() : amount.toFixed(2);
 }
@@ -50,7 +41,7 @@ export function ToolsDrawer({
   const { t } = useLocale();
   const [curInput, setCurInput] = useState("100");
   const [baseCur, setBaseCur] = useState<Cur>("CNY");
-  const [rates, setRates] = useState<Record<Cur, number>>(FALLBACK_RATES);
+  const [rates, setRates] = useState<FxRates>(FALLBACK_RATES);
   const [rateDate, setRateDate] = useState("");
   const amount = Number(curInput) || 0;
 
@@ -68,49 +59,18 @@ export function ToolsDrawer({
     };
   }, [open, onClose]);
 
-  // 拉取最新汇率（fawazahmed0 currency-api，免费无 key，含 CNY/VND）；
-// sessionStorage 缓存 24 小时，命中则不重复请求；失败降级到静态值
-useEffect(() => {
-  if (!open) return;
-  const CACHE_KEY = "fxRates";
-  const ONE_DAY = 24 * 60 * 60 * 1000;
-  try {
-    const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || "");
-    if (
-      cached?.ts &&
-      Date.now() - cached.ts < ONE_DAY &&
-      cached?.rates?.CNY &&
-      cached?.rates?.VND
-    ) {
-      setRates({ USD: 1, CNY: cached.rates.CNY, VND: cached.rates.VND });
-      setRateDate(String(cached.date ?? ""));
-      return;
-    }
-  } catch {
-    /* sessionStorage 不可用或缓存损坏 — 走 fetch */
-  }
-  let cancelled = false;
-  fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json")
-    .then((r) => r.json())
-    .then((d) => {
-      if (cancelled || !d?.usd?.cny || !d?.usd?.vnd) return;
-      const next = { USD: 1, CNY: d.usd.cny, VND: d.usd.vnd };
-      setRates(next);
-      setRateDate(String(d.date ?? ""));
-      try {
-        sessionStorage.setItem(
-          CACHE_KEY,
-          JSON.stringify({ ts: Date.now(), date: d.date, rates: next }),
-        );
-      } catch {
-        /* 写入失败（隐私模式等）— 不影响本次显示 */
-      }
-    })
-    .catch(() => {});
-  return () => {
-    cancelled = true;
-  };
-}, [open]);
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    loadRates().then((r) => {
+      if (cancelled) return;
+      setRates(r.rates);
+      setRateDate(r.date);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
 
   return (
     <>
@@ -182,7 +142,7 @@ useEffect(() => {
                 <div key={c} className="rounded-lg bg-sage px-2.5 py-2">
                   <p className="mb-0.5 text-[11px] text-ink-soft">{c}</p>
                   <p className="text-[14px] font-semibold tracking-[-0.01em] text-ink">
-                    {CUR_META[c].symbol} {fmtAmount(convert(amount, baseCur, c, rates), c)}
+                    {CUR_META[c].symbol} {fmtAmount(convertFx(amount, baseCur, c, rates), c)}
                   </p>
                 </div>
               ))}

@@ -18,6 +18,7 @@ import {
 import { ItinDays } from "@/components/plan/ItinDays";
 import { PriceEstimate } from "@/components/plan/PriceEstimate";
 import { estimateParty, estSummaryLine } from "@/lib/estimate";
+import { useFxRates, usePriceCurrency } from "@/hooks/useFx";
 import {
   Chip,
   ConciergeForm,
@@ -65,6 +66,9 @@ function toggle(arr: string[], val: string) {
 
 export function BookRouteFlow({ route }: { route: RouteId }) {
   const { t, locale } = useLocale();
+  const { rates } = useFxRates();
+  const { currency } = usePriceCurrency();
+  const moneyOpts = { currency, rates };
   const [step, setStep] = useState(0);
   const [baseRoute, setBaseRoute] = useState<RouteId | "">(route);
   const [dateMode, setDateMode] = useState<DateMode | "">("");
@@ -143,7 +147,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
       { label: t(copy.plan.rowTweak), value: tweak.trim() || t(copy.plan.none) },
     ];
     if (est) {
-      rows.push({ label: t(copy.plan.rowEstimate), value: estSummaryLine(est, t, locale) });
+      rows.push({ label: t(copy.plan.rowEstimate), value: estSummaryLine(est, t, locale, moneyOpts) });
     }
     rows.push(
       { label: t(copy.plan.rowName), value: name.trim() || t(copy.plan.dash) },
@@ -223,7 +227,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
       travelers: `${partyN} ${t(copy.plan.peopleUnit)} (${adults} ${t(copy.plan.adults)} / ${children} ${t(copy.plan.children)})`,
       adults: String(adults),
       children: String(children),
-      estimate: est ? estSummaryLine(est, t, locale) : "",
+      estimate: est ? estSummaryLine(est, t, locale, moneyOpts) : "",
       groupTypes: labelsOf(groupTypes, GROUP_TYPES, "en").join(", "),
       addOns: labelsOf(addOns, ADD_ONS, "en").join(", "),
       notes: notes.trim(),
@@ -243,7 +247,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
       [t(copy.plan.rowDates), dateDisplay(), true],
       [t(copy.plan.rowPeople), `${partyN} ${t(copy.plan.peopleUnit)}`],
       ...(est
-        ? ([[t(copy.plan.rowEstimate), estSummaryLine(est, t, locale), true]] as [string, string, boolean][])
+        ? ([[t(copy.plan.rowEstimate), estSummaryLine(est, t, locale, moneyOpts), true]] as [string, string, boolean][])
         : []),
       [
         t(copy.plan.rowGroup),

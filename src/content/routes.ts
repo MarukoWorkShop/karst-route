@@ -2,6 +2,9 @@ import { parse } from "yaml";
 import type { RouteId, Tx } from "@/types";
 import { EXCL_LABELS, INCL_LABELS, type ExclId, type InclId } from "@/data/tourFacts";
 import { inferSrc, txOf } from "@/content/helpers";
+import { priceCnyOf, parsePriceCny, type PriceCny } from "@/content/priceCny";
+
+export type { PriceCny };
 
 /**
  * 第一层内容解耦：路线内容写在仓库根目录的 content/routes/*.yaml，构建时同步读取。
@@ -24,7 +27,8 @@ export type RouteContent = {
   entry: Tx;
   exit: Tx;
   audience: Tx;
-  price: Tx;
+  /** 参考预算区间（人民币）；展示层按语言换汇 */
+  priceCny: PriceCny;
   /** public/ 下的相对路径，例如 tours/r1-kunming-exit.jpg */
   cover: string;
   included: InclId[];
@@ -87,7 +91,17 @@ export function routeContent(id: RouteId, fallback: RouteContent): RouteContent 
     entry: txOf(src.entry, fallback.entry, fileSrc),
     exit: txOf(src.exit, fallback.exit, fileSrc),
     audience: txOf(src.audience, fallback.audience, fileSrc),
-    price: txOf(src.price, fallback.price, fileSrc),
+    priceCny: (() => {
+      if (src.priceCny != null) return priceCnyOf(src.priceCny, fallback.priceCny);
+      // 兼容旧 YAML / Notion：从 price.zh 解析人民币区间
+      const legacy = src.price;
+      if (legacy && typeof legacy === "object" && !Array.isArray(legacy)) {
+        const zh = typeof (legacy as { zh?: unknown }).zh === "string" ? (legacy as { zh: string }).zh : "";
+        return parsePriceCny(zh) ?? fallback.priceCny;
+      }
+      if (typeof legacy === "string") return parsePriceCny(legacy) ?? fallback.priceCny;
+      return fallback.priceCny;
+    })(),
     cover: coverOf(src.cover, fallback.cover),
     included: idsOf<InclId>(src.included, VALID_INCL, fallback.included),
     excluded: idsOf<ExclId>(src.excluded, VALID_EXCL, fallback.excluded),

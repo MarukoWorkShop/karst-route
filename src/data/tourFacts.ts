@@ -37,8 +37,8 @@ export const EXCL_LABELS: Record<ExclId, Tx> = {
 };
 
 export type RouteFacts = {
-  /** 中英分开给：中文用区间，英文用 from $ 起价体例 */
-  price: Tx;
+  /** 无市场档时的参考预算（人民币） */
+  priceCny: { from: number; to?: number };
   /** 后台勾选出来的包含项 id */
   included: InclId[];
   /** 后台勾选出来的不含项 id */
@@ -63,17 +63,17 @@ const ALL_EXCLUDED: ExclId[] = [
 
 export const routeFacts: Record<RouteId, RouteFacts> = {
   r1: {
-    price: L("from $1,890 / person", "¥12,800–18,600 / 人"),
+    priceCny: { from: 12800, to: 18600 },
     included: ALL_INCLUDED,
     excluded: ALL_EXCLUDED,
   },
   r2: {
-    price: L("from $1,390 / person", "¥9,400–13,800 / 人"),
+    priceCny: { from: 9400, to: 13800 },
     included: ALL_INCLUDED,
     excluded: ALL_EXCLUDED,
   },
   r3: {
-    price: L("from $980 / person", "¥6,800–9,800 / 人"),
+    priceCny: { from: 8480, to: 22000 },
     // 按报价单：含住宿、餐食、门票活动、当地用车及司机服务费、旅游意外险；
     // 不含往返机票、行程外费用、其他个人费用。此行程不跨境，故无签证材料协助。
     included: ["transport", "lodging", "tickets", "meals", "insurance"],

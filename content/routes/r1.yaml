@@ -1,6 +1,7 @@
 # 路线卡片 · r1
 # 改名称、价格、卖点、封面。逐日行程请改 content/itineraries/r1.yaml
 # cover 只写 public 下的相对路径
+# 参考预算只维护 priceCny（人民币数字）；英文站按汇率换算
 
 src: zh
 cover: tours/r1-kunming-exit.jpg
@@ -34,9 +35,10 @@ exit:
 audience:
   en: Adventure
   zh: 探险
-price:
-  en: from $1,890 / person
-  zh: ¥12,800–18,600 / 人
+# 参考预算只维护人民币数字；英文站按汇率换算
+priceCny:
+  from: 12800
+  to: 18600
 days:
   en: 14 days
   zh: 14 日

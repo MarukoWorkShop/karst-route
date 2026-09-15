@@ -7,7 +7,10 @@ import {
   type PricingVehicle,
   type RoutePricing,
 } from "@/data/routePricing";
+import { formatMoney, fmtCny, type DisplayCurrency, type FxRates } from "@/lib/fx";
 
+export { formatMoney, fmtCny };
+export type { DisplayCurrency };
 /**
  * 按日报价纯函数（无 React 依赖）。
  * 仅 days 路径；无按日明细则返回 null（询价）。
@@ -226,19 +229,18 @@ export function estimateParty(
   };
 }
 
-export function fmtCny(v: number): string {
-  return `¥${v.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
-}
-
 export function estSummaryLine(
   est: EstimateResult,
   t: (s: { en: string; zh: string }) => string,
   locale: "en" | "zh",
+  opts?: { currency?: DisplayCurrency; rates?: FxRates },
 ): string {
+  const money = (v: number) =>
+    formatMoney(v, { locale, currency: opts?.currency, rates: opts?.rates });
   const tag = locale === "zh" ? "【参考】" : "[Reference] ";
   const and = locale === "zh" ? "＋" : " + ";
   const eq = locale === "zh" ? "≈" : "≈";
-  const a = `${t({ en: "Adults", zh: "成人" })} ${fmtCny(est.adultPerPerson)}×${est.adults}`;
-  const c = `${t({ en: "Child", zh: "儿童" })} ${fmtCny(est.childPerPerson)}×${est.children}`;
-  return `${tag}${a}${and}${c} ${eq} ${fmtCny(est.subtotal)}`;
+  const a = `${t({ en: "Adults", zh: "成人" })} ${money(est.adultPerPerson)}×${est.adults}`;
+  const c = `${t({ en: "Child", zh: "儿童" })} ${money(est.childPerPerson)}×${est.children}`;
+  return `${tag}${a}${and}${c} ${eq} ${money(est.subtotal)}`;
 }

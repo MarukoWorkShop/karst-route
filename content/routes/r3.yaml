@@ -1,6 +1,7 @@
 # 路线卡片 · r3
 # 改名称、价格、卖点、封面。逐日行程请改 content/itineraries/r3.yaml
 # cover 只写 public 下的相对路径
+# 参考预算只维护 priceCny（人民币数字）；英文站按汇率换算
 
 src: zh
 cover: tours/r3-chongzuo.jpg
@@ -38,9 +39,9 @@ exit:
 audience:
   en: Mountains + sea · Short break
   zh: 山海双景 · 短假期
-price:
-  en: from $1200 / person
-  zh: ¥8,480–22,000 / 人
+priceCny:
+  from: 8480
+  to: 22000
 days:
   en: 7 days
   zh: 7 日

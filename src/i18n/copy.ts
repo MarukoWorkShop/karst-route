@@ -149,6 +149,11 @@ export const copy = {
     priceLabel: { en: "Reference budget", zh: "参考预算" },
     priceAdult: { en: "Adult", zh: "成人" },
     priceChild: { en: "Child", zh: "儿童" },
+    fxNote: {
+      en: "Approximate · reference FX · final quote confirmed by concierge",
+      zh: "参考汇率换算 · 最终报价以旅游管家确认为准",
+    },
+    priceFrom: { en: "from", zh: "起" },
     pricePerPerson: { en: "/ person", zh: "/ 人" },
     priceBandHint: {
       en: "2–10 travellers · market tiers",
@@ -470,6 +475,10 @@ export const copy = {
     estDisclaimer: {
       en: "This is a reference quote only and does not constitute an offer. Your final price will be confirmed by the travel concierge.",
       zh: "以上仅为参考报价，不构成要约；最终价格以旅游管家确认为准。",
+    },
+    estFxNote: {
+      en: "Shown in USD/EUR via reference FX (updated about daily). Switch currency above; Chinese site shows CNY.",
+      zh: "英文站按参考汇率显示美元/欧元；中文站显示人民币。",
     },
     estConciergeHint: {
       en: "Leave your email or WhatsApp in the next steps — a concierge will contact you with a detailed quote.",

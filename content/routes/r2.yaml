@@ -1,6 +1,7 @@
 # 路线卡片 · r2
 # 改名称、价格、卖点、封面。逐日行程请改 content/itineraries/r2.yaml
 # cover 只写 public 下的相对路径
+# 参考预算只维护 priceCny（人民币数字）；英文站按汇率换算
 
 src: zh
 cover: tours/r2-nanning-loop.jpg
@@ -38,9 +39,9 @@ exit:
 audience:
   en: Families · All
   zh: 家庭 · 全部
-price:
-  en: from $1,390 / person
-  zh: ¥9,400–13,800 / 人
+priceCny:
+  from: 9400
+  to: 13800
 days:
   en: 11 days
   zh: 11 日
