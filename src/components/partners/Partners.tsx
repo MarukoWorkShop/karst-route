@@ -8,8 +8,8 @@ export function Partners() {
   return (
     <section id="partners" className="scroll-mt-24 bg-paper py-14 md:py-[72px]">
       <div className="page-col">
-        <h2 className="text-[22px] leading-[1.3] font-medium text-cta">{t(copy.partners.h2)}</h2>
-        <p className="mt-1.5 mb-7 max-w-[640px] text-[13px] leading-5 text-ink-soft">
+        <h2 className="type-h2 text-cta">{t(copy.partners.h2)}</h2>
+        <p className="type-body mt-1.5 mb-7 max-w-[640px] text-ink-soft">
           {t(copy.partners.sub)}
         </p>
 
@@ -24,16 +24,18 @@ export function Partners() {
                 style={{ backgroundColor: p.color }}
               >
                 <div>
-                  <span className="inline-block rounded-full bg-black/18 px-[7px] py-0.5 text-[9px] font-semibold tracking-[0.06em] text-paper/75 uppercase">
+                  <span className="type-meta inline-block rounded-full bg-black/18 px-[7px] py-0.5 text-paper/75">
                     {t(p.category)}
                   </span>
                 </div>
-                <p className="pt-0.5 text-right text-[9px] leading-[14px] text-paper/60">{t(p.location)}</p>
+                <p className="type-meta pt-0.5 text-right font-normal normal-case tracking-normal text-paper/60">
+                  {t(p.location)}
+                </p>
               </div>
 
               <div className="flex-1 px-3 pt-3">
-                <h3 className="mb-1.5 text-[13px] leading-[1.3] font-semibold text-ink">{t(p.name)}</h3>
-                <p className="line-clamp-3 text-[11.5px] leading-[17px] text-ink-soft">{t(p.desc)}</p>
+                <h3 className="type-body mb-1.5 font-semibold text-ink">{t(p.name)}</h3>
+                <p className="type-aux line-clamp-3 text-ink-soft">{t(p.desc)}</p>
               </div>
 
               <div className="flex flex-col gap-1.5 p-3 pt-2.5">
@@ -45,7 +47,7 @@ export function Partners() {
                       href={lnk.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-[5px] text-[11px] font-medium ${
+                      className={`type-chip inline-flex items-center gap-1.5 rounded-md border px-2 py-[5px] font-medium normal-case tracking-normal ${
                         google
                           ? "border-[rgba(66,133,244,0.2)] bg-[rgba(66,133,244,0.08)] text-[#4285F4]"
                           : "border-cta/15 bg-cta/7 text-cta"

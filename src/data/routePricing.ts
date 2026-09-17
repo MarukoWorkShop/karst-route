@@ -529,22 +529,43 @@ export function resolveMarketTier(id: RouteId, n: number): MarketTier | null {
   return hit ?? tiers[tiers.length - 1] ?? null;
 }
 
-/** 路线卡片：10 人档→2–3 人档的成人/儿童市场价区间（低→高） */
+/** 路线卡片：人数最少档价（贵）与最多档价（便宜）+ 档位人数文案 */
 export function marketPriceRange(id: RouteId): {
   adultFrom: number;
   adultTo: number;
   childFrom: number;
   childTo: number;
+  /** 低价对应档：如 7–10 */
+  bandFrom: { minN: number; maxN: number };
+  /** 高价对应档：如 ≤3 */
+  bandTo: { minN: number; maxN: number };
 } | null {
-  const tiers = routePricing[id].marketTiers.filter((t) => t.adult > 0);
+  const tiers = routePricing[id].marketTiers
+    .filter((t) => t.adult > 0)
+    .slice()
+    .sort((a, b) => a.maxN - b.maxN);
   if (!tiers.length) return null;
-  const adults = tiers.map((t) => t.adult);
-  const children = tiers.map((t) => t.child);
+
+  const bandOf = (i: number) => {
+    const maxN = tiers[i].maxN;
+    const minN = i === 0 ? 1 : tiers[i - 1].maxN + 1;
+    return { minN, maxN };
+  };
+
+  let lowI = 0;
+  let highI = 0;
+  for (let i = 1; i < tiers.length; i++) {
+    if (tiers[i].adult < tiers[lowI].adult) lowI = i;
+    if (tiers[i].adult > tiers[highI].adult) highI = i;
+  }
+
   return {
-    adultFrom: Math.min(...adults),
-    adultTo: Math.max(...adults),
-    childFrom: Math.min(...children),
-    childTo: Math.max(...children),
+    adultFrom: tiers[lowI].adult,
+    adultTo: tiers[highI].adult,
+    childFrom: tiers[lowI].child,
+    childTo: tiers[highI].child,
+    bandFrom: bandOf(lowI),
+    bandTo: bandOf(highI),
   };
 }
 

@@ -11,6 +11,7 @@ import { formatMoney } from "@/lib/estimate";
 import { marketPriceRange } from "@/data/routePricing";
 import { useFxRates, usePriceCurrency } from "@/hooks/useFx";
 import { CurrencyToggle } from "@/components/ui/CurrencyToggle";
+import { SectionIntro } from "@/components/ui/SectionIntro";
 import {
   IconChevron,
   IconClock,
@@ -30,7 +31,7 @@ function routeVideoSrc(path: string) {
 function QuoteBarLabel() {
   const { t } = useLocale();
   return (
-    <span className="flex min-w-0 flex-1 flex-col items-center text-center text-[14px] leading-snug font-bold">
+    <span className="type-btn flex min-w-0 flex-1 flex-col items-center text-center font-semibold">
       <span>{t(copy.tours.quoteBarLead)}</span>
       <span>{t(copy.tours.quoteBarDetail)}</span>
     </span>
@@ -46,6 +47,7 @@ export function BoutiqueTours({
   onSelect: (id: RouteId) => void;
   onOpenItinerary: (id: RouteId) => void;
 }) {
+  const { t } = useLocale();
   const [expanded, setExpanded] = useState<RouteId | null>(null);
 
   const fallbackFor = (id: RouteId): RouteContent => {
@@ -93,13 +95,19 @@ export function BoutiqueTours({
   }
 
   return (
-    <section id="tours" className="scroll-mt-24 py-8 md:py-16">
+    <section id="tours" className="scroll-mt-24 py-14 md:py-16">
       <div className="mx-auto w-full max-w-[1180px] px-3 md:px-8">
+        <SectionIntro
+          title={t(copy.tours.moduleTitle)}
+          sub={t(copy.tours.moduleSub)}
+          desc={t(copy.tours.moduleDesc)}
+        />
+
         {/*
           手机：单列紧凑、内容自适应高度（不对齐留白）。
           lg 三列 subgrid：城市 / meta / 预算 / 文案 / 费用 各行取三卡最高。
         */}
-        <div className="grid grid-cols-1 items-start gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-3 lg:grid-rows-[repeat(6,auto)] lg:items-stretch lg:gap-4 lg:pt-10 lg:pb-6">
+        <div className="mt-7 grid grid-cols-1 items-start gap-3 md:mt-8 md:grid-cols-2 md:gap-5 lg:grid-cols-3 lg:grid-rows-[repeat(6,auto)] lg:items-stretch lg:gap-4">
           {ROUTE_IDS.map((id) => (
             <RouteCard
               key={id}
@@ -148,7 +156,7 @@ function RouteCard({
 
   return (
     <article
-      className="group relative flex h-auto flex-col overflow-hidden rounded-xl bg-surface text-left ring-1 ring-line shadow-[0_8px_22px_rgba(16,28,22,0.06)] will-change-transform transition-[transform,box-shadow,ring-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:-translate-y-3 hover:ring-gold/70 hover:shadow-[0_0_0_1px_rgba(168,140,86,0.45),0_0_28px_rgba(168,140,86,0.28),0_22px_44px_rgba(16,28,22,0.14)] lg:row-span-6 lg:grid lg:h-auto lg:grid-rows-subgrid"
+      className="group relative flex h-auto flex-col overflow-hidden rounded-xl bg-surface text-left ring-1 ring-line shadow-[0_6px_16px_rgba(16,28,22,0.04)] will-change-transform transition-[transform,box-shadow,ring-color] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:-translate-y-1 hover:ring-gold/50 hover:shadow-[0_12px_28px_rgba(16,28,22,0.1)] lg:row-span-6 lg:grid lg:h-auto lg:grid-rows-subgrid"
     >
       <button
         type="button"
@@ -166,15 +174,15 @@ function RouteCard({
           alt=""
           className="h-full w-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
         />
-        <span className="absolute top-3 left-3 rounded-md bg-paper/92 px-2.5 py-1 text-[10px] font-bold tracking-[0.1em] text-cta backdrop-blur-sm">
+        <span className="type-meta absolute top-3 left-3 rounded-md bg-paper/92 px-2.5 py-1 text-cta backdrop-blur-sm">
           {t(content.badge)}
         </span>
         <span className="pointer-events-none absolute inset-0 bg-linear-to-t from-night/75 via-night/10 to-transparent" />
         <span className="absolute right-3.5 bottom-3.5 left-3.5">
-          <span className="block text-[22px] leading-tight font-medium text-paper md:text-2xl">
+          <span className="type-h3 block text-paper">
             {t(content.name)}
           </span>
-          <span className="mt-1 block text-[12px] leading-4 text-paper/80 md:text-[11px]">{t(content.tagline)}</span>
+          <span className="type-aux mt-1 block text-paper/80">{t(content.tagline)}</span>
         </span>
       </div>
 
@@ -183,7 +191,7 @@ function RouteCard({
         {t(content.regions).split(" · ").map((seg, i) => (
           <span
             key={`${seg}-${i}`}
-            className="rounded-full bg-cta/8 px-2.5 py-0.5 text-[11px] font-medium tracking-[0.03em] text-cta"
+            className="type-chip rounded-full bg-cta/8 px-2.5 py-0.5 tracking-[0.03em] text-cta normal-case"
           >
             {seg}
           </span>
@@ -210,28 +218,28 @@ function RouteCard({
 
       {/* 6 · 费用 + CTA（仅 lg subgrid 行内拉高贴底） */}
       <div className="flex flex-col border-t border-line px-3 pt-2.5 pb-3 md:px-4 md:pt-3.5 md:pb-3.5 lg:h-full lg:min-h-0">
-        <p className="mb-1.5 text-[10px] font-semibold tracking-[0.1em] text-cta uppercase md:mb-2">
+        <p className="type-meta mb-1.5 text-cta md:mb-2">
           {t(copy.tours.included)}
         </p>
         <ul className="flex flex-wrap gap-1.5">
           {content.included.map((id) => (
             <li
               key={id}
-              className="inline-flex items-center gap-1 rounded-full bg-cta/8 px-2.5 py-[5px] text-[11px] font-medium text-cta"
+              className="type-chip inline-flex items-center gap-1 rounded-full bg-cta/8 px-2.5 py-[5px] normal-case tracking-normal text-cta"
             >
               <CheckMark />
               {t(INCL_LABELS[id])}
             </li>
           ))}
         </ul>
-        <p className="mt-2.5 mb-1.5 text-[10px] font-semibold tracking-[0.1em] text-ink-soft uppercase md:mt-3.5 md:mb-2">
+        <p className="type-meta mt-2.5 mb-1.5 text-ink-soft md:mt-3.5 md:mb-2">
           {t(copy.tours.excluded)}
         </p>
         <ul className="flex flex-wrap gap-1.5">
           {content.excluded.map((id) => (
             <li
               key={id}
-              className="inline-flex items-center gap-1 rounded-full bg-sage px-2.5 py-[5px] text-[11px] text-ink-soft"
+              className="type-chip inline-flex items-center gap-1 rounded-full bg-sage px-2.5 py-[5px] normal-case tracking-normal text-ink-soft"
             >
               <DashMark />
               {t(EXCL_LABELS[id])}
@@ -325,25 +333,27 @@ function RouteExpandModal({
             />
             {!videoOk ? (
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 px-3 text-center">
-                <p className="text-[11px] leading-4 text-ink-soft">{t(copy.tours.videoSoon)}</p>
-                <p className="font-mono text-[9px] text-ink-soft/65">{media.video}</p>
+                <p className="type-aux text-ink-soft">{t(copy.tours.videoSoon)}</p>
+                <p className="type-meta font-mono font-normal normal-case tracking-normal text-ink-soft/65">
+                  {media.video}
+                </p>
               </div>
             ) : null}
           </div>
         </div>
 
         <div className="mt-4 flex min-w-0 flex-1 flex-col md:mt-0">
-          <p className="text-[11px] font-bold tracking-[0.12em] text-cta uppercase">{t(content.badge)}</p>
-          <h3 className="mt-1 pr-10 text-[24px] leading-tight font-medium text-ink md:pr-8 md:text-[26px]">
+          <p className="type-meta text-cta">{t(content.badge)}</p>
+          <h3 className="type-h3 mt-1 pr-10 text-ink md:pr-8">
             {t(content.name)}
           </h3>
-          <p className="mt-1.5 text-[13px] leading-5 text-ink-soft">{t(content.tagline)}</p>
+          <p className="type-aux mt-1.5 text-ink-soft">{t(content.tagline)}</p>
 
           <div className="mt-3 flex flex-wrap gap-1.5">
             {t(content.regions).split(" · ").map((seg, i) => (
               <span
                 key={`${seg}-${i}`}
-                className="rounded-full bg-cta/8 px-2.5 py-0.5 text-[11px] font-medium text-cta"
+                className="type-chip rounded-full bg-cta/8 px-2.5 py-0.5 text-cta normal-case"
               >
                 {seg}
               </span>
@@ -365,7 +375,7 @@ function RouteExpandModal({
             {content.included.map((id) => (
               <span
                 key={id}
-                className="inline-flex items-center gap-1 rounded-full bg-cta/8 px-2 py-1 text-[10.5px] font-medium text-cta"
+                className="type-chip inline-flex items-center gap-1 rounded-full bg-cta/8 px-2 py-1 normal-case tracking-normal text-cta"
               >
                 <CheckMark />
                 {t(INCL_LABELS[id])}
@@ -415,7 +425,7 @@ function FeatureParagraphs({
         {shown.map((para, i) => {
           const isLast = i === shown.length - 1;
           return (
-            <p key={i} className="text-[14px] leading-6 text-ink">
+            <p key={i} className="type-body text-ink">
               {para}
               {canToggle && isLast ? (
                 <button
@@ -444,7 +454,7 @@ function FeatureParagraphs({
 function MarketBudget({
   routeId,
   priceCny,
-  size,
+  size: _size,
 }: {
   routeId: RouteId;
   priceCny: RouteContent["priceCny"];
@@ -454,12 +464,19 @@ function MarketBudget({
   const { rates } = useFxRates();
   const { currency, setCurrency } = usePriceCurrency();
   const range = marketPriceRange(routeId);
-  const titleCls = "text-[10px] tracking-[0.08em] text-ink-soft uppercase";
-  const priceCls =
-    size === "modal"
-      ? "font-semibold tracking-[-0.01em] text-cta text-[17px] tabular-nums"
-      : "font-semibold tracking-[-0.01em] text-cta text-[15px] md:text-[16px] tabular-nums";
+  const titleCls = "type-meta text-ink-soft";
   const money = (v: number) => formatMoney(v, { locale, currency, rates });
+  const bandLabel = (band: { minN: number; maxN: number }) => {
+    if (band.minN <= 1) {
+      return t(copy.tours.priceBandUpTo).replace("{max}", String(band.maxN));
+    }
+    return t(copy.tours.priceBandGroup)
+      .replace("{min}", String(band.minN))
+      .replace("{max}", String(band.maxN));
+  };
+
+  const mainPriceCls = "type-price text-cta";
+  const bandCls = "type-meta mt-0.5 normal-case tracking-normal font-normal text-ink-soft/80";
 
   if (!range) {
     const fallback =
@@ -474,25 +491,33 @@ function MarketBudget({
           <p className={titleCls}>{t(copy.tours.priceLabel)}</p>
           {locale === "en" ? <CurrencyToggle value={currency} onChange={setCurrency} /> : null}
         </div>
-        <p className={`mt-0.5 ${size === "modal" ? "text-[20px]" : "text-[18px]"} font-semibold tracking-[-0.01em] text-cta tabular-nums`}>
+        <p className={`mt-1 ${mainPriceCls}`}>
           {fallback}
-          <span className="ml-1 text-[11px] font-normal text-ink-soft">{t(copy.tours.pricePerPerson)}</span>
+          <span className="type-meta ml-1 normal-case tracking-normal font-normal text-ink-soft">
+            {t(copy.tours.pricePerPerson)}
+          </span>
         </p>
-        {locale === "en" ? (
-          <p className="mt-1.5 text-[10px] leading-4 text-ink-soft/80">{t(copy.tours.fxNote)}</p>
-        ) : null}
+        <p className="type-meta mt-1.5 normal-case tracking-normal font-normal text-ink-soft/80">
+          {t(copy.tours.fxNote)}
+        </p>
       </div>
     );
   }
 
-  const adult =
+  const priceRange =
     range.adultFrom === range.adultTo
       ? money(range.adultFrom)
       : `${money(range.adultFrom)}–${money(range.adultTo)}`;
-  const child =
+  const childRange =
     range.childFrom === range.childTo
       ? money(range.childFrom)
       : `${money(range.childFrom)}–${money(range.childTo)}`;
+  const bandHint =
+    range.adultFrom === range.adultTo
+      ? bandLabel(range.bandFrom)
+      : locale === "zh"
+        ? `${bandLabel(range.bandFrom)} · ${bandLabel(range.bandTo)}`
+        : `${bandLabel(range.bandFrom)} · ${bandLabel(range.bandTo)}`;
 
   return (
     <div className="min-w-0">
@@ -500,21 +525,31 @@ function MarketBudget({
         <p className={titleCls}>{t(copy.tours.priceLabel)}</p>
         {locale === "en" ? <CurrencyToggle value={currency} onChange={setCurrency} /> : null}
       </div>
-      <div className="mt-1.5 space-y-0.5">
-        <p className={priceCls}>
-          <span className="mr-1.5 text-[11px] font-normal text-ink-soft">{t(copy.tours.priceAdult)}</span>
-          {adult}
-          <span className="ml-1 text-[11px] font-normal text-ink-soft">{t(copy.tours.pricePerPerson)}</span>
-        </p>
-        <p className={priceCls}>
-          <span className="mr-1.5 text-[11px] font-normal text-ink-soft">{t(copy.tours.priceChild)}</span>
-          {child}
-          <span className="ml-1 text-[11px] font-normal text-ink-soft">{t(copy.tours.pricePerPerson)}</span>
-        </p>
+      <div className="mt-1.5 space-y-2.5">
+        <div>
+          <p className={mainPriceCls}>
+            <span className="mr-1.5 font-semibold text-ink">{t(copy.tours.priceAdult)}</span>
+            {priceRange}
+            <span className="type-meta ml-1 normal-case tracking-normal font-normal text-ink-soft">
+              {t(copy.tours.pricePerPerson)}
+            </span>
+          </p>
+          <p className={bandCls}>{bandHint}</p>
+        </div>
+        <div>
+          <p className={mainPriceCls}>
+            <span className="mr-1.5 font-semibold text-ink">{t(copy.tours.priceChild)}</span>
+            {childRange}
+            <span className="type-meta ml-1 normal-case tracking-normal font-normal text-ink-soft">
+              {t(copy.tours.pricePerPerson)}
+            </span>
+          </p>
+          <p className={bandCls}>{bandHint}</p>
+        </div>
       </div>
-      {locale === "en" ? (
-        <p className="mt-1.5 text-[10px] leading-4 text-ink-soft/80">{t(copy.tours.fxNote)}</p>
-      ) : null}
+      <p className="type-meta mt-2 normal-case tracking-normal font-normal text-ink-soft/80">
+        {t(copy.tours.fxNote)}
+      </p>
     </div>
   );
 }
@@ -534,8 +569,8 @@ function Meta({
         {icon}
       </span>
       <span className="min-w-0">
-        <span className="block text-[9.5px] tracking-[0.07em] text-ink-soft uppercase">{label}</span>
-        <span className="block truncate text-[12px] font-medium text-ink">{value}</span>
+        <span className="type-meta block text-ink-soft">{label}</span>
+        <span className="type-aux block truncate font-medium text-ink">{value}</span>
       </span>
     </span>
   );

@@ -319,34 +319,28 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
           {/* key 用索引而非 slide.id：多个 slide 可共用一个主题，用 id 会导致切换时动画不触发 */}
           <div key={active} className="hero-copy max-w-[640px]">
             {/* 主题标签保留展示，但不再作为可点击的跳转入口 */}
-            <span className="inline-flex rounded-full border border-[#C5A059]/70 bg-night/35 px-3 py-[5px] text-[10px] font-medium tracking-[0.14em] text-[#C5A059] backdrop-blur-[2px] md:text-[11px]">
+            <span className="type-chip inline-flex rounded-full border border-gold-bright/70 bg-night/35 px-3 py-[5px] text-gold-bright backdrop-blur-[2px]">
               {chip}
             </span>
 
-            <h1
-              className={`mt-3 font-bold tracking-[-0.02em] text-white md:mt-4 ${
-                zh
-                  ? "text-[28px] leading-[36px] md:text-[44px] md:leading-[54px]"
-                  : "text-[26px] leading-[33px] md:text-[40px] md:leading-[50px]"
-              }`}
-            >
+            <h1 className="type-h1 mt-3 text-white md:mt-4">
               {t(slide.title)}
             </h1>
 
-            <p className="mt-2.5 max-w-[480px] text-[13px] leading-[21px] text-white/90 md:mt-3 md:text-[15px] md:leading-[25px]">
+            <p className="type-body mt-2.5 max-w-[480px] text-white/90 md:mt-3">
               {t(slide.intro)}
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-3 md:mt-8">
               <a
                 href="#tours"
-                className="pointer-events-auto inline-flex min-h-12 flex-1 items-center justify-center rounded-lg bg-cta px-5 text-center text-[13px] font-medium text-white md:min-h-[52px] md:flex-none md:px-8 md:text-[14px]"
+                className="type-btn pointer-events-auto inline-flex min-h-12 flex-1 items-center justify-center rounded-lg bg-cta px-5 text-center text-white md:min-h-[52px] md:flex-none md:px-8"
               >
                 {t(copy.hero.ctaA)}
               </a>
               <a
                 href="#experience"
-                className="pointer-events-auto inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg bg-cta px-5 text-center text-[13px] font-medium text-white md:min-h-[52px] md:flex-none md:px-8 md:text-[14px]"
+                className="type-btn pointer-events-auto inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg bg-cta px-5 text-center text-white md:min-h-[52px] md:flex-none md:px-8"
               >
                 {t(copy.light.cta)}
                 <IconSparkles className="h-3.5 w-3.5 shrink-0" />
@@ -354,7 +348,7 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
               <a
                 href="#plan"
                 onClick={onPlanOwn}
-                className="pointer-events-auto inline-flex items-center text-[12px] font-medium tracking-[0.02em] text-white/85 underline-offset-4 transition-colors hover:text-white hover:underline md:text-[13px]"
+                className="type-aux pointer-events-auto inline-flex items-center font-medium tracking-[0.02em] text-white/85 underline-offset-4 transition-colors hover:text-white hover:underline"
               >
                 {t(copy.hero.ctaB)}
               </a>

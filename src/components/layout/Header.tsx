@@ -1,5 +1,5 @@
-import { useEffect, useId, useState } from "react";
-import { IconChevron, IconGlobe, IconMenu } from "@/components/icons";
+import { useEffect, useState } from "react";
+import { IconGlobe, IconMenu } from "@/components/icons";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { ToolsDrawer } from "@/components/layout/ToolsDrawer";
@@ -9,10 +9,6 @@ export function Header({ onPlan }: { onPlan: () => void }) {
   const { t } = useLocale();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [solid, setSolid] = useState(false);
-  const exploreLinks = [
-    { href: "#explore-films", label: t(copy.nav.films) },
-    { href: "#explore-lit", label: t(copy.nav.literature) },
-  ];
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 40);
     onScroll();
@@ -46,18 +42,17 @@ export function Header({ onPlan }: { onPlan: () => void }) {
         <div className="mx-auto hidden h-[60px] max-w-[1060px] items-center px-8 md:flex">
           <BrandLogo solid={solid} className="w-[230px]" />
           <nav className="flex flex-1 items-center justify-center gap-7">
-            <a href="#tours" className={`text-[14px] font-medium ${ink}`}>
+            <a href="#tours" className={`type-btn ${ink}`}>
               {t(copy.nav.tours)}
             </a>
-            <a href="#plan" onClick={onPlan} className={`text-[14px] font-medium ${ink}`}>
+            <a href="#plan" onClick={onPlan} className={`type-btn ${ink}`}>
               {t(copy.nav.plan)}
             </a>
-            <a href="#about" className={`text-[14px] font-medium ${ink}`}>
+            <a href="#about" className={`type-btn ${ink}`}>
               {t(copy.nav.about)}
             </a>
             <span className={`h-4 w-px ${solid ? "bg-line" : "bg-paper/25"}`} aria-hidden />
-            <SubMenu label={t(copy.nav.explore)} links={exploreLinks} muted={muted} solid={solid} />
-            <a href="#faq" className={`text-[14px] font-medium ${ink}`}>
+            <a href="#faq" className={`type-btn ${ink}`}>
               {t(copy.nav.faq)}
             </a>
           </nav>
@@ -129,57 +124,6 @@ function LangToggle({ solid }: { solid: boolean }) {
       <button type="button" aria-pressed={locale === "zh"} onClick={() => setLocale("zh")} className={locale === "zh" ? on : off}>
         中文
       </button>
-    </div>
-  );
-}
-
-function SubMenu({
-  label,
-  links,
-  muted,
-  solid,
-}: {
-  label: string;
-  links: { href: string; label: string }[];
-  muted: string;
-  solid: boolean;
-}) {
-  const [open, setOpen] = useState(false);
-  const id = useId();
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-controls={id}
-        onClick={() => setOpen((v) => !v)}
-        onBlur={() => setTimeout(() => setOpen(false), 150)}
-        className={`inline-flex items-center gap-0.5 text-[12px] font-normal ${muted}`}
-      >
-        {label}
-        <IconChevron className="h-4 w-4" />
-      </button>
-      {open ? (
-        <ul
-          id={id}
-          className={`absolute top-full left-0 z-50 mt-2 min-w-40 rounded-lg border py-2 ${
-            solid ? "border-line bg-surface" : "border-white/15 bg-night/90"
-          }`}
-        >
-          {links.map((l) => (
-            <li key={l.href}>
-              <a
-                href={l.href}
-                className={`block px-3 py-2 text-[12px] ${
-                  solid ? "text-ink-soft hover:text-ink" : "text-paper/80 hover:text-paper"
-                }`}
-              >
-                {l.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      ) : null}
     </div>
   );
 }

@@ -251,7 +251,7 @@ export function StartOver({
       <button
         type="button"
         onClick={onClick}
-        className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12.5px] ${
+        className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] ${
           tone === "dark"
             ? "text-paper/55 hover:text-paper"
             : "text-ink-soft hover:text-ink"

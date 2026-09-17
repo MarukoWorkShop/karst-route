@@ -62,7 +62,7 @@ export function ReviewsFold({
                   <span className="flex h-11 w-11 items-center justify-center rounded-full border-[1.5px] border-line bg-sage text-[22px] leading-none">
                     {r.flag}
                   </span>
-                  <span className="text-center text-[10.5px] leading-[14px] text-ink-soft">
+                  <span className="text-center text-[11px] leading-[14px] text-ink-soft">
                     {r.name.split(" ")[0]}
                   </span>
                 </span>

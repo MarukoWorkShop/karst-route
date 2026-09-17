@@ -147,14 +147,39 @@ export const copy = {
       mapCredit: { en: "© OpenStreetMap contributors · Natural Earth", zh: "© OpenStreetMap contributors · Natural Earth" },
     },
     priceLabel: { en: "Reference budget", zh: "参考预算" },
+    moduleTitle: {
+      en: "All-inclusive Boutique Routes",
+      zh: "经典全包路线",
+    },
+    moduleSub: {
+      en: "Best for first-time visitors who want a zero-worry, seamless vacation.",
+      zh: "最适合第一次来中国、或者想彻底省心度假的人。",
+    },
+    moduleDesc: {
+      en: "If you don’t want to spend hours researching transport, booking hotels, or figuring out cross-border transfers, choose this. We bundle the must-see highlights of Southern China into a relaxed, unhurried loop. It’s private, comfortable, and moves at a loose, flexible pace to give you a perfect first taste of the region.",
+      zh: "如果你不想花几个小时查交通、订酒店，或者为复杂的跨境接送而头疼，选这个就对了。我们把南境中国最精华、最不容错过的景点打包进一条轻松、不赶时间的环线里。纯私家车和专属导游，时间非常松弛，让你用最舒服的方式在本地转上一圈。",
+    },
     priceAdult: { en: "Adult", zh: "成人" },
     priceChild: { en: "Child", zh: "儿童" },
     fxNote: {
-      en: "Approximate · reference FX · final quote confirmed by concierge",
-      zh: "参考汇率换算 · 最终报价以旅游管家确认为准",
+      en: "Approximate · reference FX · final quote — enquire at the bottom of the page",
+      zh: "最终价格请在页面底部垂询",
     },
     priceFrom: { en: "from", zh: "起" },
-    pricePerPerson: { en: "/ person", zh: "/ 人" },
+    pricePerPerson: { en: "/ person", zh: "/人" },
+    priceEach: { en: "each", zh: "/人" },
+    /** 低价端人数档，如 7-10人团 */
+    priceBandGroup: {
+      en: "{min}-{max} people",
+      zh: "{min}-{max}人团",
+    },
+    /** 高价端（通常 ≤3）：「3人以下」 */
+    priceBandUpTo: {
+      en: "up to {max} people",
+      zh: "{max}人以下",
+    },
+    /** 两端价之间的连接：中文用 –，英文用 and（对齐示例 Sample Price） */
+    priceBandJoin: { en: " and ", zh: "–" },
     priceBandHint: {
       en: "2–10 travellers · market tiers",
       zh: "2–10 人团 · 市场档",
@@ -179,7 +204,15 @@ export const copy = {
     },
   },
   experience: {
-    h2: { en: "Journeys that leave a mark", zh: "让旅途真正改变你" },
+    h2: { en: "Profoundly Local Experiences", zh: "在地小体验" },
+    moduleSub: {
+      en: "Best for those traveling at a loose pace, or looking to add unique local experiences to their current journey.",
+      zh: "最适合喜欢慢节奏、或者需要为原本行程增加新奇体验的旅人。",
+    },
+    moduleDesc: {
+      en: "If you hate fixed itineraries and just want to stay in one charming place to experience real local life, start here. These are half-day or 1-day micro-activities that you can mix and match however you like. It’s the perfect way to gap your business trip, design your own slow living, and look forward to unexpected little surprises.",
+      zh: "如果你讨厌被固定的路线牵着走，只想挑一个地方安安静静呆上几天，深度体验一把本地人的生活，从这里开始。这些都是半天或一天的碎片化活动，你可以像挑零食一样随意加进你的行程里。无论你是想深度体验本地人生，还是想跟自己原有的商务考察计划做无缝衔接，这里都非常轻松、随意，并且随时期待一些好玩的小惊喜。",
+    },
     kicker: { en: "Life changing experience", zh: "Life changing experience" },
     highlights: { en: "Highlights", zh: "旅途亮点" },
     stories: { en: "Real travel stories", zh: "真实的旅行故事" },
@@ -287,8 +320,8 @@ export const copy = {
       },
       {
         icon: "",
-        en: "Covered by independent travel media",
-        zh: "独立旅行媒体报道",
+        en: "Long-term partnerships with leading independent bespoke travel agencies",
+        zh: "知名独立定制旅行机构长期合作",
       },
     ],
   },

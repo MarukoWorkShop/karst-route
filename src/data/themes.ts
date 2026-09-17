@@ -3,22 +3,22 @@ import type { Theme } from "@/types";
 export const themes: Theme[] = [
   {
     id: "wild",
-    en: "Wild Fun",
-    zh: "纵情山野・玩法够野",
+    en: "Beyond the Scenery",
+    zh: "走进风景深处",
   },
   {
     id: "flavors",
-    en: "Great Flavors",
-    zh: "地道风味・美食够味",
+    en: "The Authentic South",
+    zh: "南境原乡之美",
   },
   {
     id: "villages",
-    en: "Green Villages",
-    zh: "村落生态・传统非遗",
+    en: "A World of Heritage",
+    zh: "岁月的奇迹",
   },
   {
     id: "locals",
-    en: "Friendly Locals",
-    zh: "够朋友・当地人",
+    en: "Profoundly Local",
+    zh: "本地人才知道",
   },
 ];

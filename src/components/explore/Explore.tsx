@@ -60,7 +60,7 @@ export function Explore() {
   return (
     <section id="explore" className="scroll-mt-24 bg-paper py-14 md:py-16">
       <div className="page-col">
-        <h2 className="mb-9 text-[22px] leading-[1.3] font-medium text-cta">
+        <h2 className="type-h2 mb-9 text-cta">
           {t(copy.explore.h2)}
         </h2>
 
@@ -111,7 +111,7 @@ export function Explore() {
         {drawer ? (
           <div className="pt-[max(56px,env(safe-area-inset-top))] pb-12">
             <div className="flex items-center justify-between px-5 pb-5">
-              <p id="explore-drawer-title" className="text-[16px] font-medium text-ink">
+              <p id="explore-drawer-title" className="type-h3 text-ink">
                 {drawerTitle}
               </p>
               <button
@@ -133,7 +133,7 @@ export function Explore() {
                     <div key={w.id}>
                       <LitCard work={w} />
                       <div className="-mt-2.5 rounded-b-[10px] border-x border-b border-line bg-sage px-3.5 pt-3.5 pb-3.5">
-                        <p className="text-[12.5px] leading-5 text-ink">{t(w.desc)}</p>
+                        <p className="text-[13px] leading-5 text-ink">{t(w.desc)}</p>
                       </div>
                     </div>
                   ))}
@@ -205,13 +205,13 @@ function Block({
     <div id={id} className={`scroll-mt-28 ${className}`}>
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-[15px] font-medium text-ink">{label}</span>
-          <span className="rounded-full bg-sage px-2 py-0.5 text-[11px] text-ink-soft">{count}</span>
+          <span className="type-sub font-medium text-ink">{label}</span>
+          <span className="type-chip rounded-full bg-sage px-2 py-0.5 normal-case tracking-normal text-ink-soft">{count}</span>
         </div>
         <button
           type="button"
           onClick={onViewAll}
-          className="inline-flex items-center gap-1 rounded-full border border-cta px-3 py-[5px] text-[12px] font-medium text-cta"
+          className="type-aux inline-flex items-center gap-1 rounded-full border border-cta px-3 py-[5px] font-medium text-cta"
         >
           {viewAll}
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
@@ -278,7 +278,7 @@ function VideoCard({
           <h3 className="mb-1.5 line-clamp-2 text-[13.5px] leading-[1.35] font-medium text-ink">
             {t(item.title)}
           </h3>
-          <p className="line-clamp-2 text-[11.5px] leading-[17px] text-ink-soft">{t(item.desc)}</p>
+          <p className="line-clamp-2 text-[12px] leading-[17px] text-ink-soft">{t(item.desc)}</p>
         </div>
       </button>
       <div className="px-0.5 pt-1.5">
@@ -310,8 +310,8 @@ function LitCard({ work }: { work: LitWork }) {
             {work.year ? ` · ${work.year}` : ""}
           </p>
           <p className="mb-0.5 text-[13.5px] leading-[1.3] font-medium text-ink">{t(work.title)}</p>
-          <p className="mb-1.5 text-[11.5px] text-ink-soft">{t(work.creator)}</p>
-          <p className="line-clamp-2 text-[11.5px] leading-[17px] text-ink-soft">{t(work.desc)}</p>
+          <p className="mb-1.5 text-[12px] text-ink-soft">{t(work.creator)}</p>
+          <p className="line-clamp-2 text-[12px] leading-[17px] text-ink-soft">{t(work.desc)}</p>
         </div>
         <a
           href={`https://www.google.com/search?q=${encodeURIComponent(work.googleQuery)}`}

@@ -38,7 +38,7 @@ const fallbackSlides: HeroSlide[] = [
     poster: asset("/destinations/hero-shot-2.jpg"),
     pos: "center 55%",
     alt: L("A bamboo raft drifting down the Li River", "竹筏顺漓江而下"),
-    themeId: "wild",
+    themeId: "flavors",
     title: L("Drifting the Li River", "漓江竹筏"),
     intro: L(
       "A raft slips downstream between karst peaks — you don't have to find the way, the river already knows it.",
@@ -51,7 +51,7 @@ const fallbackSlides: HeroSlide[] = [
     poster: asset("/destinations/hero-shot-3.jpg"),
     pos: "center 50%",
     alt: L("Aerial view of karst peaks", "航拍喀斯特峰丛"),
-    themeId: "wild",
+    themeId: "villages",
     title: L("Above the Karst", "峰丛之上"),
     intro: L(
       "The drone climbs and the range opens up — fold after fold of green, and no road in sight.",
@@ -64,7 +64,7 @@ const fallbackSlides: HeroSlide[] = [
     poster: asset("/destinations/hero-shot-4.jpg"),
     pos: "center 50%",
     alt: L("A village tucked among the hills", "山间的村落"),
-    themeId: "villages",
+    themeId: "locals",
     title: L("The Living Village", "村子还醒着"),
     intro: L(
       "Stone lanes, timber houses and kitchen smoke — the village still keeps its own hours.",

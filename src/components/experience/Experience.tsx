@@ -4,10 +4,11 @@ import { lightById, lightExperiences, type LightExperience } from "@/data/lightE
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { IconClose } from "@/components/icons";
+import { SectionIntro } from "@/components/ui/SectionIntro";
 
 type View = { kind: "index" } | { kind: "item"; id: LightId };
 
-/** 轻旅行体验：首页「让旅途真正改变你」区块 —— 五个可单独预订的小产品栏目 */
+/** 在地小体验：Profoundly Local Experiences —— 可单独预订的小产品栏目 */
 export function Experience({ onQuote }: { onQuote?: () => void }) {
   const { t } = useLocale();
   const [open, setOpen] = useState<View | null>(null);
@@ -35,26 +36,28 @@ export function Experience({ onQuote }: { onQuote?: () => void }) {
   return (
     <section id="experience" className="scroll-mt-24 bg-paper py-14 md:py-16">
       <div className="page-col">
-        <h2 className="text-[22px] leading-7 font-medium text-cta">{t(copy.experience.h2)}</h2>
-        <p className="mt-1.5 max-w-[52ch] text-[13px] leading-5 text-ink-soft">
-          {t(copy.light.ctaSub)}
-        </p>
-
-        <button
-          type="button"
-          onClick={() => setOpen({ kind: "index" })}
-          className="mt-5 inline-flex items-center gap-2 rounded-[10px] bg-cta px-5 py-3 text-[14px] font-medium text-surface transition hover:bg-cta/90"
-        >
-          {t(copy.light.cta)}
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-            <path
-              d="M3 11L11 3M11 3H5M11 3V9"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-          </svg>
-        </button>
+        <SectionIntro
+          title={t(copy.experience.h2)}
+          sub={t(copy.experience.moduleSub)}
+          desc={t(copy.experience.moduleDesc)}
+          action={
+            <button
+              type="button"
+              onClick={() => setOpen({ kind: "index" })}
+              className="type-btn inline-flex items-center gap-2 rounded-lg bg-cta px-5 py-3 text-surface transition hover:bg-cta/90"
+            >
+              {t(copy.light.cta)}
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+                <path
+                  d="M3 11L11 3M11 3H5M11 3V9"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          }
+        />
 
         <div className="mt-7 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
           {lightExperiences.map((item) => (
@@ -101,13 +104,13 @@ function LightCard({ item, onOpen }: { item: LightExperience; onOpen: () => void
         </svg>
       </span>
       <span className="absolute right-3.5 bottom-3.5 left-3.5">
-        <span className="block text-[10px] tracking-[0.1em] text-surface/60 uppercase">
+        <span className="type-meta block text-surface/60">
           {t(item.badge)}
         </span>
-        <span className="mt-1 block text-[15px] leading-snug font-medium text-surface md:text-base">
+        <span className="type-sub mt-1 block font-medium text-surface">
           {t(item.title)}
         </span>
-        <span className="mt-0.5 block text-[11px] leading-4 text-surface/65">
+        <span className="type-aux mt-0.5 block text-surface/65">
           {t(item.tagline)}
         </span>
       </span>
@@ -183,13 +186,13 @@ function IndexBody({
   const { t } = useLocale();
   return (
     <div className="md:col-span-2">
-      <p className="text-[11px] font-bold tracking-[0.12em] text-cta uppercase">
+      <p className="type-meta text-cta">
         {t(copy.light.kicker)}
       </p>
-      <h3 id={titleId} className="mt-1 pr-10 text-[24px] leading-tight font-medium text-ink md:text-[26px]">
+      <h3 id={titleId} className="type-h3 mt-1 pr-10 text-ink">
         {t(copy.light.allTitle)}
       </h3>
-      <p className="mt-1.5 text-[13px] leading-5 text-ink-soft">{t(copy.light.allSub)}</p>
+      <p className="type-aux mt-1.5 text-ink-soft">{t(copy.light.allSub)}</p>
 
       <ul className="mt-5 flex flex-col">
         {lightExperiences.map((item, i) => (
@@ -206,23 +209,23 @@ function IndexBody({
                 className="h-16 w-24 shrink-0 rounded-md object-cover"
               />
               <span className="min-w-0 flex-1">
-                <span className="block text-[10px] tracking-[0.1em] text-cta uppercase">
+                <span className="type-meta block text-cta">
                   {t(item.badge)}
                 </span>
-                <span className="mt-0.5 block text-[15px] font-medium text-ink">
+                <span className="type-sub mt-0.5 block font-medium text-ink">
                   {t(item.title)}
                 </span>
-                <span className="mt-0.5 block text-[12px] leading-4 text-ink-soft">
+                <span className="type-aux mt-0.5 block text-ink-soft">
                   {t(item.tagline)}
                 </span>
               </span>
-              <span className="shrink-0 text-[12px] text-cta">{t(copy.light.view)} →</span>
+              <span className="type-aux shrink-0 text-cta">{t(copy.light.view)} →</span>
             </button>
           </li>
         ))}
       </ul>
 
-      <p className="mt-4 border-t border-line pt-4 text-[12px] leading-5 text-ink-soft">
+      <p className="type-aux mt-4 border-t border-line pt-4 text-ink-soft">
         {t(copy.light.priceNote)}
       </p>
     </div>
@@ -261,16 +264,16 @@ function ItemBody({
 
         {routes.length ? (
           <div className="border-t border-line pt-4 md:border-t-0 md:pt-0">
-            <p className="text-[11px] font-bold tracking-[0.12em] text-cta uppercase">
+            <p className="type-meta text-cta">
               {t(item.routesLabel ?? copy.light.routes)}
             </p>
-            <p className="mt-1 text-[12px] leading-5 text-ink-soft">
+            <p className="type-aux mt-1 text-ink-soft">
               {t(item.routesSub ?? copy.light.routesSub)}
             </p>
             <ul className="mt-3 flex flex-col gap-4">
               {routes.map((route) => (
                 <li key={route.id} className="rounded-[10px] border border-line bg-paper/60 p-3">
-                  <h4 className="text-[15px] leading-snug font-medium text-ink">{t(route.title)}</h4>
+                  <h4 className="type-sub font-medium text-ink">{t(route.title)}</h4>
                   <div className="mt-2.5 grid grid-cols-3 gap-1.5">
                     {route.images.slice(0, 3).map((src) => (
                       <div key={src} className="relative aspect-[4/3] overflow-hidden rounded-md bg-bone">
@@ -285,7 +288,7 @@ function ItemBody({
                   </div>
                   <div className="mt-2.5 space-y-1.5">
                     {route.blurb.map((p) => (
-                      <p key={p.zh || p.en} className="text-[12.5px] leading-5 text-ink-soft">
+                      <p key={p.zh || p.en} className="type-aux text-ink-soft">
                         {t(p)}
                       </p>
                     ))}
@@ -301,20 +304,20 @@ function ItemBody({
         <button
           type="button"
           onClick={onBack}
-          className="mb-3 self-start text-[11.5px] text-ink-soft transition hover:text-cta"
+          className="mb-3 self-start type-aux text-ink-soft transition hover:text-cta"
         >
           ← {t(copy.light.back)}
         </button>
-        <p className="text-[11px] font-bold tracking-[0.12em] text-cta uppercase">
+        <p className="type-meta text-cta">
           {t(item.badge)}
         </p>
         <h3
           id={titleId}
-          className="mt-1 pr-10 text-[24px] leading-tight font-medium text-ink md:pr-8 md:text-[26px]"
+          className="type-h3 mt-1 pr-10 text-ink md:pr-8"
         >
           {t(item.title)}
         </h3>
-        <p className="mt-1.5 text-[13px] leading-5 text-ink-soft">{t(item.tagline)}</p>
+        <p className="type-aux mt-1.5 text-ink-soft">{t(item.tagline)}</p>
 
         <div className="mt-3 grid grid-cols-3 gap-px overflow-hidden rounded-lg bg-line ring-1 ring-line">
           <Meta label={t(copy.light.duration)} value={t(item.duration)} />
@@ -324,35 +327,35 @@ function ItemBody({
 
         <div className="mt-4 space-y-3">
           {item.desc.map((p) => (
-            <p key={p.en} className="text-[14px] leading-[26px] text-ink">
+            <p key={p.en} className="type-body text-ink">
               {t(p)}
             </p>
           ))}
         </div>
 
         <div className="mt-5 border-t border-line pt-4">
-          <p className="mb-3 text-[11px] tracking-[0.08em] text-ink-soft uppercase">
+          <p className="type-meta mb-3 text-ink-soft">
             {t(copy.light.highlights)}
           </p>
           <ul className="flex flex-col gap-2.5">
             {item.highlights.map((h) => (
               <li key={h.en} className="flex items-start gap-2.5">
                 <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-cta" />
-                <span className="text-[13.5px] leading-snug text-ink">{t(h)}</span>
+                <span className="type-body text-ink">{t(h)}</span>
               </li>
             ))}
           </ul>
         </div>
 
         <div className="mt-5 border-t border-line pt-4">
-          <p className="mb-2.5 text-[11px] tracking-[0.08em] text-ink-soft uppercase">
+          <p className="type-meta mb-2.5 text-ink-soft">
             {t(copy.light.included)}
           </p>
           <div className="flex flex-wrap gap-1.5">
             {item.included.map((x) => (
               <span
                 key={x.en}
-                className="inline-flex items-center gap-1 rounded-full bg-cta/8 px-2.5 py-1 text-[11px] font-medium text-cta"
+                className="type-chip inline-flex items-center gap-1 rounded-full bg-cta/8 px-2.5 py-1 normal-case tracking-normal text-cta"
               >
                 <CheckMark />
                 {t(x)}
@@ -363,14 +366,14 @@ function ItemBody({
 
         {meals.length ? (
           <div className="mt-5 border-t border-line pt-4">
-            <p className="text-[11px] font-bold tracking-[0.12em] text-cta uppercase">
+            <p className="type-meta text-cta">
               {t(copy.light.meals)}
             </p>
-            <p className="mt-1 text-[12px] leading-5 text-ink-soft">{t(copy.light.mealsSub)}</p>
+            <p className="type-aux mt-1 text-ink-soft">{t(copy.light.mealsSub)}</p>
             <ul className="mt-3 flex flex-col gap-4">
               {meals.map((meal) => (
                 <li key={meal.id} className="rounded-[10px] border border-line bg-paper/60 p-3">
-                  <h4 className="text-[15px] leading-snug font-medium text-ink">{t(meal.title)}</h4>
+                  <h4 className="type-sub font-medium text-ink">{t(meal.title)}</h4>
                   <div className="mt-2.5 grid grid-cols-3 gap-1.5">
                     {meal.images.slice(0, 3).map((src) => (
                       <div key={src} className="relative aspect-[4/3] overflow-hidden rounded-md bg-bone">
@@ -385,7 +388,7 @@ function ItemBody({
                   </div>
                   <div className="mt-2.5 space-y-1.5">
                     {meal.blurb.map((p) => (
-                      <p key={p.zh || p.en} className="text-[12.5px] leading-5 text-ink-soft">
+                      <p key={p.zh || p.en} className="type-aux text-ink-soft">
                         {t(p)}
                       </p>
                     ))}
@@ -397,11 +400,11 @@ function ItemBody({
         ) : null}
 
         <div className="mt-5 flex flex-col gap-2 border-t border-line pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:flex-row sm:items-center sm:justify-between md:pb-0">
-          <p className="text-[12px] leading-5 text-ink-soft">{t(copy.light.priceNote)}</p>
+          <p className="type-aux text-ink-soft">{t(copy.light.priceNote)}</p>
           <button
             type="button"
             onClick={onQuote}
-            className="inline-flex h-11 shrink-0 items-center justify-center rounded-[10px] bg-cta px-5 text-[14px] font-medium text-surface transition hover:bg-cta/90"
+            className="type-btn inline-flex h-11 shrink-0 items-center justify-center rounded-lg bg-cta px-5 text-surface transition hover:bg-cta/90"
           >
             {t(copy.light.quote)}
           </button>
@@ -414,8 +417,8 @@ function ItemBody({
 function Meta({ label, value }: { label: string; value: string }) {
   return (
     <div className="bg-surface px-3 py-2.5">
-      <p className="text-[10px] tracking-[0.06em] text-ink-soft uppercase">{label}</p>
-      <p className="mt-0.5 text-[12.5px] font-medium text-ink">{value}</p>
+      <p className="type-meta text-ink-soft">{label}</p>
+      <p className="type-aux mt-0.5 font-medium text-ink">{value}</p>
     </div>
   );
 }

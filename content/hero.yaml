@@ -8,7 +8,7 @@ slides:
     video: videos/4.mp4
     poster: destinations/hero-shot-4.jpg
     pos: center 50%
-    themeId: Profoundly Local
+    themeId: locals
     alt:
       en: A village tucked among the hills
       zh: 山间的村落
@@ -22,7 +22,7 @@ slides:
     video: videos/3.mp4
     poster: destinations/hero-shot-3.jpg
     pos: center 50%
-    themeId: A World of Heritage
+    themeId: villages
     alt:
       en: Aerial view of karst peaks
       zh: 航拍喀斯特峰丛
@@ -36,7 +36,7 @@ slides:
     video: videos/2-hero.mp4
     poster: destinations/hero-shot-2.jpg
     pos: center 55%
-    themeId: The Authentic South
+    themeId: flavors
     alt:
       en: A bamboo raft drifting down the Li River
       zh: 竹筏顺漓江而下
@@ -50,7 +50,7 @@ slides:
     video: videos/1.mp4
     poster: destinations/chongzuo-mijing.jpg
     pos: center 42%
-    themeId: Beyond the Scenery
+    themeId: wild
     alt:
       en: Karst peaks in mist
       zh: 云雾中的喀斯特峰丛

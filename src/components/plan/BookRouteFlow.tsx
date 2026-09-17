@@ -307,7 +307,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
             type="button"
             disabled={pdfBusy}
             onClick={() => void downloadPdf()}
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-[10px] border-[1.5px] border-cta bg-transparent text-[15px] font-semibold text-cta disabled:opacity-60"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-lg border-[1.5px] border-cta bg-transparent text-[15px] font-semibold text-cta disabled:opacity-60"
           >
             <IconDownload />
             {pdfBusy
@@ -624,7 +624,7 @@ function StepCounter({
         >
           −
         </button>
-        <span className="min-w-[2ch] flex-1 text-center text-[16px] font-bold text-ink">
+        <span className="min-w-[2ch] flex-1 text-center text-[16px] font-semibold text-ink">
           {value}
         </span>
         <button

@@ -53,12 +53,12 @@ v1 可用占位图，但间距、热区、骨架几何按真稿执行。
 
 不要传统大社那种「签证无忧 / 品质保证 / 专车接送 / 24h 客服」均权排列。性格只有这四句，落在 `#experience` 四卡 + Hero 芯片（**不是**独立性格轨）。**中英一起印在卡上**：
 
-| ID | English（大） | 中文（态度） | 照片气质 | 点下去 |
-|---|---|---|---|---|
-| `wild` | Wild Fun | 纵情山野・玩法够野 | 德天、吉婆海、番西邦、普者黑舟、蔗海骑行 | 时间轴只高亮带 `wild` 的日子 |
-| `flavors` | Great Flavors | 地道风味・美食够味 | 越南咖啡、莲花餐、夜市、弥勒 | 高亮 `flavors` |
-| `villages` | Green Villages | 村落生态・传统非遗 | 猫猫村、天琴壮寨、团山、建水 | 高亮 `villages` |
-| `locals` | Friendly Locals | 够朋友・当地人 | 地陪、手作人、同桌 | 滚到手工艺；高亮 `locals` |
+| ID | English | 中文 | 用途 |
+|---|---|---|---|
+| `wild` | Beyond the Scenery | 走进风景深处 | Hero 芯片 / 主题 |
+| `flavors` | The Authentic South | 南境原乡之美 | 同上 |
+| `villages` | A World of Heritage | 岁月的奇迹 | 同上 |
+| `locals` | Profoundly Local | 本地人才知道 | 同上 |
 
 **视觉（主体要突出）**
 
@@ -74,13 +74,13 @@ v1 可用占位图，但间距、热区、骨架几何按真稿执行。
 
 ### 2.3 Hero 语气
 
-跟上四句的野，不要写成产品手册。轮播标题与导语写在 `heroPanels.ts`，CTA 用长句（精品路线 / 自己设计线路）。
+轮播标题与导语写在 `content/hero.yaml`（经 `heroPanels` 叠加）。主题芯片文案见 `themes.ts`。CTA 用长句指向精品路线 / 轻体验 / 行程定制。
 
-Logo v1：顶栏 `KARST ROUTE`；页脚 `南境拾遗`。
+Logo：顶栏有闲 Logo 图；页脚品牌「有闲旅行」；副线可用「南境拾遗 / The Southern Curations」。
 
 **文案硬限制**
 
-- 主题卡：英文 1–3 词；中文一条，中间用 `・`
+- Hero 芯片：中英短标签（见 themes.ts），勿写成段落
 - 折叠日：城市 + 住宿一词
 - 展开：≤ 3 bullet，每条 ≤ 12 词
 - 后勤保障降级为一行小字，不是四宫格：`Border · Car · WhatsApp`
@@ -100,45 +100,77 @@ Tailwind `@theme` / CSS 变量。
 | `--color-paper` | `#FAF8F2` | **浅米白页底** |
 | `--color-surface` | `#FDFBF6` | 卡片、输入、底栏 |
 | `--color-sage` | `#E7EBE6` | 工具箱极浅洗底 |
-| `--color-night` | `#16241E` | 仅性格卡图上遮罩、弹层遮罩、页脚；不上大面积页底 |
+| `--color-night` | `#16241E` | 仅图上遮罩、弹层遮罩、页脚；不上大面积页底 |
 | `--color-cta` | `#2F5344` | 森林绿：Quote、DAY 序号、选中轨、区块名 |
 | `--color-cta-press` | `#1E3329` | :active / :hover |
 | `--color-teal` | `#2F5344` | 与 CTA 同色，兼容旧类名 |
 | `--color-gold` | `#A88C56` | 苔金短线，少用 |
 | `--color-gold-line` | `#8F8458` | 苔金描边 |
+| `--color-gold-bright` | `#C5A059` | Hero 主题芯片描边/字色 |
+| `--color-tea` | `#6B4A32` | 模块「Best for…」副标 |
 | `--color-line` | `#D9D6CC` | 分割、输入边 |
 | `--color-bone` | `#E8E5DC` | 骨架、空素材槽 |
 | `--color-bone-2` | `#F0EDE5` | 骨架高光 |
 | `--color-ok` | `#3D6B52` | 成功 |
 | `--color-danger` | `#B42318` | 校验错 |
 
-Hero：浅米白底、墨绿字、PingFang H1；主钮森林绿。性格卡仍可用深色照片，但卡四周必须是浅米白。  
-墨绿只用于 CTA、DAY、选中与区块名，不要四色彩虹。
+禁止组件内魔法色；新语义先加 token。
 
 ---
 
 ## 4. 字体
 
-全站 **PingFang**（系统栈，不加载 webfont）。无 Georgia / 衬线例外。
+拉丁优先 **Inter**，中文走 **PingFang / 系统黑体栈**（`--font-sans`）。无 Georgia / 装饰衬线。
 
 ```css
---font-sans: "PingFang SC", "PingFang TC", "Hiragino Sans GB", "Heiti SC",
+--font-sans: "Inter", "PingFang SC", "PingFang TC", "Hiragino Sans GB", "Heiti SC",
   "Noto Sans SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
 ```
 
-字重整体偏轻：正文 400，标题与按钮 **500**，不要 700。行距略松：正文约 1.65–1.7。
+字重整体偏轻：正文 **400**；标题与按钮 **500–600（medium / semibold）**；仅价格数字等少数场景可用 bold。行距略松：正文约 1.65–1.7。
 
-| 角色 | 手机 | 规则 |
+**一类一字号**（无 `md:` 分叉）。组件用 `src/index.css` 的 `type-*` 类，不要再写零散 `text-[Npx]`。
+
+| 角色 | 类名 | 字号 | 字重 | 用途 |
+|---|---|---|---|---|
+| 一级标题 | `type-h1` | **28** | 600 | Hero、About 主名 |
+| 二级标题 | `type-h2` | **24** | 600 | 模块主标题（`SectionIntro`、Explore、Partners、Plan） |
+| 三级标题 | `type-h3` | **18** | 500 | 路线卡 / 弹层 / 体验详情标题 |
+| 副标 | `type-sub` | **15** | 400 | Best for、列表项主名、About 角色行 |
+| 正文 | `type-body` | **14** | 400 | 说明段、段落 |
+| 辅助 | `type-aux` | **12** | 400 | 副文案、tagline、资质条 |
+| 元信息 | `type-meta` | **10** | 600 · 字距 0.08em · 大写 | 区块名、徽章、价格注 |
+| 价格 | `type-price` | **17** | 700 · tabular | 人均价主数字 |
+| 按钮 | `type-btn` | **14** | 500 | CTA |
+| 芯片 | `type-chip` | **10** | 500 · 大写 | 主题标签、城市 pill（pill 可 `normal-case`） |
+
+禁止：9 / 11 / 13 / 16 / 22 / 26 / 32 / 40 / 44 等游离字号；同一角色不要再叠 `md:text-*`。
+
+---
+
+## 4.1 圆角阶梯
+
+| 用途 | 类名 | 值 |
 |---|---|---|
-| Hero H1 | 34/44 · 500 | ≤ 2 行 |
-| 主题英文 | 40/52 · 500 | 卡内最大字，允许破行 |
-| 主题中文 | 14/22 · 400 | 口号，不是段落 |
-| 区块名 | 13/20 · 500 · 字距 0.12em · 全大写 | `ITINERARY` |
-| Day 序号 | 15/22 · 500 | `01` |
-| 折叠城市 | 16/26 · 500 | |
-| Bullet | 15/26 | |
-| Meta | 12/20 | 后勤条 |
-| 按钮 | 16/26 · 500 | 高 48 |
+| 主/次按钮、输入 | `rounded-lg` | **8px**（默认） |
+| 竖图媒体卡、小面块 | `rounded-[10px]` | 10px |
+| 大卡 / 弹层桌面 | `rounded-xl` | 12px |
+| 芯片 / 开关 / 关闭钮 | `rounded-full` | pill |
+
+不要 14–20px 无语义大圆角。
+
+---
+
+## 4.2 模块头（`SectionIntro`）
+
+`#tours` / `#experience` 共用：
+
+1. 主标题（无 Module N 小标）  
+2. Best for…（`text-tea`）  
+3. 说明段（`text-ink-soft`）  
+4. 可选 CTA（`rounded-lg bg-cta`）
+
+主题短标签（Hero 芯片）见 `src/data/themes.ts`：Beyond the Scenery / 走进风景深处 等。
 
 ---
 
@@ -147,7 +179,7 @@ Hero：浅米白底、墨绿字、PingFang H1；主钮森林绿。性格卡仍�
 - 4px 基准。左右 16 / `md` 24。
 - 内容宽：时间轴与表单 640；Hero 全宽。
 - **区块空隙要大、区块内部要紧：** 段与段 40–48，卡片内 12。年轻人靠「块与块之间能喘气」，不是靠块内写满。
-- 圆角收敛：卡与输入 **8px**（`rounded-lg`）；主按钮 8px；芯片仍 `full`。不要 16–20 的大圆角卡片。
+- 圆角收敛：见 §4.1。主按钮与输入 **8px**（`rounded-lg`）；媒体卡可 10px；芯片 `full`。
 - 底栏 56 + `safe-area`。主区 `padding-bottom: calc(72px + safe-area)`。
 
 | 断点 | |
@@ -160,21 +192,32 @@ Hero：浅米白底、墨绿字、PingFang H1；主钮森林绿。性格卡仍�
 
 ---
 
+## 5.1 图片与视觉资产
+
+| 场景 | 规范 |
+|---|---|
+| Hero | `content/hero.yaml`：COS `video` + `poster`；底渐变保证白字对比 |
+| 路线卡封面 | `routeMedia` / YAML `cover`；满幅；角标 ROUTE |
+| 轻体验 | `public/light/` → COS；竖构图约 3:4 |
+| 生产地址 | `VITE_MEDIA_BASE` / COS；开发可用本地 `public/` |
+| 禁止 | 无 poster 的裂图；四张同构图雾山；组件内写死外链色块占位 |
+
+气质：雾、石、水、村、岸。一张图一个焦点。
+
+---
+
 ## 6. 手机信息流（低密度）
 
 ```
-Header：一级 Boutique Tours / 精品路线 · Plan Your Route / 行程定制；二级 Explore / 探索 ▾ · Q&A / 问答 ▾
-  手机：KARST ROUTE + 汉堡工具箱 + 地球仪切语言
-Hero：满幅 4 段主题视频（双节点 1.2s 淡入）；点画面或芯片 → #experience 打开对应文章（不筛选行程）；实心 → #tours；幽灵 Plan → #plan 自己设计路线
-#tours：两张精品卡
+Header：一级 精品路线 / 行程定制 / 关于我们 | FAQ；汉堡 = 工具箱；有闲 Logo；EN | 中文
+Hero：满幅轮播（poster / 视频）；主题芯片（themes.ts）；主 CTA → #tours / #experience / #plan
+#tours：SectionIntro（All-inclusive Boutique Routes）+ 三张路线卡 + 参考预算档
 #itinerary：折叠行程 + 评论 + 离线矢量路线动画
-#experience：四主题体验卡
-#explore：目的地影像 + 文艺推荐
-#plan：预定现成路线（3 步）| 自己设计路线（5 步）
-#faq：出行前问答
-#partners：当地合作商家
-Footer：南境拾遗 / The Southern Curations
-Dock：Tours / 路线 | Plan / 定制
+#experience：SectionIntro（Profoundly Local Experiences）+ 轻体验竖卡 + 抽屉
+#plan：预定现成路线 | 自己设计路线
+#about / #faq / #partners
+Footer：品牌与联系
+Dock（手机）：Tours | Plan
 ```
 
 **同时只展开一天。** 点另一天则关上当前天（手风琴互斥），避免变成高密度长页。
@@ -185,14 +228,12 @@ Dock：Tours / 路线 | Plan / 定制
 
 | 手势 | 行为 |
 |---|---|
-| 点体验主题卡 | 打开故事抽屉 |
-| 点精品卡 / 时间轴分段器 | 切 Route 1/2 |
-| 点 Hero 画面 / 芯片 | 打开对应主题文章 |
+| 点轻体验卡 | 打开详情弹层 |
+| 点精品卡 | 打开路线展开弹层 |
 | 点 Day 行 | 互斥展开；再点收起 |
 | 顶栏汉堡 | 打开旅行工具箱 |
-| 底栏 Tours | 滚到 `#tours` |
-| 底栏 Plan | 滚到 `#plan` 并打开「自己设计路线」 |
-| Header EN \| 中文 | 改 URL 路径，保留 hash |
+| 底栏 Tours / Plan | 滚到 `#tours` / `#plan` |
+| Header EN \| 中文 | 切语言路径 |
 | Esc / 遮罩 | 关闭抽屉与弹层 |
 
 跟手优先：路线滑、sheet 拖，用 transform，不靠长 CSS 动画演戏。
@@ -203,19 +244,19 @@ Dock：Tours / 路线 | Plan / 定制
 
 ### Header
 
-高 56。浅米白底 + 底边 `line`。左 Logo 墨绿，右 **EN | 中文**。桌面锚点墨绿。
+高 52–60。透明→滚动后 `paper/95` + `border-line`。左有闲 Logo；桌面锚点；一级/二级间 `h-4 w-px` 竖线；右汉堡 + 语言。
 
 ### Hero
 
-满幅 4 段主题视频（COS 托管、poster 占首屏）、白字叠在夜色遮罩上。双 `<video>` 节点，`onEnded` 后 1200ms 淡入。画面静音自播；右下角喇叭打开循环 BGM。主题芯片或点画面滚到 `#experience`。主钮全宽约 48，森林绿，圆角 8。区域地图不进首屏。
+满幅 poster/视频、白字叠夜色渐变。主题芯片：`gold-bright` pill。主钮 `rounded-lg` · `bg-cta` · 高约 48。芯片不再作为跳转入口（仅展示）。
 
-### Experience（四主题，取代首页性格轨）
+### 模块头 + 路线 / 轻体验
 
-见 PRD §6.3。`Experience` + `src/data/themes.ts` + `src/data/experiences.ts`。点卡打开故事抽屉，不筛选行程。`ThemeRail` / `ThemeMaterials` 已下线。
+见 §4.2 `SectionIntro`。`#tours` 三卡；`#experience` 竖图卡 + 弹层（`lightExperiences`）。
 
 ### 时间轴（互动路书）
 
-折叠日程 + 展开后勤条（交通 / 住宿 / 餐饮）+ 旅客评论 + 路线动画。圆角 8px，字重 500。
+折叠日程 + 展开后勤条 + 旅客评论 + 路线动画。圆角按 §4.1；字重 medium/semibold。
 
 - 分段器高 44。选中森林绿底白字。
 - 折叠行高 56：左 `01` 森林绿，右城市。

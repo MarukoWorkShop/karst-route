@@ -24,7 +24,7 @@ export function CurrencyToggle({
       <button
         type="button"
         onClick={() => onChange("USD")}
-        className={`text-[9px] font-semibold tracking-[0.08em] transition ${
+        className={`type-meta transition ${
           !isEur ? "text-cta" : "text-ink-soft/70 hover:text-ink-soft"
         }`}
         aria-pressed={!isEur}
@@ -42,7 +42,7 @@ export function CurrencyToggle({
       >
         <span
           aria-hidden
-          className={`absolute top-0.5 left-0.5 h-2.5 w-2.5 rounded-full bg-cta shadow-sm transition-transform duration-200 ease-out ${
+          className={`absolute top-0.5 left-0.5 h-2.5 w-2.5 rounded-full bg-cta transition-transform duration-200 ease-out ${
             isEur ? "translate-x-3.5" : "translate-x-0"
           }`}
         />
@@ -51,7 +51,7 @@ export function CurrencyToggle({
       <button
         type="button"
         onClick={() => onChange("EUR")}
-        className={`text-[9px] font-semibold tracking-[0.08em] transition ${
+        className={`type-meta transition ${
           isEur ? "text-cta" : "text-ink-soft/70 hover:text-ink-soft"
         }`}
         aria-pressed={isEur}

@@ -395,7 +395,7 @@ function DayDetailContent({
       ) : null}
 
       {transport || lodging || dining ? (
-        <div className="mt-4 divide-y divide-paper rounded-2xl bg-sage">
+        <div className="mt-4 divide-y divide-paper rounded-xl bg-sage">
           {transport ? (
             <LogRow
               icons={

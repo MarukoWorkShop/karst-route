@@ -1393,7 +1393,20 @@ async function main() {
         video: text(page, "video"),
         poster: text(page, "poster"),
         pos: text(page, "pos") || "center 50%",
-        themeId: text(page, "themeId") || "wild",
+        themeId: (() => {
+          const raw = text(page, "themeId") || "wild";
+          const alias = {
+            wild: "wild",
+            flavors: "flavors",
+            villages: "villages",
+            locals: "locals",
+            "Beyond the Scenery": "wild",
+            "The Authentic South": "flavors",
+            "A World of Heritage": "villages",
+            "Profoundly Local": "locals",
+          };
+          return alias[raw] || "wild";
+        })(),
         alt: pair(text(page, "alt_zh"), text(page, "alt_en")),
         title: pair(text(page, "title_zh"), text(page, "title_en")),
         intro: pair(text(page, "intro_zh"), text(page, "intro_en")),

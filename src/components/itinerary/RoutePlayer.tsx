@@ -164,14 +164,13 @@ export function RoutePlayer({
                 className="region-map-route"
                 d={drawn}
                 fill="none"
-                stroke="#2f5344"
                 strokeWidth="8"
                 strokeLinejoin="round"
                 strokeLinecap="round"
                 strokeDasharray="22 14"
                 strokeDashoffset={-progress * 72}
               />
-              <circle cx={dotX} cy={dotY} r="11" fill="#2f5344" stroke="#faf8f2" strokeWidth="3" />
+              <circle cx={dotX} cy={dotY} r="11" fill="var(--color-cta)" stroke="var(--color-paper)" strokeWidth="3" />
               {stops.map((s, i) => (
                 <g key={`${s.id}-${i}`} pointerEvents="none">
                   {/* 地名：仅当前 idx 显示，白描边避免被圆圈/路径遮挡 */}
@@ -181,8 +180,8 @@ export function RoutePlayer({
                     textAnchor="middle"
                     fontSize="13"
                     fontWeight="600"
-                    fill="#2f5344"
-                    stroke="#faf8f2"
+                    fill="var(--color-cta)"
+                    stroke="var(--color-paper)"
                     strokeWidth="3"
                     paintOrder="stroke"
                     opacity={i === idx ? 1 : 0}
@@ -192,7 +191,7 @@ export function RoutePlayer({
                   </text>
                   {/* 当前 idx：涟漪微发光，从圆圈外缘向外扩散并淡出 */}
                   {i === idx && !reduce ? (
-                    <circle cx={s.x} cy={s.y} r="18" fill="none" stroke="#2f5344" strokeWidth="2.5">
+                    <circle cx={s.x} cy={s.y} r="18" fill="none" stroke="var(--color-cta)" strokeWidth="2.5">
                       <animate attributeName="r" values="18;36" dur="1.8s" repeatCount="indefinite" />
                       <animate attributeName="opacity" values="0.55;0" dur="1.8s" repeatCount="indefinite" />
                     </circle>
@@ -201,8 +200,8 @@ export function RoutePlayer({
                     cx={s.x}
                     cy={s.y}
                     r="18"
-                    fill={i === idx ? "#2f5344" : "#faf8f2"}
-                    stroke="#2f5344"
+                    fill={i === idx ? "var(--color-cta)" : "var(--color-paper)"}
+                    stroke="var(--color-cta)"
                     strokeWidth="2.5"
                   />
                   <text
@@ -211,7 +210,7 @@ export function RoutePlayer({
                     textAnchor="middle"
                     fontSize="16"
                     fontWeight="600"
-                    fill={i === idx ? "#faf8f2" : "#2f5344"}
+                    fill={i === idx ? "var(--color-paper)" : "var(--color-cta)"}
                   >
                     {s.num}
                   </text>
@@ -230,7 +229,7 @@ export function RoutePlayer({
                     on ? "text-cta" : "text-ink"
                   }`}
                 >
-                  <span className="w-8 shrink-0 text-[20px] font-bold tabular-nums">{s.num}</span>
+                  <span className="w-8 shrink-0 text-[20px] font-semibold tabular-nums">{s.num}</span>
                   <span className="text-[16px] font-medium">{t(s.label)}</span>
                 </li>
               );

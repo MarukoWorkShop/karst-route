@@ -19,13 +19,13 @@ export function PlanSection({
   return (
     <section id="plan" className="scroll-mt-24 border-y border-cta/20 bg-bone py-14 md:py-20">
       <div className="page-col">
-        <p className="text-[13px] font-semibold tracking-[0.16em] text-cta uppercase">
+        <p className="type-meta text-cta">
           {t(copy.plan.kicker)}
         </p>
-        <h2 className="mt-2 max-w-[720px] text-[26px] leading-tight font-semibold text-balance text-ink md:text-[34px]">
+        <h2 className="type-h2 mt-2 max-w-[720px] text-balance text-ink">
           {t(copy.plan.h2)}
         </h2>
-        <p className="mt-3 max-w-[640px] text-[14px] leading-[22px] text-ink-soft">
+        <p className="type-body mt-3 max-w-[640px] text-ink-soft">
           {t(copy.plan.h2Sub)}
         </p>
 
@@ -40,7 +40,7 @@ export function PlanSection({
               role="tab"
               aria-selected={boutique}
               onClick={() => onTab("boutique")}
-              className={`relative inline-flex min-h-[48px] flex-1 items-center justify-center rounded-t-[12px] border px-3 py-2.5 text-center text-[12.5px] leading-[1.3] font-semibold transition-colors md:min-h-[52px] md:px-5 md:text-[14px] ${
+              className={`type-btn relative inline-flex min-h-[48px] flex-1 items-center justify-center rounded-t-xl border px-3 py-2.5 text-center font-semibold transition-colors md:min-h-[52px] md:px-5 ${
                 boutique
                   ? "z-[2] border-gold/40 border-b-0 bg-paper text-cta after:pointer-events-none after:absolute after:inset-x-0 after:bottom-[-1px] after:h-[1px] after:bg-paper"
                   : "z-[0] border-line/70 bg-bone/80 text-ink-soft hover:bg-bone-2 hover:text-ink"
@@ -53,7 +53,7 @@ export function PlanSection({
               role="tab"
               aria-selected={!boutique}
               onClick={() => onTab("custom")}
-              className={`relative inline-flex min-h-[48px] flex-1 items-center justify-center rounded-t-[12px] border-2 px-3 py-2.5 text-center text-[12.5px] leading-[1.3] font-semibold transition-colors md:min-h-[52px] md:px-5 md:text-[14px] ${
+              className={`type-btn relative inline-flex min-h-[48px] flex-1 items-center justify-center rounded-t-xl border-2 px-3 py-2.5 text-center font-semibold transition-colors md:min-h-[52px] md:px-5 ${
                 !boutique
                   ? "z-[2] border-cta border-b-0 bg-cta text-paper after:pointer-events-none after:absolute after:inset-x-0 after:bottom-[-2px] after:h-[2px] after:bg-cta"
                   : "z-[0] border-line/70 bg-bone/80 text-ink-soft hover:bg-bone-2 hover:text-ink"
@@ -65,10 +65,10 @@ export function PlanSection({
 
           {/* 文件夹本体：定制与预订同 paper 底，仅用 2px 墨绿边区分 */}
           <div
-            className={`relative z-0 rounded-b-2xl bg-paper p-5 md:p-8 shadow-[0_10px_36px_color-mix(in_srgb,var(--color-ink)_6%,transparent)] ${
+            className={`relative z-0 rounded-b-xl bg-paper p-5 md:p-8 shadow-[0_10px_36px_color-mix(in_srgb,var(--color-ink)_6%,transparent)] ${
               boutique
-                ? "-mt-px rounded-tr-2xl border border-gold/40"
-                : "-mt-[2px] rounded-tl-2xl border-2 border-cta"
+                ? "-mt-px rounded-tr-xl border border-gold/40"
+                : "-mt-[2px] rounded-tl-xl border-2 border-cta"
             }`}
           >
             <div className={boutique ? "" : "hidden"}>
