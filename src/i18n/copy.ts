@@ -162,7 +162,7 @@ export const copy = {
     priceAdult: { en: "Adult", zh: "成人" },
     priceChild: { en: "Child", zh: "儿童" },
     fxNote: {
-      en: "Approximate · reference FX · final quote — enquire at the bottom of the page",
+      en: "Approximate · final quote — enquire below",
       zh: "最终价格请在页面底部垂询",
     },
     priceFrom: { en: "from", zh: "起" },

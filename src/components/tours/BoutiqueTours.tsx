@@ -466,17 +466,8 @@ function MarketBudget({
   const range = marketPriceRange(routeId);
   const titleCls = "type-meta text-ink-soft";
   const money = (v: number) => formatMoney(v, { locale, currency, rates });
-  const bandLabel = (band: { minN: number; maxN: number }) => {
-    if (band.minN <= 1) {
-      return t(copy.tours.priceBandUpTo).replace("{max}", String(band.maxN));
-    }
-    return t(copy.tours.priceBandGroup)
-      .replace("{min}", String(band.minN))
-      .replace("{max}", String(band.maxN));
-  };
 
   const mainPriceCls = "type-price text-cta";
-  const bandCls = "type-meta mt-0.5 normal-case tracking-normal font-normal text-ink-soft/80";
 
   if (!range) {
     const fallback =
@@ -493,11 +484,11 @@ function MarketBudget({
         </div>
         <p className={`mt-1 ${mainPriceCls}`}>
           {fallback}
-          <span className="type-meta ml-1 normal-case tracking-normal font-normal text-ink-soft">
+          <span className="type-meta ml-1 font-normal normal-case tracking-normal text-ink-soft">
             {t(copy.tours.pricePerPerson)}
           </span>
         </p>
-        <p className="type-meta mt-1.5 normal-case tracking-normal font-normal text-ink-soft/80">
+        <p className="type-meta mt-1.5 truncate font-normal normal-case tracking-normal text-ink-soft/80">
           {t(copy.tours.fxNote)}
         </p>
       </div>
@@ -512,12 +503,10 @@ function MarketBudget({
     range.childFrom === range.childTo
       ? money(range.childFrom)
       : `${money(range.childFrom)}–${money(range.childTo)}`;
-  const bandHint =
+  const bands =
     range.adultFrom === range.adultTo
-      ? bandLabel(range.bandFrom)
-      : locale === "zh"
-        ? `${bandLabel(range.bandFrom)} · ${bandLabel(range.bandTo)}`
-        : `${bandLabel(range.bandFrom)} · ${bandLabel(range.bandTo)}`;
+      ? [range.bandFrom]
+      : [range.bandFrom, range.bandTo];
 
   return (
     <div className="min-w-0">
@@ -530,27 +519,46 @@ function MarketBudget({
           <p className={mainPriceCls}>
             <span className="mr-1.5 font-semibold text-ink">{t(copy.tours.priceAdult)}</span>
             {priceRange}
-            <span className="type-meta ml-1 normal-case tracking-normal font-normal text-ink-soft">
+            <span className="type-meta ml-1 font-normal normal-case tracking-normal text-ink-soft">
               {t(copy.tours.pricePerPerson)}
             </span>
           </p>
-          <p className={bandCls}>{bandHint}</p>
+          <BandPeopleHint bands={bands} />
         </div>
         <div>
           <p className={mainPriceCls}>
             <span className="mr-1.5 font-semibold text-ink">{t(copy.tours.priceChild)}</span>
             {childRange}
-            <span className="type-meta ml-1 normal-case tracking-normal font-normal text-ink-soft">
+            <span className="type-meta ml-1 font-normal normal-case tracking-normal text-ink-soft">
               {t(copy.tours.pricePerPerson)}
             </span>
           </p>
-          <p className={bandCls}>{bandHint}</p>
+          <BandPeopleHint bands={bands} />
         </div>
       </div>
-      <p className="type-meta mt-2 normal-case tracking-normal font-normal text-ink-soft/80">
+      <p className="type-meta mt-2 truncate font-normal normal-case tracking-normal text-ink-soft/80">
         {t(copy.tours.fxNote)}
       </p>
     </div>
+  );
+}
+
+/** 人数档：小人 icon + 7-10 · 1-3，字重与附注一致 */
+function BandPeopleHint({ bands }: { bands: { minN: number; maxN: number }[] }) {
+  return (
+    <p className="type-meta mt-0.5 flex flex-wrap items-center gap-x-1.5 font-normal normal-case tracking-normal text-ink-soft/80">
+      {bands.map((b, i) => {
+        const lo = b.minN <= 1 ? 1 : b.minN;
+        const label = `${lo}-${b.maxN}`;
+        return (
+          <span key={`${label}-${i}`} className="inline-flex items-center gap-0.5">
+            {i > 0 ? <span className="text-ink-soft/40" aria-hidden>·</span> : null}
+            <IconUsers className="h-2.5 w-2.5" strokeWidth={1.5} aria-hidden />
+            <span>{label}</span>
+          </span>
+        );
+      })}
+    </p>
   );
 }
 
