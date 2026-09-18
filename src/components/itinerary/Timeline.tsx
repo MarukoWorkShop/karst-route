@@ -2,17 +2,21 @@ import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import type { DayStop, RouteId } from "@/types";
 import { routes } from "@/data/itinerary";
 import { places, placeStories } from "@/data/destinations";
-import { IconBoat, IconChevron, IconDining, IconLodge, IconVan } from "@/components/icons";
+import { IconBoat, IconChevron, IconChevronsUp, IconDining, IconLodge, IconVan } from "@/components/icons";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { ItineraryCtas } from "@/components/itinerary/ItineraryCtas";
 import { RoutePlayer } from "@/components/itinerary/RoutePlayer";
 
 export function Timeline({
+  open,
+  onCollapse,
   routeId,
   onRoute,
   onPlanQuote,
 }: {
+  open: boolean;
+  onCollapse: () => void;
   routeId: RouteId;
   onRoute: (id: RouteId) => void;
   onPlanQuote: (id: RouteId) => void;
@@ -73,12 +77,34 @@ export function Timeline({
     setOpenIndex((cur) => (cur === index ? null : index));
   }
 
+  function collapse() {
+    setPlaying(false);
+    setOpenIndex(null);
+    onCollapse();
+    requestAnimationFrame(() => {
+      document.getElementById("tours")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  if (!open) {
+    return <section id="itinerary" className="scroll-mt-24" aria-hidden="true" />;
+  }
+
   return (
     <section id="itinerary" className="scroll-mt-24 py-12">
-      <div className="page-col">
+      <div className="page-col relative">
         <p className="text-[13px] font-medium tracking-[0.12em] text-cta uppercase">
           {t(copy.tours.days)}
         </p>
+        <button
+          type="button"
+          onClick={collapse}
+          aria-label={t(copy.tours.collapseItinerary)}
+          title={t(copy.tours.collapseItinerary)}
+          className="absolute top-0 right-0 flex h-8 w-8 items-center justify-center rounded-full text-ink-soft transition hover:bg-sage hover:text-cta"
+        >
+          <IconChevronsUp className="h-4 w-4" />
+        </button>
       </div>
       <div className="sticky top-[52px] z-30 border-b border-line bg-paper md:top-[60px]">
         <div role="tablist" className="page-col flex">

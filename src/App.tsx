@@ -20,6 +20,7 @@ function go(id: string) {
 export default function App() {
   const [route, setRoute] = useState<RouteId>("r1");
   const [intent, setIntent] = useState<"boutique" | "custom">("boutique");
+  const [itinOpen, setItinOpen] = useState(false);
 
   // 首屏（Hero）占据视野时收起底部导航，让画面整屏呈现
   const [heroInView, setHeroInView] = useState(true);
@@ -37,7 +38,11 @@ export default function App() {
 
   function openItinerary(id: RouteId) {
     setRoute(id);
-    go("itinerary");
+    setItinOpen(true);
+    // 等展开后再滚，避免滚到空锚点
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => go("itinerary"));
+    });
   }
 
   return (
@@ -55,6 +60,8 @@ export default function App() {
           onOpenItinerary={openItinerary}
         />
         <Timeline
+          open={itinOpen}
+          onCollapse={() => setItinOpen(false)}
           routeId={route}
           onRoute={(id) => {
             setRoute(id);
