@@ -8,7 +8,7 @@ import {
 } from "@/data/lightExperiences";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { IconClose, IconHeart } from "@/components/icons";
+import { IconClose, IconFlame, IconHeart } from "@/components/icons";
 import { SectionIntro } from "@/components/ui/SectionIntro";
 import { User, Baby, Minus, Plus } from "lucide-react";
 import { FieldLabel, IconSend } from "@/components/plan/PlanUi";
@@ -16,6 +16,7 @@ import { CurrencyToggle } from "@/components/ui/CurrencyToggle";
 import { formatMoney, fmtCny } from "@/lib/fx";
 import { sendEnquiry } from "@/lib/enquiry";
 import { lineTotalCny, priceOf, formatSkuPriceParts, priceNoteOf, stripPriceFromBlurb } from "@/lib/lightPrice";
+import { bumpSkuClick, popularityScore, readSkuClicks } from "@/lib/lightClicks";
 import { useFxRates, usePriceCurrency } from "@/hooks/useFx";
 
 type View = { kind: "index" } | { kind: "item"; id: LightId };
@@ -101,7 +102,10 @@ export function Experience() {
     setLikes((prev) => {
       const next = new Set(prev);
       if (next.has(key)) next.delete(key);
-      else next.add(key);
+      else {
+        next.add(key);
+        bumpSkuClick(routeId);
+      }
       writeLikes(next);
       return next;
     });
@@ -275,37 +279,104 @@ function IndexBody({
   onPick: (id: LightId) => void;
 }) {
   const { t } = useLocale();
+  const [clicks, setClicks] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    setClicks(readSkuClicks());
+  }, []);
+
+  const ranked = useMemo(() => {
+    type Row = {
+      key: string;
+      skuId: string;
+      categoryId: LightId;
+      categoryBadge: Tx;
+      categoryTitle: Tx;
+      route: LightRoute;
+      score: number;
+    };
+    const rows: Row[] = [];
+    for (const cat of lightExperiences) {
+      for (const route of [...(cat.routes ?? []), ...(cat.meals ?? [])]) {
+        rows.push({
+          key: likeKey(cat.id, route.id),
+          skuId: route.id,
+          categoryId: cat.id,
+          categoryBadge: cat.badge,
+          categoryTitle: cat.title,
+          route,
+          score: popularityScore(route.id, route.sort, clicks),
+        });
+      }
+    }
+    rows.sort((a, b) => b.score - a.score || a.skuId.localeCompare(b.skuId));
+    return rows;
+  }, [clicks]);
+
+  function openSku(row: (typeof ranked)[number]) {
+    setClicks(bumpSkuClick(row.skuId));
+    onPick(row.categoryId);
+  }
+
   return (
     <div className="md:col-span-2">
       <p className="type-meta text-cta">{t(copy.light.kicker)}</p>
       <h3 id={titleId} className="type-h3 mt-1 pr-10 text-ink">
         {t(copy.light.allTitle)}
       </h3>
-      <p className="type-aux mt-1.5 text-ink-soft">{t(copy.light.allSub)}</p>
 
       <ul className="mt-5 flex flex-col">
-        {lightExperiences.map((item, i) => (
-          <li key={item.id} className={i > 0 ? "border-t border-line" : ""}>
-            <button
-              type="button"
-              onClick={() => onPick(item.id)}
-              className="flex w-full items-center gap-3.5 py-3.5 text-left transition hover:bg-bone/60"
-            >
-              <img
-                loading="lazy"
-                src={item.cover}
-                alt=""
-                className="h-16 w-24 shrink-0 rounded-md object-cover"
-              />
-              <span className="min-w-0 flex-1">
-                <span className="type-meta block text-cta">{t(item.badge)}</span>
-                <span className="type-sub mt-0.5 block font-medium text-ink">{t(item.title)}</span>
-                <span className="type-aux mt-0.5 block text-ink-soft">{t(item.tagline)}</span>
-              </span>
-              <span className="type-aux shrink-0 text-cta">{t(copy.light.view)} →</span>
-            </button>
-          </li>
-        ))}
+        {ranked.map((row, i) => {
+          const hot = i < 5;
+          const cover = row.route.images[0] ?? "";
+          const intro = row.route.blurb[0];
+          return (
+            <li key={row.key} className={i > 0 ? "border-t border-line" : ""}>
+              <button
+                type="button"
+                onClick={() => openSku(row)}
+                className="flex w-full items-center gap-3.5 py-3.5 text-left transition hover:bg-bone/60"
+              >
+                {cover ? (
+                  <img
+                    loading="lazy"
+                    src={cover}
+                    alt=""
+                    className="h-16 w-24 shrink-0 rounded-md object-cover"
+                  />
+                ) : (
+                  <span className="h-16 w-24 shrink-0 rounded-md bg-bone" />
+                )}
+                <span className="min-w-0 flex-1">
+                  <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span className="type-meta text-cta">{t(row.categoryBadge)}</span>
+                    {hot ? (
+                      <span
+                        className="inline-flex shrink-0 text-[#E84B3C]"
+                        title={t(copy.light.hotTag)}
+                        aria-label={t(copy.light.hotTag)}
+                      >
+                        <IconFlame className="hot-flame h-3.5 w-3.5" />
+                      </span>
+                    ) : null}
+                  </span>
+                  <span className="type-sub mt-0.5 block font-medium text-ink">{t(row.route.title)}</span>
+                  {intro ? (
+                    <span className="type-aux mt-0.5 line-clamp-2 block text-ink-soft">{t(intro)}</span>
+                  ) : null}
+                  <span className="type-meta mt-1 block font-normal normal-case tracking-normal text-ink-soft/75">
+                    {t(row.categoryTitle)}
+                    <span className="mx-1.5 text-ink-soft/35" aria-hidden>
+                      ·
+                    </span>
+                    {t(copy.light.popularity).replace("{n}", String(row.score))}
+                  </span>
+                </span>
+                <span className="type-aux shrink-0 text-cta">{t(copy.light.view)} →</span>
+              </button>
+            </li>
+          );
+        })}
       </ul>
 
       <p className="type-aux mt-4 border-t border-line pt-4 text-ink-soft">{t(copy.light.priceNote)}</p>

@@ -22,6 +22,8 @@ export type LightRoute = {
   images: string[];
   /** 参考价（由 LIGHT_SKU_PRICE 挂载） */
   price?: LightSkuPrice;
+  /** Notion / YAML 排序权重（越小越靠前；也作热度种子） */
+  sort?: number;
 };
 
 export type LightExperience = {
@@ -959,6 +961,7 @@ function skusForCategory(categoryId: string, kind: "route" | "meal"): LightRoute
       .filter((b) => b?.en || b?.zh)
       .map((b) => ({ en: b.en ?? "", zh: b.zh ?? "" })),
     images: (it.images ?? []).map((p) => asset(`/${String(p).replace(/^\//, "")}`)),
+    sort: typeof it.sort === "number" ? it.sort : undefined,
   }));
 }
 

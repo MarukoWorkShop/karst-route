@@ -282,6 +282,32 @@ html[lang|="zh"] #plan {
   }
 }
 
+/* Hot flame — soft flicker like a social “on fire” mark */
+@keyframes hot-flame {
+  0%,
+  100% {
+    transform: scale(1) rotate(-2deg);
+    opacity: 0.88;
+    filter: drop-shadow(0 0 2px rgba(232, 75, 60, 0.35));
+  }
+  40% {
+    transform: scale(1.12) rotate(3deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 5px rgba(232, 75, 60, 0.55));
+  }
+  70% {
+    transform: scale(0.96) rotate(-1deg);
+    opacity: 0.92;
+    filter: drop-shadow(0 0 3px rgba(255, 120, 60, 0.4));
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hot-flame {
+    transform-origin: 50% 90%;
+    animation: hot-flame 1.8s ease-in-out infinite;
+  }
+}
+
 .place-drawer {
   transform: translateX(100%);
 }

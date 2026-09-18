@@ -224,11 +224,9 @@ export const copy = {
       zh: "半日到一日的小产品，可单独预订，也可挂在任意线路前后",
     },
     kicker: { en: "Light travel experiences", zh: "轻旅行体验" },
-    allTitle: { en: "Featured local experiences", zh: "精选在地体验小产品" },
-    allSub: {
-      en: "Six bookable experiences — pick one, or pair two in a single day.",
-      zh: "六档可单独预订的在地体验——选一项，或一天里搭配两项。",
-    },
+    allTitle: { en: "Popular activities", zh: "热门活动小产品" },
+    hotTag: { en: "Hot", zh: "Hot" },
+    popularity: { en: "{n} views", zh: "热度 {n}" },
     pick: { en: "Choose an experience", zh: "选择体验" },
     duration: { en: "Duration", zh: "时长" },
     group: { en: "Group size", zh: "成团人数" },
@@ -241,7 +239,7 @@ export const copy = {
     },
     quote: { en: "Enquire", zh: "咨询报价" },
     view: { en: "View details", zh: "查看详情" },
-    back: { en: "All experiences", zh: "全部体验" },
+    back: { en: "Popular list", zh: "热门列表" },
     routes: { en: "Route options", zh: "路线小产品" },
     routesSub: {
       en: "Bookable add-ons — alone or paired with a longer trip.",
