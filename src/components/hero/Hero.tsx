@@ -331,24 +331,26 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
               {t(slide.intro)}
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-3 md:mt-8">
-              <a
-                href="#tours"
-                className="type-btn pointer-events-auto inline-flex min-h-12 flex-1 items-center justify-center rounded-lg bg-cta px-5 text-center text-white md:min-h-[52px] md:flex-none md:px-8"
-              >
-                {t(copy.hero.ctaA)}
-              </a>
-              <a
-                href="#experience"
-                className="type-btn pointer-events-auto inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg bg-cta px-5 text-center text-white md:min-h-[52px] md:flex-none md:px-8"
-              >
-                {t(copy.light.cta)}
-                <IconSparkles className="h-3.5 w-3.5 shrink-0" />
-              </a>
+            <div className="mt-7 flex flex-col gap-3 md:mt-8">
+              <div className="flex items-stretch gap-2.5 md:gap-3">
+                <a
+                  href="#tours"
+                  className="pointer-events-auto inline-flex min-h-11 flex-1 items-center justify-center rounded-lg bg-cta px-3 py-2.5 text-center text-[13px] leading-snug font-medium text-white md:min-h-[48px] md:px-5 md:text-[14px]"
+                >
+                  {t(copy.hero.ctaA)}
+                </a>
+                <a
+                  href="#experience"
+                  className="pointer-events-auto inline-flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-lg bg-cta px-3 py-2.5 text-center text-[13px] leading-snug font-medium text-white md:min-h-[48px] md:px-5 md:text-[14px]"
+                >
+                  <span className="text-balance">{t(copy.light.cta)}</span>
+                  <IconSparkles className="h-3 w-3 shrink-0 opacity-90" aria-hidden />
+                </a>
+              </div>
               <a
                 href="#plan"
                 onClick={onPlanOwn}
-                className="type-aux pointer-events-auto inline-flex items-center font-medium tracking-[0.02em] text-white/85 underline-offset-4 transition-colors hover:text-white hover:underline"
+                className="type-aux pointer-events-auto inline-flex items-center self-start text-[13px] font-medium tracking-[0.02em] text-white/85 underline-offset-4 transition-colors hover:text-white hover:underline md:text-[14px]"
               >
                 {t(copy.hero.ctaB)}
               </a>
