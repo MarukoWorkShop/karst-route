@@ -124,6 +124,7 @@ export const copy = {
     r1Tab: { en: "Route 1 · 14 Days", zh: "路线一 · 14日" },
     r2Tab: { en: "Route 2 · 11 Days", zh: "路线二 · 11日" },
     r3Tab: { en: "Route 3 · 7 Days", zh: "路线三 · 7日" },
+    collapseItinerary: { en: "Collapse itinerary", zh: "收起行程" },
     book: {
       readReviews: { en: "Read real traveller reviews", zh: "查看客户的真实评价" },
       downloadRoutePdf: { en: "Download itinerary PDF", zh: "下载路书 PDF" },

@@ -198,9 +198,9 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
     }
   }
 
-  /** 上滑（页面下滚）时柔和滚入路线说明页，不再跳转到主题文章 */
-  function scrollToItinerary() {
-    document.getElementById("itinerary")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  /** 上滑（页面下滚）时柔和滚入路线卡片区 */
+  function scrollToTours() {
+    document.getElementById("tours")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function onPointerDown(e: PointerEvent<HTMLElement>) {
@@ -223,7 +223,7 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
     }
     // 上滑（页面下滚）：柔和滚入路线说明页。仅触摸设备生效，避免鼠标拖拽误触
     if (e.pointerType !== "mouse" && dy <= -SWIPE_PX && Math.abs(dy) > Math.abs(dx)) {
-      scrollToItinerary();
+      scrollToTours();
     }
     // 轻点不再触发跳转
   }
