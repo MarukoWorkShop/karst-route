@@ -21,6 +21,7 @@ import { estimateRouteParty } from "./lib/estimate-from-yaml.mjs";
 
 const root = process.cwd();
 const VERSION = "2022-06-28";
+const VERSION_DS = "2025-09-03";
 const cfgPath = path.join(root, "content", "notion.yaml");
 
 function loadDotenv() {
@@ -156,12 +157,12 @@ function published(page) {
   return true;
 }
 
-async function notionFetch(token, url, init = {}) {
+async function notionFetch(token, url, init = {}, version = VERSION) {
   const res = await fetch(url, {
     ...init,
     headers: {
       Authorization: `Bearer ${token}`,
-      "Notion-Version": VERSION,
+      "Notion-Version": version,
       "Content-Type": "application/json",
       ...(init.headers ?? {}),
     },
@@ -174,20 +175,80 @@ async function notionFetch(token, url, init = {}) {
   return body;
 }
 
-async function queryAll(token, databaseId) {
-  const id = uuid(databaseId);
+async function queryDataSource(token, dataSourceId) {
+  const id = uuid(dataSourceId);
   if (!id) return [];
   const pages = [];
   let cursor;
   do {
-    const body = await notionFetch(token, `https://api.notion.com/v1/databases/${id}/query`, {
-      method: "POST",
-      body: JSON.stringify({ page_size: 100, start_cursor: cursor }),
-    });
+    const body = await notionFetch(
+      token,
+      `https://api.notion.com/v1/data_sources/${id}/query`,
+      {
+        method: "POST",
+        body: JSON.stringify({ page_size: 100, start_cursor: cursor }),
+      },
+      VERSION_DS,
+    );
     pages.push(...(body.results ?? []));
     cursor = body.has_more ? body.next_cursor : undefined;
   } while (cursor);
   return pages;
+}
+
+async function queryAll(token, databaseId, dataSourceId) {
+  if (dataSourceId) {
+    try {
+      return await queryDataSource(token, dataSourceId);
+    } catch (e) {
+      console.warn(`data_source query failed (${dataSourceId}):`, e.message);
+    }
+  }
+  const id = uuid(databaseId);
+  if (!id) return [];
+  try {
+    const pages = [];
+    let cursor;
+    do {
+      const body = await notionFetch(token, `https://api.notion.com/v1/databases/${id}/query`, {
+        method: "POST",
+        body: JSON.stringify({ page_size: 100, start_cursor: cursor }),
+      });
+      pages.push(...(body.results ?? []));
+      cursor = body.has_more ? body.next_cursor : undefined;
+    } while (cursor);
+    return pages;
+  } catch (e) {
+    const msg = e.message || "";
+    if (!/data source|Invalid request URL|multiple data sources/i.test(msg)) {
+      // 也可能是直接填了 data source id
+      try {
+        return await queryDataSource(token, id);
+      } catch {
+        throw e;
+      }
+    }
+    try {
+      return await queryDataSource(token, id);
+    } catch {
+      /* resolve via database */
+    }
+    // 多源库：用 2025 解析 data_sources 后查询
+    const db = await notionFetch(
+      token,
+      `https://api.notion.com/v1/databases/${id}`,
+      {},
+      VERSION_DS,
+    );
+    const sources = Array.isArray(db.data_sources) ? db.data_sources : [];
+    if (!sources.length) throw e;
+    const prefer =
+      sources.find((s) => /栏目|文案/i.test(s.name || "")) ||
+      sources.find((s) => !/清单|sku/i.test(s.name || "")) ||
+      sources[0];
+    console.warn(`DB ${id} → data_source ${prefer.id} (${prefer.name || "?"})`);
+    return queryDataSource(token, prefer.id);
+  }
 }
 
 function writeYaml(rel, header, data) {
@@ -298,6 +359,7 @@ async function main() {
   const token = process.env.NOTION_TOKEN?.trim();
   const cfg = fs.existsSync(cfgPath) ? parseYaml(fs.readFileSync(cfgPath, "utf8")) : {};
   const dbs = cfg.databases ?? {};
+  const sources = cfg.dataSources ?? {};
   const filled = Object.values(dbs).filter((v) => String(v ?? "").trim());
   if (!token || filled.length === 0) {
     console.log(`
@@ -1170,7 +1232,9 @@ async function main() {
   // --- 轻旅行体验（首页六张小产品卡）→ content/experiences.yaml ---
   if (dbs.lightExperiences) {
     const rel = "content/experiences.yaml";
-    const pages = (await queryAll(token, dbs.lightExperiences)).filter(published);
+    const pages = (
+      await queryAll(token, dbs.lightExperiences, sources.lightExperiences)
+    ).filter(published);
     if (pages.length && takeNotion(pages, rel)) {
       const prev = existingYaml(rel);
       const prevItems = Array.isArray(prev.items) ? prev.items : [];
@@ -1237,8 +1301,114 @@ async function main() {
 #
 # 注意：
 #   - id 只能用 hike / photo / village / foodfilm / craft / wellness，不要改
-#   - 图片路径只写 public/ 下相对路径，例如 destinations/sapa.jpg
-#   - 这里不写价格：网站统一显示「按人数与日期报价」，避免展示未确认的报价`,
+#   - 图片路径只写 public/ 下相对路径，例如 light/hike/hike-1.jpeg
+#   - 可售小产品（SKU）在旁边的独立表「轻体验清单」→ content/light-skus.yaml
+#   - 本文件是栏目级介绍；单价与小产品不写在这里`,
+          { src: srcLang, items },
+        );
+        mark();
+      }
+    }
+  }
+
+  // --- 轻体验 SKU 清单 → content/light-skus.yaml ---
+  if (dbs.lightSkus) {
+    const rel = "content/light-skus.yaml";
+    const pages = await queryAll(token, dbs.lightSkus, sources.lightSkus);
+    if (pages.length && takeNotion(pages, rel)) {
+      const prev = existingYaml(rel);
+      const prevItems = Array.isArray(prev.items) ? prev.items : [];
+      const srcLang = prev.src || "zh";
+      const statusOfSku = (s) => {
+        if (s === "暂缓" || s === "paused") return "paused";
+        if (s === "季节性" || s === "seasonal") return "seasonal";
+        return "live";
+      };
+      const priceFromPage = (page) => {
+        const unit = text(page, "price_unit").trim();
+        const minPax = prop(page, "min_pax");
+        if (unit === "raft") {
+          const raftCny = Number(prop(page, "raft_cny"));
+          const seats = Number(prop(page, "raft_seats")) || 2;
+          if (!Number.isFinite(raftCny)) return null;
+          return { unit: "raft", raftCny, seats };
+        }
+        if (unit === "flat") {
+          const flatCny = Number(prop(page, "price_flat_cny"));
+          if (!Number.isFinite(flatCny)) return null;
+          return { unit: "flat", flatCny };
+        }
+        if (unit === "person" || unit === "") {
+          const low = Number(prop(page, "price_cny_1_3"));
+          const high = Number(prop(page, "price_cny_4_plus"));
+          if (!Number.isFinite(low) && !Number.isFinite(high)) return null;
+          const a = Number.isFinite(low) ? low : high;
+          const b = Number.isFinite(high) ? high : low;
+          const price = {
+            unit: "person",
+            bands:
+              a === b
+                ? [{ max: 99, cny: a }]
+                : [
+                    { max: 3, cny: a },
+                    { max: 10, cny: b },
+                    { max: 99, cny: b },
+                  ],
+          };
+          if (Number.isFinite(Number(minPax)) && Number(minPax) > 1) {
+            price.minPax = Number(minPax);
+          }
+          return price;
+        }
+        return null;
+      };
+
+      const items = [];
+      for (const page of pages) {
+        const id = text(page, "id").trim();
+        if (!id) continue;
+        const prevItem = prevItems.find((x) => x && x.id === id) ?? {};
+        const category = text(page, "category").trim() || prevItem.category || "";
+        if (!/^(hike|photo|village|foodfilm|craft|wellness)$/.test(category)) continue;
+        const kind = text(page, "kind").trim() === "meal" ? "meal" : "route";
+        const status = statusOfSku(text(page, "status"));
+        const pairOf = (zhKey, enKey, prevVal) =>
+          keepTx(srcLang, text(page, zhKey), text(page, enKey), prevVal) || pair("", "");
+        const title = pairOf("title_zh", "title_en", prevItem.title);
+        const blurb = [
+          pairOf("blurb1_zh", "blurb1_en", prevItem.blurb?.[0]),
+          pairOf("blurb2_zh", "blurb2_en", prevItem.blurb?.[1]),
+        ].filter((x) => x.en || x.zh);
+        const images = splitLines(text(page, "images"));
+        const price = priceFromPage(page) ?? prevItem.price ?? null;
+        const priceNote = pairOf("price_note_zh", "price_note_en", prevItem.priceNote);
+        const sortRaw = prop(page, "sort");
+        const sort = Number.isFinite(Number(sortRaw)) ? Number(sortRaw) : prevItem.sort ?? 0;
+        const row = {
+          id,
+          category,
+          kind,
+          status,
+          sort,
+          title,
+          blurb,
+          images: images.length ? images : prevItem.images || [],
+        };
+        if (price) row.price = price;
+        if (priceNote.en || priceNote.zh) row.priceNote = priceNote;
+        items.push(row);
+      }
+      items.sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0) || a.id.localeCompare(b.id));
+      if (items.length) {
+        writeYaml(
+          rel,
+          `# 轻体验 SKU 清单（可售小产品）
+# 修改方式二选一：
+#   1. Notion「轻体验清单」表 → npm run content:notion 同步回本文件
+#   2. 直接改本文件
+# 字段说明见 content/notion-import/README.md「轻体验清单」一节。
+#
+`,
           { src: srcLang, items },
         );
         mark();

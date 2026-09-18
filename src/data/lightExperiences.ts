@@ -1,6 +1,7 @@
 import { parse } from "yaml";
 import type { LightId, Tx } from "@/types";
 import { asset } from "@/lib/asset";
+import { priceOf, type LightSkuPrice } from "@/lib/lightPrice";
 
 const L = (en: string, zh: string): Tx => ({ en, zh });
 
@@ -8,7 +9,7 @@ const L = (en: string, zh: string): Tx => ({ en, zh });
  * 轻旅行体验 · 小产品栏目
  *
  * 与长线路分开：半日到一日、可单独预订、可挂在任意线路前后。
- * 页面不展示价格 —— 按人数与日期核算，走询单（见 copy.light.priceNote）。
+ * 参考价见 src/lib/lightPrice.ts；询单走 Web3Forms。
  * duration / group / season 目前是建议值，等主理人确认后替换。
  */
 /** 详情展开里的路线小产品（目前用于「村落人文考察」） */
@@ -17,8 +18,10 @@ export type LightRoute = {
   title: Tx;
   /** 2–3 句短文案 */
   blurb: Tx[];
-  /** 2–3 张配图 */
+  /** 1–3 张配图（可不凑满） */
   images: string[];
+  /** 参考价（由 LIGHT_SKU_PRICE 挂载） */
+  price?: LightSkuPrice;
 };
 
 export type LightExperience = {
@@ -75,10 +78,10 @@ const FALLBACK: LightExperience[] = [
       ),
     ],
     highlights: [
-      L("Countryside walks above glass fields and karst viewpoints", "玻璃田与喀斯特观景台的田园徒步"),
-      L("Guided creek tracing with swim pools and natural slides", "教练带领的山谷溯溪：碧潭与天然水滑"),
-      L("Vintage scooters along the Yulong River promenade", "遇龙河网红步道复古机车骑行"),
-      L("ATV off-road through streams and valley tracks", "全地形车山谷冲滩越野"),
+      L("Countryside walks, creek tracing and vintage scooters", "田园徒步、山谷溯溪与复古机车"),
+      L("ATV jungle track · climbing · paddleboard / kayak", "ATV 丛林越野 · 攀岩 · 浆板 / 皮划艇"),
+      L("Yulong bamboo raft and countryside bike loops", "遇龙河竹筏与乡野骑行线路"),
+      L("Xingping peak walks: Laosai & Xianggong", "兴坪登山：老寨山与相公山"),
     ],
     included: [
       L("Local guide / coach throughout", "全程在地向导 / 户外教练"),
@@ -87,8 +90,8 @@ const FALLBACK: LightExperience[] = [
     ],
     routesLabel: L("Activity options", "活动小产品"),
     routesSub: L(
-      "Six Guilin–Yangshuo outings you can book alone or pair with a longer trip.",
-      "六档桂林阳朔户外活动——可单独体验，也可挂在长线前后。",
+      "Book alone or pair with a longer trip — pick the pace that fits the day.",
+      "可单独体验，也可挂在长线前后——按当天体力与天气选一项。",
     ),
     routes: [
       {
@@ -150,60 +153,101 @@ const FALLBACK: LightExperience[] = [
       },
       {
         id: "atv",
-        title: L("ATV Valley Off-Road", "全地形车 · 山谷越野"),
+        title: L("ATV Jungle Off-Road", "ATV 丛林越野车"),
         blurb: [
           L(
-            "Hop on an ATV with your host: ford streams, splash through caves and feel summer in Yangshuo’s valleys — two per vehicle, coach-taught before you roll.",
-            "跨上 ATV 全地形车，跟随管家在阳朔山谷冲滩、溯溪、山洞戏水；两人一台，教练实操教学，学会再出发。",
+            "Beside a Li River tributary on the Jinbao riverside track: undeveloped scenery, a winding 5 km course through peak forest — speed and karst views together.",
+            "在漓江支流遇龙河 / 金宝河边：依山临水、景色零开发；5 公里赛道宽阔曲折，穿梭峰林之间，速度与山水美景同时拥有。",
           ),
           L(
-            "A new skill and a wet, laughing afternoon — gear and briefing included.",
-            "学会一种新技能，再带走一个湿透又痛快的午后；装备与行前说明都安排好。",
+            "Reference price: ¥200 / person · two per vehicle · about 50 minutes driving.",
+            "参考报价：200 元/人（2 人一车）· 驾驶约 50 分钟。",
           ),
         ],
-        images: [
-          asset("/light/hike/atv-1.jpeg"),
-          asset("/light/hike/atv-2.jpeg"),
-          asset("/light/hike/atv-3.jpeg"),
-        ],
+        images: [asset("/light/hike/atv-doc-1.jpeg")],
       },
       {
         id: "raft",
-        title: L("Yulong River Bamboo Raft", "遇龙河竹筏 · 古桥峰丛"),
+        title: L("Yulong River Bamboo Raft", "遇龙河人工竹筏漂流"),
         blurb: [
           L(
-            "Pole-driven bamboo rafts on the clear Yulong — old bridges, karst peaks and rice paddies drawn into one quiet scroll.",
-            "手撑竹筏游遇龙河：河水清澈见底，古桥、峰丛与水稻田共同画出诗意田园。",
+            "From Shiwai Taoyuan in Baisha to Gongnong Bridge by the big banyan — clear shallow water, green banks, bamboo and slow current. A quiet way to see village scenery.",
+            "遇龙河自白沙世外桃源至大榕树工农桥段，水质清澈、水流缓缓，两岸山峰清秀、翠竹葱郁。乘竹筏随波逐流，是欣赏乡村风光很放松的方式。",
           ),
           L(
-            "Shoot the weir with your raftsman, splash in a water fight, or simply sit and watch the green hills pass.",
-            "筏工师傅带你体验冲坝与打水仗，也可以安静坐着，看两岸连绵青山慢慢过去。",
+            "Trips run about 30–90 minutes from different put-ins. Reference: ¥300 per 2-person raft.",
+            "出发点和行程约半小时至 1.5 小时不等。参考报价：2 人竹筏 300 元/筏。",
+          ),
+        ],
+        images: [asset("/light/hike/raft-1.jpeg"), asset("/light/hike/raft-2.jpeg")],
+      },
+      {
+        id: "bike",
+        title: L("Countryside Bike Loops", "自行车休闲游"),
+        blurb: [
+          L(
+            "Mountain-bike loops are a fast way into Yangshuo’s dramatic countryside. Three favourites: Moon Hill (half day), Yulong Bridge (full day, with swim stops), and Liugong Village (800-year riverside hamlet, three-colour ponds).",
+            "山地自行车休闲游能在短时间内深入乡野。我们最喜欢的三条：月亮山路线（半天）、遇龙桥路线（全天，沿途可下水）、留公村路线（八百年江边古村，近旁有三色池塘）。",
+          ),
+          L(
+            "We share up-to-date route notes so you can ride at your own pace.",
+            "我们提供最新路线说明，让你按自己的节奏骑完。",
+          ),
+        ],
+        images: [asset("/light/hike/bike-1.jpeg"), asset("/light/hike/bike-2.jpeg")],
+      },
+      {
+        id: "climb",
+        title: L("Rock Climbing", "攀岩"),
+        blurb: [
+          L(
+            "Yangshuo is a climbing hub with peaks for every level — gradient sport routes A/B/C/D-Plus and harder natural walls. Beginners and specialists both have options.",
+            "阳朔正迅速成为亚洲攀岩领域的圣地。山峰多样，不同水准都可锻炼；我们拥有 A/B/C/D-Plus 多条梯度线路，还有高难度自然岩壁可供选择。",
+          ),
+          L(
+            "Reference: ¥350 / person (1–3) · ¥300 / person (4–10) · about 2 hours.",
+            "参考报价：1–3 人 350 元/人 · 4–10 人 300 元/人 · 约 2 小时。",
           ),
         ],
         images: [
-          asset("/light/hike/raft-1.jpeg"),
-          asset("/light/hike/raft-2.jpeg"),
-          asset("/light/hike/raft-3.jpeg"),
+          asset("/light/hike/climb-1.jpeg"),
+          asset("/light/hike/climb-2.jpeg"),
+          asset("/light/hike/climb-3.jpeg"),
         ],
       },
       {
-        id: "chicken",
-        title: L("Bamboo Grove Chickens & Bamboo Rice", "竹林捉鸡 · 竹筒饭香"),
+        id: "paddle",
+        title: L("Paddleboard / Kayak", "浆板 / 皮划艇体验"),
         blurb: [
           L(
-            "In a terraced village, hosts walk you into the bamboo to catch chickens and gather eggs — then cook the day’s catch.",
-            "深入梯田环绕的自然村寨，民宿阿嫂阿哥带你漫步山谷，在竹林里捉鸡、捡鸡蛋。",
+            "Downstream on the Li: quieter water, farm life on the banks — nets, buffalo, slow green shores. About 2–3 hours on the river.",
+            "顺漓江而下：这一段不拥堵，有一种静态的美，也是观察河边农家生活的好机会——渔网、水牛、岸边闲景。行程约 2–3 小时。",
           ),
           L(
-            "Evening turns the harvest into bamboo-tube chicken and sticky rice — labour you can taste.",
-            "晚上，劳动收获变成竹筒鸡与竹筒饭——亲手忙过的一餐，特别香。",
+            "Reference: ¥200 · about 3 hours.",
+            "参考报价：200 元 · 约 3 小时。",
           ),
         ],
         images: [
-          asset("/light/hike/chicken-1.jpeg"),
-          asset("/light/hike/chicken-2.jpeg"),
-          asset("/light/hike/chicken-3.jpeg"),
+          asset("/light/hike/paddle-1.jpeg"),
+          asset("/light/hike/paddle-2.jpeg"),
+          asset("/light/hike/paddle-3.jpeg"),
         ],
+      },
+      {
+        id: "xingping-peaks",
+        title: L("Xingping Peak Walks", "兴坪登山 · 老寨山 / 相公山"),
+        blurb: [
+          L(
+            "Laosai Hill by Xingping’s old street and Rongshu pool: ~200 m stone path, a classic photo overlook of the Li’s 180° bend.",
+            "老寨山位于兴坪古镇老街头漓江榕树潭码头边，高约 200 余米，石径通顶，是观赏兴坪山水、尽览漓江大拐弯的经典摄影点。",
+          ),
+          L(
+            "Xianggong Hill on the west bank between Yellow Cloth Shoal and Nine-Horse Fresco — cloud seas, sunrise and ordered peaks for photographers.",
+            "相公山在漓江西岸、黄布滩与九马画山之间：登顶远眺群峰有序、江流蜿蜒，光影云海与日出彩霞常吸引摄影人。",
+          ),
+        ],
+        images: [],
       },
     ],
   },
@@ -260,7 +304,7 @@ const FALLBACK: LightExperience[] = [
     cover: asset("/light/village/yao-visit-1.jpeg"),
     gallery: [
       asset("/light/village/yao-visit-1.jpeg"),
-      asset("/light/village/oil-tea-2.jpeg"),
+      asset("/light/village/oil-tea-baba-1.jpeg"),
       asset("/light/village/dong-song-2.jpeg"),
     ],
     desc: [
@@ -286,8 +330,8 @@ const FALLBACK: LightExperience[] = [
     ],
     routesLabel: L("Route options", "路线小产品"),
     routesSub: L(
-      "Five village encounters you can book on their own or pair with a longer trip.",
-      "五档可单独加订的村落相遇——可单独体验，也可挂在长线前后。",
+      "Village visits, festivals and river life — book alone or pair with a longer trip.",
+      "村落相遇与节庆渔事——可单独体验，也可挂在长线前后。",
     ),
     routes: [
       {
@@ -311,21 +355,23 @@ const FALLBACK: LightExperience[] = [
       },
       {
         id: "oil-tea",
-        title: L("Zhuang Oil Tea by the Hearth", "一杯苦来四杯香 · 打油茶"),
+        title: L(
+          "One Bitter, Four Fragrant · Oil Tea & Mugwort Ciba",
+          "一杯苦来四杯香 · 打油茶+艾叶粑粑制作",
+        ),
         blurb: [
           L(
-            "Follow a Zhuang auntie through every step of hand-beaten oil tea — from frying the leaves to crisp oil fritters — the living taste of northern Guangxi.",
-            "跟随壮族阿嫂手打油茶：从炒茶到油果，一道工序接着一道，把桂北传统饮食文化摊开在火塘边。",
+            "Yao oil tea is passed down by village elders who keep the tea customs — often in the family, sometimes across the community.",
+            "瑶族油茶是桂林村寨里了解和掌握瑶族茶规的长者、寨老会传授给年轻人的习俗相关知识。一般传承为家传，也有社会传承。",
           ),
           L(
-            "First cup bitter, second astringent, third and fourth suddenly fragrant — then you understand why this bowl is everyday life, not a souvenir.",
-            "一杯苦，二杯涩，三杯四杯才见好油茶。亲自喝过，才懂这碗茶为什么是生活，而不是纪念品。",
+            "Includes making minority oil tea on site, trying ethnic dress, and making mugwort ciba (aiye baba). Reference: ¥200 / person (1–3, min 2) · ¥150 / person (4–10).",
+            "含现场体验制作少数民族油茶、少数民族服饰体验，以及制作艾叶粑粑。参考报价：1–3 人 200 元/人（2 人起订）· 4–10 人 150 元/人。",
           ),
         ],
         images: [
-          asset("/light/village/oil-tea-1.jpeg"),
-          asset("/light/village/oil-tea-2.jpeg"),
-          asset("/light/village/oil-tea-3.jpeg"),
+          asset("/light/village/oil-tea-baba-1.jpeg"),
+          asset("/light/village/oil-tea-baba-2.jpeg"),
         ],
       },
       {
@@ -384,6 +430,90 @@ const FALLBACK: LightExperience[] = [
           asset("/light/village/stilt-tea-2.jpeg"),
           asset("/light/village/stilt-tea-3.jpeg"),
         ],
+      },
+
+      {
+        id: "home-visit",
+        title: L("Local Family Homestay Visit", "探访当地家访"),
+        blurb: [
+          L(
+            "A drive to a countryside home: by season you may plant or harvest rice, or pick fruit. An English-speaking local guide explains rural life around Yangshuo — rice, citrus, pomelo, sugarcane, vegetables, and water buffalo in the fields.",
+            "您将乘车到达乡下的一个当地家庭；按季节可以看到或帮助种植、收割水稻，或进行水果采摘。会讲英语的当地导游会介绍阳朔周围的农村生活——人们种植水稻、柑橘、柚子、甘蔗、蔬菜，耕作中常使用水牛。",
+          ),
+          L(
+            "Share a simple lunch with the family and learn local ciba, tofu or bamboo weaving. Timing is flexible. Reference: ¥250 / person (1–3, min 2) · ¥200 / person (4–10).",
+            "与家庭成员共享简单午餐，学习制作当地糍粑、豆腐或竹编。时间灵活。参考报价：1–3 人 250 元/人（2 人起订）· 4–10 人 200 元/人。",
+          ),
+        ],
+        images: [
+          asset("/light/village/home-visit-1.jpeg"),
+          asset("/light/village/home-visit-2.jpeg"),
+          asset("/light/village/home-visit-3.jpeg"),
+        ],
+      },
+      {
+        id: "hermit",
+        title: L("Visit Local Hermits", "拜访当地隐士"),
+        blurb: [
+          L(
+            "A seek-the-hermit journey on this land — finding people who guard terroir with new eyes and craft, like modern Tao Yuanmings.",
+            "是一段在地寻隐记旅行，寻找每一位隐藏的隐士。语言、作物、思考方式、空气、风、传统、历史，都有自己的风土；像现代陶渊明，以新的眼光和创造力守护所在土地的风土。",
+          ),
+        ],
+        images: [
+          asset("/light/village/hermit-1.jpeg"),
+          asset("/light/village/hermit-2.jpeg"),
+          asset("/light/village/hermit-3.jpeg"),
+        ],
+      },
+      {
+        id: "cormorant",
+        title: L("Cormorant Fishing by Raft", "鱼鹰抓鱼"),
+        blurb: [
+          L(
+            "Night bamboo-raft outing to watch the oldest fishing life on the Li — cormorants at work, up close, with a thousand-year fishing tradition.",
+            "夜乘竹筏，近距离欣赏漓江最原始的渔民生活——鱼鹰抓鱼。这里有着千年捕鱼历史，比在别处远观候鸟更有趣味。",
+          ),
+          L(
+            "Reference: ¥180 / person · about 1 hour.",
+            "参考报价：180 元/人 · 约 1 小时。",
+          ),
+        ],
+        images: [
+          asset("/light/village/cormorant-1.jpeg"),
+          asset("/light/village/cormorant-2.jpeg"),
+          asset("/light/village/cormorant-3.jpeg"),
+        ],
+      },
+      {
+        id: "festivals",
+        title: L("Ethnic Village Festivals", "少数民族节日"),
+        blurb: [
+          L(
+            "For the most rooted village culture — opening-farm day, seedling-combing, clothes-drying, long-hair festival, Shigong dance and more.",
+            "如果您只想体验最地道的乡村文化，了解村里的时光，不要错过这些节日：开耕节 / 梳秧节 / 晒衣节 / 长发节 / 师公舞等。",
+          ),
+          L(
+            "Reference: ¥500 / person (min 2) · transport not included · seasonal.",
+            "参考报价：500 元/人（2 人起订，不包含交通费）· 按节期安排。",
+          ),
+        ],
+        images: [
+          asset("/light/village/festival-1.jpeg"),
+          asset("/light/village/festival-2.jpeg"),
+          asset("/light/village/festival-3.jpeg"),
+        ],
+      },
+      {
+        id: "sanyuesan",
+        title: L("March Third Song Fair", "三月三歌圩"),
+        blurb: [
+          L(
+            "Zhuang song festival on the lunar March third — five-colour sticky rice, dyed eggs, song sheds on the village green. Gatherings last two or three days; large fairs draw thousands.",
+            "农历三月三又称三月三歌节或三月歌圩，是壮族传统歌节。家家户户做五色糯饭、染彩蛋；歌棚搭在村旁空地，对歌以未婚青年为主，小圩一两千人，大圩可达数万。",
+          ),
+        ],
+        images: [],
       },
     ],
     meals: [
@@ -489,17 +619,16 @@ const FALLBACK: LightExperience[] = [
     badge: L("FOOD & FILM", "FOOD & FILM"),
     title: L("Food & Film", "美食与电影"),
     tagline: L(
-      "Eat the scene, then watch the place on screen",
-      "先吃到那个场景，再在银幕上看见它",
+      "Cook, taste, and see the place — from market to table",
+      "从市场到餐桌：动手做、亲自尝，再认识这座城",
     ),
-    duration: L("3–5 hours", "3–5 小时"),
-    group: L("2–12 travellers", "2–12 人"),
-    season: L("Year-round · evenings preferred", "全年可订 · 建议傍晚"),
-    cover: asset("/destinations/hanoi.jpg"),
+    duration: L("Half day", "半天"),
+    group: L("1–10 travellers", "1–10 人"),
+    season: L("Year-round", "全年可订"),
+    cover: asset("/light/foodfilm/cooking-1.jpeg"),
     gallery: [
-      asset("/destinations/hanoi.jpg"),
-      asset("/destinations/guilin-mifen.jpg"),
-      asset("/destinations/kunming-dengdeng.jpg"),
+      asset("/light/foodfilm/cooking-1.jpeg"),
+      asset("/light/foodfilm/cooking-2.jpeg"),
     ],
     desc: [
       L(
@@ -512,93 +641,264 @@ const FALLBACK: LightExperience[] = [
       ),
     ],
     highlights: [
-      L("Morning market walk with a food writer or chef", "由food writer或主厨带队的早市"),
-      L("Six-to-eight tastings, no tourist-menu versions", "6–8 处品鉴，不安排游客菜单"),
-      L("Film screening tied to the location", "与取景地呼应的电影放映"),
-      L("Evening option with drinks and open-air screen", "可选傍晚场：酒水 + 露天银幕"),
+      L("Yangshuo cooking school — market, cook, lunch", "阳朔厨艺学校：逛市场、做菜、吃午餐"),
+      L("Bamboo grove chickens & bamboo-tube rice", "竹林捉鸡 · 竹筒饭"),
+      L("Small class with an English-speaking local teacher", "小班 · 会讲英语的本地老师"),
     ],
     included: [
-      L("Food host for the whole session", "全程美食向导"),
-      L("All tastings and one drink", "全部品鉴与一杯饮品"),
-      L("Screening setup and subtitles", "放映设备与字幕"),
+      L("Food host / village host for the session", "美食向导或村民接待全程"),
+      L("Ingredients and cooking as listed", "所列食材与烹饪安排"),
+      L("The meal you make or harvest", "亲手做或收获的一餐"),
     ],
+    routesLabel: L("Food sessions", "美食小产品"),
+    routesSub: L(
+      "Cook in a farmhouse kitchen, or catch dinner in the bamboo — book alone or pair with a longer trip.",
+      "农舍厨房做菜，或竹林里捉鸡做竹筒饭——可单独体验，也可挂在长线前后。",
+    ),
+    routes: [
+      {
+        id: "cooking-school",
+        title: L("Yangshuo Cooking School", "阳朔厨艺学校"),
+        blurb: [
+          L(
+            "Learn real Chinese dishes in a traditional farmhouse kitchen. Friendly teachers emphasise doing, not watching; they also take you to the local market for ingredients. Then you eat what you cooked for lunch.",
+            "在阳朔传统中国农舍中学习烹调中国食物。友善的老师强调实际操作而不是看；还会带您去当地市场了解配料。制作菜肴之后，一起食用午餐。",
+          ),
+          L(
+            "Small class · English-speaking local teacher · half day · 2–4 dishes · recipes to take home. Reference: ¥380 / person (1–3) · ¥280 / person (4–10).",
+            "小班教学 · 会讲英语的本地老师 · 半天学 2–4 道菜 · 含食谱。参考报价：1–3 人 380 元/人 · 4–10 人 280 元/人。",
+          ),
+        ],
+        images: [
+          asset("/light/foodfilm/cooking-1.jpeg"),
+          asset("/light/foodfilm/cooking-2.jpeg"),
+        ],
+      },
+      {
+        id: "chicken",
+        title: L("Bamboo Grove Chickens & Bamboo Rice", "竹林捉鸡 · 竹筒饭香"),
+        blurb: [
+          L(
+            "In a terraced village, hosts walk you into the bamboo to catch chickens and gather eggs — then cook the day’s catch.",
+            "深入梯田环绕的自然村寨，民宿阿嫂阿哥带你漫步山谷，在竹林里捉鸡、捡鸡蛋。",
+          ),
+          L(
+            "Evening turns the harvest into bamboo-tube chicken and sticky rice — labour you can taste.",
+            "晚上，劳动收获变成竹筒鸡与竹筒饭——亲手忙过的一餐，特别香。",
+          ),
+        ],
+        images: [
+          asset("/light/hike/chicken-1.jpeg"),
+          asset("/light/hike/chicken-2.jpeg"),
+          asset("/light/hike/chicken-3.jpeg"),
+        ],
+      },
+    ],
+    // 中国茶 / 七仙峰茶园：归属待确认后再入库
   },
   {
     id: "craft",
     badge: L("HANDICRAFT", "HANDICRAFT"),
     title: L("Handicraft Workshops", "手作与非遗工坊"),
     tagline: L(
-      "Make one thing properly, with the person who teaches it",
-      "跟真正做这行的人，好好做完一件东西",
+      "Paint a fan, try a heritage craft, or sit with brush and ink",
+      "画扇、非遗手作，或一堂书法——好好做完一件",
     ),
     duration: L("2–4 hours", "2–4 小时"),
-    group: L("1–8 travellers", "1–8 人"),
+    group: L("1–10 travellers", "1–10 人"),
     season: L("Year-round", "全年可订"),
-    cover: asset("/destinations/dongfengyun2.jpg"),
+    cover: asset("/light/craft/fuli-fan-1.jpeg"),
     gallery: [
-      asset("/destinations/dongfengyun2.jpg"),
-      asset("/destinations/mile.jpg"),
-      asset("/destinations/jianshuioldtown1.jpg"),
+      asset("/light/craft/fuli-fan-1.jpeg"),
+      asset("/light/craft/heritage-1.jpeg"),
+      asset("/light/craft/calligraphy-1.jpeg"),
     ],
     desc: [
       L(
-        "Two to four hours at one bench: throwing clay, dyeing cloth, pressing tea, shaping paper. The instructor is the maker, and the pace is the pace the craft actually needs.",
-        "两到四个小时，守在一张工作台前：拉坯、扎染、压茶、抄纸。教你的人是做这行的人，节奏也是这门手艺真正需要的节奏。",
+        "Fuli is known for Chinese fans — walk the old town, then paint one of your own. Or choose a heritage craft session: zongzi, tofu, straw shoes, weaving and more.",
+        "福利古镇以制扇闻名：逛老城之后，画一把自己的扇。也可以选非遗工坊：包粽子、做豆腐、草鞋、编织等，一项一项亲手做。",
       ),
       L(
-        "You leave with the object you made — fired, dried or boxed for shipping. Nothing is a demo piece someone else finished for you.",
-        "你带走的是自己做的那件：烧好、晾干或打包寄回。没有哪一件是别人替你收尾的样品。",
+        "Calligraphy is available as a quieter session with brush and ink. You leave with what you made.",
+        "也可以静下来写一堂中国书法。带走的是自己做的那一件。",
       ),
     ],
     highlights: [
-      L("Pottery on the wheel at a working kiln", "在仍在烧窑的作坊里拉坯"),
-      L("Indigo dyeing and natural pigment mixing", "蓝靛扎染与植物染料调制"),
-      L("Tea pressing, roasting and tasting", "压茶、焙火与品鉴"),
-      L("Take home what you made, shipping arranged", "作品带走，可安排寄送"),
+      L("Fuli ancient town fan painting", "福利古镇画扇"),
+      L("Heritage crafts: zongzi, tofu, straw shoes, weaving and more", "非遗：包粽子 / 做豆腐 / 草鞋 / 编织等"),
+      L("Chinese calligraphy workshop", "中国书法体验"),
+      L("Take home what you made", "作品带走"),
     ],
     included: [
       L("Maker-led instruction", "手艺人全程教学"),
-      L("All materials, firing and packing", "全部材料、烧制与包装"),
-      L("Shipping to your home address", "成品寄送到家"),
+      L("All materials as listed", "所列材料与工具"),
+      L("Finished piece to take home", "成品带走"),
     ],
+    routesLabel: L("Workshop options", "工坊小产品"),
+    routesSub: L(
+      "Make one thing properly — fan, heritage craft, or calligraphy.",
+      "好好做完一件：画扇、非遗手作或书法。",
+    ),
+    routes: [
+      {
+        id: "fuli-fan",
+        title: L("Fuli Fan Painting", "福利古镇画扇"),
+        blurb: [
+          L(
+            "A guide and private car take you to Fuli — famous for Chinese fans of every size. After a short walk in the old town, paint a fan of your own (about 2 hours).",
+            "当地导游与专车带您到福利古镇，逛老城区。福利以制扇闻名，大小皆可。短游之后，画一把属于自己的扇（约 2 小时）。",
+          ),
+          L(
+            "Reference: ¥250 / person (1–3) · ¥200 / person (4–10).",
+            "参考报价：1–3 人 250 元/人 · 4–10 人 200 元/人。",
+          ),
+        ],
+        images: [
+          asset("/light/craft/fuli-fan-1.jpeg"),
+          asset("/light/craft/fuli-fan-2.jpeg"),
+          asset("/light/craft/fuli-fan-3.jpeg"),
+        ],
+      },
+      {
+        id: "heritage-crafts",
+        title: L("Intangible Heritage Workshop", "非遗传统文化"),
+        blurb: [
+          L(
+            "Choose among: wrapping zongzi, making tofu, straw shoes, straw dragon, weaving, five-colour sticky rice, ciba, embroidered ball, cloth weaving.",
+            "可选体验：包粽子 / 做豆腐 / 草鞋 / 草龙 / 编织 / 五色糯米饭 / 糍粑 / 绣球体验 / 织布。",
+          ),
+          L(
+            "Reference: ¥200 / person.",
+            "参考报价：200 元/人。",
+          ),
+        ],
+        images: [
+          asset("/light/craft/heritage-1.jpeg"),
+          asset("/light/craft/heritage-2.jpeg"),
+          asset("/light/craft/heritage-3.jpeg"),
+        ],
+      },
+      {
+        id: "calligraphy",
+        title: L("Chinese Calligraphy", "中国书法"),
+        blurb: [
+          L(
+            "A hands-on session with brush and ink — form, breath and the character of each stroke.",
+            "毛笔与墨：一堂动手的书法体验，感受每一笔的形与气息。",
+          ),
+        ],
+        images: [
+          asset("/light/craft/calligraphy-1.jpeg"),
+          asset("/light/craft/calligraphy-2.jpeg"),
+          asset("/light/craft/calligraphy-3.jpeg"),
+        ],
+      },
+    ],
+    // 七仙峰茶园、孔子开笔：归属待确认后再入库
   },
   {
     id: "wellness",
     badge: L("WELLNESS & SPA", "WELLNESS & SPA"),
     title: L("Healing & Unwinding", "疗愈与放松"),
     tagline: L(
-      "Massage, meditation and slow hours — built into the day",
-      "按摩、冥想与慢下来的几个小时，写进当天行程",
+      "Tai chi, nature stillness, and traditional massage — slow hours in the karst",
+      "太极、山水静心与传统按摩——在桂林慢下来的几个小时",
     ),
-    duration: L("2–3 hours", "2–3 小时"),
-    group: L("1–6 travellers", "1–6 人"),
-    season: L("Year-round · best at dusk", "全年可订 · 傍晚最佳"),
-    cover: asset("/destinations/hotel-c.jpg"),
+    duration: L("1–3 hours", "1–3 小时"),
+    group: L("1–10 travellers", "1–10 人"),
+    season: L("Year-round", "全年可订"),
+    cover: asset("/light/wellness/taichi-2.jpeg"),
     gallery: [
-      asset("/destinations/hotel-c.jpg"),
-      asset("/destinations/guantang3.jpg"),
-      asset("/destinations/mingshi-2.jpg"),
+      asset("/light/wellness/taichi-2.jpeg"),
+      asset("/light/wellness/taichi-1.jpeg"),
     ],
     desc: [
       L(
-        "Recovery is part of the journey, not a reward for finishing it. We book the therapists who still work with local herbs, and the rooms that are quiet at six in the evening — so a long drive or a steep trail ends with warm oil, not a queue.",
-        "恢复体力是旅程的一部分，不是走完之后的奖励。我们只约仍用本地草药的理疗师，只订傍晚六点依旧安静的房间——一整天车程或山路之后，等着你的是热毛巾与精油，而不是排队取号。",
+        "From the opening form to cloud hands, each breath folds the landscape back into the body. We teach beginner-friendly tai chi outdoors — bilingual coaching, zero jargon — so travellers can feel soft power and stillness between the peaks.",
+        "从起势到云手，再由发力至收势，在一呼一吸之间，将天地灵气融归丹田；每一式抬手落步，皆可成为旅途中最独特、不可复制的记忆。我们为零基础学员开设太极课，中英双语、耐心拆解，在山水里真正放松身心。",
       ),
       L(
-        "Sessions run at your pace: a foot soak after the morning market, a full-body herbal massage after a trek, or twenty quiet minutes of guided breathing before dinner. No upsell, no membership talk.",
-        "节奏由你定：逛完早市泡个脚，徒步之后做一次全身草药按摩，或者晚餐前跟着引导做二十分钟呼吸。没有推销，也不办卡。",
+        "Pair it with a quiet yoga or breath session above the river, or end a long countryside day with a traditional Chinese foot or full-body massage — herbal oils, no upsell, book a day ahead.",
+        "也可以在我们安排的临水处做瑜伽与深呼吸，与桂林山水安静相处；或在乡间走完漫长一天后，预约传统足底 / 全身按摩——温热与穴位并用，提前一天预订即可。",
       ),
     ],
     highlights: [
-      L("Herbal compress and full-body massage by local therapists", "在地理疗师的草药热敷与全身按摩"),
-      L("Guided meditation and breathwork, indoors or by the water", "冥想与呼吸引导，室内或临水"),
-      L("Foot soak and hot-stone ritual after long walking days", "徒步日后的足浴与热石"),
-      L("Sound bath or evening stretching as an optional add-on", "颂钵音疗或傍晚拉伸（可选加项）"),
+      L(
+        "Tai chi class · ¥300 / person (1–3) · ¥200 / person (4–10)",
+        "太极拳体验 · 1–3 人 300 元/人 · 4–10 人 200 元/人",
+      ),
+      L("Nature yoga & breathwork among the karst peaks", "自然体验 · 瑜伽与深呼吸，与山水相处"),
+      L(
+        "Foot / full-body massage · oil 1.5h or dry 1h · foot bath & shoulders",
+        "足底或全身按摩 · 精油 1.5 小时 / 无油 1 小时 · 足浴与肩部按摩",
+      ),
+      L(
+        "Beginner-friendly · bilingual coaching · book massage one day ahead",
+        "零基础友好 · 中英双语教学 · 按摩请至少提前一天预订",
+      ),
     ],
     included: [
-      L("Therapist or meditation guide for the session", "理疗师 / 冥想引导师全程"),
-      L("Herbs, oils, towels and hot stones", "草药、精油、毛巾与热石"),
-      L("Private quiet room and tea afterwards", "独立安静房间与事后茶饮"),
+      L("Coach or therapist for the session", "教练或按摩师全程"),
+      L("Outdoor venue or quiet treatment room as listed", "户外场地或安静理疗空间（按项目）"),
+      L("Massage oils / towels when booked", "按摩精油、毛巾（预约按摩时）"),
+    ],
+    routesLabel: L("Session options", "体验小产品"),
+    routesSub: L(
+      "Three ways to slow down — book one, or stack two in a day.",
+      "三种慢下来的方式——可单订，也可同一天搭配两项。",
+    ),
+    routes: [
+      {
+        id: "taichi",
+        title: L("Tai Chi Experience", "太极拳体验"),
+        blurb: [
+          L(
+            "Zero-basis friendly, bilingual coaching. From breath and morning forms to soft power and silk-reeling — feel heaven-and-earth in the karst air.",
+            "零基础友好，中英双语教学。从呼吸、晨练开始，体验太极刚柔相济、缠丝发力，在山水里感受「以柔克刚、动静结合」。",
+          ),
+          L(
+            "Reference price: ¥300 / person for 1–3 · ¥200 / person for 4–10.",
+            "参考报价：1–3 人 300 元/人 · 4–10 人 200 元/人。",
+          ),
+        ],
+        images: [
+          asset("/light/wellness/taichi-1.jpeg"),
+          asset("/light/wellness/taichi-2.jpeg"),
+        ],
+      },
+      {
+        id: "nature-still",
+        title: L("Nature Stillness", "自然体验"),
+        blurb: [
+          L(
+            "Yoga, deep breath, and quiet time with Guilin’s peaks and water — a private pocket of calm we arrange for you.",
+            "在我们安排的地方享受属于自己的放松：瑜伽、深呼吸，与桂林山水安静相处。",
+          ),
+          L(
+            "Priced by venue and length — enquire with your dates.",
+            "按场地与时长核算，提交日期后报价。",
+          ),
+        ],
+        images: [
+          asset("/light/wellness/nature-1.jpeg"),
+          asset("/light/wellness/nature-2.jpeg"),
+        ],
+      },
+      {
+        id: "massage",
+        title: L("Foot or Full-Body Massage", "足底或全身按摩"),
+        blurb: [
+          L(
+            "Traditional Chinese pressure work: foot massage, full-body oil (1.5h) or dry (1h), or a foot bath with shoulder massage after long walks.",
+            "传统中式按摩：足底穴位、全身精油按摩（1.5 小时）或无油按摩（1 小时），也可选足浴与肩部按摩——乡间长走一天后尤其合适。",
+          ),
+          L(
+            "Experienced local therapists · please book at least one day ahead.",
+            "训练有素的当地按摩师 · 请至少提前一天预订。",
+          ),
+        ],
+        images: [],
+      },
     ],
   },
 ];
@@ -609,6 +909,58 @@ const files = import.meta.glob("../../content/experiences.yaml", {
   query: "?raw",
   import: "default",
 }) as Record<string, string>;
+
+const skuFiles = import.meta.glob("../../content/light-skus.yaml", {
+  eager: true,
+  query: "?raw",
+  import: "default",
+}) as Record<string, string>;
+
+type SkuYamlItem = {
+  id?: string;
+  category?: string;
+  kind?: string;
+  status?: string;
+  sort?: number;
+  title?: { en?: string; zh?: string };
+  blurb?: Array<{ en?: string; zh?: string }>;
+  images?: string[];
+};
+
+function loadSkuYaml(): SkuYamlItem[] {
+  try {
+    const raw = Object.values(skuFiles)[0] ?? "";
+    if (!raw) return [];
+    const doc = (parse(raw) ?? {}) as { items?: unknown };
+    return Array.isArray(doc.items) ? (doc.items as SkuYamlItem[]) : [];
+  } catch (err) {
+    console.warn("[content] content/light-skus.yaml 解析失败", err);
+    return [];
+  }
+}
+
+function skusForCategory(categoryId: string, kind: "route" | "meal"): LightRoute[] {
+  const rows = loadSkuYaml()
+    .filter(
+      (it) =>
+        it?.id &&
+        it.category === categoryId &&
+        (it.kind === kind || (!it.kind && kind === "route")) &&
+        it.status !== "paused",
+    )
+    .sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0));
+  return rows.map((it) => ({
+    id: String(it.id),
+    title: {
+      en: it.title?.en ?? "",
+      zh: it.title?.zh ?? "",
+    },
+    blurb: (it.blurb ?? [])
+      .filter((b) => b?.en || b?.zh)
+      .map((b) => ({ en: b.en ?? "", zh: b.zh ?? "" })),
+    images: (it.images ?? []).map((p) => asset(`/${String(p).replace(/^\//, "")}`)),
+  }));
+}
 
 const VALID_IDS: LightId[] = ["hike", "photo", "village", "foodfilm", "craft", "wellness"];
 
@@ -673,11 +1025,9 @@ function build(): LightExperience[] {
         desc: txListOf(it.desc, fb.desc),
         highlights: txListOf(it.highlights, fb.highlights),
         included: txListOf(it.included, fb.included),
-        // YAML 暂未建模 routes / meals；小产品与餐食先以代码为准
-        ...(fb.routes?.length ? { routes: fb.routes } : {}),
         ...(fb.routesLabel ? { routesLabel: fb.routesLabel } : {}),
         ...(fb.routesSub ? { routesSub: fb.routesSub } : {}),
-        ...(fb.meals?.length ? { meals: fb.meals } : {}),
+        // routes / meals 由 attachSkuOverlay 统一挂载
       });
     }
     return out.length ? out : FALLBACK;
@@ -687,7 +1037,41 @@ function build(): LightExperience[] {
   }
 }
 
-export const lightExperiences: LightExperience[] = build();
+function attachSkuOverlay(items: LightExperience[]): LightExperience[] {
+  return items.map((cat) => {
+    const routes = skusForCategory(cat.id, "route");
+    const meals = skusForCategory(cat.id, "meal");
+    return {
+      ...cat,
+      ...(routes.length
+        ? { routes }
+        : cat.routes?.length
+          ? { routes: cat.routes }
+          : {}),
+      ...(meals.length
+        ? { meals }
+        : cat.meals?.length
+          ? { meals: cat.meals }
+          : {}),
+    };
+  });
+}
+
+function attachPrices(items: LightExperience[]): LightExperience[] {
+  return items.map((cat) => ({
+    ...cat,
+    routes: cat.routes?.map((r) => {
+      const price = priceOf(r.id);
+      return price ? { ...r, price } : r;
+    }),
+    meals: cat.meals?.map((r) => {
+      const price = priceOf(r.id);
+      return price ? { ...r, price } : r;
+    }),
+  }));
+}
+
+export const lightExperiences: LightExperience[] = attachPrices(attachSkuOverlay(build()));
 
 export const lightById = (id: LightId): LightExperience | undefined =>
   lightExperiences.find((item) => item.id === id);

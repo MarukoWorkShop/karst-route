@@ -117,3 +117,14 @@ export const IconPlay = (p: P) => (
     <path d="M10 8.5v7l6-3.5-6-3.5Z" fill="currentColor" stroke="none" />
   </I>
 );
+/** Outline / solid heart — use `filled` for liked state. */
+export const IconHeart = ({ filled, ...p }: P & { filled?: boolean }) => (
+  <I
+    {...p}
+    fill={filled ? "currentColor" : "none"}
+    stroke={filled ? "none" : "currentColor"}
+    strokeWidth={filled ? 0 : 1.75}
+  >
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+  </I>
+);

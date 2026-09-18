@@ -65,12 +65,7 @@ export default function App() {
             go("plan");
           }}
         />
-        <Experience
-          onQuote={() => {
-            setIntent("custom");
-            go("plan");
-          }}
-        />
+        <Experience />
         <About />
         <PlanSection tab={intent} onTab={setIntent} route={route} />
         <Explore />

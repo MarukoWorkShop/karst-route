@@ -35,6 +35,10 @@
     "content:notion:patch-team-fees-misc": "node scripts/notion-patch-team-fees-to-misc.mjs",
     "content:notion:create-room-diff": "node scripts/notion-create-room-diff.mjs",
     "content:notion:create-market-tiers": "node scripts/notion-create-market-tiers.mjs",
+    "content:notion:create-light-skus": "node scripts/notion-create-light-skus.mjs",
+    "content:notion:organize-light": "node scripts/notion-organize-light.mjs",
+    "content:notion:split-light": "node scripts/notion-split-light-tables.mjs",
+    "content:dump-light-skus": "npx vite-node scripts/dump-light-skus.mjs",
     "content:pricing-align": "node scripts/pricing-align-from-itinerary.mjs",
     "content:pricing-scaffold": "node scripts/pricing-scaffold-from-itinerary.mjs",
     "content:keepTx": "node scripts/test-keepTx.mjs",
@@ -43,6 +47,7 @@
   "dependencies": {
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
+    "lucide-react": "^0.511.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "yaml": "^2.9.0"

@@ -324,14 +324,68 @@ CSV：`17-报价线路总览.csv`（三线路名称与 brief 模板）。
 
 官网首页「让旅途真正改变你」区块的六张卡片 + 详情大卡，数据源是 `content/experiences.yaml`。
 
-Notion 两个入口：
+Notion **两张独立表**（同一内容页下各一张，侧栏都能看到）：
 
-| 名称 | 用途 |
+| 表 | 用途 | 仓库文件 |
+|---|---|---|
+| **轻体验栏目** | 一行一个品类大卡：介绍、封面、时长/成团/季节 | `content/experiences.yaml` |
+| **轻体验清单** | 一行一个可售 SKU | `content/light-skus.yaml` |
+| **轻体验 · YAML 映射说明** | 两张表的列 ↔ YAML ↔ 网页；改前先看 | — |
+
+栏目顺序固定为 `hike → photo → village → foodfilm → craft → wellness`，栏目 `id` 不要新增或改名。
+
+改完跑 `npm run content:notion` → 写入 YAML → 网站更新。  
+手工导入备选：`18-轻体验栏目.csv`（6 行栏目）。
+
+整理层级 / 从网站回写栏目到 Notion：
+
+```bash
+npm run content:notion:organize-light
+# 或：node scripts/notion-organize-light.mjs
+```
+
+---
+
+## 轻体验清单（SKU · 运营/主理人货架）
+
+详情页里的「活动小产品 / 线路餐食」、桃心收藏、参考价与兴趣清单合计，都来自 **SKU**，不是栏目大卡。  
+在 Notion 内容页里直接打开「轻体验清单」，不要在「轻体验栏目」里找第二张表。
+
+| 仓库文件 | Notion |
 |---|---|
-| **轻体验栏目**（数据表） | 一行一个栏目，改文案、图片、时长/成团/季节 |
-| **轻体验 · YAML 映射说明**（文档页） | 列 ↔ YAML 字段 ↔ 网页位置的对照说明，改动前先看它 |
+| `content/light-skus.yaml` | **轻体验清单**（与「轻体验栏目」并列的独立表） |
 
-栏目顺序固定为 `hike → photo → village → foodfilm → craft → wellness`，`id` 不要新增或改名。
+### 常用列
 
-改完跑 `npm run content:notion` → 写入 `content/experiences.yaml` → 网站更新。  
-手工导入备选：`18-轻体验栏目.csv`（6 行）。
+| Notion 列 | 含义 |
+|---|---|
+| `id` | SKU 稳定键（如 `climb`）；桃心与计价依赖它，勿随意改 |
+| `category` | 归属栏目：`hike` / `village` / … |
+| `kind` | `route` 活动小产品 · `meal` 线路餐食 |
+| `status` | `在售` / `季节性` / `暂缓`（暂缓不上线） |
+| `sort` | 同栏目排序，越小越靠前 |
+| `title_zh` / `title_en` | 标题 |
+| `blurb1_*` / `blurb2_*` | 说明（网站会剥掉文内「参考报价」句，避免与结构化价重复） |
+| `images` | 一行一条，`public/` 相对路径，如 `light/hike/climb-1.jpeg` |
+| `price_unit` | `person` 按人 · `raft` 按筏 · `flat` 一口价 |
+| `price_cny_1_3` / `price_cny_4_plus` | 按人档位（元，十位取整） |
+| `raft_cny` / `raft_seats` | 按筏 |
+| `price_flat_cny` | 一口价 |
+| `min_pax` | 起订人数（可选） |
+| `price_note_zh` / `price_note_en` | 报价后补足，如「（2 人一车）· 驾驶约 50 分钟。」 |
+| `note` | 内部备注，不同步 |
+
+### 改完怎么生效
+
+1. 在 Notion「轻体验清单」改行  
+2. `npm run content:notion`（需 `.env.local` 的 `NOTION_TOKEN`）  
+3. 推送后 Actions 会同步并部署  
+
+首次建表 / 从代码灌入现有 32 个 SKU：
+
+```bash
+npx vite-node scripts/dump-light-skus.mjs   # 可选：从代码重导 YAML
+node scripts/notion-create-light-skus.mjs   # 建表或更新行
+```
+
+儿童计入单价人数；3 岁以下免费只在网站提示。英文站 USD/EUR 按参考汇率换算，人民币以本表为准。

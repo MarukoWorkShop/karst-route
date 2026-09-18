@@ -1,0 +1,792 @@
+# 轻体验 SKU 清单（可售小产品）
+# 修改方式二选一：
+#   1. Notion「轻体验清单」表 → npm run content:notion 同步回本文件
+#   2. 直接改本文件
+# 字段说明见 content/notion-import/README.md「轻体验清单」一节。
+#
+src: zh
+items:
+  - id: wulong-hike
+    category: hike
+    kind: route
+    status: live
+    sort: 10
+    title:
+      en: Wulongquan Countryside Walk
+      zh: 乌龙泉山径 · 田园徒步
+    blurb:
+      - en: Walk the paths around Wulongquan’s glass fields and karst viewpoints — the same countryside frames photographers chase at golden hour.
+        zh: 沿乌龙泉玻璃田与喀斯特观景台的山径慢走，把摄影向导眼中的田园风光，一步一步走进展平线。
+      - en: "No rush, no bus tour: soft trails, village roofs below, and peaks stacked to the horizon."
+        zh: 不赶场、不跟大巴：缓坡小径、脚下村舍，远山一层层叠到天边。
+    images:
+      - light/hike/hike-1.jpeg
+      - light/hike/hike-2.jpeg
+      - light/hike/hike-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 180
+        - max: 10
+          cny: 150
+        - max: 99
+          cny: 150
+  - id: creek
+    category: hike
+    kind: route
+    status: live
+    sort: 20
+    title:
+      en: Valley Creek Tracing
+      zh: 山谷溯溪 · 碧潭戏水
+    blurb:
+      - en: With outdoor coaches, climb rock, ford shallows and follow the stream upstream to jelly-clear swimming pools in a green gorge.
+        zh: 在专业户外教练带领下开启山谷溯溪：攀岩趟滩、逆流而上，找到泉水清凉的果冻碧潭。
+      - en: Jump, swim and ride natural water slides in the shade — playful and challenging, cool underfoot like early autumn.
+        zh: 阴凉处跳潭游泳，还能玩天然水上滑梯：既好玩又有挑战，脚下凉意恍如初秋。
+    images:
+      - light/hike/creek-1.jpeg
+      - light/hike/creek-2.jpeg
+      - light/hike/creek-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 350
+        - max: 10
+          cny: 300
+        - max: 99
+          cny: 300
+  - id: scooter
+    category: hike
+    kind: route
+    status: live
+    sort: 30
+    title:
+      en: Vintage Scooter on the Yulong Path
+      zh: 复古机车 · 遇龙河步道
+    blurb:
+      - en: Ride sidecar and vintage scooters along the Yulong River promenade — rice fields on both sides, karst peaks all around.
+        zh: 挎斗机车骑行遇龙河网红步道：水稻田边蜿蜒乡路，喀斯特峰丛环绕的广阔田园。
+      - en: Pause at Shuangliu ferry pavilion for a popsicle, splash at the weir, and take the photos the valley asks for.
+        zh: 双流义渡亭歇凉吃根老冰棍，堤坝上玩水嬉戏，在山水之间拍美美照、释放活力。
+    images:
+      - light/hike/scooter-1.jpeg
+      - light/hike/scooter-2.jpeg
+      - light/hike/scooter-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 280
+        - max: 10
+          cny: 250
+        - max: 99
+          cny: 250
+  - id: atv
+    category: hike
+    kind: route
+    status: live
+    sort: 40
+    title:
+      en: ATV Jungle Off-Road
+      zh: ATV 丛林越野车
+    blurb:
+      - en: "Beside a Li River tributary on the Jinbao riverside track: undeveloped scenery, a winding 5 km course through peak forest — speed and karst views together."
+        zh: 在漓江支流遇龙河 / 金宝河边：依山临水、景色零开发；5 公里赛道宽阔曲折，穿梭峰林之间，速度与山水美景同时拥有。
+      - en: "Reference price: ¥200 / person · two per vehicle · about 50 minutes driving."
+        zh: 参考报价：200 元/人（2 人一车）· 驾驶约 50 分钟。
+    images:
+      - light/hike/atv-doc-1.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 99
+          cny: 200
+    priceNote:
+      en: " (two per vehicle) · about 50 minutes driving."
+      zh: （2 人一车）· 驾驶约 50 分钟。
+  - id: raft
+    category: hike
+    kind: route
+    status: live
+    sort: 50
+    title:
+      en: Yulong River Bamboo Raft
+      zh: 遇龙河人工竹筏漂流
+    blurb:
+      - en: From Shiwai Taoyuan in Baisha to Gongnong Bridge by the big banyan — clear shallow water, green banks, bamboo and slow current. A quiet way to see village scenery.
+        zh: 遇龙河自白沙世外桃源至大榕树工农桥段，水质清澈、水流缓缓，两岸山峰清秀、翠竹葱郁。乘竹筏随波逐流，是欣赏乡村风光很放松的方式。
+      - en: "Trips run about 30–90 minutes from different put-ins. Reference: ¥300 per 2-person raft."
+        zh: 出发点和行程约半小时至 1.5 小时不等。参考报价：2 人竹筏 300 元/筏。
+    images:
+      - light/hike/raft-1.jpeg
+      - light/hike/raft-2.jpeg
+    price:
+      unit: raft
+      raftCny: 300
+      seats: 2
+  - id: bike
+    category: hike
+    kind: route
+    status: live
+    sort: 60
+    title:
+      en: Countryside Bike Loops
+      zh: 自行车休闲游
+    blurb:
+      - en: "Mountain-bike loops are a fast way into Yangshuo’s dramatic countryside. Three favourites: Moon Hill (half day), Yulong Bridge (full day, with swim stops), and Liugong Village (800-year riverside hamlet, three-colour ponds)."
+        zh: 山地自行车休闲游能在短时间内深入乡野。我们最喜欢的三条：月亮山路线（半天）、遇龙桥路线（全天，沿途可下水）、留公村路线（八百年江边古村，近旁有三色池塘）。
+      - en: We share up-to-date route notes so you can ride at your own pace.
+        zh: 我们提供最新路线说明，让你按自己的节奏骑完。
+    images:
+      - light/hike/bike-1.jpeg
+      - light/hike/bike-2.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 150
+        - max: 10
+          cny: 120
+        - max: 99
+          cny: 120
+  - id: climb
+    category: hike
+    kind: route
+    status: live
+    sort: 70
+    title:
+      en: Rock Climbing
+      zh: 攀岩
+    blurb:
+      - en: Yangshuo is a climbing hub with peaks for every level — gradient sport routes A/B/C/D-Plus and harder natural walls. Beginners and specialists both have options.
+        zh: 阳朔正迅速成为亚洲攀岩领域的圣地。山峰多样，不同水准都可锻炼；我们拥有 A/B/C/D-Plus 多条梯度线路，还有高难度自然岩壁可供选择。
+      - en: "Reference: ¥350 / person (1–3) · ¥300 / person (4–10) · about 2 hours."
+        zh: 参考报价：1–3 人 350 元/人 · 4–10 人 300 元/人 · 约 2 小时。
+    images:
+      - light/hike/climb-1.jpeg
+      - light/hike/climb-2.jpeg
+      - light/hike/climb-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 350
+        - max: 10
+          cny: 300
+        - max: 99
+          cny: 300
+    priceNote:
+      en: " · about 2 hours."
+      zh: " · 约 2 小时。"
+  - id: paddle
+    category: hike
+    kind: route
+    status: live
+    sort: 80
+    title:
+      en: Paddleboard / Kayak
+      zh: 浆板 / 皮划艇体验
+    blurb:
+      - en: "Downstream on the Li: quieter water, farm life on the banks — nets, buffalo, slow green shores. About 2–3 hours on the river."
+        zh: 顺漓江而下：这一段不拥堵，有一种静态的美，也是观察河边农家生活的好机会——渔网、水牛、岸边闲景。行程约 2–3 小时。
+      - en: "Reference: ¥200 · about 3 hours."
+        zh: 参考报价：200 元 · 约 3 小时。
+    images:
+      - light/hike/paddle-1.jpeg
+      - light/hike/paddle-2.jpeg
+      - light/hike/paddle-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 99
+          cny: 200
+    priceNote:
+      en: " · about 3 hours."
+      zh: " · 约 3 小时。"
+  - id: xingping-peaks
+    category: hike
+    kind: route
+    status: live
+    sort: 90
+    title:
+      en: Xingping Peak Walks
+      zh: 兴坪登山 · 老寨山 / 相公山
+    blurb:
+      - en: "Laosai Hill by Xingping’s old street and Rongshu pool: ~200 m stone path, a classic photo overlook of the Li’s 180° bend."
+        zh: 老寨山位于兴坪古镇老街头漓江榕树潭码头边，高约 200 余米，石径通顶，是观赏兴坪山水、尽览漓江大拐弯的经典摄影点。
+      - en: Xianggong Hill on the west bank between Yellow Cloth Shoal and Nine-Horse Fresco — cloud seas, sunrise and ordered peaks for photographers.
+        zh: 相公山在漓江西岸、黄布滩与九马画山之间：登顶远眺群峰有序、江流蜿蜒，光影云海与日出彩霞常吸引摄影人。
+    images: []
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 180
+        - max: 10
+          cny: 150
+        - max: 99
+          cny: 150
+  - id: yao-visit
+    category: village
+    kind: route
+    status: live
+    sort: 100
+    title:
+      en: Hong Yao Homestay Visit
+      zh: 红瑶人家 · 山歌唱进家门
+    blurb:
+      - en: Stilt houses still cling to the valley sides, and farming ways that look ancient are simply how people live here. Yao hosts meet you with mountain songs and walk you into their story.
+        zh: 依山而建的吊脚楼仍在，刀耕火种的农耕文明也并未变成展陈——瑶族阿嫂阿哥唱着山歌迎你进门，把红瑶人家的故事讲给你听。
+      - en: "It is a rare, sincere exchange: not a staged show, but a living household in the gorge offering a memory you can only get by sitting down with them."
+        zh: 这是遗落在峡谷里的真诚邀约：不是舞台表演，而是与当地人真正坐在一起，带走一份只能在这里发生的记忆。
+    images:
+      - light/village/yao-visit-1.jpeg
+      - light/village/yao-visit-2.jpeg
+      - light/village/yao-visit-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 250
+        - max: 10
+          cny: 200
+        - max: 99
+          cny: 200
+  - id: oil-tea
+    category: village
+    kind: route
+    status: live
+    sort: 110
+    title:
+      en: One Bitter, Four Fragrant · Oil Tea & Mugwort Ciba
+      zh: 一杯苦来四杯香 · 打油茶+艾叶粑粑制作
+    blurb:
+      - en: Yao oil tea is passed down by village elders who keep the tea customs — often in the family, sometimes across the community.
+        zh: 瑶族油茶是桂林村寨里了解和掌握瑶族茶规的长者、寨老会传授给年轻人的习俗相关知识。一般传承为家传，也有社会传承。
+      - en: "Includes making minority oil tea on site, trying ethnic dress, and making mugwort ciba (aiye baba). Reference: ¥200 / person (1–3, min 2) · ¥150 / person (4–10)."
+        zh: 含现场体验制作少数民族油茶、少数民族服饰体验，以及制作艾叶粑粑。参考报价：1–3 人 200 元/人（2 人起订）· 4–10 人 150 元/人。
+    images:
+      - light/village/oil-tea-baba-1.jpeg
+      - light/village/oil-tea-baba-2.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 200
+        - max: 10
+          cny: 150
+        - max: 99
+          cny: 150
+  - id: embroidered-ball
+    category: village
+    kind: route
+    status: live
+    sort: 120
+    title:
+      en: Make a Zhuang Embroidered Ball
+      zh: 绣球里的山水心意
+    blurb:
+      - en: Sit with a Zhuang auntie and stitch Guangxi’s iconic embroidered ball — a compact piece of intangible heritage held in the palm.
+        zh: 跟着壮族阿嫂亲手制作广西的瑰宝——绣球，学习传统针法，感受少数民族非遗如何落在指尖。
+      - en: "A small ball carries big wishes: courtship, blessing, and the warmth of wanting a good life for the people you love."
+        zh: 小小绣球寓意很深：寄托情意与祝福，也装着人们对美好生活的热情。
+    images:
+      - light/village/embroidered-ball-1.jpeg
+      - light/village/embroidered-ball-2.jpeg
+      - light/village/embroidered-ball-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 99
+          cny: 200
+  - id: dong-song
+    category: village
+    kind: route
+    status: live
+    sort: 130
+    title:
+      en: Dong Grand Song Gathering
+      zh: 侗族大歌 · 无指挥的自然和声
+    blurb:
+      - en: "Meet a heritage Dong song troupe face to face: many voices, no conductor, no accompaniment, no score — birdsong and mountain water folded into harmony."
+        zh: 与侗族大歌传承歌班面对面：多声部、无指挥、无伴奏、无曲谱，把鸟叫虫鸣、高山流水织进和声。
+      - en: Open that sonic world with them and feel how close Dong music sits to the natural soundscape of the hills.
+        zh: 打开侗族大歌的奇幻魔盒，感受侗族人民对自然界的亲近，以及传统音乐如何在村寨里继续生长。
+    images:
+      - light/village/dong-song-1.jpeg
+      - light/village/dong-song-2.jpeg
+      - light/village/dong-song-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 280
+        - max: 10
+          cny: 250
+        - max: 99
+          cny: 250
+  - id: stilt-tea
+    category: village
+    kind: route
+    status: live
+    sort: 140
+    title:
+      en: Tea in a Restored Stilt Granary
+      zh: 吊脚楼粮仓 · 一席老茶
+    blurb:
+      - en: A host walks you through a stilt-house granary’s second life — from ruin to loft garden, packed with carefully kept antiques.
+        zh: 主理人带你走进一座吊脚楼粮仓的故事：从破旧不堪到阁楼花园，满屋精心收藏的老物件。
+      - en: "Warmth and persistence, timber tradition meeting present-day living — then a quiet VIP tea table: pitched-pot games, whisked tea, unhurried talk."
+        zh: 温情与坚守，传统木构与现代生活交错。再入一席 VIP 茶室：投壶、点茶，把时间放慢。
+    images:
+      - light/village/stilt-tea-1.jpeg
+      - light/village/stilt-tea-2.jpeg
+      - light/village/stilt-tea-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 320
+        - max: 10
+          cny: 280
+        - max: 99
+          cny: 280
+  - id: home-visit
+    category: village
+    kind: route
+    status: live
+    sort: 150
+    title:
+      en: Local Family Homestay Visit
+      zh: 探访当地家访
+    blurb:
+      - en: "A drive to a countryside home: by season you may plant or harvest rice, or pick fruit. An English-speaking local guide explains rural life around Yangshuo — rice, citrus, pomelo, sugarcane, vegetables, and water buffalo in the fields."
+        zh: 您将乘车到达乡下的一个当地家庭；按季节可以看到或帮助种植、收割水稻，或进行水果采摘。会讲英语的当地导游会介绍阳朔周围的农村生活——人们种植水稻、柑橘、柚子、甘蔗、蔬菜，耕作中常使用水牛。
+      - en: "Share a simple lunch with the family and learn local ciba, tofu or bamboo weaving. Timing is flexible. Reference: ¥250 / person (1–3, min 2) · ¥200 / person (4–10)."
+        zh: 与家庭成员共享简单午餐，学习制作当地糍粑、豆腐或竹编。时间灵活。参考报价：1–3 人 250 元/人（2 人起订）· 4–10 人 200 元/人。
+    images:
+      - light/village/home-visit-1.jpeg
+      - light/village/home-visit-2.jpeg
+      - light/village/home-visit-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 250
+        - max: 10
+          cny: 200
+        - max: 99
+          cny: 200
+  - id: hermit
+    category: village
+    kind: route
+    status: live
+    sort: 160
+    title:
+      en: Visit Local Hermits
+      zh: 拜访当地隐士
+    blurb:
+      - en: A seek-the-hermit journey on this land — finding people who guard terroir with new eyes and craft, like modern Tao Yuanmings.
+        zh: 是一段在地寻隐记旅行，寻找每一位隐藏的隐士。语言、作物、思考方式、空气、风、传统、历史，都有自己的风土；像现代陶渊明，以新的眼光和创造力守护所在土地的风土。
+    images:
+      - light/village/hermit-1.jpeg
+      - light/village/hermit-2.jpeg
+      - light/village/hermit-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 280
+        - max: 10
+          cny: 250
+        - max: 99
+          cny: 250
+  - id: cormorant
+    category: village
+    kind: route
+    status: live
+    sort: 170
+    title:
+      en: Cormorant Fishing by Raft
+      zh: 鱼鹰抓鱼
+    blurb:
+      - en: Night bamboo-raft outing to watch the oldest fishing life on the Li — cormorants at work, up close, with a thousand-year fishing tradition.
+        zh: 夜乘竹筏，近距离欣赏漓江最原始的渔民生活——鱼鹰抓鱼。这里有着千年捕鱼历史，比在别处远观候鸟更有趣味。
+      - en: "Reference: ¥180 / person · about 1 hour."
+        zh: 参考报价：180 元/人 · 约 1 小时。
+    images:
+      - light/village/cormorant-1.jpeg
+      - light/village/cormorant-2.jpeg
+      - light/village/cormorant-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 99
+          cny: 180
+    priceNote:
+      en: " · about 1 hour."
+      zh: " · 约 1 小时。"
+  - id: festivals
+    category: village
+    kind: route
+    status: live
+    sort: 180
+    title:
+      en: Ethnic Village Festivals
+      zh: 少数民族节日
+    blurb:
+      - en: For the most rooted village culture — opening-farm day, seedling-combing, clothes-drying, long-hair festival, Shigong dance and more.
+        zh: 如果您只想体验最地道的乡村文化，了解村里的时光，不要错过这些节日：开耕节 / 梳秧节 / 晒衣节 / 长发节 / 师公舞等。
+      - en: "Reference: ¥500 / person (min 2) · transport not included · seasonal."
+        zh: 参考报价：500 元/人（2 人起订，不包含交通费）· 按节期安排。
+    images:
+      - light/village/festival-1.jpeg
+      - light/village/festival-2.jpeg
+      - light/village/festival-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 99
+          cny: 500
+      minPax: 2
+    priceNote:
+      en: " · transport not included · seasonal."
+      zh: " · 不包含交通费 · 按节期安排。"
+  - id: sanyuesan
+    category: village
+    kind: route
+    status: live
+    sort: 190
+    title:
+      en: March Third Song Fair
+      zh: 三月三歌圩
+    blurb:
+      - en: Zhuang song festival on the lunar March third — five-colour sticky rice, dyed eggs, song sheds on the village green. Gatherings last two or three days; large fairs draw thousands.
+        zh: 农历三月三又称三月三歌节或三月歌圩，是壮族传统歌节。家家户户做五色糯饭、染彩蛋；歌棚搭在村旁空地，对歌以未婚青年为主，小圩一两千人，大圩可达数万。
+    images: []
+    price:
+      unit: person
+      bands:
+        - max: 99
+          cny: 500
+  - id: nianzhu
+    category: village
+    kind: meal
+    status: live
+    sort: 200
+    title:
+      en: Winter Hog & Hearth Hotpot
+      zh: 年味年猪 · 围炉泡汤
+    blurb:
+      - en: Deep in the terraces in the coldest month, Zhuang villages kill a hog for the year — then gather by the fire for their traditional paotang feast.
+        zh: 寒冬腊月，梯田深处的壮族古村落年味渐浓：家家杀猪庆祝，开启独特的刨汤生活。
+      - en: "Sit by the hearth in a stilt-house inn: meat still warm, cured pork rich, and mountain rice wine poured soft — the New Year flavour you thought you'd lost."
+        zh: 民宿火塘边围炉而坐，新鲜猪肉还温热，腊肉淳厚，再喝两杯温好的山里米酒——久违的年味就在这一桌。
+    images:
+      - light/village/meals/nianzhu-1.jpeg
+      - light/village/meals/nianzhu-2.jpeg
+      - light/village/meals/nianzhu-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 280
+        - max: 10
+          cny: 250
+        - max: 99
+          cny: 250
+  - id: yanhua
+    category: village
+    kind: meal
+    status: live
+    sort: 210
+    title:
+      en: Hillside Courtyard Firework Feast
+      zh: 半山小院 · 烟花家宴
+    blurb:
+      - en: At dusk in a hillside hideaway above the valley, a courtyard dinner faces open karst — elegant, quiet, and set for celebration.
+        zh: 傍晚在大面山秘境的半山小院享用家宴：面对开豁山谷，环境优雅，美景与美食同桌。
+      - en: Then fireworks bloom over the peaks — the moment travel actually feels like travel.
+        zh: 漫天烟花亮起时，这一顿就更像一场真正的旅行。
+    images:
+      - light/village/meals/yanhua-1.jpeg
+      - light/village/meals/yanhua-2.jpeg
+      - light/village/meals/yanhua-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 380
+        - max: 10
+          cny: 320
+        - max: 99
+          cny: 320
+  - id: lijiang-table
+    category: village
+    kind: meal
+    status: live
+    sort: 220
+    title:
+      en: A Li River Table from the Banks
+      zh: 漓江餐桌 · 鱼虾与田园
+    blurb:
+      - en: Local hosts cook a Li River table worth boasting about — fish and shrimp from the river you just watched, greens from the fields beside it.
+        zh: 当地老乡土著做一顿值得吹嘘的漓江餐桌：鱼虾来自眼前的江，菜蔬来自身边的田园。
+      - en: Wild, seasonal, and tied to the water — not a restaurant menu, but a meal that belongs to this bend of the river.
+        zh: 野趣、当季、贴着江水——不是餐馆菜单，而是属于这一湾漓江的一餐。
+    images:
+      - light/village/meals/lijiang-1.jpeg
+      - light/village/meals/lijiang-2.jpeg
+      - light/village/meals/lijiang-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 250
+        - max: 10
+          cny: 220
+        - max: 99
+          cny: 220
+  - id: zhuang-feast
+    category: village
+    kind: meal
+    status: live
+    sort: 230
+    title:
+      en: Zhuang Homestead Feast by Season
+      zh: 壮族家宴 · 四时风物
+    blurb:
+      - en: A Zhuang auntie brings the village kitchen to the table — wild greens in spring, creek fish in summer, osmanthus in autumn, hotpot in winter.
+        zh: 壮族阿嫂把当地美食搬上家宴：春天野菜餐，夏天野生溪鱼，秋天桂花餐，冬天泡汤宴。
+      - en: Different season, different plate — one long table of living Zhuang foodways, including the famous raw fish.
+        zh: 什么季节来，就吃什么——一桌活着的壮族饮食文化，也少不了那盘鱼生。
+    images:
+      - light/village/meals/zhuang-1.jpeg
+      - light/village/meals/zhuang-2.jpeg
+      - light/village/meals/zhuang-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 250
+        - max: 10
+          cny: 220
+        - max: 99
+          cny: 220
+  - id: riverside
+    category: village
+    kind: meal
+    status: live
+    sort: 240
+    title:
+      en: Private Riverside Garden Dinner
+      zh: 遇龙河畔 · 私家晚宴
+    blurb:
+      - en: A riverside private garden on the Yulong — the kind of house kitchen you only reach through introduction.
+        zh: 在遇龙河私家花园享用河畔晚宴：非熟人预约不到的私房菜馆，美食美景，仪式感十足。
+      - en: The chef cooks what the season gives — river, Li River banks, and hillside fields — under starlight on the water.
+        zh: 主厨选用当季风物：遇龙河、漓江与山间田野入菜，河畔星光下慢慢吃完这一顿。
+    images:
+      - light/village/meals/riverside-1.jpeg
+      - light/village/meals/riverside-2.jpeg
+      - light/village/meals/riverside-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 450
+        - max: 10
+          cny: 380
+        - max: 99
+          cny: 380
+  - id: cooking-school
+    category: foodfilm
+    kind: route
+    status: live
+    sort: 250
+    title:
+      en: Yangshuo Cooking School
+      zh: 阳朔厨艺学校
+    blurb:
+      - en: Learn real Chinese dishes in a traditional farmhouse kitchen. Friendly teachers emphasise doing, not watching; they also take you to the local market for ingredients. Then you eat what you cooked for lunch.
+        zh: 在阳朔传统中国农舍中学习烹调中国食物。友善的老师强调实际操作而不是看；还会带您去当地市场了解配料。制作菜肴之后，一起食用午餐。
+      - en: "Small class · English-speaking local teacher · half day · 2–4 dishes · recipes to take home. Reference: ¥380 / person (1–3) · ¥280 / person (4–10)."
+        zh: 小班教学 · 会讲英语的本地老师 · 半天学 2–4 道菜 · 含食谱。参考报价：1–3 人 380 元/人 · 4–10 人 280 元/人。
+    images:
+      - light/foodfilm/cooking-1.jpeg
+      - light/foodfilm/cooking-2.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 380
+        - max: 10
+          cny: 280
+        - max: 99
+          cny: 280
+  - id: chicken
+    category: foodfilm
+    kind: route
+    status: live
+    sort: 260
+    title:
+      en: Bamboo Grove Chickens & Bamboo Rice
+      zh: 竹林捉鸡 · 竹筒饭香
+    blurb:
+      - en: In a terraced village, hosts walk you into the bamboo to catch chickens and gather eggs — then cook the day’s catch.
+        zh: 深入梯田环绕的自然村寨，民宿阿嫂阿哥带你漫步山谷，在竹林里捉鸡、捡鸡蛋。
+      - en: Evening turns the harvest into bamboo-tube chicken and sticky rice — labour you can taste.
+        zh: 晚上，劳动收获变成竹筒鸡与竹筒饭——亲手忙过的一餐，特别香。
+    images:
+      - light/hike/chicken-1.jpeg
+      - light/hike/chicken-2.jpeg
+      - light/hike/chicken-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 280
+        - max: 10
+          cny: 250
+        - max: 99
+          cny: 250
+  - id: fuli-fan
+    category: craft
+    kind: route
+    status: live
+    sort: 270
+    title:
+      en: Fuli Fan Painting
+      zh: 福利古镇画扇
+    blurb:
+      - en: A guide and private car take you to Fuli — famous for Chinese fans of every size. After a short walk in the old town, paint a fan of your own (about 2 hours).
+        zh: 当地导游与专车带您到福利古镇，逛老城区。福利以制扇闻名，大小皆可。短游之后，画一把属于自己的扇（约 2 小时）。
+      - en: "Reference: ¥250 / person (1–3) · ¥200 / person (4–10)."
+        zh: 参考报价：1–3 人 250 元/人 · 4–10 人 200 元/人。
+    images:
+      - light/craft/fuli-fan-1.jpeg
+      - light/craft/fuli-fan-2.jpeg
+      - light/craft/fuli-fan-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 250
+        - max: 10
+          cny: 200
+        - max: 99
+          cny: 200
+  - id: heritage-crafts
+    category: craft
+    kind: route
+    status: live
+    sort: 280
+    title:
+      en: Intangible Heritage Workshop
+      zh: 非遗传统文化
+    blurb:
+      - en: "Choose among: wrapping zongzi, making tofu, straw shoes, straw dragon, weaving, five-colour sticky rice, ciba, embroidered ball, cloth weaving."
+        zh: 可选体验：包粽子 / 做豆腐 / 草鞋 / 草龙 / 编织 / 五色糯米饭 / 糍粑 / 绣球体验 / 织布。
+      - en: "Reference: ¥200 / person."
+        zh: 参考报价：200 元/人。
+    images:
+      - light/craft/heritage-1.jpeg
+      - light/craft/heritage-2.jpeg
+      - light/craft/heritage-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 99
+          cny: 200
+  - id: calligraphy
+    category: craft
+    kind: route
+    status: live
+    sort: 290
+    title:
+      en: Chinese Calligraphy
+      zh: 中国书法
+    blurb:
+      - en: A hands-on session with brush and ink — form, breath and the character of each stroke.
+        zh: 毛笔与墨：一堂动手的书法体验，感受每一笔的形与气息。
+    images:
+      - light/craft/calligraphy-1.jpeg
+      - light/craft/calligraphy-2.jpeg
+      - light/craft/calligraphy-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 99
+          cny: 200
+  - id: taichi
+    category: wellness
+    kind: route
+    status: live
+    sort: 300
+    title:
+      en: Tai Chi Experience
+      zh: 太极拳体验
+    blurb:
+      - en: Zero-basis friendly, bilingual coaching. From breath and morning forms to soft power and silk-reeling — feel heaven-and-earth in the karst air.
+        zh: 零基础友好，中英双语教学。从呼吸、晨练开始，体验太极刚柔相济、缠丝发力，在山水里感受「以柔克刚、动静结合」。
+      - en: "Reference price: ¥300 / person for 1–3 · ¥200 / person for 4–10."
+        zh: 参考报价：1–3 人 300 元/人 · 4–10 人 200 元/人。
+    images:
+      - light/wellness/taichi-1.jpeg
+      - light/wellness/taichi-2.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 300
+        - max: 10
+          cny: 200
+        - max: 99
+          cny: 200
+  - id: nature-still
+    category: wellness
+    kind: route
+    status: live
+    sort: 310
+    title:
+      en: Nature Stillness
+      zh: 自然体验
+    blurb:
+      - en: Yoga, deep breath, and quiet time with Guilin’s peaks and water — a private pocket of calm we arrange for you.
+        zh: 在我们安排的地方享受属于自己的放松：瑜伽、深呼吸，与桂林山水安静相处。
+      - en: Priced by venue and length — enquire with your dates.
+        zh: 按场地与时长核算，提交日期后报价。
+    images:
+      - light/wellness/nature-1.jpeg
+      - light/wellness/nature-2.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 200
+        - max: 10
+          cny: 180
+        - max: 99
+          cny: 180
+  - id: massage
+    category: wellness
+    kind: route
+    status: live
+    sort: 320
+    title:
+      en: Foot or Full-Body Massage
+      zh: 足底或全身按摩
+    blurb:
+      - en: "Traditional Chinese pressure work: foot massage, full-body oil (1.5h) or dry (1h), or a foot bath with shoulder massage after long walks."
+        zh: 传统中式按摩：足底穴位、全身精油按摩（1.5 小时）或无油按摩（1 小时），也可选足浴与肩部按摩——乡间长走一天后尤其合适。
+      - en: Experienced local therapists · please book at least one day ahead.
+        zh: 训练有素的当地按摩师 · 请至少提前一天预订。
+    images: []
+    price:
+      unit: person
+      bands:
+        - max: 99
+          cny: 280
