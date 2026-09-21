@@ -17,6 +17,7 @@ import { formatMoney, fmtCny } from "@/lib/fx";
 import { sendEnquiry } from "@/lib/enquiry";
 import { lineTotalCny, priceOf, formatSkuPriceParts, priceNoteOf, stripPriceFromBlurb } from "@/lib/lightPrice";
 import { bumpSkuClick, popularityScore, readSkuClicks } from "@/lib/lightClicks";
+import { LightReviews } from "@/components/experience/LightReviews";
 import { useFxRates, usePriceCurrency } from "@/hooks/useFx";
 
 type View = { kind: "index" } | { kind: "item"; id: LightId };
@@ -69,7 +70,7 @@ function collectLiked(keys: Set<string>): LikedSku[] {
   return out;
 }
 
-/** 在地小体验：Profoundly Local Experiences —— 可单独预订的小产品栏目 */
+/** 在地小体验货架。桌面栏目详情为宽幅两栏：左小产品，右介绍与评价。 */
 export function Experience() {
   const { t } = useLocale();
   const [open, setOpen] = useState<View | null>(null);
@@ -243,7 +244,7 @@ function LightModal({
         aria-modal="true"
         aria-labelledby={titleId}
         className={`relative z-[1] flex h-dvh w-full flex-col overflow-y-auto overscroll-contain bg-surface p-4 pt-14 shadow-none ring-0 md:my-auto md:h-auto md:max-h-none md:w-[min(92vw,960px)] md:overflow-visible md:rounded-xl md:p-6 md:pt-6 md:shadow-[0_24px_64px_rgba(16,28,22,0.22)] md:ring-1 md:ring-line ${
-          item ? "md:grid md:grid-cols-[1.15fr_0.85fr] md:gap-6" : ""
+          item ? "md:grid md:grid-cols-[1.15fr_0.85fr] md:items-start md:gap-x-6" : ""
         }`}
       >
         <button
@@ -319,7 +320,7 @@ function IndexBody({
   }
 
   return (
-    <div className="md:col-span-2">
+    <div>
       <p className="type-meta text-cta">{t(copy.light.kicker)}</p>
       <h3 id={titleId} className="type-h3 mt-1 pr-10 text-ink">
         {t(copy.light.allTitle)}
@@ -403,121 +404,117 @@ function ItemBody({
   const money = (cny: number) => formatMoney(cny, { locale, currency, rates });
   const routes = item.routes ?? [];
   const meals = item.meals ?? [];
+  const lead = item.desc[0];
+  const chips = [...item.highlights, ...item.included];
   return (
     <>
-      {/* 左栏：直接产品列（栏目 gallery 保留在数据里，详情不展示） */}
-      <div className="flex min-w-0 flex-col self-start">
-        {routes.length ? (
-          <div>
-            <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
-              <div className="min-w-0">
-                <p className="type-meta text-cta">{t(item.routesLabel ?? copy.light.routes)}</p>
-                <p className="type-aux mt-1 text-ink-soft">{t(item.routesSub ?? copy.light.routesSub)}</p>
-              </div>
-              {locale === "en" ? (
-                <CurrencyToggle value={currency} onChange={setCurrency} className="mt-0.5 shrink-0" />
-              ) : null}
-            </div>
-            <ul className="mt-3 flex flex-col gap-4">
-              {routes.map((route) => (
-                <SkuCard
-                  key={route.id}
-                  route={route}
-                  liked={likes.has(likeKey(item.id, route.id))}
-                  onToggleLike={() => onToggleLike(item.id, route.id)}
-                  formatAmount={money}
-                />
+      {/* 手机 contents：介绍 / 产品 / 评价仍按 order 单列。桌面合成右栏一格，避免左列跨两行把评价撑开。 */}
+      <div className="contents md:col-start-2 md:row-start-1 md:flex md:min-w-0 md:flex-col md:self-start">
+        <div className="order-1 min-w-0">
+          <button
+            type="button"
+            onClick={onBack}
+            className="type-aux mb-3 self-start text-ink-soft transition hover:text-cta"
+          >
+            ← {t(copy.light.back)}
+          </button>
+          <h3 id={titleId} className="type-h3 pr-10 text-ink md:pr-8">
+            {t(item.title)}
+          </h3>
+          <p className="type-aux mt-1.5 text-ink-soft">{t(item.tagline)}</p>
+          {lead ? <p className="type-body mt-4 text-ink">{t(lead)}</p> : null}
+          {chips.length ? (
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              {chips.map((x) => (
+                <span
+                  key={x.zh || x.en}
+                  className="type-aux inline-flex rounded-full bg-cta/8 px-2.5 py-1 text-cta"
+                >
+                  {t(x)}
+                </span>
               ))}
-            </ul>
-          </div>
-        ) : (
-          <p className="type-aux text-ink-soft">{t(copy.light.priceNote)}</p>
-        )}
+            </div>
+          ) : null}
+        </div>
+
+        <div className="order-3 min-w-0 pb-[max(1rem,env(safe-area-inset-bottom))] md:pb-0">
+          <LightReviews category={item.id} />
+        </div>
       </div>
 
-      <div className="mt-4 flex min-w-0 flex-1 flex-col md:mt-0">
-        <button
-          type="button"
-          onClick={onBack}
-          className="type-aux mb-3 self-start text-ink-soft transition hover:text-cta"
-        >
-          ← {t(copy.light.back)}
-        </button>
-        <p className="type-meta text-cta">{t(item.badge)}</p>
-        <h3 id={titleId} className="type-h3 mt-1 pr-10 text-ink md:pr-8">
-          {t(item.title)}
-        </h3>
-        <p className="type-aux mt-1.5 text-ink-soft">{t(item.tagline)}</p>
-
-        <div className="mt-3 grid grid-cols-3 gap-px overflow-hidden rounded-lg bg-line ring-1 ring-line">
-          <Meta label={t(copy.light.duration)} value={t(item.duration)} />
-          <Meta label={t(copy.light.group)} value={t(item.group)} />
-          <Meta label={t(copy.light.season)} value={t(item.season)} />
-        </div>
-
-        <div className="mt-4 space-y-3">
-          {item.desc.map((p) => (
-            <p key={p.en} className="type-body text-ink">
-              {t(p)}
-            </p>
-          ))}
-        </div>
-
-        <div className="mt-5 border-t border-line pt-4">
-          <p className="type-meta mb-3 text-ink-soft">{t(copy.light.highlights)}</p>
-          <ul className="flex flex-col gap-2.5">
-            {item.highlights.map((h) => (
-              <li key={h.en} className="flex items-start gap-2.5">
-                <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-cta" />
-                <span className="type-body text-ink">{t(h)}</span>
-              </li>
+      <div className="order-2 flex min-w-0 flex-col self-start md:col-start-1 md:row-start-1 md:[&>section:first-child]:mt-0">
+        {routes.length ? (
+          <SkuGroup
+            title={t(item.routesLabel ?? copy.light.routes)}
+            sub={t(item.routesSub ?? copy.light.routesSub)}
+            aside={
+              locale === "en" ? (
+                <CurrencyToggle value={currency} onChange={setCurrency} className="shrink-0" />
+              ) : null
+            }
+          >
+            {routes.map((route) => (
+              <SkuCard
+                key={route.id}
+                route={route}
+                liked={likes.has(likeKey(item.id, route.id))}
+                onToggleLike={() => onToggleLike(item.id, route.id)}
+                formatAmount={money}
+              />
             ))}
-          </ul>
-        </div>
-
-        <div className="mt-5 border-t border-line pt-4">
-          <p className="type-meta mb-2.5 text-ink-soft">{t(copy.light.included)}</p>
-          <div className="flex flex-wrap gap-1.5">
-            {item.included.map((x) => (
-              <span
-                key={x.en}
-                className="type-chip inline-flex items-center gap-1 rounded-full bg-cta/8 px-2.5 py-1 font-medium tracking-normal normal-case text-cta"
-              >
-                <CheckMark />
-                {t(x)}
-              </span>
-            ))}
-          </div>
-        </div>
+          </SkuGroup>
+        ) : (
+          <p className="type-aux mt-6 text-ink-soft md:mt-0">{t(copy.light.priceNote)}</p>
+        )}
 
         {meals.length ? (
-          <div className="mt-5 border-t border-line pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:pb-0">
-            <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
-              <div className="min-w-0">
-                <p className="type-meta text-cta">{t(copy.light.meals)}</p>
-                <p className="type-aux mt-1 text-ink-soft">{t(copy.light.mealsSub)}</p>
-              </div>
-              {locale === "en" && !routes.length ? (
-                <CurrencyToggle value={currency} onChange={setCurrency} className="mt-0.5 shrink-0" />
-              ) : null}
-            </div>
-            <ul className="mt-3 flex flex-col gap-4">
-              {meals.map((meal) => (
-                <SkuCard
-                  key={meal.id}
-                  route={meal}
-                  liked={likes.has(likeKey(item.id, meal.id))}
-                  onToggleLike={() => onToggleLike(item.id, meal.id)}
-                  formatAmount={money}
-                />
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <div className="pb-[max(1rem,env(safe-area-inset-bottom))] md:pb-0" />
-        )}
+          <SkuGroup
+            title={t(copy.light.meals)}
+            sub={t(copy.light.mealsSub)}
+            aside={
+              locale === "en" && !routes.length ? (
+                <CurrencyToggle value={currency} onChange={setCurrency} className="shrink-0" />
+              ) : null
+            }
+          >
+            {meals.map((meal) => (
+              <SkuCard
+                key={meal.id}
+                route={meal}
+                liked={likes.has(likeKey(item.id, meal.id))}
+                onToggleLike={() => onToggleLike(item.id, meal.id)}
+                formatAmount={money}
+              />
+            ))}
+          </SkuGroup>
+        ) : null}
       </div>
     </>
+  );
+}
+
+function SkuGroup({
+  title,
+  sub,
+  aside,
+  children,
+}: {
+  title: string;
+  sub: string;
+  aside?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <section className="mt-8">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <h4 className="type-sub font-medium text-ink">{title}</h4>
+          <p className="type-aux mt-1 text-ink-soft">{sub}</p>
+        </div>
+        {aside}
+      </div>
+      <ul className="mt-2">{children}</ul>
+    </section>
   );
 }
 
@@ -525,13 +522,11 @@ function SkuCard({
   route,
   liked,
   onToggleLike,
-  eyebrow,
   formatAmount = fmtCny,
 }: {
   route: LightRoute;
   liked: boolean;
   onToggleLike: () => void;
-  eyebrow?: ReactNode;
   formatAmount?: (cny: number) => string;
 }) {
   const { t, locale } = useLocale();
@@ -555,45 +550,49 @@ function SkuCard({
   }, [tip]);
 
   return (
-    <li className="relative rounded-[10px] border border-line bg-paper/60 p-3 pt-3.5">
-      <div className="absolute top-2 right-2 z-[1] flex items-center gap-1.5">
-        {tip ? (
-          <span
-            role="status"
-            className="like-tip type-aux pointer-events-none rounded-full bg-night/88 px-2.5 py-1 font-medium tracking-[0.04em] text-paper shadow-sm"
+    <li className="border-t border-line py-5 first:border-t-0 first:pt-3 md:py-3.5">
+      <div className="flex items-center justify-between gap-3">
+        <h4 className="type-h3 min-w-0 flex-1 text-ink">{t(route.title)}</h4>
+        <div className="relative flex shrink-0 items-center gap-0.5">
+          {tip ? (
+            <span
+              role="status"
+              className="like-tip type-aux pointer-events-none absolute right-0 bottom-full z-[1] mb-1 rounded-full bg-night/88 px-2.5 py-1 font-medium tracking-[0.04em] whitespace-nowrap text-paper"
+            >
+              {t(copy.light.interestedToast)}
+            </span>
+          ) : null}
+          {priceParts ? (
+            <p className="type-price whitespace-nowrap text-ink">{priceParts.core}</p>
+          ) : null}
+          <button
+            type="button"
+            aria-pressed={liked}
+            aria-label={t(liked ? copy.light.unlikeAria : copy.light.likeAria)}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!liked) {
+                setPop(false);
+                requestAnimationFrame(() => setPop(true));
+                setTip(true);
+              }
+              onToggleLike();
+            }}
+            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition hover:bg-danger/8 ${
+              liked ? "text-danger" : "text-ink-soft hover:text-danger"
+            }`}
           >
-            {t(copy.light.interestedToast)}
-          </span>
-        ) : null}
-        <button
-          type="button"
-          aria-pressed={liked}
-          aria-label={t(liked ? copy.light.unlikeAria : copy.light.likeAria)}
-          onClick={(e) => {
-            e.stopPropagation();
-            if (!liked) {
-              setPop(false);
-              requestAnimationFrame(() => setPop(true));
-              setTip(true);
-            }
-            onToggleLike();
-          }}
-          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-paper/90 transition hover:bg-danger/8 ${
-            liked ? "text-danger" : "text-ink-soft hover:text-danger"
-          }`}
-        >
-          <IconHeart
-            filled={liked}
-            className={`h-[18px] w-[18px] ${pop ? "like-heart-pop" : ""}`}
-            onAnimationEnd={() => setPop(false)}
-          />
-        </button>
+            <IconHeart
+              filled={liked}
+              className={`h-[18px] w-[18px] ${pop ? "like-heart-pop" : ""}`}
+              onAnimationEnd={() => setPop(false)}
+            />
+          </button>
+        </div>
       </div>
-      {eyebrow}
-      <h4 className="type-sub pr-9 font-medium text-ink">{t(route.title)}</h4>
       <SkuImages images={route.images} />
       {blurbs.length ? (
-        <div className="mt-2.5 space-y-1.5">
+        <div className="mt-2 space-y-1.5">
           {blurbs.map((b) => (
             <p key={b.key} className="type-aux text-ink-soft">
               {b.text}
@@ -601,55 +600,71 @@ function SkuCard({
           ))}
         </div>
       ) : null}
-      {priceParts ? (
-        <p className="type-body mt-2.5 text-ink">
-          <span>{priceParts.lead}</span>
-          <span className="text-[15px] font-semibold tracking-[0.01em]">{priceParts.core}</span>
-          {note ? <span>{note}</span> : null}
-        </p>
-      ) : null}
+      {note ? <p className="type-aux mt-1 text-ink-soft">{note}</p> : null}
     </li>
   );
 }
 
-/** 1 张大图 / 2 张中图错落 / 3 张瀑布，避免统一三小格 */
+/** 手机：1 张大图 / 2–3 张瀑布满宽。桌面：同一组图横排，高度比矮条加高一半，少裁照片。 */
 function SkuImages({ images }: { images: string[] }) {
   const imgs = images.slice(0, 3);
   if (!imgs.length) return null;
 
+  const strip = (
+    <div
+      className="mt-2 hidden gap-2 md:grid"
+      style={{ gridTemplateColumns: `repeat(${imgs.length}, minmax(0, 1fr))` }}
+    >
+      {imgs.map((src, i) => (
+        <div key={`${src}-${i}`} className="h-36 overflow-hidden rounded-md bg-bone">
+          <img src={src} alt="" className="h-full w-full object-cover" loading="lazy" />
+        </div>
+      ))}
+    </div>
+  );
+
   if (imgs.length === 1) {
     return (
-      <div className="mt-2.5 overflow-hidden rounded-md bg-bone">
-        <img src={imgs[0]} alt="" className="aspect-[16/10] w-full object-cover" loading="lazy" />
-      </div>
+      <>
+        <div className="mt-2.5 overflow-hidden rounded-md bg-bone md:hidden">
+          <img src={imgs[0]} alt="" className="aspect-[16/10] w-full object-cover" loading="lazy" />
+        </div>
+        {strip}
+      </>
     );
   }
 
   if (imgs.length === 2) {
     return (
-      <div className="mt-2.5 grid grid-cols-2 items-end gap-2">
-        <div className="overflow-hidden rounded-md bg-bone">
-          <img src={imgs[0]} alt="" className="aspect-[3/4] w-full object-cover" loading="lazy" />
+      <>
+        <div className="mt-2.5 grid grid-cols-2 items-end gap-2 md:hidden">
+          <div className="overflow-hidden rounded-md bg-bone">
+            <img src={imgs[0]} alt="" className="aspect-[3/4] w-full object-cover" loading="lazy" />
+          </div>
+          <div className="overflow-hidden rounded-md bg-bone pb-4">
+            <img src={imgs[1]} alt="" className="aspect-square w-full object-cover" loading="lazy" />
+          </div>
         </div>
-        <div className="overflow-hidden rounded-md bg-bone pb-4">
-          <img src={imgs[1]} alt="" className="aspect-square w-full object-cover" loading="lazy" />
-        </div>
-      </div>
+        {strip}
+      </>
     );
   }
 
   return (
-    <div className="mt-2.5 grid grid-cols-2 gap-2">
-      <div className="row-span-2 overflow-hidden rounded-md bg-bone">
-        <img src={imgs[0]} alt="" className="h-full min-h-[11rem] w-full object-cover" loading="lazy" />
+    <>
+      <div className="mt-2.5 grid grid-cols-2 gap-2 md:hidden">
+        <div className="row-span-2 overflow-hidden rounded-md bg-bone">
+          <img src={imgs[0]} alt="" className="h-full min-h-[11rem] w-full object-cover" loading="lazy" />
+        </div>
+        <div className="overflow-hidden rounded-md bg-bone">
+          <img src={imgs[1]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
+        </div>
+        <div className="overflow-hidden rounded-md bg-bone">
+          <img src={imgs[2]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
+        </div>
       </div>
-      <div className="overflow-hidden rounded-md bg-bone">
-        <img src={imgs[1]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
-      </div>
-      <div className="overflow-hidden rounded-md bg-bone">
-        <img src={imgs[2]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
-      </div>
-    </div>
+      {strip}
+    </>
   );
 }
 
@@ -1051,22 +1066,5 @@ function PartyStepper({
         </button>
       </div>
     </div>
-  );
-}
-
-function Meta({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="bg-surface px-3 py-2.5">
-      <p className="type-meta text-ink-soft">{label}</p>
-      <p className="type-aux mt-0.5 font-medium text-ink">{value}</p>
-    </div>
-  );
-}
-
-function CheckMark() {
-  return (
-    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden>
-      <path d="M2 6.4L4.6 9L10 3.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
   );
 }

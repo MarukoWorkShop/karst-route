@@ -27,6 +27,8 @@ databases:
   lightExperiences: 3d7d5dfd82c481a28137f44e66039154
   # 独立整页表「轻体验清单」（与栏目并列，侧栏各一张）
   lightSkus: a3903bc864264f1392631b1a536b1851
+  # 轻体验详情右侧客人评价
+  lightReviews: 3e2d5dfd82c481edb155e6ff1011c245
 # 栏目是多源库，同步时必须指定 data source；清单是单表，data source 仅作备用
 dataSources:
   lightExperiences: 3d7d5dfd82c481dca928000ba3208875

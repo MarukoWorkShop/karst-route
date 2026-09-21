@@ -3,7 +3,9 @@
 """Upload public/destinations|tours|reviews|light to Tencent COS (same object keys).
 
 Credentials: macOS dialog (never printed), or TENCENTCLOUD_SECRET_ID / TENCENTCLOUD_SECRET_KEY.
-Optional args: only sync listed dirs, e.g. `python3 scripts/cos-sync-public.py light`
+Optional args: top-level dirs or subpaths under them, e.g.
+  python3 scripts/cos-sync-public.py light
+  python3 scripts/cos-sync-public.py light/reviews
 """
 from __future__ import annotations
 
@@ -47,11 +49,29 @@ def ask_gui(prompt: str, hidden: bool = False) -> str | None:
         return None
 
 
-def collect_files(dirs: tuple[str, ...] = DIRS) -> list[tuple[Path, str]]:
+def resolve_scopes(args: list[str]) -> list[str]:
+    """Return relative scopes under public/ (e.g. light, light/reviews)."""
+    if not args:
+        return list(DIRS)
+    out: list[str] = []
+    for raw in args:
+        rel = raw.strip().strip("/")
+        if not rel:
+            continue
+        top = rel.split("/", 1)[0]
+        if top not in DIRS:
+            print(f"跳过未知目录：{raw}（允许：{', '.join(DIRS)} 及其子路径）", file=sys.stderr)
+            continue
+        out.append(rel)
+    return out or list(DIRS)
+
+
+def collect_files(scopes: list[str] | None = None) -> list[tuple[Path, str]]:
     out: list[tuple[Path, str]] = []
-    for d in dirs:
-        base = PUBLIC / d
+    for rel in scopes or list(DIRS):
+        base = PUBLIC / rel
         if not base.is_dir():
+            print(f"警告：本地目录不存在 {base}", file=sys.stderr)
             continue
         for path in sorted(base.rglob("*")):
             if not path.is_file():
@@ -86,9 +106,9 @@ def main() -> int:
     # discard locals ASAP from further prints
     secret_id = secret_key = None
 
-    dirs = tuple(a for a in sys.argv[1:] if a in DIRS) or DIRS
-    files = collect_files(dirs)
-    print(f"准备上传 {len(files)} 个文件到 {BUCKET}（目录：{', '.join(dirs)}）…")
+    scopes = resolve_scopes(sys.argv[1:])
+    files = collect_files(scopes)
+    print(f"准备上传 {len(files)} 个文件到 {BUCKET}（范围：{', '.join(scopes)}）…")
     ok = fail = 0
     for i, (path, key) in enumerate(files, 1):
         size_kb = path.stat().st_size / 1024

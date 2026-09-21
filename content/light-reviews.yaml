@@ -1,0 +1,121 @@
+# 轻体验客人评价（详情卡右侧评论区）
+# 修改方式二选一：
+#   1. Notion「轻体验评价」表 → npm run content:notion 同步回本文件
+#   2. 直接改本文件
+# category 只能是 hike / photo / village / foodfilm / craft / wellness
+# body 中英各不超过 999 字；photos 最多 4 张，写 light/reviews/…（与 COS 同键）
+# 原文语言见 src；译文空着时上线前再补
+
+src: zh
+items:
+  - id: hp-seed-box
+    category: foodfilm
+    flag: ✦
+    name: Guest A
+    country: ""
+    rating: 5
+    date: 2025-03-12
+    body:
+      zh: 今天不只是买了一包种子，像带回家一个小小的「生命盲盒」。接下来要看着它破土、长大，有一天用自己种的香菜，做一碗地道的中国汤面。这才是最好的旅行纪念品。
+      en: Today we didn’t just buy a packet of seeds — it felt like bringing home a tiny “life blind box.” Next we’ll watch it break the soil and grow, and one day cook a proper Chinese noodle soup with coriander we grew ourselves. That’s the best kind of travel souvenir.
+    photos:
+      - light/reviews/hp-1.jpeg
+      - light/reviews/hp-2.jpeg
+      - light/reviews/hp-3.jpeg
+
+  - id: hp-kitchen-friends
+    category: foodfilm
+    flag: ✦
+    name: Guest B
+    country: ""
+    rating: 5
+    date: 2025-04-02
+    body:
+      zh: 在阳朔的灶台前，不同国家的人围在一起。大人交到了朋友，孩子也有了玩伴。希望两代人的故事，以后还能接着写。
+      en: Around a Yangshuo stove, people from different countries stood together. The adults made friends; the kids found playmates. We hope both generations get to write the next chapter.
+    photos:
+      - light/reviews/hp-4.jpeg
+
+  - id: hp-market-cook
+    category: foodfilm
+    flag: ✦
+    name: Guest C
+    country: ""
+    rating: 5
+    date: 2024-11-18
+    body:
+      zh: 没有一顿好吃的解决不了的事。市场里蹲下来看干货、伸手碰活鱼，再到灶边自己翻炒。一顿不够，那就再来一顿。
+      en: There’s almost nothing a good meal can’t fix. We crouched over dried goods at the market, touched live fish, then stir-fried at the stove ourselves. One meal wasn’t enough — so we had another.
+    photos:
+      - light/reviews/hp-5.jpeg
+      - light/reviews/hp-6.jpeg
+      - light/reviews/hp-7.jpeg
+
+  - id: hp-muslim-dining
+    category: foodfilm
+    flag: ✦
+    name: Guest D
+    country: ""
+    rating: 5
+    date: 2025-05-08
+    body:
+      zh: 导游安排到了阳朔新开的一家穆斯林餐厅，太赞了，环境优雅，有祈祷室。
+      en: Our guide took us to a newly opened Muslim restaurant in Yangshuo — wonderful. Elegant space, and it has a prayer room.
+    photos:
+      - light/reviews/hp-9.jpeg
+      - light/reviews/hp-10.jpeg
+
+  - id: hp-irish-pub
+    category: foodfilm
+    flag: ✦
+    name: Guest E
+    country: ""
+    rating: 5
+    date: 2025-02-21
+    body:
+      zh: 此行最喜欢爱尔兰酒吧，可以有各种选择。
+      en: Our favourite stop this trip was the Irish pub — so many choices.
+    photos:
+      - light/reviews/hp-14.jpeg
+
+  - id: hp-climb
+    category: hike
+    flag: ✦
+    name: Guest F
+    country: ""
+    rating: 5
+    date: 2025-01-16
+    body:
+      zh: 我们年纪不小了，没想到还能在阳朔的岩壁上走一遭。攀岩不是年轻人的专利。缆绳在手里的时候，觉得这条路是写给我们的。
+      en: We’re not young anymore, and still didn’t expect to climb Yangshuo rock. Climbing isn’t only for the young. With the rope in our hands, it felt like this route was written for us.
+    photos:
+      - light/reviews/hp-8.jpeg
+
+  - id: hp-bike-stay
+    category: hike
+    flag: ✦
+    name: Guest G
+    country: ""
+    rating: 5
+    date: 2024-10-09
+    body:
+      zh: 我们非常喜欢这次安排的住宿。位置非常理想——就在河边，远离主要旅游区的喧嚣，因此感觉极其宁静，同时又离一切都很近，田园诗般优美，毫不夸张地说，这里确实像一个小天堂。环境欢迎我们的到来。服务非常出色。这里也是探索该地区的绝佳基地。附近有一些活动非常出色。这是一个很棒的额外惊喜。我们特别欣赏的一点是免费的洗衣机和烘干机。这带来很大不同。美丽的地理位置、出色的员工和非常放松的氛围，我们一定会再次来。我们还租了自行车，沿着乡道慢慢骑，竹林和田埂就在旁边；骑累了就回住处歇一歇，把衣服洗干净，第二天又能接着出发。
+      en: We loved the lodging on this trip. The location is ideal — right by the river, away from the main tourist noise, so it feels deeply quiet, yet close to everything; pastoral and, without exaggeration, a little paradise. The place welcomed us. Service was excellent. It’s also a great base for exploring the area. Some nearby activities were outstanding — a wonderful extra surprise. We especially appreciated the free washer and dryer; that made a real difference. Beautiful setting, wonderful staff, and a very relaxed atmosphere — we will definitely come back. We also rented bikes and rode slowly along country lanes, with bamboo and rice paddies beside us; when we tired, we returned to rest, washed our clothes, and were ready to set out again the next day.
+    photos:
+      - light/reviews/hp-15.jpeg
+      - light/reviews/hp-16.jpeg
+
+  - id: hp-yao-longji
+    category: village
+    flag: ✦
+    name: Guest H
+    country: ""
+    rating: 5
+    date: 2025-06-03
+    body:
+      zh: 向导带我们看见稻田里生活的两个民族，壮族和瑶族。红瑶阿嫂把长发举过头顶，那一刻真的很打动人。
+      en: Our guide showed us two peoples living among the rice terraces — Zhuang and Yao. When a Red Yao aunt lifted her long hair above her head, that moment truly moved us.
+    photos:
+      - light/reviews/hp-11.jpeg
+      - light/reviews/hp-12.jpeg
+      - light/reviews/hp-13.jpeg

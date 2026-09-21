@@ -525,10 +525,10 @@ items:
         - max: 99
           cny: 320
   - id: lijiang-table
-    category: village
-    kind: meal
+    category: foodfilm
+    kind: route
     status: live
-    sort: 220
+    sort: 262
     title:
       en: A Li River Table from the Banks
       zh: 漓江餐桌 · 鱼虾与田园
@@ -551,10 +551,10 @@ items:
         - max: 99
           cny: 220
   - id: zhuang-feast
-    category: village
-    kind: meal
+    category: foodfilm
+    kind: route
     status: live
-    sort: 230
+    sort: 264
     title:
       en: Zhuang Homestead Feast by Season
       zh: 壮族家宴 · 四时风物
@@ -577,10 +577,10 @@ items:
         - max: 99
           cny: 220
   - id: riverside
-    category: village
-    kind: meal
+    category: foodfilm
+    kind: route
     status: live
-    sort: 240
+    sort: 266
     title:
       en: Private Riverside Garden Dinner
       zh: 遇龙河畔 · 私家晚宴
