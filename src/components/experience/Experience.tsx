@@ -8,7 +8,7 @@ import {
 } from "@/data/lightExperiences";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { IconClose, IconFlame, IconHeart } from "@/components/icons";
+import { IconClose, IconFlame, IconHeart, IconUsers } from "@/components/icons";
 import { SectionIntro } from "@/components/ui/SectionIntro";
 import { User, Baby, Minus, Plus } from "lucide-react";
 import { FieldLabel, IconSend } from "@/components/plan/PlanUi";
@@ -563,7 +563,32 @@ function SkuCard({
             </span>
           ) : null}
           {priceParts ? (
-            <p className="type-price whitespace-nowrap text-ink">{priceParts.core}</p>
+            <p className="type-price inline-flex items-center whitespace-nowrap text-ink">
+              {priceParts.bits.map((bit, i) =>
+                bit.type === "pax" ? (
+                  <span
+                    key={i}
+                    className="type-meta inline-flex items-center gap-0.5 font-normal normal-case tracking-normal text-ink-soft/80"
+                  >
+                    <IconUsers className="h-2.5 w-2.5 shrink-0" strokeWidth={1.5} aria-hidden />
+                    <span>{bit.label}</span>
+                  </span>
+                ) : bit.type === "money" ? (
+                  <span key={i} className="ml-2">
+                    {bit.text}
+                  </span>
+                ) : bit.text.trim() === "·" ? (
+                  <span
+                    key={i}
+                    className="type-meta mx-1.5 font-normal normal-case tracking-normal text-ink-soft/40"
+                  >
+                    ·
+                  </span>
+                ) : (
+                  <span key={i}>{bit.text}</span>
+                ),
+              )}
+            </p>
           ) : null}
           <button
             type="button"
