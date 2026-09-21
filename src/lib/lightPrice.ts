@@ -103,12 +103,12 @@ export const LIGHT_SKU_PRICE: Record<string, LightSkuPrice> = {
   // meals
   nianzhu: bands(280, 250),
   yanhua: bands(380, 320),
-  "lijiang-table": bands(250, 220),
-  "zhuang-feast": bands(250, 220),
-  riverside: bands(450, 380),
   // foodfilm
   "cooking-school": bands(380, 280),
   chicken: bands(280, 250),
+  "lijiang-table": bands(250, 220),
+  "zhuang-feast": bands(250, 220),
+  riverside: bands(450, 380),
   // craft
   "fuli-fan": bands(250, 200),
   "heritage-crafts": bands(200),

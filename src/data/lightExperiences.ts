@@ -557,63 +557,6 @@ const FALLBACK: LightExperience[] = [
           asset("/light/village/meals/yanhua-3.jpeg"),
         ],
       },
-      {
-        id: "lijiang-table",
-        title: L("A Li River Table from the Banks", "漓江餐桌 · 鱼虾与田园"),
-        blurb: [
-          L(
-            "Local hosts cook a Li River table worth boasting about — fish and shrimp from the river you just watched, greens from the fields beside it.",
-            "当地老乡土著做一顿值得吹嘘的漓江餐桌：鱼虾来自眼前的江，菜蔬来自身边的田园。",
-          ),
-          L(
-            "Wild, seasonal, and tied to the water — not a restaurant menu, but a meal that belongs to this bend of the river.",
-            "野趣、当季、贴着江水——不是餐馆菜单，而是属于这一湾漓江的一餐。",
-          ),
-        ],
-        images: [
-          asset("/light/village/meals/lijiang-1.jpeg"),
-          asset("/light/village/meals/lijiang-2.jpeg"),
-          asset("/light/village/meals/lijiang-3.jpeg"),
-        ],
-      },
-      {
-        id: "zhuang-feast",
-        title: L("Zhuang Homestead Feast by Season", "壮族家宴 · 四时风物"),
-        blurb: [
-          L(
-            "A Zhuang auntie brings the village kitchen to the table — wild greens in spring, creek fish in summer, osmanthus in autumn, hotpot in winter.",
-            "壮族阿嫂把当地美食搬上家宴：春天野菜餐，夏天野生溪鱼，秋天桂花餐，冬天泡汤宴。",
-          ),
-          L(
-            "Different season, different plate — one long table of living Zhuang foodways, including the famous raw fish.",
-            "什么季节来，就吃什么——一桌活着的壮族饮食文化，也少不了那盘鱼生。",
-          ),
-        ],
-        images: [
-          asset("/light/village/meals/zhuang-1.jpeg"),
-          asset("/light/village/meals/zhuang-2.jpeg"),
-          asset("/light/village/meals/zhuang-3.jpeg"),
-        ],
-      },
-      {
-        id: "riverside",
-        title: L("Private Riverside Garden Dinner", "遇龙河畔 · 私家晚宴"),
-        blurb: [
-          L(
-            "A riverside private garden on the Yulong — the kind of house kitchen you only reach through introduction.",
-            "在遇龙河私家花园享用河畔晚宴：非熟人预约不到的私房菜馆，美食美景，仪式感十足。",
-          ),
-          L(
-            "The chef cooks what the season gives — river, Li River banks, and hillside fields — under starlight on the water.",
-            "主厨选用当季风物：遇龙河、漓江与山间田野入菜，河畔星光下慢慢吃完这一顿。",
-          ),
-        ],
-        images: [
-          asset("/light/village/meals/riverside-1.jpeg"),
-          asset("/light/village/meals/riverside-2.jpeg"),
-          asset("/light/village/meals/riverside-3.jpeg"),
-        ],
-      },
     ],
   },
   {
@@ -693,6 +636,63 @@ const FALLBACK: LightExperience[] = [
           asset("/light/hike/chicken-1.jpeg"),
           asset("/light/hike/chicken-2.jpeg"),
           asset("/light/hike/chicken-3.jpeg"),
+        ],
+      },
+      {
+        id: "lijiang-table",
+        title: L("A Li River Table from the Banks", "漓江餐桌 · 鱼虾与田园"),
+        blurb: [
+          L(
+            "Local hosts cook a Li River table worth boasting about — fish and shrimp from the river you just watched, greens from the fields beside it.",
+            "当地老乡土著做一顿值得吹嘘的漓江餐桌：鱼虾来自眼前的江，菜蔬来自身边的田园。",
+          ),
+          L(
+            "Wild, seasonal, and tied to the water — not a restaurant menu, but a meal that belongs to this bend of the river.",
+            "野趣、当季、贴着江水——不是餐馆菜单，而是属于这一湾漓江的一餐。",
+          ),
+        ],
+        images: [
+          asset("/light/village/meals/lijiang-1.jpeg"),
+          asset("/light/village/meals/lijiang-2.jpeg"),
+          asset("/light/village/meals/lijiang-3.jpeg"),
+        ],
+      },
+      {
+        id: "zhuang-feast",
+        title: L("Zhuang Homestead Feast by Season", "壮族家宴 · 四时风物"),
+        blurb: [
+          L(
+            "A Zhuang auntie brings the village kitchen to the table — wild greens in spring, creek fish in summer, osmanthus in autumn, hotpot in winter.",
+            "壮族阿嫂把当地美食搬上家宴：春天野菜餐，夏天野生溪鱼，秋天桂花餐，冬天泡汤宴。",
+          ),
+          L(
+            "Different season, different plate — one long table of living Zhuang foodways, including the famous raw fish.",
+            "什么季节来，就吃什么——一桌活着的壮族饮食文化，也少不了那盘鱼生。",
+          ),
+        ],
+        images: [
+          asset("/light/village/meals/zhuang-1.jpeg"),
+          asset("/light/village/meals/zhuang-2.jpeg"),
+          asset("/light/village/meals/zhuang-3.jpeg"),
+        ],
+      },
+      {
+        id: "riverside",
+        title: L("Private Riverside Garden Dinner", "遇龙河畔 · 私家晚宴"),
+        blurb: [
+          L(
+            "A riverside private garden on the Yulong — the kind of house kitchen you only reach through introduction.",
+            "在遇龙河私家花园享用河畔晚宴：非熟人预约不到的私房菜馆，美食美景，仪式感十足。",
+          ),
+          L(
+            "The chef cooks what the season gives — river, Li River banks, and hillside fields — under starlight on the water.",
+            "主厨选用当季风物：遇龙河、漓江与山间田野入菜，河畔星光下慢慢吃完这一顿。",
+          ),
+        ],
+        images: [
+          asset("/light/village/meals/riverside-1.jpeg"),
+          asset("/light/village/meals/riverside-2.jpeg"),
+          asset("/light/village/meals/riverside-3.jpeg"),
         ],
       },
     ],

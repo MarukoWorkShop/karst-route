@@ -234,6 +234,8 @@ export const copy = {
     season: { en: "Best season", zh: "最佳季节" },
     highlights: { en: "What you'll do", zh: "体验内容" },
     included: { en: "What's included", zh: "费用包含" },
+    reviewsTitle: { en: "Guest notes", zh: "客人评价" },
+    reviewsEmpty: { en: "No guest notes for this experience yet.", zh: "这个体验还没有客人评价。" },
     priceNote: {
       en: "Priced by party size and date — send a brief and we'll quote it.",
       zh: "按人数与日期报价，提交需求后为您核算。",

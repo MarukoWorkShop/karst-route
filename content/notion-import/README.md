@@ -330,7 +330,8 @@ Notion **两张独立表**（同一内容页下各一张，侧栏都能看到）
 |---|---|---|
 | **轻体验栏目** | 一行一个品类大卡：介绍、封面、时长/成团/季节 | `content/experiences.yaml` |
 | **轻体验清单** | 一行一个可售 SKU | `content/light-skus.yaml` |
-| **轻体验 · YAML 映射说明** | 两张表的列 ↔ YAML ↔ 网页；改前先看 | — |
+| **轻体验评价** | 一行一条详情右侧客人评价 | `content/light-reviews.yaml` |
+| **轻体验 · YAML 映射说明** | 三张表的列 ↔ YAML ↔ 网页；改前先看 | — |
 
 栏目顺序固定为 `hike → photo → village → foodfilm → craft → wellness`，栏目 `id` 不要新增或改名。
 
@@ -389,3 +390,26 @@ node scripts/notion-create-light-skus.mjs   # 建表或更新行
 ```
 
 儿童计入单价人数；3 岁以下免费只在网站提示。英文站 USD/EUR 按参考汇率换算，人民币以本表为准。
+
+## 轻体验评价（详情右侧客人评价）
+
+| 仓库文件 | Notion 表 |
+|---|---|
+| `content/light-reviews.yaml` | **轻体验评价**（与栏目/清单并列） |
+
+| 列 | 说明 |
+|---|---|
+| `id` | 稳定键，如 `hp-seed-box` |
+| `category` | `hike` / `photo` / `village` / `foodfilm` / `craft` / `wellness` |
+| `flag` / `name` / `country` / `rating` / `date` | 头像区 |
+| `body_zh` / `body_en` | 正文（各 ≤999 字）；`src` 为原文语言 |
+| `photos` | 一行一条：`light/reviews/文件名.jpeg`（本地 + COS 同键，最多 4 张） |
+
+首次建表 / 从 YAML 灌入：
+
+```bash
+npm run content:notion:create-light-reviews
+python3 scripts/cos-sync-public.py light/reviews   # 新图必须先上 COS
+```
+
+与精品路线「客人评价」（`content/reviews/`、路径 `reviews/…`）分开。

@@ -1416,6 +1416,60 @@ async function main() {
     }
   }
 
+  // --- 轻体验评价 → content/light-reviews.yaml ---
+  if (dbs.lightReviews) {
+    const rel = "content/light-reviews.yaml";
+    const pages = await queryAll(token, dbs.lightReviews, sources.lightReviews);
+    if (pages.length && takeNotion(pages, rel)) {
+      const prev = existingYaml(rel);
+      const prevItems = Array.isArray(prev.items) ? prev.items : [];
+      const srcLang =
+        text(pages[0], "src") === "en" || prev.src === "en" ? "en" : "zh";
+      const items = [];
+      for (const page of pages) {
+        const id = text(page, "id").trim();
+        if (!id) continue;
+        const category = text(page, "category").trim();
+        if (!/^(hike|photo|village|foodfilm|craft|wellness)$/.test(category)) continue;
+        const prevItem = prevItems.find((x) => x && x.id === id) ?? {};
+        const body = keepTx(
+          srcLang,
+          text(page, "body_zh"),
+          text(page, "body_en"),
+          prevItem.body,
+        );
+        if (!body) continue;
+        const photos = splitLines(text(page, "photos"));
+        items.push({
+          id,
+          category,
+          flag: text(page, "flag") || prevItem.flag || "✦",
+          name: text(page, "name") || prevItem.name || id,
+          country: text(page, "country") || prevItem.country || "",
+          rating: Math.min(5, Math.max(1, Number(prop(page, "rating")) || prevItem.rating || 5)),
+          date: text(page, "date") || prevItem.date || "",
+          body,
+          photos: photos.length ? photos : prevItem.photos || [],
+        });
+      }
+      if (items.length) {
+        writeYaml(
+          rel,
+          `# 轻体验客人评价（详情卡右侧评论区）
+# 修改方式二选一：
+#   1. Notion「轻体验评价」表 → npm run content:notion 同步回本文件
+#   2. 直接改本文件
+# category 只能是 hike / photo / village / foodfilm / craft / wellness
+# body 中英各不超过 999 字；photos 最多 4 张，写 light/reviews/…（与 COS 同键）
+# 原文语言见 src；译文空着时上线前再补
+`,
+          { src: srcLang, items },
+        );
+        mark();
+      }
+    }
+  }
+
   // --- 评价 ---
   if (dbs.reviews) {
     const routesPages = dbs.routes ? await queryAll(token, dbs.routes) : [];
