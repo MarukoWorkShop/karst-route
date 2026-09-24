@@ -264,6 +264,54 @@ export function StartOver({
   );
 }
 
+/** 人数步进器（预订与定制流程共用） */
+export function StepCounter({
+  label,
+  value,
+  min,
+  max,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  onChange: (v: number) => void;
+}) {
+  const btn =
+    "flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-line text-[16px] font-medium leading-none text-ink transition-colors";
+  return (
+    <div>
+      <span className="mb-1.5 block text-[11px] font-medium tracking-[0.04em] text-ink-soft">
+        {label}
+      </span>
+      <div className="flex items-center gap-1 rounded-lg border-[1.5px] border-line bg-surface px-1.5 py-1">
+        <button
+          type="button"
+          aria-label={`${label} −`}
+          disabled={value <= min}
+          onClick={() => onChange(value - 1)}
+          className={`${btn} disabled:cursor-not-allowed disabled:opacity-30`}
+        >
+          −
+        </button>
+        <span className="min-w-[2ch] flex-1 text-center text-[16px] font-semibold text-ink">
+          {value}
+        </span>
+        <button
+          type="button"
+          aria-label={`${label} +`}
+          disabled={value >= max}
+          onClick={() => onChange(value + 1)}
+          className={`${btn} disabled:cursor-not-allowed disabled:opacity-30`}
+        >
+          ＋
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export function ConciergeForm({
   name,
   contact,

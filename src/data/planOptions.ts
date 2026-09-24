@@ -41,6 +41,14 @@ export const EXTRA_DESTS = [
   { id: "dali", label: L("Dali Old Town (extension)", "大理古城（延伸）") },
 ] as const;
 
+/** 与其他旅程的衔接（多选；都不选 = 暂不需要） */
+export const LINK_NEEDS = [
+  { id: "rail", label: L("Drop-off at high-speed rail station", "送到高铁站") },
+  { id: "airport", label: L("Drop-off at the airport", "送到机场") },
+  { id: "coach", label: L("Coach transfer to another city", "大巴送去另一个城市") },
+  { id: "meet", label: L("Meet & greet on arrival", "到达时接站接机") },
+] as const;
+
 export const HOTEL_TIERS = [
   {
     id: "standard" as const,

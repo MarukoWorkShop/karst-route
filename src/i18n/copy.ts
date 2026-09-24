@@ -433,6 +433,7 @@ export const copy = {
     ],
     designSteps: [
       { en: "Base route", zh: "选择基础路线" },
+      { en: "Dates & connections", zh: "出发时间与行程衔接" },
       { en: "Destinations", zh: "调整目的地" },
       { en: "Hotel tier", zh: "住宿偏好" },
       { en: "Transport", zh: "交通偏好" },
@@ -636,7 +637,12 @@ export const copy = {
       zh: "此文件为行程确认单草稿，最终酒店、通关与时间以管家确认为准。",
     },
     rowDateMode: { en: "Date preference", zh: "时间方式" },
-    rowDuration: { en: "Duration", zh: "总天数" },
+    rowDuration: { en: "Preferred total days", zh: "期望总天数" },
+    durationNoteLabel: { en: "About the length", zh: "关于天数" },
+    durationNote: {
+      en: "The above is your preferred length — the final itinerary is designed by your concierge based on the cities visited and your specific requests.",
+      zh: "以上是您的期望天数；实际安排会根据到访城市与您的具体要求，由旅行管家量身设计。",
+    },
     rowHotel: { en: "Hotel tier", zh: "住宿偏好" },
     rowExtra: { en: "Extra destinations", zh: "额外目的地" },
     rowTransportPref: { en: "Transport", zh: "交通偏好" },
@@ -690,9 +696,28 @@ export const copy = {
     fallbackDownload: { en: "Download my request as PDF", zh: "下载我的需求单 PDF" },
     copyHint: { en: "tap to copy", zh: "点击复制" },
     copied: { en: "copied ✓", zh: "已复制 ✓" },
-    totalDays: { en: "Total days: {n}", zh: "调整总天数：{n} 天" },
+    totalDays: { en: "Preferred total days: {n}", zh: "期望总天数：{n} 天" },
     daysMin: { en: "8 days", zh: "8天（精简）" },
     daysMax: { en: "18 days", zh: "18天（深度）" },
+    entryCityLabel: {
+      en: "Arrival city — where are you coming from?",
+      zh: "入口城市 —— 您从哪里出发 / 抵达？",
+    },
+    entryCityPh: { en: "e.g. Guangzhou", zh: "例如：广州" },
+    nextDestLabel: {
+      en: "Where does your journey continue after this trip?",
+      zh: "行程结束后，您的下一站是哪里？",
+    },
+    nextDestPh: { en: "e.g. back home, or on to Chengdu", zh: "例如：返回家中，或继续前往成都" },
+    linkNeedsLabel: {
+      en: "Connections with other journeys (optional, multi-select)",
+      zh: "与其他旅程的衔接（可多选；不选即暂不需要）",
+    },
+    customDestLabel: { en: "Other destinations (free text)", zh: "其他目的地（自由填写）" },
+    customDestPh: {
+      en: "e.g. Weizhou Island, Huangyao Ancient Town… separate multiple places with commas.",
+      zh: "例如：涠洲岛、黄姚古镇……多个地点用逗号隔开。",
+    },
     extraHint: {
       en: "Extra stops to add on top of the base route (each ~1–2 days)",
       zh: "在基础路线上额外增加的目的地（可复选，每增加一处约需 1-2 天）",
