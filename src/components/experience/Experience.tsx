@@ -8,7 +8,7 @@ import {
 } from "@/data/lightExperiences";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { IconClose, IconFlame, IconHeart } from "@/components/icons";
+import { IconClose, IconFlame, IconHeart, IconUsers } from "@/components/icons";
 import { SectionIntro } from "@/components/ui/SectionIntro";
 import { User, Baby, Minus, Plus } from "lucide-react";
 import { FieldLabel, IconSend } from "@/components/plan/PlanUi";
@@ -17,6 +17,7 @@ import { formatMoney, fmtCny } from "@/lib/fx";
 import { sendEnquiry } from "@/lib/enquiry";
 import { lineTotalCny, priceOf, formatSkuPriceParts, priceNoteOf, stripPriceFromBlurb } from "@/lib/lightPrice";
 import { bumpSkuClick, popularityScore, readSkuClicks } from "@/lib/lightClicks";
+import { likeKey, readLikes, writeLikes } from "@/lib/lightLikes";
 import { LightReviews } from "@/components/experience/LightReviews";
 import { useFxRates, usePriceCurrency } from "@/hooks/useFx";
 
@@ -28,28 +29,6 @@ type LikedSku = {
   categoryTitle: Tx;
   route: LightRoute;
 };
-
-const LIKES_KEY = "light-sku-likes-v1";
-
-function likeKey(categoryId: string, routeId: string) {
-  return `${categoryId}:${routeId}`;
-}
-
-function readLikes(): Set<string> {
-  try {
-    const raw = localStorage.getItem(LIKES_KEY);
-    if (!raw) return new Set();
-    const arr = JSON.parse(raw) as unknown;
-    if (!Array.isArray(arr)) return new Set();
-    return new Set(arr.filter((x): x is string => typeof x === "string"));
-  } catch {
-    return new Set();
-  }
-}
-
-function writeLikes(set: Set<string>) {
-  localStorage.setItem(LIKES_KEY, JSON.stringify([...set]));
-}
 
 function collectLiked(keys: Set<string>): LikedSku[] {
   const out: LikedSku[] = [];
@@ -418,6 +397,17 @@ function ItemBody({
           >
             ← {t(copy.light.back)}
           </button>
+          {/* 栏目封面大片：正页头部横幅（与产品图互不重复） */}
+          {item.cover ? (
+            <div className="mb-4 overflow-hidden rounded-lg bg-bone">
+              <img
+                src={item.cover}
+                alt=""
+                className="aspect-[4/3] w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          ) : null}
           <h3 id={titleId} className="type-h3 pr-10 text-ink md:pr-8">
             {t(item.title)}
           </h3>
@@ -563,7 +553,32 @@ function SkuCard({
             </span>
           ) : null}
           {priceParts ? (
-            <p className="type-price whitespace-nowrap text-ink">{priceParts.core}</p>
+            <p className="type-price inline-flex items-center whitespace-nowrap text-ink">
+              {priceParts.bits.map((bit, i) =>
+                bit.type === "pax" ? (
+                  <span
+                    key={i}
+                    className="type-meta inline-flex items-center gap-0.5 font-normal normal-case tracking-normal text-ink-soft/80"
+                  >
+                    <IconUsers className="h-2.5 w-2.5 shrink-0" strokeWidth={1.5} aria-hidden />
+                    <span>{bit.label}</span>
+                  </span>
+                ) : bit.type === "money" ? (
+                  <span key={i} className="ml-2">
+                    {bit.text}
+                  </span>
+                ) : bit.text.trim() === "·" ? (
+                  <span
+                    key={i}
+                    className="type-meta mx-1.5 font-normal normal-case tracking-normal text-ink-soft/40"
+                  >
+                    ·
+                  </span>
+                ) : (
+                  <span key={i}>{bit.text}</span>
+                ),
+              )}
+            </p>
           ) : null}
           <button
             type="button"
@@ -605,65 +620,94 @@ function SkuCard({
   );
 }
 
-/** 手机：1 张大图 / 2–3 张瀑布满宽。桌面：同一组图横排，高度比矮条加高一半，少裁照片。 */
+/**
+ * 手机：1 张大图 / 2–3 张瀑布满宽。桌面：同一组图横排，图越少给越高。
+ * 带后缀 `#contain` 的图视为竖版海报（如三联拼图）：独占一行、按原始比例完整显示，不裁切。
+ */
 function SkuImages({ images }: { images: string[] }) {
-  const imgs = images.slice(0, 3);
-  if (!imgs.length) return null;
+  const parsed = images.slice(0, 3).map((src) => {
+    const contain = src.endsWith("#contain");
+    return { src: contain ? src.slice(0, -"#contain".length) : src, contain };
+  });
+  const normal = parsed.filter((p) => !p.contain).map((p) => p.src);
+  const posters = parsed.filter((p) => p.contain).map((p) => p.src);
+  if (!normal.length && !posters.length) return null;
 
-  const strip = (
+  const stripH = normal.length === 1 ? "h-[20rem]" : normal.length === 2 ? "h-60" : "h-44";
+  const strip = normal.length ? (
     <div
-      className="mt-2 hidden gap-2 md:grid"
-      style={{ gridTemplateColumns: `repeat(${imgs.length}, minmax(0, 1fr))` }}
+      className="mt-2.5 hidden gap-2 md:grid"
+      style={{ gridTemplateColumns: `repeat(${normal.length}, minmax(0, 1fr))` }}
     >
-      {imgs.map((src, i) => (
-        <div key={`${src}-${i}`} className="h-36 overflow-hidden rounded-md bg-bone">
+      {normal.map((src, i) => (
+        <div key={`${src}-${i}`} className={`overflow-hidden rounded-md bg-bone ${stripH}`}>
           <img src={src} alt="" className="h-full w-full object-cover" loading="lazy" />
         </div>
       ))}
     </div>
-  );
+  ) : null;
 
-  if (imgs.length === 1) {
-    return (
-      <>
-        <div className="mt-2.5 overflow-hidden rounded-md bg-bone md:hidden">
-          <img src={imgs[0]} alt="" className="aspect-[16/10] w-full object-cover" loading="lazy" />
-        </div>
-        {strip}
-      </>
+  /** 竖版海报：满宽 + 原始比例（w-auto 高度），完整不裁切 */
+  const posterList = (className: string) =>
+    posters.length ? (
+      <div className={className}>
+        {posters.map((src, i) => (
+          <div
+            key={`${src}-p${i}`}
+            className={`overflow-hidden rounded-md bg-bone ${i > 0 ? "mt-2" : ""}`}
+          >
+            <img src={src} alt="" className="w-full h-auto" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    ) : null;
+
+  let mobileNormal = null;
+  if (normal.length === 1) {
+    mobileNormal = (
+      <div className="mt-2.5 overflow-hidden rounded-md bg-bone">
+        <img src={normal[0]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
+      </div>
     );
-  }
-
-  if (imgs.length === 2) {
-    return (
-      <>
-        <div className="mt-2.5 grid grid-cols-2 items-end gap-2 md:hidden">
-          <div className="overflow-hidden rounded-md bg-bone">
-            <img src={imgs[0]} alt="" className="aspect-[3/4] w-full object-cover" loading="lazy" />
-          </div>
-          <div className="overflow-hidden rounded-md bg-bone pb-4">
-            <img src={imgs[1]} alt="" className="aspect-square w-full object-cover" loading="lazy" />
-          </div>
+  } else if (normal.length === 2) {
+    mobileNormal = (
+      <div className="mt-2.5 grid grid-cols-2 gap-2">
+        <div className="overflow-hidden rounded-md bg-bone">
+          <img src={normal[0]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
         </div>
-        {strip}
-      </>
+        <div className="overflow-hidden rounded-md bg-bone">
+          <img src={normal[1]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
+        </div>
+      </div>
+    );
+  } else if (normal.length === 3) {
+    mobileNormal = (
+      <div className="mt-2.5 grid grid-cols-2 gap-2">
+        <div className="row-span-2 overflow-hidden rounded-md bg-bone">
+          <img
+            src={normal[0]}
+            alt=""
+            className="h-full min-h-[15rem] w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+        <div className="overflow-hidden rounded-md bg-bone">
+          <img src={normal[1]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
+        </div>
+        <div className="overflow-hidden rounded-md bg-bone">
+          <img src={normal[2]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
+        </div>
+      </div>
     );
   }
 
   return (
     <>
-      <div className="mt-2.5 grid grid-cols-2 gap-2 md:hidden">
-        <div className="row-span-2 overflow-hidden rounded-md bg-bone">
-          <img src={imgs[0]} alt="" className="h-full min-h-[11rem] w-full object-cover" loading="lazy" />
-        </div>
-        <div className="overflow-hidden rounded-md bg-bone">
-          <img src={imgs[1]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
-        </div>
-        <div className="overflow-hidden rounded-md bg-bone">
-          <img src={imgs[2]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
-        </div>
-      </div>
+      {/* 竖版海报放最前，主视觉优先 */}
+      {posterList("mt-2.5 md:hidden")}
+      <div className="md:hidden">{mobileNormal}</div>
       {strip}
+      {posterList("mt-2.5 hidden md:block")}
     </>
   );
 }

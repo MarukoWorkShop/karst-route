@@ -195,10 +195,17 @@ export function priceNoteOf(skuId: string, locale: "en" | "zh"): string {
   return n ? n[locale] : "";
 }
 
+export type SkuPriceBit =
+  | { type: "text"; text: string }
+  | { type: "pax"; label: string }
+  | { type: "money"; text: string };
+
 export type SkuPriceParts = {
   lead: string;
   core: string;
   note: string;
+  /** 详情价格行：人数档带小人 icon，其余为原文 */
+  bits: SkuPriceBit[];
 };
 
 /** 详情卡：引导语 + 突出单价 + 补足信息（避免与正文报价句重复） */
@@ -209,7 +216,15 @@ export function formatSkuPriceParts(
   note = "",
 ): SkuPriceParts {
   const lead = locale === "zh" ? "参考报价：" : "Reference: ";
+  const bits: SkuPriceBit[] = [];
   let core = "";
+
+  const pushText = (text: string) => {
+    if (!text) return;
+    const prev = bits[bits.length - 1];
+    if (prev?.type === "text") prev.text += text;
+    else bits.push({ type: "text", text });
+  };
 
   if (price.unit === "raft") {
     const money = fmt(round10(price.raftCny));
@@ -217,8 +232,10 @@ export function formatSkuPriceParts(
       locale === "zh"
         ? `${money}/筏（${price.seats} 人）`
         : `${money} / raft (${price.seats} seats)`;
+    pushText(core);
   } else if (price.unit === "flat") {
     core = fmt(round10(price.flatCny));
+    pushText(core);
   } else {
     const sorted = [...price.bands].sort((a, b) => a.max - b.max);
     const parts: string[] = [];
@@ -232,20 +249,21 @@ export function formatSkuPriceParts(
         end = sorted[i]!.max;
       }
       const money = fmt(cny);
+      const per = locale === "zh" ? `${money}/人` : `${money} / person`;
+      if (parts.length) pushText(" · ");
       if (end >= 99 && startMax === 1) {
-        parts.push(locale === "zh" ? `${money}/人` : `${money} / person`);
+        parts.push(per);
+        pushText(per);
       } else if (end >= 99) {
-        parts.push(
-          locale === "zh"
-            ? `${startMax} 人起 ${money}/人`
-            : `${startMax}+ · ${money} / person`,
-        );
+        const label = `${startMax}+`;
+        parts.push(`${label} ${per}`);
+        bits.push({ type: "pax", label });
+        bits.push({ type: "money", text: per });
       } else {
-        parts.push(
-          locale === "zh"
-            ? `${startMax}–${end} 人 ${money}/人`
-            : `${startMax}–${end} · ${money} / person`,
-        );
+        const label = `${startMax}-${end}`;
+        parts.push(`${label} ${per}`);
+        bits.push({ type: "pax", label });
+        bits.push({ type: "money", text: per });
       }
       i += 1;
     }
@@ -256,9 +274,10 @@ export function formatSkuPriceParts(
           : ` (min ${price.minPax})`
         : "";
     core = `${parts.join(" · ")}${min}`;
+    pushText(min);
   }
 
-  return { lead, core, note };
+  return { lead, core, note, bits };
 }
 
 /** @deprecated 用 formatSkuPriceParts */

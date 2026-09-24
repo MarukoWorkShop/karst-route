@@ -40,7 +40,7 @@ items:
     season:
       en: Year-round
       zh: 全年可订
-    cover: light/hike/hike-1.jpeg
+    cover: light/hike/bike-2.jpeg
     gallery:
       - light/hike/hike-1.jpeg
       - light/hike/scooter-1.jpeg
@@ -69,46 +69,47 @@ items:
   - id: photo
     badge: PHOTO WALKS
     title:
-      en: Professional Photo Walks
-      zh: 专业旅拍
+      en: Cinematic Photo Shoots
+      zh: 影视级专业旅拍
     tagline:
-      en: A photographer-guide, not a photographer-tour
-      zh: 跟着摄影师走，而不是被摄影师拍
+      en: Cinematic shots amid beautiful scenery and total relaxation
+      zh: 在美景与完全放松的氛围中拍大片
     duration:
-      en: 2–4 hours
-      zh: 2–4 小时
+      en: Confirm with your concierge
+      zh: 与管家确认
     group:
-      en: 1–6 travellers
-      zh: 1–6 人
+      en: Confirm with your concierge
+      zh: 与管家确认
     season:
-      en: Year-round · best at golden hour
-      zh: 全年可订 · 黄金光线最佳
-    cover: destinations/chongzuo-rachel.jpg
-    gallery:
-      - destinations/chongzuo-rachel.jpg
-      - destinations/weizhoudao3.jpeg
-      - destinations/catba.jpg
+      en: Confirm with your concierge
+      zh: 与管家确认
+    cover: light/photo/fisherman-sunset-1.jpeg
+    gallery: []
     desc:
-      - en: Our photographer-guides shoot the region every week, so they know which lane catches the light at 5pm and which pier is empty before 7am. They take the pictures and they teach you to see the same frame.
-        zh: 我们的摄影向导每周都在这一带拍摄，知道哪条巷子五点有光、哪个码头七点前没人。他们既替你拍，也教你怎么看这个画面。
-      - en: You get a same-day preview and a full edited set afterwards — no watermark, no upsell, yours to print.
-        zh: 当天给预览，随后交付整套精修：无水印、无二次推销，版权归你，可直接打印。
+      - en: "We shoot at Liandao Bay in Xingping, the Li River bend printed on the 20-yuan note: bamboo rafts, a working fisherman and his cormorants, karst peaks doubled in the water."
+        zh: 拍摄地位于阳朔兴坪镰刀湾，也就是 20 元人民币背面的那片漓江山水：竹筏、渔翁与鸬鹚同框，峰林倒影铺满整个江面。
+      - en: Two products share this stretch of river. The family shoot “Fishermen’s Song” follows a loose story script as the fisherman plays with your child — expressions are caught as they happen, never posed. The commercial shoot “Fisherman’s Dawn” is a film-grade session on medium format, with a wuxia theme of your choice.
+        zh: 同一段江面，两条产品线。亲子拍摄【漓水渔歌】以故事脚本互动式引导，在渔翁与孩子游戏之间抓拍最自然的表情——不是摆拍，是发生；专业影视商拍【渔舟唱早】走电影级中画幅流程，武侠主题三选其一。
     highlights:
-      - en: Golden-hour route planned around the day's light
-        zh: 按当天光线规划的黄金时刻路线
-      - en: Portrait set for couples
-        zh: 情侣 / 亲子 / 单人皆可的人像套系
-      - en: Edited photos delivered in a private gallery
-        zh: 精修照片私密相册交付
-      - en: Light coaching on composition
-        zh: 构图指导，手机同样用得上
+      - en: A real fisherman, his raft and cormorants — the same cast seen in national documentaries
+        zh: 出镜渔翁、竹筏与鸬鹚实景，曾多次出镜主流媒体纪录片
+      - en: Family line — story-led play between the fisherman and your child
+        zh: 亲子线：渔翁与孩子游戏互动，抓拍最真实的表情
+      - en: Commercial line — Hasselblad H6D, film-grade retouching, wuxia theme
+        zh: 商拍线：哈苏 H6D 中画幅、电影级修图，可选武侠主题
+      - en: Licensed Hanfu costume with at least one hour of professional make-up
+        zh: 正版汉服与精致妆造，化妆时间不低于一小时
+      - en: Canon R5 with L-series primes for the family set; all raw files delivered
+        zh: 亲子线用佳能 R5 红圈定焦，底片全送
     included:
-      - en: Photographer-guide for the session
-        zh: 摄影师向导全程
-      - en: Edited digital photos
-        zh: 精修数字照片（可打印）
-      - en: Private online gallery
-        zh: 私密线上相册
+      - en: Fisherman, props, licensed costume and styling
+        zh: 出镜渔翁、服装道具与正版汉服妆造
+      - en: All raw files (count varies by set)
+        zh: 底片全送（张数按套系）
+      - en: Retouched photos (count varies by set)
+        zh: 精修照片（张数按套系）
+      - en: Optional video (+¥300)
+        zh: 可加拍视频（+300 元）
   - id: village
     badge: VILLAGE STUDY
     title:
@@ -126,7 +127,7 @@ items:
     season:
       en: Year-round
       zh: 全年可订
-    cover: light/village/yao-visit-1.jpeg
+    cover: light/village/home-visit-3.jpeg
     gallery:
       - light/village/yao-visit-1.jpeg
       - light/village/oil-tea-baba-1.jpeg
@@ -264,11 +265,11 @@ items:
       - en: Pair it with a quiet yoga or breath session above the river, or end a long countryside day with a traditional Chinese foot or full-body massage — herbal oils, no upsell, book a day ahead.
         zh: 也可以在我们安排的临水处做瑜伽与深呼吸，与桂林山水安静相处；或在乡间走完漫长一天后，预约传统足底 / 全身按摩——温热与穴位并用，提前一天预订即可。
     highlights:
-      - en: "Tai chi class · ¥300 / person (1–3) · ¥200 / person (4–10)"
+      - en: Tai chi class · ¥300 / person (1–3) · ¥200 / person (4–10)
         zh: 太极拳体验 · 1–3 人 300 元/人 · 4–10 人 200 元/人
       - en: Nature yoga & breathwork among the karst peaks
         zh: 自然体验 · 瑜伽与深呼吸，与山水相处
-      - en: "Foot / full-body massage · oil 1.5h or dry 1h · foot bath & shoulders"
+      - en: Foot / full-body massage · oil 1.5h or dry 1h · foot bath & shoulders
         zh: 足底或全身按摩 · 精油 1.5 小时 / 无油 1 小时 · 足浴与肩部按摩
       - en: Beginner-friendly · bilingual coaching · book massage one day ahead
         zh: 零基础友好 · 中英双语教学 · 按摩请至少提前一天预订

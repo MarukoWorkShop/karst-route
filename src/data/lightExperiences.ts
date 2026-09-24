@@ -63,7 +63,7 @@ const FALLBACK: LightExperience[] = [
     duration: L("Half day – full day", "半日 – 一日"),
     group: L("2–8 travellers", "2–8 人小团"),
     season: L("Year-round", "全年可订"),
-    cover: asset("/light/hike/hike-1.jpeg"),
+    cover: asset("/light/hike/bike-2.jpeg"),
     gallery: [
       asset("/light/hike/hike-1.jpeg"),
       asset("/light/hike/scooter-1.jpeg"),
@@ -303,7 +303,7 @@ const FALLBACK: LightExperience[] = [
     duration: L("Half day", "半日"),
     group: L("2–10 travellers", "2–10 人"),
     season: L("Year-round", "全年可订"),
-    cover: asset("/light/village/yao-visit-1.jpeg"),
+    cover: asset("/light/village/home-visit-3.jpeg"),
     gallery: [
       asset("/light/village/yao-visit-1.jpeg"),
       asset("/light/village/oil-tea-baba-1.jpeg"),
