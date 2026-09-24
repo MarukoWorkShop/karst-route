@@ -17,6 +17,8 @@ import {
 } from "@/lib/briefPdf";
 import { ItinDays } from "@/components/plan/ItinDays";
 import { PriceEstimate } from "@/components/plan/PriceEstimate";
+import { ConciergeFallback } from "@/components/plan/ConciergeFallback";
+import { SendFailDialog } from "@/components/plan/SendFailDialog";
 import { estimateParty, estSummaryLine } from "@/lib/estimate";
 import { useFxRates, usePriceCurrency } from "@/hooks/useFx";
 import {
@@ -85,6 +87,8 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(false);
+  const [sendError, setSendError] = useState(false);
+  const [failOpen, setFailOpen] = useState(false);
   const [pdfBusy, setPdfBusy] = useState(false);
   const [pdfErr, setPdfErr] = useState(false);
   const [tweak, setTweak] = useState("");
@@ -216,7 +220,17 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
       return;
     }
     setError(false);
+    setSendError(false);
     setSending(true);
+    // try/finally：无论发送层发生什么，按钮都要从「发送中」复位
+    try {
+      await sendBooking();
+    } finally {
+      setSending(false);
+    }
+  }
+
+  async function sendBooking() {
     const ok = await sendEnquiry({
       subject: `New Karst Route booking — ${baseRoute || "unset"}`,
       name: name.trim(),
@@ -234,9 +248,13 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
       tweak: tweak.trim(),
       brief: briefBody(),
     });
-    setSending(false);
-    if (ok) setSent(true);
-    else setError(true);
+    if (ok) {
+      setSent(true);
+      setFailOpen(false);
+    } else {
+      setSendError(true);
+      setFailOpen(true);
+    }
   }
 
   if (phase === "ready") {
@@ -318,15 +336,26 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
           {sent ? (
             <SentNote />
           ) : (
-            <ConciergeForm
-              name={name}
-              contact={contact}
-              sending={sending}
-              error={error}
-              onName={setName}
-              onContact={setContact}
-              onSend={() => void submit()}
-            />
+            <>
+              <ConciergeForm
+                name={name}
+                contact={contact}
+                sending={sending}
+                error={error}
+                errorText={sendError ? t(copy.plan.sendFail) : undefined}
+                onName={setName}
+                onContact={setContact}
+                onSend={() => void submit()}
+              />
+              {sendError ? (
+                <ConciergeFallback
+                  rows={briefRows()}
+                  filename={bookingPdfFilename(asRoute(baseRoute))}
+                  kicker={t(copy.plan.summary)}
+                  title={routeLabel(false)}
+                />
+              ) : null}
+            </>
           )}
         </div>
         <StartOver
@@ -335,8 +364,21 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
             setSent(false);
             setStep(0);
             setError(false);
+            setSendError(false);
+            setFailOpen(false);
             setTweak("");
           }}
+        />
+
+        <SendFailDialog
+          open={failOpen && sendError}
+          sending={sending}
+          rows={briefRows()}
+          filename={bookingPdfFilename(asRoute(baseRoute))}
+          kicker={t(copy.plan.summary)}
+          title={routeLabel(false)}
+          onRetry={() => void submit()}
+          onClose={() => setFailOpen(false)}
         />
       </div>
     );

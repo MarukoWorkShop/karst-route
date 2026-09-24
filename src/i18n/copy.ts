@@ -668,6 +668,28 @@ export const copy = {
       en: "Check name and WeChat / WhatsApp / email.",
       zh: "请填写姓名，以及微信、WhatsApp 或邮箱。",
     },
+    sendFail: {
+      en: "Couldn't send just now — please retry, or reach us on WeChat / WhatsApp.",
+      zh: "暂时没发送成功，请稍后重试；也可以直接加管家微信或 WhatsApp 联系我们。",
+    },
+    failDialogTitle: {
+      en: "The network isn't cooperating",
+      zh: "网络好像不太顺畅",
+    },
+    failDialogBody: {
+      en: "Your request didn't reach our concierge just now — almost always a network hiccup. You can simply try again in a moment, or use any of the ways below to reach us directly. Your plan won't be lost.",
+      zh: "刚才的需求没能发送给管家，多数是网络原因。稍等片刻再试几次通常就好；也可以用下面的任何方式直接找到管家。您填写的计划不会丢失。",
+    },
+    failRetry: { en: "Try again", zh: "再试一次" },
+    fallbackTitle: {
+      en: "Or reach us directly",
+      zh: "也可以这样联系我们",
+    },
+    fallbackWechat: { en: "WeChat ID（tap to copy）", zh: "微信号（点击复制）" },
+    fallbackWhatsapp: { en: "Message us on WhatsApp →", zh: "WhatsApp 联系我们 →" },
+    fallbackDownload: { en: "Download my request as PDF", zh: "下载我的需求单 PDF" },
+    copyHint: { en: "tap to copy", zh: "点击复制" },
+    copied: { en: "copied ✓", zh: "已复制 ✓" },
     totalDays: { en: "Total days: {n}", zh: "调整总天数：{n} 天" },
     daysMin: { en: "8 days", zh: "8天（精简）" },
     daysMax: { en: "18 days", zh: "18天（深度）" },

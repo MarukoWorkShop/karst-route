@@ -11,6 +11,8 @@ import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { labelsOf, sendEnquiry } from "@/lib/enquiry";
 import { likeKey, readLikes } from "@/lib/lightLikes";
+import { ConciergeFallback } from "@/components/plan/ConciergeFallback";
+import { SendFailDialog } from "@/components/plan/SendFailDialog";
 import {
   Chip,
   ConciergeForm,
@@ -75,6 +77,8 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(false);
+  const [sendError, setSendError] = useState(false);
+  const [failOpen, setFailOpen] = useState(false);
 
   useEffect(() => {
     setBaseRoute(route);
@@ -153,7 +157,17 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
       return;
     }
     setError(false);
+    setSendError(false);
     setSending(true);
+    // try/finally：无论发送层发生什么，按钮都要从「发送中」复位
+    try {
+      await sendBrief();
+    } finally {
+      setSending(false);
+    }
+  }
+
+  async function sendBrief() {
     const hotel = HOTEL_TIERS.find((h) => h.id === hotelTier);
     const ok = await sendEnquiry({
       subject: `New custom route request — ${rid}`,
@@ -169,9 +183,13 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
       notes: notes.trim(),
       brief: briefBody(),
     });
-    setSending(false);
-    if (ok) setSent(true);
-    else setError(true);
+    if (ok) {
+      setSent(true);
+      setFailOpen(false);
+    } else {
+      setSendError(true);
+      setFailOpen(true);
+    }
   }
 
   function restart() {
@@ -179,6 +197,8 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
     setSent(false);
     setStep(0);
     setError(false);
+    setSendError(false);
+    setFailOpen(false);
   }
 
   if (phase === "contact") {
@@ -198,15 +218,26 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
         {sent ? (
           <SentNote />
         ) : (
-          <ConciergeForm
-            name={name}
-            contact={contact}
-            sending={sending}
-            error={error}
-            onName={setName}
-            onContact={setContact}
-            onSend={() => void submit()}
-          />
+          <>
+            <ConciergeForm
+              name={name}
+              contact={contact}
+              sending={sending}
+              error={error}
+              errorText={sendError ? t(copy.plan.sendFail) : undefined}
+              onName={setName}
+              onContact={setContact}
+              onSend={() => void submit()}
+            />
+            {sendError ? (
+              <ConciergeFallback
+                rows={briefRows()}
+                filename={`karst-design-request-${rid}.pdf`}
+                kicker={t(copy.plan.designLead)}
+                title={t(routeTitle(rid))}
+              />
+            ) : null}
+          </>
         )}
         {sent ? (
           <StartOver onClick={restart} />
@@ -219,6 +250,17 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
             {t(copy.plan.back)}
           </button>
         )}
+
+        <SendFailDialog
+          open={failOpen && sendError}
+          sending={sending}
+          rows={briefRows()}
+          filename={`karst-design-request-${rid}.pdf`}
+          kicker={t(copy.plan.designLead)}
+          title={t(routeTitle(rid))}
+          onRetry={() => void submit()}
+          onClose={() => setFailOpen(false)}
+        />
       </div>
     );
   }

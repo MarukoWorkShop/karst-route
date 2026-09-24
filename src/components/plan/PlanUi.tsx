@@ -273,6 +273,7 @@ export function ConciergeForm({
   onContact,
   onSend,
   tone = "light",
+  errorText,
 }: {
   name: string;
   contact: string;
@@ -282,6 +283,8 @@ export function ConciergeForm({
   onContact: (v: string) => void;
   onSend: () => void;
   tone?: PlanTone;
+  /** 发送失败等具体原因；给了就优先显示它，而不是通用的“请填写…” */
+  errorText?: string;
 }) {
   const { t } = useLocale();
   const dark = tone === "dark";
@@ -320,9 +323,9 @@ export function ConciergeForm({
             className={dark ? fieldClassDark : fieldClass}
           />
         </label>
-        {error ? (
+        {error || errorText ? (
           <p className={`text-[13px] ${dark ? "text-gold" : "text-danger"}`}>
-            {t(copy.plan.err)}
+            {errorText || t(copy.plan.err)}
           </p>
         ) : null}
         <button
