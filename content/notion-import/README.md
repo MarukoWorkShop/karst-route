@@ -345,6 +345,15 @@ npm run content:notion:organize-light
 # 或：node scripts/notion-organize-light.mjs
 ```
 
+整表从仓库推回 Notion（内容是在 yaml 里改的，避免下次单向同步被冲掉）：
+
+```bash
+npm run content:push-light                 # 栏目 + 清单一起推
+npm run content:push-light -- --only=skus  # 只推清单
+```
+
+价格只写在 `content/light-skus.yaml`（CNY 原值）。英文界面按实时汇率自动换算美元 / 欧元，访客可在 `$ / €` 之间切换；汇率拉取失败时回退到内置汇率（约 1 USD ≈ 7.25 CNY）。
+
 ---
 
 ## 轻体验清单（SKU · 运营/主理人货架）

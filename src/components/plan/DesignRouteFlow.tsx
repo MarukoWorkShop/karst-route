@@ -3,13 +3,14 @@ import type { RouteId } from "@/types";
 import {
   EXTRA_DESTS,
   HOTEL_TIERS,
-  SPECIAL_EXPS,
   TRANSPORT_PREFS,
   type HotelTierId,
 } from "@/data/planOptions";
+import { lightExperiences } from "@/data/lightExperiences";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { labelsOf, sendEnquiry } from "@/lib/enquiry";
+import { likeKey, readLikes } from "@/lib/lightLikes";
 import {
   Chip,
   ConciergeForm,
@@ -48,6 +49,15 @@ function asRoute(id: RouteId | ""): RouteId {
   return id === "r2" || id === "r3" ? id : "r1";
 }
 
+const SKU_CATALOG = lightExperiences.map((cat) => ({
+  id: cat.id,
+  title: cat.title,
+  skus: [...(cat.routes ?? []), ...(cat.meals ?? [])].map((route) => ({
+    key: likeKey(cat.id, route.id),
+    title: route.title,
+  })),
+})).filter((group) => group.skus.length > 0);
+
 export function DesignRouteFlow({ route }: { route: RouteId }) {
   const { t, locale } = useLocale();
   const [step, setStep] = useState(0);
@@ -56,7 +66,8 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
   const [extraDests, setExtraDests] = useState<string[]>([]);
   const [hotelTier, setHotelTier] = useState<HotelTierId | "">("");
   const [transport, setTransport] = useState<string[]>([]);
-  const [special, setSpecial] = useState<string[]>([]);
+  const [pickedSkus, setPickedSkus] = useState<string[]>(() => [...readLikes()]);
+  const [skuTouched, setSkuTouched] = useState(false);
   const [notes, setNotes] = useState("");
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
@@ -70,12 +81,33 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
     setDuration(defaultDays(route));
   }, [route]);
 
+  useEffect(() => {
+    if (skuTouched) return;
+    const sync = () => setPickedSkus([...readLikes()]);
+    sync();
+    window.addEventListener("light-likes", sync);
+    return () => window.removeEventListener("light-likes", sync);
+  }, [skuTouched]);
+
   const rid = asRoute(baseRoute);
   const daysRange = durationRange(rid);
 
   function listOrDash(items: string[]) {
     const sep = locale === "zh" ? "、" : ", ";
     return items.length ? items.join(sep) : t(copy.plan.dash);
+  }
+
+  function experienceLines(lang: "en" | "zh") {
+    const sep = lang === "zh" ? "、" : ", ";
+    const lines: string[] = [];
+    for (const group of SKU_CATALOG) {
+      const names = group.skus
+        .filter((sku) => pickedSkus.includes(sku.key))
+        .map((sku) => sku.title[lang]);
+      if (!names.length) continue;
+      lines.push(`${group.title[lang]}：${names.join(sep)}`);
+    }
+    return lines;
   }
 
   function briefRows() {
@@ -96,8 +128,13 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
         value: hotel ? `${t(hotel.label)} — ${t(hotel.sub)}` : t(copy.plan.dash),
       },
       { label: t(copy.plan.rowTransportPref), value: listOrDash(labelsOf(transport, TRANSPORT_PREFS, locale)) },
-      { label: t(copy.plan.rowSpecial), value: listOrDash(labelsOf(special, SPECIAL_EXPS, locale)) },
-      { label: t(copy.plan.rowNotes), value: notes.trim() || t(copy.plan.none) },
+      {
+        label: t(copy.plan.rowSpecial),
+        value: experienceLines(locale).join("\n") || t(copy.plan.none),
+      },
+      ...(notes.trim()
+        ? [{ label: t(copy.plan.rowNotes), value: notes.trim() }]
+        : []),
       { label: t(copy.plan.rowName), value: name.trim() || t(copy.plan.dash) },
       { label: t(copy.plan.rowContact), value: contact.trim() || t(copy.plan.dash) },
     ];
@@ -128,7 +165,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
       hotel: hotel ? hotel.label.en : "",
       extraDests: labelsOf(extraDests, EXTRA_DESTS, "en").join(", "),
       transport: labelsOf(transport, TRANSPORT_PREFS, "en").join(", "),
-      special: labelsOf(special, SPECIAL_EXPS, "en").join(", "),
+      special: experienceLines("en").join("\n"),
       notes: notes.trim(),
       brief: briefBody(),
     });
@@ -154,7 +191,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
             .map((r) => (
               <div key={r.label} className="flex justify-between gap-3 border-t border-line py-2.5 first:border-t-0">
                 <span className="shrink-0 text-[12px] text-ink-soft">{r.label}</span>
-                <span className="text-right text-[13px] font-semibold leading-5 text-ink">{r.value}</span>
+                <span className="text-right text-[13px] font-semibold leading-5 whitespace-pre-line text-ink">{r.value}</span>
               </div>
             ))}
         </div>
@@ -304,15 +341,25 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
       {step === 4 ? (
         <div>
           <p className="mb-4 text-[13px] text-ink-soft">{t(copy.plan.expHint)}</p>
-          <div className="mb-5 flex flex-wrap gap-2.5">
-            {SPECIAL_EXPS.map((e) => (
-              <Chip
-                key={e.id}
-                active={special.includes(e.id)}
-                onClick={() => setSpecial((cur) => toggle(cur, e.id))}
-              >
-                {t(e.label)}
-              </Chip>
+          <div className="mb-5 flex flex-col gap-4">
+            {SKU_CATALOG.map((group) => (
+              <div key={group.id}>
+                <p className="mb-2 text-[12px] font-medium text-ink-soft">{t(group.title)}</p>
+                <div className="flex flex-wrap gap-2">
+                  {group.skus.map((sku) => (
+                    <Chip
+                      key={sku.key}
+                      active={pickedSkus.includes(sku.key)}
+                      onClick={() => {
+                        setSkuTouched(true);
+                        setPickedSkus((cur) => toggle(cur, sku.key));
+                      }}
+                    >
+                      {t(sku.title)}
+                    </Chip>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
           <label className="block">

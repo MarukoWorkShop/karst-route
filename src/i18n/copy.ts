@@ -688,8 +688,8 @@ export const copy = {
       zh: "可复选，我们会根据您的偏好调整行程中的交通安排",
     },
     expHint: {
-      en: "Tell us what experiences matter most — we will weave them into your itinerary",
-      zh: "告诉我们您特别想体验的内容，我们会将它们融入行程",
+      en: "Every light experience is listed here. Ones you hearted are already selected — add or remove any. Prices are not shown.",
+      zh: "这里列出全部轻体验小产品。红心标过的已经勾上，可以再增减。此处不显示价格。",
     },
     moreIdeas: { en: "Anything else (optional)", zh: "其他想法（选填）" },
     moreIdeasPh: {

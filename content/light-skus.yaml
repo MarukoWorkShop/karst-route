@@ -4,6 +4,7 @@
 #   2. 直接改本文件
 # 字段说明见 content/notion-import/README.md「轻体验清单」一节。
 #
+
 src: zh
 items:
   - id: wulong-hike
@@ -105,7 +106,7 @@ items:
         - max: 99
           cny: 200
     priceNote:
-      en: " (two per vehicle) · about 50 minutes driving."
+      en: (two per vehicle) · about 50 minutes driving.
       zh: （2 人一车）· 驾驶约 50 分钟。
   - id: raft
     category: hike
@@ -179,8 +180,8 @@ items:
         - max: 99
           cny: 300
     priceNote:
-      en: " · about 2 hours."
-      zh: " · 约 2 小时。"
+      en: · about 2 hours.
+      zh: · 约 2 小时。
   - id: paddle
     category: hike
     kind: route
@@ -204,8 +205,8 @@ items:
         - max: 99
           cny: 200
     priceNote:
-      en: " · about 3 hours."
-      zh: " · 约 3 小时。"
+      en: · about 3 hours.
+      zh: · 约 3 小时。
   - id: xingping-peaks
     category: hike
     kind: route
@@ -427,8 +428,8 @@ items:
         - max: 99
           cny: 180
     priceNote:
-      en: " · about 1 hour."
-      zh: " · 约 1 小时。"
+      en: · about 1 hour.
+      zh: · 约 1 小时。
   - id: festivals
     category: village
     kind: route
@@ -453,8 +454,8 @@ items:
           cny: 500
       minPax: 2
     priceNote:
-      en: " · transport not included · seasonal."
-      zh: " · 不包含交通费 · 按节期安排。"
+      en: · transport not included · seasonal.
+      zh: · 不包含交通费 · 按节期安排。
   - id: sanyuesan
     category: village
     kind: route
@@ -524,6 +525,57 @@ items:
           cny: 320
         - max: 99
           cny: 320
+  - id: cooking-school
+    category: foodfilm
+    kind: route
+    status: live
+    sort: 250
+    title:
+      en: Yangshuo Cooking School
+      zh: 阳朔厨艺学校
+    blurb:
+      - en: Learn real Chinese dishes in a traditional farmhouse kitchen. Friendly teachers emphasise doing, not watching; they also take you to the local market for ingredients. Then you eat what you cooked for lunch.
+        zh: 在阳朔传统中国农舍中学习烹调中国食物。友善的老师强调实际操作而不是看；还会带您去当地市场了解配料。制作菜肴之后，一起食用午餐。
+      - en: "Small class · English-speaking local teacher · half day · 2–4 dishes · recipes to take home. Reference: ¥380 / person (1–3) · ¥280 / person (4–10)."
+        zh: 小班教学 · 会讲英语的本地老师 · 半天学 2–4 道菜 · 含食谱。参考报价：1–3 人 380 元/人 · 4–10 人 280 元/人。
+    images:
+      - light/foodfilm/cooking-1.jpeg
+      - light/foodfilm/cooking-2.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 380
+        - max: 10
+          cny: 280
+        - max: 99
+          cny: 280
+  - id: chicken
+    category: foodfilm
+    kind: route
+    status: live
+    sort: 260
+    title:
+      en: Bamboo Grove Chickens & Bamboo Rice
+      zh: 竹林捉鸡 · 竹筒饭香
+    blurb:
+      - en: In a terraced village, hosts walk you into the bamboo to catch chickens and gather eggs — then cook the day’s catch.
+        zh: 深入梯田环绕的自然村寨，民宿阿嫂阿哥带你漫步山谷，在竹林里捉鸡、捡鸡蛋。
+      - en: Evening turns the harvest into bamboo-tube chicken and sticky rice — labour you can taste.
+        zh: 晚上，劳动收获变成竹筒鸡与竹筒饭——亲手忙过的一餐，特别香。
+    images:
+      - light/hike/chicken-1.jpeg
+      - light/hike/chicken-2.jpeg
+      - light/hike/chicken-3.jpeg
+    price:
+      unit: person
+      bands:
+        - max: 3
+          cny: 280
+        - max: 10
+          cny: 250
+        - max: 99
+          cny: 250
   - id: lijiang-table
     category: foodfilm
     kind: route
@@ -602,57 +654,6 @@ items:
           cny: 380
         - max: 99
           cny: 380
-  - id: cooking-school
-    category: foodfilm
-    kind: route
-    status: live
-    sort: 250
-    title:
-      en: Yangshuo Cooking School
-      zh: 阳朔厨艺学校
-    blurb:
-      - en: Learn real Chinese dishes in a traditional farmhouse kitchen. Friendly teachers emphasise doing, not watching; they also take you to the local market for ingredients. Then you eat what you cooked for lunch.
-        zh: 在阳朔传统中国农舍中学习烹调中国食物。友善的老师强调实际操作而不是看；还会带您去当地市场了解配料。制作菜肴之后，一起食用午餐。
-      - en: "Small class · English-speaking local teacher · half day · 2–4 dishes · recipes to take home. Reference: ¥380 / person (1–3) · ¥280 / person (4–10)."
-        zh: 小班教学 · 会讲英语的本地老师 · 半天学 2–4 道菜 · 含食谱。参考报价：1–3 人 380 元/人 · 4–10 人 280 元/人。
-    images:
-      - light/foodfilm/cooking-1.jpeg
-      - light/foodfilm/cooking-2.jpeg
-    price:
-      unit: person
-      bands:
-        - max: 3
-          cny: 380
-        - max: 10
-          cny: 280
-        - max: 99
-          cny: 280
-  - id: chicken
-    category: foodfilm
-    kind: route
-    status: live
-    sort: 260
-    title:
-      en: Bamboo Grove Chickens & Bamboo Rice
-      zh: 竹林捉鸡 · 竹筒饭香
-    blurb:
-      - en: In a terraced village, hosts walk you into the bamboo to catch chickens and gather eggs — then cook the day’s catch.
-        zh: 深入梯田环绕的自然村寨，民宿阿嫂阿哥带你漫步山谷，在竹林里捉鸡、捡鸡蛋。
-      - en: Evening turns the harvest into bamboo-tube chicken and sticky rice — labour you can taste.
-        zh: 晚上，劳动收获变成竹筒鸡与竹筒饭——亲手忙过的一餐，特别香。
-    images:
-      - light/hike/chicken-1.jpeg
-      - light/hike/chicken-2.jpeg
-      - light/hike/chicken-3.jpeg
-    price:
-      unit: person
-      bands:
-        - max: 3
-          cny: 280
-        - max: 10
-          cny: 250
-        - max: 99
-          cny: 250
   - id: fuli-fan
     category: craft
     kind: route
@@ -790,3 +791,46 @@ items:
       bands:
         - max: 99
           cny: 280
+  - id: fisherman-family
+    category: photo
+    kind: route
+    status: live
+    sort: 400
+    title:
+      en: Family Shoot · Fishermen’s Song
+      zh: 亲子拍摄 · 漓水渔歌
+    blurb:
+      - en: The fisherman poles the raft while your child casts the net — a story-led, interactive shoot that catches the most natural expressions as they play together.
+        zh: 渔翁撑筏、孩子撒网，全程故事脚本互动式拍摄——在渔翁和孩子做游戏的过程中，抓拍最纯真的表情。
+      - en: Includes licensed Hanfu costume with at least one hour of make-up. Shot at Liandao Bay, Xingping — the Li River bend on the 20-yuan note.
+        zh: 含正版汉服与不低于一小时的精致妆造与化妆。拍摄地为阳朔兴坪镰刀湾，20 元人民币背面的那片漓江山水。
+    images:
+      - light/photo/fisherman-family-1.jpeg
+      - light/photo/fisherman-family-2.jpeg
+    price:
+      unit: flat
+      flatCny: 2100
+    priceNote:
+      en: · ¥2,100 for 1 child · ¥2,400 for 2 · ¥3,000 for 3 (per session) · includes the fisherman, 180–360 raw files and 20–36 retouched photos, costume and styling · add video +¥300.
+      zh: · 1 位小朋友 2,100 元 · 2 位 2,400 元 · 3 位 3,000 元（整单）· 含出镜渔翁、180–360 张底片与 20–36 张精修、服装与妆造 · 加拍视频 +300 元。
+  - id: fisherman-dawn
+    category: photo
+    kind: route
+    status: live
+    sort: 410
+    title:
+      en: Fisherman’s Dawn · Commercial Film Shoot
+      zh: 渔舟唱早 · 专业影视商拍
+    blurb:
+      - en: "Shot on a Hasselblad H6D medium format: 80 raw files and 18 retouched images, with frequency-separation skin work, dodge-and-burn and cinematic colour grading."
+        zh: 中画幅哈苏 H6D 拍摄：底片 80 张、精修 18 张，含中性灰磨皮、双曲线明暗与电影感氛围渲染。
+      - en: Costume, props and styling included. Choose the wuxia theme — water flight, fisherman’s dawn or cloud-top classic.
+        zh: 提供服装、道具与妆造；武侠主题三选：水上飞 / 渔舟唱早 / 云端古风。
+    images:
+      - light/photo/wuxia-1.jpeg#contain
+    price:
+      unit: flat
+      flatCny: 6999
+    priceNote:
+      en: · 80 raw files, 18 retouched · extra retouched photo ¥80 each.
+      zh: · 底片 80 张、精修 18 张 · 超出加修 80 元/张。
