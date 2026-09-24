@@ -12,9 +12,9 @@ wechatId: ""
 # 微信二维码图片路径，例如 concierge/wechat-qr.jpg
 wechatQr: ""
 # WhatsApp 号码：国家码 + 号码，不要写 + 和空格，例如 8613800000000
-whatsapp: ""
+whatsapp: "41765847386"
 # 邮箱，例如 hello@guilinvillage.com
-email: ""
+email: "solana.chen@gmail.com"
 # 一句话说明（可留空）
 note:
   en: "Sending failed? Reach us directly — we'll pick it up from here."
