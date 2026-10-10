@@ -69,8 +69,8 @@ export default function App() {
           }}
         />
         <Experience />
-        <About />
         <PlanSection tab={intent} onTab={setIntent} route={route} />
+        <About />
         <Explore />
         <Faq />
         <Partners />
