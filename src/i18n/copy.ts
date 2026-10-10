@@ -33,8 +33,6 @@ export const copy = {
     map: { en: "Map", zh: "区域地图" },
     mapSub: { en: "Guangxi · Yunnan · North Vietnam", zh: "广西 · 云南 · 越南北部" },
     openMaps: { en: "Open in Google Maps", zh: "在 Google 地图中打开" },
-    weather: { en: "Weather", zh: "本地天气" },
-    weatherNote: { en: "Best time: Nov–Mar (cool & dry)", zh: "最佳出行：11月–3月（凉季干燥）" },
     food: { en: "Food Tips", zh: "饮食提示" },
     time: { en: "Time", zh: "时间" },
     timeBeijing: { en: "Beijing (UTC+8)", zh: "北京（UTC+8）" },

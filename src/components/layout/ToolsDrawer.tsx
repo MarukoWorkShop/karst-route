@@ -20,13 +20,9 @@ const MAP_PLACES = [
   { label: { en: "Guilin Li River", zh: "桂林漓江" }, q: "Li+River,Guilin,China" },
   { label: { en: "Sapa Rice Terraces", zh: "沙坝梯田" }, q: "Sapa,Vietnam" },
   { label: { en: "Hanoi Old Quarter", zh: "河内老城" }, q: "Hoan+Kiem,Hanoi,Vietnam" },
-] as const;
-
-const WEATHER = [
-  { region: { en: "Kunming", zh: "昆明" }, temp: "18–24°C", desc: { en: "Spring year-round", zh: "四季如春" } },
-  { region: { en: "Nanning", zh: "南宁" }, temp: "24–30°C", desc: { en: "Humid, use sunscreen", zh: "湿热，注意防晒" } },
-  { region: { en: "Ha Long", zh: "下龙" }, temp: "22–28°C", desc: { en: "Sea mist, bring a jacket", zh: "海上多雾，备一件外套" } },
-  { region: { en: "Sapa", zh: "沙坝" }, temp: "14–20°C", desc: { en: "Cool & misty", zh: "凉爽多雾" } },
+  { label: { en: "Ha Long Bay", zh: "下龙湾" }, q: "Ha+Long+Bay,Quang+Ninh,Vietnam" },
+  { label: { en: "Detian Waterfall", zh: "德天瀑布" }, q: "Detian+Waterfall,Chongzuo,China" },
+  { label: { en: "Weizhou Island", zh: "涠洲岛" }, q: "Weizhou+Island,Beihai,China" },
 ] as const;
 
 
@@ -181,24 +177,6 @@ export function ToolsDrawer({
               </a>
             ))}
           </section>
-
-          <section className="mb-3 rounded-xl border border-line bg-surface px-4 pt-4 pb-[18px]">
-            <h3 className="mb-3 text-[11px] font-semibold tracking-[0.1em] text-cta uppercase">
-              {t(copy.toolbox.weather)}
-            </h3>
-            {WEATHER.map((w) => (
-              <div key={w.region.en} className="flex items-center gap-2.5 border-b border-line py-2 last:border-b-0">
-                <div className="min-w-0 flex-1">
-                  <p className="text-[13px] font-medium text-ink">{t(w.region)}</p>
-                  <p className="text-[11px] text-ink-soft">{t(w.desc)}</p>
-                </div>
-                <span className="shrink-0 text-[12px] font-semibold text-cta">{w.temp}</span>
-              </div>
-            ))}
-            <p className="mt-2 text-[10px] text-ink-soft/70">{t(copy.toolbox.weatherNote)}</p>
-          </section>
-
-
         </div>
       </aside>
     </>
