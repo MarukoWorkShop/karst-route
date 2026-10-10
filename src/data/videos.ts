@@ -1,9 +1,13 @@
 import type { Tx } from "@/types";
 import { asset } from "@/lib/asset";
+import { cosUrl } from "@/lib/media";
 
 export const destinationVideos: {
   id: string;
-  youtubeId: string;
+  /** YouTube id. Omit when `file` is a self-hosted COS clip. */
+  youtubeId?: string;
+  /** Self-hosted clip on Tencent COS, e.g. videos/village-slow-life.mp4 */
+  file?: string;
   /** YouTube channel display name, as shown on the original video. */
   channel?: string;
   /** Channel home, e.g. https://www.youtube.com/@NatGeo */
@@ -14,6 +18,21 @@ export const destinationVideos: {
   title: Tx;
   desc: Tx;
 }[] = [
+  {
+    id: "explore-village-slow",
+    file: cosUrl("videos/village-slow-life.mp4"),
+    src: asset("/destinations/village-slow-life.jpg"),
+    duration: "0:54",
+    location: { en: "Guangxi · Guilin", zh: "广西 · 桂林" },
+    title: {
+      en: "Feel the Slow Life of the Villages Nearby",
+      zh: "感受周边乡村的慢生活",
+    },
+    desc: {
+      en: "Learn calligraphy and ink painting from a master, cook on a village wood-fired stove, or simply sit for a while, catch the breeze, and enjoy this unhurried moment.",
+      zh: "向师傅学写书法、水墨画，用农村柴火灶做饭，或者只是安静地坐一会儿，吹吹风，享受放松的此刻。",
+    },
+  },
   {
     id: "explore-culture",
     youtubeId: "clo3vXDJqCA",

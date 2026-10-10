@@ -166,17 +166,30 @@ export function Explore() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="aspect-video bg-black">
-              <iframe
-                src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0`}
-                title={t(activeVideo.title)}
-                allow="autoplay; encrypted-media; picture-in-picture"
-                allowFullScreen
-                className="h-full w-full border-0"
-              />
+              {activeVideo.file ? (
+                <video
+                  src={activeVideo.file}
+                  poster={activeVideo.src}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="h-full w-full bg-black"
+                />
+              ) : (
+                <iframe
+                  src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0`}
+                  title={t(activeVideo.title)}
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                  className="h-full w-full border-0"
+                />
+              )}
             </div>
-            <div className="border-t border-paper/10 px-3.5 py-2.5">
-              <VideoSource item={activeVideo} onDark />
-            </div>
+            {activeVideo.youtubeId ? (
+              <div className="border-t border-paper/10 px-3.5 py-2.5">
+                <VideoSource item={activeVideo} onDark />
+              </div>
+            ) : null}
           </div>
         </div>
       ) : null}
@@ -226,6 +239,7 @@ function Block({
 
 function VideoSource({ item, onDark }: { item: VideoItem; onDark?: boolean }) {
   const { t } = useLocale();
+  if (!item.youtubeId) return null;
   const href = item.channelUrl ?? `https://www.youtube.com/watch?v=${item.youtubeId}`;
   const label = item.channel
     ? t(copy.explore.source).replace("{channel}", item.channel)
@@ -281,9 +295,11 @@ function VideoCard({
           <p className="line-clamp-2 text-[12px] leading-[17px] text-ink-soft">{t(item.desc)}</p>
         </div>
       </button>
-      <div className="px-0.5 pt-1.5">
-        <VideoSource item={item} />
-      </div>
+      {item.youtubeId ? (
+        <div className="px-0.5 pt-1.5">
+          <VideoSource item={item} />
+        </div>
+      ) : null}
     </div>
   );
 }
