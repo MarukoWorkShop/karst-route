@@ -40,6 +40,57 @@ export const copy = {
     timeOnline: { en: "Youxian concierge online · ~5-min reply", zh: "有闲旅游专属顾问在线，平均 5 分钟内响应" },
     timeNight: { en: "Local night — send your request and we'll pick it up first at Beijing 9:00", zh: "当前为当地夜间，您可直接提交定制意向，我们将在北京时间早 9:00 优先处理" },
   },
+  pwa: {
+    kicker: { en: "QUICK ACCESS", zh: "快捷访问" },
+    title: { en: "Keep LeisureTime close", zh: "把 LeisureTime 带在身边" },
+    body: {
+      en: "Add it to your Home Screen and return to your journeys like an app.",
+      zh: "添加到主屏幕，下次像打开 App 一样快速查看旅行灵感与私人路书。",
+    },
+    add: { en: "Add to Home Screen", zh: "添加到主屏幕" },
+    later: { en: "Not now", zh: "暂不" },
+    gotIt: { en: "Got it", zh: "知道了" },
+    openIcon: { en: "Open the app icon in a new tab", zh: "在新标签页打开 App 图标" },
+    ios: {
+      title: { en: "Add from Safari", zh: "从 Safari 添加" },
+      steps: [
+        {
+          en: "Tap the Share button in Safari's toolbar.",
+          zh: "点击 Safari 浏览器工具栏中的“分享”按钮。",
+        },
+        {
+          en: 'Scroll down, choose "Add to Home Screen", then tap Add.',
+          zh: "向下滑动，选择“添加到主屏幕”，再点击“添加”。",
+        },
+      ],
+    },
+    browser: {
+      title: { en: "Add from your browser", zh: "从浏览器添加" },
+      steps: [
+        {
+          en: "Open your browser menu.",
+          zh: "打开浏览器菜单。",
+        },
+        {
+          en: 'Choose "Install app" or "Add to Home Screen".',
+          zh: "选择“安装应用”或“添加到主屏幕”。",
+        },
+      ],
+    },
+    inApp: {
+      title: { en: "Open in your browser first", zh: "请先在浏览器中打开" },
+      steps: [
+        {
+          en: 'Open the app menu and choose "Open in browser".',
+          zh: "点击右上角菜单，选择“在浏览器中打开”。",
+        },
+        {
+          en: 'Then use the browser menu to choose "Add to Home Screen".',
+          zh: "再打开浏览器菜单，选择“添加到主屏幕”。",
+        },
+      ],
+    },
+  },
   hero: {
     ctaA: {
       en: "Our Boutique Routes",

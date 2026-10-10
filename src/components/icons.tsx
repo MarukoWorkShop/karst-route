@@ -57,6 +57,25 @@ export const IconExternal = (p: P) => (
     <path d="M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4M14 4h6v6M10 14 20 4" />
   </I>
 );
+export const IconShare = (p: P) => (
+  <I {...p}>
+    <path d="M12 16V3M8 7l4-4 4 4" />
+    <path d="M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8" />
+  </I>
+);
+export const IconMore = (p: P) => (
+  <I {...p}>
+    <circle cx="5" cy="12" r="1" fill="currentColor" stroke="none" />
+    <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
+    <circle cx="19" cy="12" r="1" fill="currentColor" stroke="none" />
+  </I>
+);
+export const IconSmartphone = (p: P) => (
+  <I {...p}>
+    <rect x="6" y="2.5" width="12" height="19" rx="2" />
+    <path d="M10 5h4M11 18.5h2" />
+  </I>
+);
 export const IconClock = (p: P) => (
   <I {...p}>
     <circle cx="12" cy="12" r="8.5" />
