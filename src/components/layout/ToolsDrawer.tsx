@@ -82,6 +82,7 @@ export function ToolsDrawer({
         aria-hidden
       />
       <aside
+        id="travel-toolbox"
         role="dialog"
         aria-modal="true"
         aria-labelledby="toolbox-title"

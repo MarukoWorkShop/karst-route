@@ -31,7 +31,7 @@ export function Header({ onPlan }: { onPlan: () => void }) {
       >
         <div className="grid h-[52px] grid-cols-[1fr_auto_1fr] items-center px-3 md:hidden">
           <div className="flex justify-start">
-            <MenuButton onClick={() => setDrawerOpen(true)} className={muted} />
+            <MenuButton onClick={() => setDrawerOpen(true)} className={muted} expanded={drawerOpen} />
           </div>
           <BrandLogo solid={solid} className="justify-center" />
           <div className="flex justify-end">
@@ -39,8 +39,11 @@ export function Header({ onPlan }: { onPlan: () => void }) {
           </div>
         </div>
 
-        <div className="mx-auto hidden h-[60px] max-w-[1060px] items-center px-8 md:flex">
-          <BrandLogo solid={solid} className="w-[230px]" />
+        <div className="mx-auto hidden h-[60px] max-w-[1060px] items-center px-6 md:flex">
+          <div className="flex w-[268px] items-center">
+            <MenuButton onClick={() => setDrawerOpen(true)} className={muted} expanded={drawerOpen} />
+            <BrandLogo solid={solid} className="min-w-0" />
+          </div>
           <nav className="flex flex-1 items-center justify-center gap-7">
             <a href="#tours" className={`type-btn ${ink}`}>
               {t(copy.nav.tours)}
@@ -56,8 +59,7 @@ export function Header({ onPlan }: { onPlan: () => void }) {
               {t(copy.nav.faq)}
             </a>
           </nav>
-          <div className="flex w-[230px] items-center justify-end gap-1">
-            <MenuButton onClick={() => setDrawerOpen(true)} className={muted} />
+          <div className="flex w-[268px] items-center justify-end">
             <LangToggle solid={solid} />
           </div>
         </div>
@@ -81,12 +83,22 @@ function BrandLogo({ solid, className }: { solid: boolean; className?: string })
   );
 }
 
-function MenuButton({ onClick, className }: { onClick: () => void; className: string }) {
+function MenuButton({
+  onClick,
+  className,
+  expanded,
+}: {
+  onClick: () => void;
+  className: string;
+  expanded: boolean;
+}) {
   const { t } = useLocale();
   return (
     <button
       type="button"
       aria-label={t(copy.toolbox.open)}
+      aria-expanded={expanded}
+      aria-controls="travel-toolbox"
       onClick={onClick}
       className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${className}`}
     >
