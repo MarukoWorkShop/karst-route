@@ -36,7 +36,7 @@ function playSafe(el: HTMLVideoElement | null) {
   void el.play().catch(() => {});
 }
 
-export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
+export function Hero() {
   const { t, locale } = useLocale();
   const count = heroSlides.length;
   const [active, setActive] = useState(0);
@@ -297,19 +297,8 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
           onEnded={() => onVideoEnded("b")}
           onTimeUpdate={(e) => onTimeUpdate("b", e.currentTarget)}
         />
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(8,12,10,0.85) 0%, rgba(8,12,10,0.5) 20%, rgba(8,12,10,0.16) 40%, rgba(8,12,10,0.04) 58%, transparent 74%)",
-          }}
-        />
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-28"
-          style={{
-            background: "linear-gradient(to bottom, rgba(8,12,10,0.45) 0%, transparent 100%)",
-          }}
-        />
+        <div className="hero-bottom-overlay pointer-events-none absolute inset-0" />
+        <div className="hero-top-overlay pointer-events-none absolute inset-x-0 top-0 h-36 md:h-32" />
       </div>
 
       {/* 左右切换箭头已移除：移动端靠左右滑动，桌面端靠自动轮播（每 10 秒） */}
@@ -319,41 +308,34 @@ export function Hero({ onPlanOwn }: { onPlanOwn: () => void }) {
           {/* key 用索引而非 slide.id：多个 slide 可共用一个主题，用 id 会导致切换时动画不触发 */}
           <div key={active} className="hero-copy max-w-[640px]">
             {/* 主题标签保留展示，但不再作为可点击的跳转入口 */}
-            <span className="type-chip inline-flex rounded-full border border-gold-bright/70 bg-night/35 px-3 py-[5px] text-gold-bright backdrop-blur-[2px]">
+            <span className="hero-reveal hero-reveal-tag type-chip inline-flex rounded-full border border-gold-bright/70 bg-night/35 px-3 py-[5px] text-gold-bright backdrop-blur-[2px]">
               {chip}
             </span>
 
-            <h1 className="type-h1 mt-3 text-white md:mt-4">
+            <h1 className="hero-reveal hero-reveal-title hero-title mt-4">
               {t(slide.title)}
             </h1>
 
-            <p className="type-body mt-2.5 max-w-[480px] text-white/90 md:mt-3">
+            <p className="hero-reveal hero-reveal-description hero-description mt-4 max-w-[520px] md:mt-5">
               {t(slide.intro)}
             </p>
 
-            <div className="mt-7 flex flex-col gap-3 md:mt-8">
+            <div className="hero-reveal hero-reveal-actions mt-7 flex flex-col gap-3 md:mt-9">
               <div className="flex items-stretch gap-2.5 md:gap-3">
                 <a
                   href="#tours"
-                  className="pointer-events-auto inline-flex min-h-11 flex-1 items-center justify-center rounded-lg bg-cta px-3 py-2.5 text-center text-[13px] leading-snug font-medium text-white md:min-h-[48px] md:px-5 md:text-[14px]"
+                  className="pointer-events-auto inline-flex min-h-11 flex-1 items-center justify-center rounded-lg border border-paper/35 bg-night/30 px-3 py-2.5 text-center text-[13px] leading-snug font-medium text-paper/90 backdrop-blur-sm transition-[background-color,border-color,transform] hover:-translate-y-0.5 hover:border-paper/55 hover:bg-night/50 active:translate-y-0 md:min-h-[48px] md:px-5 md:text-[14px]"
                 >
                   {t(copy.hero.ctaA)}
                 </a>
                 <a
                   href="#experience"
-                  className="pointer-events-auto inline-flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-lg bg-cta px-3 py-2.5 text-center text-[13px] leading-snug font-medium text-white md:min-h-[48px] md:px-5 md:text-[14px]"
+                  className="pointer-events-auto inline-flex min-h-11 flex-[1.08] items-center justify-center gap-1.5 rounded-lg border border-paper bg-paper px-3 py-2.5 text-center text-[13px] leading-snug font-semibold text-cta shadow-lg shadow-night/25 transition-[background-color,transform,box-shadow] hover:-translate-y-0.5 hover:bg-surface hover:shadow-xl active:translate-y-0 md:min-h-[48px] md:px-5 md:text-[14px]"
                 >
-                  <span className="text-balance">{t(copy.light.cta)}</span>
-                  <IconSparkles className="h-3 w-3 shrink-0 opacity-90" aria-hidden />
+                  <span className="text-balance">{t(copy.hero.ctaExperience)}</span>
+                  <IconSparkles className="h-3.5 w-3.5 shrink-0 text-gold" aria-hidden />
                 </a>
               </div>
-              <a
-                href="#plan"
-                onClick={onPlanOwn}
-                className="type-aux pointer-events-auto inline-flex items-center self-start text-[13px] font-medium tracking-[0.02em] text-white/85 underline-offset-4 transition-colors hover:text-white hover:underline md:text-[14px]"
-              >
-                {t(copy.hero.ctaB)}
-              </a>
             </div>
           </div>
 

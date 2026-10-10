@@ -168,24 +168,20 @@ function LightCard({ item, onOpen }: { item: LightExperience; onOpen: () => void
     <button
       type="button"
       onClick={onOpen}
-      className="group relative aspect-[3/4] overflow-hidden rounded-[10px] text-left"
+      className="group relative aspect-[2/3] overflow-hidden rounded-[10px] bg-night text-center ring-1 ring-night/10 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(16,28,22,0.16)]"
     >
       <img
         loading="lazy"
         src={item.cover}
         alt=""
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
       />
-      <span className="absolute inset-0 bg-linear-to-t from-night/85 via-night/25 to-transparent" />
-      <span className="absolute top-3 right-3 flex h-7 w-7 items-center justify-center rounded-full bg-surface/15 backdrop-blur-sm">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-          <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="#FAF8F2" strokeWidth="1.5" />
-        </svg>
-      </span>
-      <span className="absolute right-3.5 bottom-3.5 left-3.5">
-        <span className="type-meta block text-surface/60">{t(item.badge)}</span>
-        <span className="type-sub mt-1 block font-medium text-surface">{t(item.title)}</span>
-        <span className="type-aux mt-0.5 block text-surface/65">{t(item.tagline)}</span>
+      <span className="absolute inset-0 bg-night/42 transition-colors duration-300 group-hover:bg-night/32" />
+      <span className="absolute inset-0 flex flex-col items-center justify-center px-4">
+        <span className="type-sub max-w-[18ch] font-semibold tracking-[0.14em] text-balance text-paper uppercase drop-shadow-sm">
+          {t(item.title)}
+        </span>
+        <span className="mt-3 h-px w-7 bg-gold-bright transition-[width] duration-300 group-hover:w-11" aria-hidden />
       </span>
     </button>
   );
@@ -211,7 +207,7 @@ function LightModal({
   const item = view.kind === "item" ? lightById(view.id) : undefined;
 
   return (
-    <div className="fixed inset-0 z-50 flex md:items-start md:justify-center md:overflow-y-auto md:px-4 md:py-14">
+    <div className="scrollbar-none fixed inset-0 z-50 flex max-w-full overflow-x-hidden md:items-start md:justify-center md:overflow-y-auto md:px-4 md:py-14">
       <button
         type="button"
         aria-label={t(copy.nav.close)}
@@ -222,7 +218,7 @@ function LightModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className={`relative z-[1] flex h-dvh w-full flex-col overflow-y-auto overscroll-contain bg-surface p-4 pt-14 shadow-none ring-0 md:my-auto md:h-auto md:max-h-none md:w-[min(92vw,960px)] md:overflow-visible md:rounded-xl md:p-6 md:pt-6 md:shadow-[0_24px_64px_rgba(16,28,22,0.22)] md:ring-1 md:ring-line ${
+        className={`scrollbar-none relative z-[1] flex h-dvh w-full max-w-full flex-col overflow-x-hidden overflow-y-auto overscroll-contain bg-surface p-4 pt-14 shadow-none ring-0 md:my-auto md:h-auto md:max-h-none md:w-[min(92vw,960px)] md:overflow-x-hidden md:overflow-y-visible md:rounded-xl md:p-6 md:pt-6 md:shadow-[0_24px_64px_rgba(16,28,22,0.22)] md:ring-1 md:ring-line ${
           item ? "md:grid md:grid-cols-[1.15fr_0.85fr] md:items-start md:gap-x-6" : ""
         }`}
       >
@@ -384,7 +380,6 @@ function ItemBody({
   const routes = item.routes ?? [];
   const meals = item.meals ?? [];
   const lead = item.desc[0];
-  const chips = [...item.highlights, ...item.included];
   return (
     <>
       {/* 手机 contents：介绍 / 产品 / 评价仍按 order 单列。桌面合成右栏一格，避免左列跨两行把评价撑开。 */}
@@ -413,18 +408,6 @@ function ItemBody({
           </h3>
           <p className="type-aux mt-1.5 text-ink-soft">{t(item.tagline)}</p>
           {lead ? <p className="type-body mt-4 text-ink">{t(lead)}</p> : null}
-          {chips.length ? (
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {chips.map((x) => (
-                <span
-                  key={x.zh || x.en}
-                  className="type-aux inline-flex rounded-full bg-cta/8 px-2.5 py-1 text-cta"
-                >
-                  {t(x)}
-                </span>
-              ))}
-            </div>
-          ) : null}
         </div>
 
         <div className="order-3 min-w-0 pb-[max(1rem,env(safe-area-inset-bottom))] md:pb-0">
@@ -541,9 +524,9 @@ function SkuCard({
 
   return (
     <li className="border-t border-line py-5 first:border-t-0 first:pt-3 md:py-3.5">
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex min-w-0 flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
         <h4 className="type-h3 min-w-0 flex-1 text-ink">{t(route.title)}</h4>
-        <div className="relative flex shrink-0 items-center gap-0.5">
+        <div className="relative flex max-w-full items-center gap-0.5 sm:shrink-0">
           {tip ? (
             <span
               role="status"
@@ -553,7 +536,7 @@ function SkuCard({
             </span>
           ) : null}
           {priceParts ? (
-            <p className="type-price inline-flex items-center whitespace-nowrap text-ink">
+            <p className="type-price inline-flex flex-wrap items-center text-ink">
               {priceParts.bits.map((bit, i) =>
                 bit.type === "pax" ? (
                   <span

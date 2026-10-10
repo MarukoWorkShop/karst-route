@@ -22,6 +22,13 @@ export const IconMenu = (p: P) => (
     <path d="M3 6h18M3 12h18M3 18h18" />
   </I>
 );
+export const IconToolbox = (p: P) => (
+  <I {...p}>
+    <path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7" />
+    <rect x="3" y="7" width="18" height="12" rx="2" />
+    <path d="M3 11.5h18M9.5 11.5v2h5v-2" />
+  </I>
+);
 export const IconGlobe = (p: P) => (
   <I {...p}>
     <circle cx="12" cy="12" r="9" />

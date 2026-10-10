@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IconGlobe, IconMenu } from "@/components/icons";
+import { IconToolbox } from "@/components/icons";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { ToolsDrawer } from "@/components/layout/ToolsDrawer";
@@ -35,7 +35,7 @@ export function Header({ onPlan }: { onPlan: () => void }) {
           </div>
           <BrandLogo solid={solid} className="justify-center" />
           <div className="flex justify-end">
-            <GlobeLangButton className={muted} />
+            <CompactLangToggle className={muted} />
           </div>
         </div>
 
@@ -100,23 +100,31 @@ function MenuButton({
       aria-expanded={expanded}
       aria-controls="travel-toolbox"
       onClick={onClick}
-      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${className}`}
+      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-transform hover:scale-105 active:scale-95 ${className}`}
     >
-      <IconMenu className="h-5 w-5" />
+      <IconToolbox className="h-6 w-6" />
     </button>
   );
 }
 
-function GlobeLangButton({ className }: { className: string }) {
+function CompactLangToggle({ className }: { className: string }) {
   const { locale, setLocale, t } = useLocale();
   return (
     <button
       type="button"
       aria-label={t(copy.nav.lang)}
       onClick={() => setLocale(locale === "en" ? "zh" : "en")}
-      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${className}`}
+      className={`flex h-10 shrink-0 items-center justify-center gap-1.5 rounded-lg px-2.5 text-[11px] leading-none tracking-[0.1em] transition-transform hover:scale-105 active:scale-95 ${className}`}
     >
-      <IconGlobe className="h-5 w-5" />
+      <span className={locale === "en" ? "font-semibold opacity-100" : "font-medium opacity-55"}>
+        EN
+      </span>
+      <span className="opacity-40" aria-hidden>
+        /
+      </span>
+      <span className={locale === "zh" ? "font-semibold opacity-100" : "font-medium opacity-55"}>
+        CHI
+      </span>
     </button>
   );
 }

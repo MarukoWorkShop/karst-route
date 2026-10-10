@@ -4,7 +4,7 @@ import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { asset } from "@/lib/asset";
 import { cosUrl } from "@/lib/media";
-import { EXCL_LABELS, INCL_LABELS, routeFacts } from "@/data/tourFacts";
+import { EXCL_LABELS, routeFacts } from "@/data/tourFacts";
 import { routeMedia } from "@/data/routeMedia";
 import { routeContent, type RouteContent } from "@/content/routes";
 import { formatMoney } from "@/lib/estimate";
@@ -103,11 +103,7 @@ export function BoutiqueTours({
           desc={t(copy.tours.moduleDesc)}
         />
 
-        {/*
-          手机：单列紧凑、内容自适应高度（不对齐留白）。
-          lg 三列 subgrid：城市 / meta / 预算 / 文案 / 费用 各行取三卡最高。
-        */}
-        <div className="mt-7 grid grid-cols-1 items-start gap-3 md:mt-8 md:grid-cols-2 md:gap-5 lg:grid-cols-3 lg:grid-rows-[repeat(6,auto)] lg:items-stretch lg:gap-4">
+        <div className="mt-7 grid grid-cols-1 items-start gap-4 md:mt-8 md:grid-cols-2 md:gap-5 lg:grid-cols-3 lg:gap-4">
           {ROUTE_IDS.map((id) => (
             <RouteCard
               key={id}
@@ -115,7 +111,6 @@ export function BoutiqueTours({
               content={contents[id]}
               active={route === id}
               onOpen={() => openCard(id)}
-              onOpenItinerary={() => onOpenItinerary(id)}
             />
           ))}
         </div>
@@ -137,26 +132,29 @@ export function BoutiqueTours({
   );
 }
 
-/** 列表态：完整竖条卡片（lg 用 subgrid 跨卡对齐模块） */
+/** 列表态：以影像和关键信息为主；完整内容进入详情弹层。 */
 function RouteCard({
   routeId,
   content,
   active,
   onOpen,
-  onOpenItinerary,
 }: {
   routeId: RouteId;
   content: RouteContent;
   active: boolean;
   onOpen: () => void;
-  onOpenItinerary: () => void;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
+  const { rates } = useFxRates();
+  const { currency } = usePriceCurrency();
   const cover = asset(`/${routeMedia[routeId].cover}`);
+  const range = marketPriceRange(routeId);
+  const fromPrice = range?.adultFrom ?? content.priceCny.from;
+  const price = formatMoney(fromPrice, { locale, currency, rates });
 
   return (
     <article
-      className="group relative flex h-auto flex-col overflow-hidden rounded-xl bg-surface text-left ring-1 ring-line shadow-[0_6px_16px_rgba(16,28,22,0.04)] will-change-transform transition-[transform,box-shadow,ring-color] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:-translate-y-1 hover:ring-gold/50 hover:shadow-[0_12px_28px_rgba(16,28,22,0.1)] lg:row-span-6 lg:grid lg:h-auto lg:grid-rows-subgrid"
+      className="group relative aspect-[3/4] overflow-hidden rounded-xl bg-night text-left ring-1 ring-line shadow-[0_8px_24px_rgba(16,28,22,0.08)] will-change-transform transition-[transform,box-shadow,ring-color] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:-translate-y-1 hover:ring-gold/60 hover:shadow-[0_18px_38px_rgba(16,28,22,0.18)] md:aspect-[4/5] lg:aspect-[3/4]"
     >
       <button
         type="button"
@@ -166,99 +164,31 @@ function RouteCard({
         className="absolute inset-0 z-[1] cursor-zoom-in rounded-xl"
       />
 
-      {/* 1 · 封面：手机大竖图，桌面回 4:3 */}
-      <div className="relative block aspect-[3/4] overflow-hidden bg-bone md:aspect-[4/3]">
-        <img
-          loading="lazy"
-          src={cover}
-          alt=""
-          className="h-full w-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
-        />
-        <span className="type-meta absolute top-3 left-3 rounded-md bg-paper/92 px-2.5 py-1 text-cta backdrop-blur-sm">
-          {t(content.badge)}
-        </span>
-        <span className="pointer-events-none absolute inset-0 bg-linear-to-t from-night/75 via-night/10 to-transparent" />
-        <span className="absolute right-3.5 bottom-3.5 left-3.5">
-          <span className="type-h3 block text-paper">
-            {t(content.name)}
-          </span>
-          <span className="type-aux mt-1 block text-paper/80">{t(content.tagline)}</span>
-        </span>
-      </div>
+      <img
+        loading="lazy"
+        src={cover}
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-night/35 via-night/5 to-night/95" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-cta-press/45 via-transparent to-transparent" />
 
-      {/* 2 · 城市标签 */}
-      <div className="flex flex-wrap content-start gap-1.5 px-3 pt-2.5 pb-1 md:px-3.5 md:pt-3">
-        {t(content.regions).split(" · ").map((seg, i) => (
-          <span
-            key={`${seg}-${i}`}
-            className="type-chip rounded-full bg-cta/8 px-2.5 py-0.5 tracking-[0.03em] text-cta normal-case"
-          >
-            {seg}
-          </span>
-        ))}
-      </div>
+      <p className="type-meta absolute top-5 right-5 z-[2] text-paper">
+        {t(content.days)}
+      </p>
 
-      {/* 3 · meta */}
-      <div className="grid grid-cols-2 gap-px border-t border-line bg-line">
-        <Meta icon={<IconClock className="h-4 w-4" />} label={t(copy.tours.duration)} value={t(content.days)} />
-        <Meta icon={<IconTakeoff className="h-4 w-4" />} label={t(copy.tours.entry)} value={t(content.entry)} />
-        <Meta icon={<IconLanding className="h-4 w-4" />} label={t(copy.tours.exit)} value={t(content.exit)} />
-        <Meta icon={<IconUsers className="h-4 w-4" />} label={t(copy.tours.for)} value={t(content.audience)} />
-      </div>
-
-      {/* 4 · 预算（市场报价档：10 人→2–3 人区间） */}
-      <div className="border-t border-line bg-paper px-3 py-2.5 md:px-4 md:py-3">
-        <MarketBudget routeId={routeId} priceCny={content.priceCny} size="card" />
-      </div>
-
-      {/* 5 · 文案 */}
-      <div className="border-t border-line bg-paper px-3 py-3 md:px-4 md:py-4">
-        <FeatureParagraphs text={t(content.feature)} collapsible />
-      </div>
-
-      {/* 6 · 费用 + CTA（仅 lg subgrid 行内拉高贴底） */}
-      <div className="flex flex-col border-t border-line px-3 pt-2.5 pb-3 md:px-4 md:pt-3.5 md:pb-3.5 lg:h-full lg:min-h-0">
-        <p className="type-meta mb-1.5 text-cta md:mb-2">
-          {t(copy.tours.included)}
+      <div className="pointer-events-none absolute right-5 bottom-5 left-5 z-[2] text-paper md:right-6 md:bottom-6 md:left-6">
+        <p className="type-meta text-gold-bright">{t(content.badge)}</p>
+        <h3 className="type-h2 mt-2 text-paper">{t(content.name)}</h3>
+        <p className="type-aux mt-2 line-clamp-2 text-paper/75">{t(content.regions)}</p>
+        <p className="type-body mt-3 line-clamp-2 text-paper/90">{t(content.tagline)}</p>
+        <p className="type-sub mt-4 italic text-paper/85">
+          {t(copy.tours.priceFrom)} {price} {t(copy.tours.pricePerPerson)}
         </p>
-        <ul className="flex flex-wrap gap-1.5">
-          {content.included.map((id) => (
-            <li
-              key={id}
-              className="type-chip inline-flex items-center gap-1 rounded-full bg-cta/8 px-2.5 py-[5px] normal-case tracking-normal text-cta"
-            >
-              <CheckMark />
-              {t(INCL_LABELS[id])}
-            </li>
-          ))}
-        </ul>
-        <p className="type-meta mt-2.5 mb-1.5 text-ink-soft md:mt-3.5 md:mb-2">
-          {t(copy.tours.excluded)}
-        </p>
-        <ul className="flex flex-wrap gap-1.5">
-          {content.excluded.map((id) => (
-            <li
-              key={id}
-              className="type-chip inline-flex items-center gap-1 rounded-full bg-sage px-2.5 py-[5px] normal-case tracking-normal text-ink-soft"
-            >
-              <DashMark />
-              {t(EXCL_LABELS[id])}
-            </li>
-          ))}
-        </ul>
-        <div className="relative z-[2] mt-3 pt-0 lg:mt-auto lg:pt-3.5">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onOpenItinerary();
-            }}
-            className="cta-sheen flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-cta px-4 py-3 text-paper transition-colors hover:bg-cta-press"
-          >
-            <QuoteBarLabel />
-            <IconArrow className="shrink-0" />
-          </button>
-        </div>
+        <span className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-paper/75 px-5 py-2.5 text-sm font-semibold tracking-[0.08em] text-paper uppercase transition-colors group-hover:border-paper group-hover:bg-paper group-hover:text-cta">
+          {t(copy.tours.exploreTrip)}
+          <IconArrow className="shrink-0" />
+        </span>
       </div>
     </article>
   );
@@ -371,28 +301,25 @@ function RouteExpandModal({
             <FeatureParagraphs text={t(content.feature)} />
           </div>
 
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {content.included.map((id) => (
-              <span
-                key={id}
-                className="type-chip inline-flex items-center gap-1 rounded-full bg-cta/8 px-2 py-1 normal-case tracking-normal text-cta"
+          <div className="mt-5 border-t border-line pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:pb-0">
+            <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-end md:justify-between">
+              <MarketBudget routeId={routeId} priceCny={content.priceCny} size="modal" />
+              <button
+                type="button"
+                onClick={onOpenItinerary}
+                className="cta-sheen inline-flex w-full items-center justify-center gap-2 rounded-lg bg-cta px-4 py-3 text-paper hover:bg-cta-press md:w-auto md:shrink-0"
               >
-                <CheckMark />
-                {t(INCL_LABELS[id])}
-              </span>
-            ))}
-          </div>
+                <QuoteBarLabel />
+                <IconArrow className="shrink-0" />
+              </button>
+            </div>
 
-          <div className="mt-5 flex flex-col gap-3 border-t border-line pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:flex-row md:flex-wrap md:items-end md:justify-between md:pb-0">
-            <MarketBudget routeId={routeId} priceCny={content.priceCny} size="modal" />
-            <button
-              type="button"
-              onClick={onOpenItinerary}
-              className="cta-sheen inline-flex w-full items-center justify-center gap-2 rounded-lg bg-cta px-4 py-3 text-paper hover:bg-cta-press md:w-auto md:shrink-0"
-            >
-              <QuoteBarLabel />
-              <IconArrow className="shrink-0" />
-            </button>
+            <div className="mt-4 border-t border-line/70 pt-3">
+              <p className="type-meta text-ink-soft">{t(copy.tours.excluded)}</p>
+              <p className="type-aux mt-1 text-ink-soft">
+                {content.excluded.map((id) => t(EXCL_LABELS[id])).join(" · ")}
+              </p>
+            </div>
           </div>
         </div>
       </article>
@@ -581,22 +508,6 @@ function Meta({
         <span className="type-aux block truncate font-medium text-ink">{value}</span>
       </span>
     </span>
-  );
-}
-
-function CheckMark() {
-  return (
-    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
-      <path d="M2 5.8 4.2 8 9 2.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function DashMark() {
-  return (
-    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
-      <path d="M2.5 5.5h6" strokeLinecap="round" />
-    </svg>
   );
 }
 

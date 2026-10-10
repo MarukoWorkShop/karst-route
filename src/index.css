@@ -30,6 +30,21 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -230,18 +245,87 @@ html[lang|="zh"] #plan {
   .hero-video {
     transition: opacity 1200ms ease-in-out;
   }
-  .hero-copy {
-    animation: hero-copy-in 700ms ease-out both;
+
+  .hero-reveal {
+    opacity: 0;
+    animation: hero-reveal-in 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .hero-reveal-tag {
+    animation-delay: 80ms;
+  }
+
+  .hero-reveal-title {
+    animation-delay: 190ms;
+  }
+
+  .hero-reveal-description {
+    animation-delay: 330ms;
+  }
+
+  .hero-reveal-actions {
+    animation-delay: 470ms;
   }
 }
-@keyframes hero-copy-in {
+
+@keyframes hero-reveal-in {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.hero-bottom-overlay {
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-night) 98%, transparent) 0%,
+    color-mix(in srgb, var(--color-night) 90%, transparent) 22%,
+    color-mix(in srgb, var(--color-cta-press) 68%, transparent) 44%,
+    color-mix(in srgb, var(--color-night) 28%, transparent) 64%,
+    transparent 82%
+  );
+}
+
+.hero-top-overlay {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-night) 78%, transparent) 0%,
+    color-mix(in srgb, var(--color-cta-press) 52%, transparent) 42%,
+    transparent 100%
+  );
+}
+
+.hero-title {
+  color: var(--color-paper);
+  font-family:
+    "PingFang SC", "PingFang TC", "Hiragino Sans GB", "Heiti SC", "Noto Sans SC",
+    "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+
+.hero-description {
+  color: color-mix(in srgb, var(--color-paper) 78%, transparent);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 68px;
+    line-height: 1.02;
+  }
+
+  .hero-description {
+    font-size: 16px;
+    line-height: 1.75;
   }
 }
 

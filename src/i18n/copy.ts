@@ -49,6 +49,10 @@ export const copy = {
       en: "Craft Your Trip",
       zh: "设计定制私家线路",
     },
+    ctaExperience: {
+      en: "Featured local experiences",
+      zh: "精选在地体验小产品",
+    },
     themesAria: {
       en: "Journey themes",
       zh: "旅途主题",
@@ -194,6 +198,7 @@ export const copy = {
     quoteBarDetail: { en: "View the itinerary and details", zh: "查看路书与详情" },
     reviews: { en: "{n} reviews", zh: "{n} 条评价" },
     expandOpen: { en: "Expand route card", zh: "展开线路卡片" },
+    exploreTrip: { en: "Explore trip", zh: "探索行程" },
     expandClose: { en: "Close", zh: "关闭" },
     featureMore: { en: "Show full description", zh: "展开全部介绍" },
     featureLess: { en: "Show less", zh: "收起介绍" },
@@ -217,7 +222,7 @@ export const copy = {
     stories: { en: "Real travel stories", zh: "真实的旅行故事" },
   },
   light: {
-    cta: { en: "Featured local experiences", zh: "精选在地体验小产品" },
+    cta: { en: "VIEW ALL", zh: "查看全部在地体验小产品" },
     ctaSub: {
       en: "Half-day to one-day add-ons, bookable on their own or with any route",
       zh: "半日到一日的小产品，可单独预订，也可挂在任意线路前后",
