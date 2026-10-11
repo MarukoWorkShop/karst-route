@@ -87,7 +87,7 @@ export function ToolsDrawer({
         }`}
         inert={!open}
       >
-        <div className="flex shrink-0 items-center justify-between border-b border-line px-4 pt-3.5 pb-3">
+        <div className="flex shrink-0 items-center justify-between border-b border-line px-4 pt-[calc(env(safe-area-inset-top)+0.875rem)] pb-3 md:pt-3.5">
           <span id="toolbox-title" className="text-[13px] font-semibold tracking-[0.1em] text-cta">
             {t(copy.toolbox.title)}
           </span>

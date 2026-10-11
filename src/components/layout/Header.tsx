@@ -23,7 +23,7 @@ export function Header({ onPlan }: { onPlan: () => void }) {
     <>
       <ToolsDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <header
-        className={`fixed top-0 z-40 w-full transition-colors duration-300 ${
+        className={`fixed top-0 z-40 w-full pt-[env(safe-area-inset-top)] transition-colors duration-300 ${
           solid
             ? "border-b border-line bg-paper/95 text-ink backdrop-blur"
             : "border-b border-transparent bg-transparent text-paper"
