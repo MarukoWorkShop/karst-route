@@ -8,16 +8,56 @@ export function PlanSection({
   tab,
   onTab,
   route,
+  open,
+  onToggle,
 }: {
   tab: "custom" | "boutique";
   onTab: (tab: "custom" | "boutique") => void;
   route: RouteId;
+  open: boolean;
+  onToggle: () => void;
 }) {
   const { t, locale } = useLocale();
   const boutique = tab === "boutique";
 
   return (
-    <section id="plan" className="scroll-mt-24 border-y border-cta/20 bg-bone py-14 md:py-20">
+    <section id="plan" className="scroll-mt-24">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-controls="plan-panel"
+        className="flex w-full flex-col items-center bg-cta px-6 py-8 text-center text-paper transition hover:bg-cta-press md:py-11"
+      >
+        <span className="plan-cta-title max-w-[18em]">
+          {t(copy.plan.ctaTitle)}
+        </span>
+        <span className="mt-2 max-w-[40ch] text-[14px] leading-snug text-paper/90 md:text-[15px]">
+          {t(copy.plan.ctaSub)}
+        </span>
+        <span
+          className={`mt-4 flex h-8 w-8 items-center justify-center rounded-full border border-paper/40 text-paper/90 transition-transform duration-300 ${
+            open ? "rotate-180" : ""
+          }`}
+          aria-hidden
+        >
+          <svg
+            className={open ? undefined : "plan-cta-hint"}
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M2.75 5.25 7 9.25l4.25-4" />
+          </svg>
+        </span>
+      </button>
+
+      <div id="plan-panel" className={open ? "border-b border-cta/20 bg-bone py-14 md:py-20" : "hidden"}>
       <div className="page-col">
         <p className="type-meta text-cta">
           {t(copy.plan.kicker)}
@@ -94,6 +134,7 @@ export function PlanSection({
             </ul>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

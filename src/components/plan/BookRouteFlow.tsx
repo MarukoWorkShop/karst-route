@@ -3,6 +3,8 @@ import { flushSync } from "react-dom";
 import type { RouteId } from "@/types";
 import { routes } from "@/data/itinerary";
 import { ADD_ONS, GROUP_TYPES, type DateMode } from "@/data/planOptions";
+import { lightExperiences } from "@/data/lightExperiences";
+import { likeKey } from "@/lib/lightLikes";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { labelsOf, sendEnquiry } from "@/lib/enquiry";
@@ -15,7 +17,6 @@ import {
   todayIso,
   type BriefDay,
 } from "@/lib/briefPdf";
-import { ItinDays } from "@/components/plan/ItinDays";
 import { PriceEstimate } from "@/components/plan/PriceEstimate";
 import { ConciergeFallback } from "@/components/plan/ConciergeFallback";
 import { SendFailDialog } from "@/components/plan/SendFailDialog";
@@ -24,14 +25,15 @@ import { useFxRates, usePriceCurrency } from "@/hooks/useFx";
 import {
   Chip,
   ConciergeForm,
+  guestName,
   FieldLabel,
   IconDownload,
+  IconRestart,
   NavRow,
   OptionBtn,
   Progress,
   RadioDot,
   SentNote,
-  StartOver,
   StepKicker,
   fieldClass,
 } from "@/components/plan/PlanUi";
@@ -66,6 +68,17 @@ function toggle(arr: string[], val: string) {
   return arr.includes(val) ? arr.filter((x) => x !== val) : [...arr, val];
 }
 
+const LIGHT_CATALOG = lightExperiences
+  .map((cat) => ({
+    id: cat.id,
+    title: cat.title,
+    skus: [...(cat.routes ?? []), ...(cat.meals ?? [])].map((item) => ({
+      key: likeKey(cat.id, item.id),
+      title: item.title,
+    })),
+  }))
+  .filter((group) => group.skus.length > 0);
+
 export function BookRouteFlow({ route }: { route: RouteId }) {
   const { t, locale } = useLocale();
   const { rates } = useFxRates();
@@ -79,9 +92,12 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [groupTypes, setGroupTypes] = useState<string[]>([]);
+  const [lightPicks, setLightPicks] = useState<string[]>([]);
   const [addOns, setAddOns] = useState<string[]>([]);
   const [notes, setNotes] = useState("");
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [contact, setContact] = useState("");
   const [phase, setPhase] = useState<"ask" | "ready">("ask");
   const [sent, setSent] = useState(false);
@@ -137,15 +153,46 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
     return items.length ? items.join(sep) : t(copy.plan.dash);
   }
 
+  /** 已选轻体验按类别归组，不含价格 */
+  function lightText(lang: "en" | "zh") {
+    const itemSep = lang === "zh" ? "、" : ", ";
+    const groupSep = lang === "zh" ? "；" : "; ";
+    const groups = LIGHT_CATALOG.map((group) => {
+      const items = group.skus
+        .filter((sku) => lightPicks.includes(sku.key))
+        .map((sku) => sku.title[lang]);
+      return items.length ? `${group.title[lang]}${lang === "zh" ? "：" : ": "}${items.join(itemSep)}` : "";
+    }).filter(Boolean);
+    return groups.join(groupSep);
+  }
+
+  /** 按行程顺序的地名：连住不重复，不含接送机、过夜列车等非地名 */
+  function placeLine() {
+    if (!baseRoute) return "";
+    const names: string[] = [];
+    for (const day of routes[baseRoute].days) {
+      if (!day.placeId || day.placeId === "train") continue;
+      const name = t(day.city).trim();
+      if (!name || /^(送机|接机|送站|接站|结束|返程|depart(?:ure)?)$/i.test(name)) continue;
+      if (names[names.length - 1] === name) continue;
+      names.push(name);
+    }
+    return names.join(" · ");
+  }
+
   function briefRows() {
     const groups = labelsOf(groupTypes, GROUP_TYPES, locale);
     const extras = labelsOf(addOns, ADD_ONS, locale);
+    const lights = lightText(locale);
+    const places = placeLine();
     const rows: { label: string; value: string }[] = [
       { label: t(copy.plan.rowRoute), value: routeLabel(false) },
+      { label: t(copy.plan.rowPlaces), value: places || t(copy.plan.dash) },
       { label: t(copy.plan.rowDateMode), value: dateModeLabel() },
       { label: t(copy.plan.rowDates), value: dateDisplay() },
       { label: t(copy.plan.rowPeople), value: `${partyN} ${t(copy.plan.peopleUnit)}` },
       { label: t(copy.plan.rowGroup), value: listOrDash(groups) },
+      { label: t(copy.plan.rowLight), value: lights || t(copy.plan.none) },
       { label: t(copy.plan.rowAddons), value: extras.length ? extras.join(locale === "zh" ? "、" : ", ") : t(copy.plan.none) },
       { label: t(copy.plan.rowNotes), value: notes.trim() || t(copy.plan.none) },
       { label: t(copy.plan.rowTweak), value: tweak.trim() || t(copy.plan.none) },
@@ -154,7 +201,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
       rows.push({ label: t(copy.plan.rowEstimate), value: estSummaryLine(est, t, locale, moneyOpts) });
     }
     rows.push(
-      { label: t(copy.plan.rowName), value: name.trim() || t(copy.plan.dash) },
+      { label: t(copy.plan.rowName), value: guestName({ title, first: firstName, last: lastName }, locale) || t(copy.plan.dash) },
       { label: t(copy.plan.rowContact), value: contact.trim() || t(copy.plan.dash) },
     );
     return rows;
@@ -215,7 +262,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   }
 
   async function submit() {
-    if (name.trim().length < 2 || !contact.trim()) {
+    if (!title || !firstName.trim() || !lastName.trim() || !contact.trim()) {
       setError(true);
       return;
     }
@@ -233,7 +280,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   async function sendBooking() {
     const ok = await sendEnquiry({
       subject: `New Karst Route booking — ${baseRoute || "unset"}`,
-      name: name.trim(),
+      name: guestName({ title, first: firstName, last: lastName }, locale),
       contact: contact.trim(),
       path: "book",
       route: baseRoute || "",
@@ -243,6 +290,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
       children: String(children),
       estimate: est ? estSummaryLine(est, t, locale, moneyOpts) : "",
       groupTypes: labelsOf(groupTypes, GROUP_TYPES, "en").join(", "),
+      lightExperiences: lightText("en"),
       addOns: labelsOf(addOns, ADD_ONS, "en").join(", "),
       notes: notes.trim(),
       tweak: tweak.trim(),
@@ -259,9 +307,10 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
 
   if (phase === "ready") {
     const groups = labelsOf(groupTypes, GROUP_TYPES, locale);
+    const lights = lightText(locale);
     const extras = labelsOf(addOns, ADD_ONS, locale);
+    const places = placeLine();
     const rows: [string, string, boolean?][] = [
-      [t(copy.plan.rowRoute), routeLabel(true)],
       [t(copy.plan.rowDates), dateDisplay(), true],
       [t(copy.plan.rowPeople), `${partyN} ${t(copy.plan.peopleUnit)}`],
       ...(est
@@ -272,6 +321,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
         groups.length ? groups.join(locale === "zh" ? "、" : ", ") : t(copy.plan.dash),
         groups.length > 2,
       ],
+      [t(copy.plan.rowLight), lights || t(copy.plan.none), Boolean(lights)],
       [
         t(copy.plan.rowAddons),
         extras.length ? extras.join(locale === "zh" ? "、" : ", ") : t(copy.plan.none),
@@ -286,6 +336,15 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
           <div className="mb-2.5 text-[13px] font-semibold tracking-[0.06em] text-gold">
             {t(copy.plan.summary)}
           </div>
+          <div className="flex items-start justify-between gap-3 border-t border-line py-2.5">
+            <span className="shrink-0 pt-px text-[12px] text-ink-soft">{t(copy.plan.rowRoute)}</span>
+            <span className="min-w-0 text-right">
+              <span className="block text-[13px] font-semibold leading-5 text-ink">{routeLabel(true)}</span>
+              {places ? (
+                <span className="mt-1 block text-[12px] font-medium leading-5 text-ink">{places}</span>
+              ) : null}
+            </span>
+          </div>
           {rows.map(([k, v, wrap]) => (
             <div
               key={k}
@@ -298,10 +357,6 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
             </div>
           ))}
           <div className="h-3" />
-        </div>
-
-        <div className="mt-5">
-          <ItinDays days={pdfDays()} />
         </div>
 
         <div className="mt-4 overflow-hidden rounded-[10px] border border-line">
@@ -338,12 +393,16 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
           ) : (
             <>
               <ConciergeForm
-                name={name}
+                title={title}
+                firstName={firstName}
+                lastName={lastName}
                 contact={contact}
                 sending={sending}
                 error={error}
                 errorText={sendError ? t(copy.plan.sendFail) : undefined}
-                onName={setName}
+                onTitle={setTitle}
+                onFirstName={setFirstName}
+                onLastName={setLastName}
                 onContact={setContact}
                 onSend={() => void submit()}
               />
@@ -358,17 +417,52 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
             </>
           )}
         </div>
-        <StartOver
-          onClick={() => {
-            setPhase("ask");
-            setSent(false);
-            setStep(0);
-            setError(false);
-            setSendError(false);
-            setFailOpen(false);
-            setTweak("");
-          }}
-        />
+        <div className="mt-4 flex gap-2.5">
+          <button
+            type="button"
+            onClick={() => {
+              setPhase("ask");
+              setStep(3);
+              setSent(false);
+              setError(false);
+              setSendError(false);
+              setFailOpen(false);
+            }}
+            className="h-12 flex-1 rounded-lg border-[1.5px] border-line text-[15px] font-semibold text-ink"
+          >
+            {t(copy.plan.back)}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setPhase("ask");
+              setSent(false);
+              setStep(0);
+              setBaseRoute(route);
+              setDateMode("");
+              setDateValue("");
+              setDateText("");
+              setAdults(2);
+              setChildren(0);
+              setGroupTypes([]);
+              setLightPicks([]);
+              setAddOns([]);
+              setNotes("");
+              setTitle("");
+              setFirstName("");
+              setLastName("");
+              setContact("");
+              setError(false);
+              setSendError(false);
+              setFailOpen(false);
+              setTweak("");
+            }}
+            className="inline-flex h-12 flex-[2] items-center justify-center gap-1.5 rounded-lg bg-cta text-[15px] font-semibold text-paper active:bg-cta-press"
+          >
+            <IconRestart className="h-[15px] w-[15px]" />
+            {t(copy.plan.rewriteAll)}
+          </button>
+        </div>
 
         <SendFailDialog
           open={failOpen && sendError}
@@ -387,7 +481,7 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
   return (
     <div>
       <p className="mb-5 text-[13px] leading-5 text-ink-soft">{t(copy.plan.bookLead)}</p>
-      <Progress step={step} total={3} />
+      <Progress step={step} total={4} />
       <StepKicker>{copy.plan.bookSteps[step] ? t(copy.plan.bookSteps[step]) : null}</StepKicker>
 
       {step === 0 ? (
@@ -561,6 +655,30 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
 
       {step === 2 ? (
         <div>
+          <p className="mb-4 text-[13px] leading-5 text-ink-soft">{t(copy.plan.lightHint)}</p>
+          <div className="flex flex-col gap-4">
+            {LIGHT_CATALOG.map((group) => (
+              <div key={group.id}>
+                <p className="mb-2 text-[12px] font-medium text-ink-soft">{t(group.title)}</p>
+                <div className="flex flex-wrap gap-2">
+                  {group.skus.map((sku) => (
+                    <Chip
+                      key={sku.key}
+                      active={lightPicks.includes(sku.key)}
+                      onClick={() => setLightPicks((cur) => toggle(cur, sku.key))}
+                    >
+                      {t(sku.title)}
+                    </Chip>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {step === 3 ? (
+        <div>
           <p className="mb-4 text-[13px] text-ink-soft">{t(copy.plan.addOnHint)}</p>
           <div className="mb-6 flex flex-wrap gap-2.5">
             {ADD_ONS.map((a) => (
@@ -584,11 +702,11 @@ export function BookRouteFlow({ route }: { route: RouteId }) {
 
       <NavRow
         step={step}
-        total={3}
+        total={4}
         lastLabel={t(copy.plan.genBook)}
         onBack={() => setStep((s) => s - 1)}
         onNext={() => {
-          if (step < 2) setStep((s) => s + 1);
+          if (step < 3) setStep((s) => s + 1);
           else setPhase("ready");
         }}
       />

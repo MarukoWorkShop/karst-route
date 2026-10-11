@@ -312,22 +312,78 @@ export function StepCounter({
   );
 }
 
+export function guestName(
+  parts: { title: string; first: string; last: string },
+  locale: "en" | "zh",
+) {
+  const title = copy.plan.titles.find((item) => item.id === parts.title);
+  const titleLabel = title ? title[locale] : "";
+  const first = parts.first.trim();
+  const last = parts.last.trim();
+  if (locale === "zh") {
+    const name = `${last}${first}`;
+    return titleLabel ? `${name}（${titleLabel}）` : name;
+  }
+  return [titleLabel, first, last].filter(Boolean).join(" ");
+}
+
+function RequiredLabel({ children, tone = "light" }: { children: ReactNode; tone?: PlanTone }) {
+  const dark = tone === "dark";
+  return (
+    <span
+      className={`mb-1.5 flex items-baseline gap-1 text-[13px] font-semibold ${
+        dark ? "text-paper/85" : "text-ink"
+      }`}
+    >
+      {children}
+      <span className={dark ? "text-gold" : "text-danger"} aria-hidden>
+        *
+      </span>
+    </span>
+  );
+}
+
+function FieldChevron({ dark }: { dark: boolean }) {
+  return (
+    <svg
+      className={`pointer-events-none absolute top-1/2 right-3 h-3.5 w-3.5 -translate-y-1/2 ${
+        dark ? "text-paper/70" : "text-ink"
+      }`}
+      viewBox="0 0 14 14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      aria-hidden
+    >
+      <path d="M2.75 5.25 7 9.25l4.25-4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export function ConciergeForm({
-  name,
+  title,
+  firstName,
+  lastName,
   contact,
   sending,
   error,
-  onName,
+  onTitle,
+  onFirstName,
+  onLastName,
   onContact,
   onSend,
   tone = "light",
   errorText,
 }: {
-  name: string;
+  title: string;
+  firstName: string;
+  lastName: string;
   contact: string;
   sending: boolean;
   error: boolean;
-  onName: (v: string) => void;
+  onTitle: (v: string) => void;
+  onFirstName: (v: string) => void;
+  onLastName: (v: string) => void;
   onContact: (v: string) => void;
   onSend: () => void;
   tone?: PlanTone;
@@ -336,6 +392,7 @@ export function ConciergeForm({
 }) {
   const { t } = useLocale();
   const dark = tone === "dark";
+  const field = `${dark ? fieldClassDark : fieldClass} appearance-none`;
   return (
     <div
       className={`overflow-hidden rounded-[10px] border ${
@@ -351,22 +408,57 @@ export function ConciergeForm({
           {t(copy.plan.concierge)}
         </p>
       </div>
-      <div className="flex flex-col gap-3 p-4">
-        <label className="block">
-          <FieldLabel tone={tone}>{t(copy.plan.yourName)}</FieldLabel>
+      <div className="flex flex-col gap-4 p-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <label className="block">
+            <RequiredLabel tone={tone}>{t(copy.plan.title)}</RequiredLabel>
+            <span className="relative block">
+              <select
+                required
+                value={title}
+                onChange={(e) => onTitle(e.target.value)}
+                className={field}
+              >
+                <option value="">{t(copy.plan.titleSelect)}</option>
+                {copy.plan.titles.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {t(item)}
+                  </option>
+                ))}
+              </select>
+              <FieldChevron dark={dark} />
+            </span>
+          </label>
+          <label className="block">
+            <RequiredLabel tone={tone}>{t(copy.plan.firstName)}</RequiredLabel>
+            <input
+              required
+              type="text"
+              autoComplete="given-name"
+              value={firstName}
+              onChange={(e) => onFirstName(e.target.value)}
+              className={dark ? fieldClassDark : fieldClass}
+            />
+          </label>
+          <label className="block">
+            <RequiredLabel tone={tone}>{t(copy.plan.lastName)}</RequiredLabel>
+            <input
+              required
+              type="text"
+              autoComplete="family-name"
+              value={lastName}
+              onChange={(e) => onLastName(e.target.value)}
+              className={dark ? fieldClassDark : fieldClass}
+            />
+          </label>
+        </div>
+        <label className="block md:max-w-[calc(66.666%-0.5rem)]">
+          <RequiredLabel tone={tone}>{t(copy.plan.yourContact)}</RequiredLabel>
           <input
+            required
             type="text"
-            value={name}
-            onChange={(e) => onName(e.target.value)}
-            className={dark ? fieldClassDark : fieldClass}
-          />
-        </label>
-        <label className="block">
-          <FieldLabel tone={tone}>{t(copy.plan.yourContact)}</FieldLabel>
-          <input
-            type="text"
+            autoComplete="email"
             value={contact}
-            placeholder={t(copy.plan.contactPh)}
             onChange={(e) => onContact(e.target.value)}
             className={dark ? fieldClassDark : fieldClass}
           />

@@ -11,7 +11,6 @@ import { routeFacts } from "../src/data/tourFacts.ts";
 import { routes } from "../src/data/itinerary.ts";
 import { travelerReviews } from "../src/data/reviews.ts";
 import { faqGroups } from "../src/data/faqs.ts";
-import { partners } from "../src/data/partners.ts";
 import { heroSlides } from "../src/data/heroPanels.ts";
 import type { DayStop, RouteId } from "../src/types.ts";
 
@@ -133,22 +132,6 @@ write(
     })),
   },
   "# 常见问题 FAQ\n# 按分组编辑。改 id 时请同步页面锚点（例如 #faq-cards）\n",
-);
-
-write(
-  "content/partners.yaml",
-  {
-    list: partners.map((p) => ({
-      name: p.name,
-      category: p.category,
-      location: p.location,
-      desc: p.desc,
-      emoji: p.emoji,
-      color: p.color,
-      links: p.links,
-    })),
-  },
-  "# 合作商家\n# type 只能是 google 或 web\n",
 );
 
 write(

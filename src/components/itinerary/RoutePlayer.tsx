@@ -19,6 +19,16 @@ const REGION_LABELS = [
   { id: "vietnam", lon: 105.85, lat: 21.35 },
 ] as const;
 
+const PIN_START = "#2f9e44";
+const PIN_MID = "#1e5c3a";
+const PIN_END = "#d64545";
+
+function pinFill(index: number, last: number) {
+  if (index === 0) return PIN_START;
+  if (index === last) return PIN_END;
+  return PIN_MID;
+}
+
 export function RoutePlayer({
   routeId,
   onClose,
@@ -63,7 +73,7 @@ export function RoutePlayer({
     return () => cancelAnimationFrame(raf);
   }, [routeId, reduce, run, stops.length]);
 
-  const { d: drawn, x: dotX, y: dotY, idx } = walkRoute(stops, progress);
+  const { x: dotX, y: dotY, idx } = walkRoute(stops, progress);
   const here = stops[idx];
   const clipId = `route-play-clip-${routeId}`;
 
@@ -91,46 +101,34 @@ export function RoutePlayer({
         <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-stretch">
           <svg
             viewBox={`0 0 ${mapView.w} ${mapView.h}`}
-            className="h-auto w-full md:w-[68%]"
+            className="h-auto w-full md:w-[78%]"
             aria-hidden
           >
             <defs>
               <clipPath id={clipId}>
                 <rect x="0" y="0" width={mapView.w} height={mapView.h} />
               </clipPath>
+              <filter id="pin-shadow" x="-40%" y="-20%" width="180%" height="160%">
+                <feDropShadow dx="0" dy="1" stdDeviation="1.1" floodColor="#1c1c1c" floodOpacity="0.28" />
+              </filter>
+              <path
+                id="map-pin"
+                d="M0 1.4C-2.2-10.7-12.2-13.6-12.2-23.8a12.2 12.2 0 1 1 24.4 0C12.2-13.6 2.2-10.7 0 1.4Z"
+              />
             </defs>
-            <rect width={mapView.w} height={mapView.h} fill="var(--color-paper)" />
+            <rect className="region-map-sea" width={mapView.w} height={mapView.h} />
             <g clipPath={`url(#${clipId})`}>
-              <g
-                className="region-map-land"
-                fill="#e8e5dc"
-                stroke="#5e7368"
-                strokeOpacity="0.28"
-                strokeWidth="0.9"
-                strokeLinejoin="round"
-              >
+              <g className="region-map-land">
                 {osmBasemap.land.map((region) =>
                   region.rings.map((ring, i) => <path key={`${region.id}-${i}`} d={ringPath(ring)} />),
                 )}
               </g>
-              <g
-                className="region-map-core"
-                fill="#e4ebe6"
-                stroke="#8aa396"
-                strokeWidth="1.35"
-                strokeLinejoin="round"
-              >
+              <g className="region-map-core">
                 {osmBasemap.core.map((region) =>
                   region.rings.map((ring, i) => <path key={`${region.id}-${i}`} d={ringPath(ring)} />),
                 )}
               </g>
-              <g
-                className="region-map-water"
-                fill="none"
-                stroke="#b7c7bf"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-              >
+              <g className="region-map-water">
                 {osmBasemap.rivers.map((river) =>
                   river.lines.map((line, i) => <path key={`${river.name}-${i}`} d={linePath(line)} />),
                 )}
@@ -146,91 +144,75 @@ export function RoutePlayer({
                     y={y}
                     textAnchor="middle"
                     className="region-map-label"
+                    style={locale === "en" ? { letterSpacing: "0.16em" } : undefined}
                   >
-                    {locale === "zh" ? region.name.zh : region.name.en}
+                    {locale === "zh" ? region.name.zh : region.name.en.toUpperCase()}
                   </text>
                 );
               })}
-              <path
-                d={track}
-                fill="none"
-                stroke="#c9c4b6"
-                strokeWidth="2.5"
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeDasharray="7 9"
-              />
-              <path
-                className="region-map-route"
-                d={drawn}
-                fill="none"
-                strokeWidth="8"
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeDasharray="22 14"
-                strokeDashoffset={-progress * 72}
-              />
-              <circle cx={dotX} cy={dotY} r="11" fill="var(--color-cta)" stroke="var(--color-paper)" strokeWidth="3" />
-              {stops.map((s, i) => (
-                <g key={`${s.id}-${i}`} pointerEvents="none">
-                  {/* 地名：仅当前 idx 显示，白描边避免被圆圈/路径遮挡 */}
-                  <text
-                    x={s.x}
-                    y={s.y - 40}
-                    textAnchor="middle"
-                    fontSize="13"
-                    fontWeight="600"
-                    fill="var(--color-cta)"
-                    stroke="var(--color-paper)"
-                    strokeWidth="3"
-                    paintOrder="stroke"
-                    opacity={i === idx ? 1 : 0}
-                    style={{ transition: "opacity 600ms ease-out" }}
-                  >
-                    {t(s.label)}
-                  </text>
-                  {/* 当前 idx：涟漪微发光，从圆圈外缘向外扩散并淡出 */}
-                  {i === idx && !reduce ? (
-                    <circle cx={s.x} cy={s.y} r="18" fill="none" stroke="var(--color-cta)" strokeWidth="2.5">
-                      <animate attributeName="r" values="18;36" dur="1.8s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.55;0" dur="1.8s" repeatCount="indefinite" />
-                    </circle>
-                  ) : null}
-                  <circle
-                    cx={s.x}
-                    cy={s.y}
-                    r="18"
-                    fill={i === idx ? "var(--color-cta)" : "var(--color-paper)"}
-                    stroke="var(--color-cta)"
-                    strokeWidth="2.5"
+              <path className="region-map-route" d={track} />
+              {stops.slice(0, -1).map((from, i) => {
+                const to = stops[i + 1];
+                const dx = to.x - from.x;
+                const dy = to.y - from.y;
+                if (Math.hypot(dx, dy) < 36) return null;
+                const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+                return (
+                  <path
+                    key={`arrow-${from.id}-${i}`}
+                    d="M-5 -3.4 L5.2 0 L-5 3.4 Z"
+                    fill="#2a2a2a"
+                    transform={`translate(${from.x + dx * 0.55} ${from.y + dy * 0.55}) rotate(${angle})`}
                   />
-                  <text
-                    x={s.x}
-                    y={s.y + 6}
-                    textAnchor="middle"
-                    fontSize="16"
-                    fontWeight="600"
-                    fill={i === idx ? "var(--color-paper)" : "var(--color-cta)"}
-                  >
-                    {s.num}
-                  </text>
-                </g>
-              ))}
+                );
+              })}
+              <circle cx={dotX} cy={dotY} r="4" fill="#2c2c2c" stroke="#ffffff" strokeWidth="1.6" />
+              {stops.map((s, i) => {
+                const color = pinFill(i, stops.length - 1);
+                const here = i === idx;
+                const bump = stops.filter(
+                  (other, j) => j !== i && Math.hypot(other.x - s.x, other.y - s.y) < 56,
+                ).length;
+                const shiftLeft = bump > 0 && i % 2 === 1;
+                return (
+                  <g key={`${s.id}-${i}`} pointerEvents="none">
+                    <g
+                      transform={`translate(${s.x} ${s.y}) scale(${here ? 1.06 : 1})`}
+                      filter="url(#pin-shadow)"
+                    >
+                      {here ? <circle cy={-23.8} r={18} fill={color} opacity={0.16} /> : null}
+                      <use href="#map-pin" fill={color} />
+                      <circle cy={-23.8} r={4.5} fill="#ffffff" />
+                    </g>
+                    <text
+                      x={bump ? s.x + (shiftLeft ? -14 : 14) : s.x}
+                      y={bump ? s.y - 8 : s.y + 18}
+                      textAnchor={bump ? (shiftLeft ? "end" : "start") : "middle"}
+                      className={here ? "region-map-place is-here" : "region-map-place"}
+                      stroke="#f7f6f2"
+                      strokeWidth="3"
+                      paintOrder="stroke"
+                    >
+                      {t(s.label)}
+                    </text>
+                  </g>
+                );
+              })}
             </g>
           </svg>
 
-          <ol className="max-h-[320px] overflow-y-auto md:max-h-none md:w-[32%] md:self-stretch">
+          <ol className="max-h-[200px] overflow-y-auto md:max-h-none md:w-[22%] md:self-stretch">
             {stops.map((s, i) => {
               const on = i === idx;
               return (
                 <li
                   key={`${s.id}-${i}`}
-                  className={`flex items-baseline gap-2.5 border-t border-line py-2 first:border-t-0 ${
+                  className={`flex items-baseline gap-2 border-t border-line py-1 first:border-t-0 ${
                     on ? "text-cta" : "text-ink"
                   }`}
                 >
-                  <span className="w-8 shrink-0 text-[20px] font-semibold tabular-nums">{s.num}</span>
-                  <span className="text-[16px] font-medium">{t(s.label)}</span>
+                  <span className="w-5 shrink-0 text-[13px] font-semibold tabular-nums">{s.num}</span>
+                  <span className="text-[13px] font-medium">{t(s.label)}</span>
                 </li>
               );
             })}

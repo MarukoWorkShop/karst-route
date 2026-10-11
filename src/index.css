@@ -161,27 +161,39 @@ html[lang|="zh"] #plan {
   font-family: var(--font-serif);
 }
 
+.region-map-sea {
+  fill: #d5e4f0;
+}
+
 .region-map-land {
-  fill: var(--color-bone);
-  stroke: var(--color-ink-soft);
-  stroke-opacity: 0.28;
+  fill: #f4f2ee;
+  stroke: #ddd8d0;
+  stroke-width: 0.7;
+  stroke-linejoin: round;
 }
 
 .region-map-core {
-  fill: color-mix(in srgb, var(--color-cta) 16%, var(--color-paper));
-  stroke: color-mix(in srgb, var(--color-cta) 48%, transparent);
+  fill: #f7f6f2;
+  stroke: #cfcabe;
+  stroke-width: 0.85;
+  stroke-linejoin: round;
 }
 
 .region-map-water {
-  stroke: color-mix(in srgb, var(--color-cta) 35%, var(--color-paper));
+  fill: none;
+  stroke: #9dbed4;
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .region-map-route {
   fill: none;
-  stroke: var(--color-cta);
-  stroke-width: 8;
+  stroke: #2a2a2a;
+  stroke-width: 2.15;
   stroke-linejoin: round;
-  stroke-linecap: round;
+  stroke-linecap: butt;
+  stroke-dasharray: 7 5.5;
 }
 
 .region-map-num {
@@ -191,10 +203,52 @@ html[lang|="zh"] #plan {
 }
 
 .region-map-label {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
-  fill: var(--color-ink-soft);
-  opacity: 0.7;
+  fill: #a39e96;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .plan-cta-hint {
+    animation: plan-cta-nudge 2.8s ease-in-out infinite;
+  }
+}
+
+@keyframes plan-cta-nudge {
+  0%,
+  62%,
+  100% {
+    transform: translateY(0);
+  }
+  78% {
+    transform: translateY(3px);
+  }
+}
+
+.plan-cta-title {
+  font-family: inherit;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25;
+}
+@media (min-width: 768px) {
+  .plan-cta-title {
+    font-size: 34px;
+  }
+}
+
+.region-map-place {
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", "Songti SC", "Noto Serif SC", "STSong", serif;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 500;
+  fill: #2a2a2a;
+}
+
+.region-map-place.is-here {
+  font-weight: 600;
+  fill: #141414;
 }
 
 .page-col {

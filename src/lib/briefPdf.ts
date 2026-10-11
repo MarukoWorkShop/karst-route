@@ -147,7 +147,7 @@ function dayHtml(day: BriefDay, labels: BriefPdfInput["labels"]) {
   const dining = day.dining?.length
     ? metaLine(labels.dining, day.dining.join(" · "))
     : "";
-  return `<section style="border:1px solid #d9d6cc;border-radius:10px;padding:16px 18px;margin:0 0 12px;background:#fdfbf6;page-break-inside:avoid;">
+  return `<section data-pdf-keep style="border:1px solid #d9d6cc;border-radius:10px;padding:16px 18px;margin:0 0 12px;background:#fdfbf6;break-inside:avoid;page-break-inside:avoid;">
     <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">
       <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#2f5344;">DAY ${esc(day.num)}</span>
       <span style="font-size:15px;font-weight:500;color:#1e3329;">${esc(day.city)}</span>
@@ -187,18 +187,63 @@ function documentHtml(doc: BriefPdfInput) {
   </div>`;
 }
 
-export async function downloadBriefPdf(input: BriefPdfInput) {
+const CREAM = "#faf8f2";
+
+type KeepBlock = { top: number; bottom: number };
+
+/**
+ * 分页切口（画布像素，从 0 到 height）。
+ * 切口尽量落在日程卡片之间；卡片本身高过一页时才允许从中切开。
+ */
+function planPdfCuts(height: number, pagePx: number, blocks: KeepBlock[]): number[] {
+  const end = Math.max(0, Math.ceil(height));
+  const page = Math.max(1, pagePx);
+  const cuts = [0];
+  let y = 0;
+  while (y < end - 1) {
+    let next = Math.min(end, y + page);
+    if (next >= end - 1) {
+      cuts.push(end);
+      break;
+    }
+    const split = blocks.find((b) => b.top < next - 1 && b.bottom > next + 1);
+    if (split && split.bottom - split.top <= page && split.top >= y + 16) {
+      next = Math.max(y + 16, split.top - 1);
+    }
+    next = Math.floor(next);
+    if (next <= y) next = Math.min(end, Math.floor(y + page));
+    cuts.push(Math.min(end, next));
+    y = cuts[cuts.length - 1];
+  }
+  return cuts;
+}
+
+function slicePage(src: HTMLCanvasElement, y0: number, y1: number, pagePx: number) {
+  const page = document.createElement("canvas");
+  page.width = src.width;
+  page.height = Math.max(1, Math.ceil(pagePx));
+  const ctx = page.getContext("2d");
+  if (!ctx) return page;
+  ctx.fillStyle = CREAM;
+  ctx.fillRect(0, 0, page.width, page.height);
+  const sy = Math.max(0, Math.floor(y0));
+  const sh = Math.max(0, Math.min(src.height - sy, Math.floor(y1) - sy));
+  if (sh > 0) ctx.drawImage(src, 0, sy, src.width, sh, 0, 0, src.width, sh);
+  return page;
+}
+
+async function rasterBrief(input: BriefPdfInput) {
   const host = document.createElement("div");
   host.setAttribute("aria-hidden", "true");
-  host.style.cssText =
-    "position:fixed;left:-10000px;top:0;width:794px;background:#faf8f2;z-index:-1;";
+  host.style.cssText = "position:fixed;left:-10000px;top:0;width:794px;background:#faf8f2;z-index:-1;";
   host.innerHTML = documentHtml(input);
   document.body.appendChild(host);
 
   try {
-    const canvas = await html2canvas(host.firstElementChild as HTMLElement, {
+    const root = host.firstElementChild as HTMLElement;
+    const canvas = await html2canvas(root, {
       scale: 2,
-      backgroundColor: "#faf8f2",
+      backgroundColor: CREAM,
       useCORS: true,
       logging: false,
       windowWidth: 794,
@@ -209,21 +254,30 @@ export async function downloadBriefPdf(input: BriefPdfInput) {
     const pageH = pdf.internal.pageSize.getHeight();
     const margin = 8;
     const printW = pageW - margin * 2;
-    const imgH = (canvas.height * printW) / canvas.width;
     const pageInnerH = pageH - margin * 2;
-    const imgData = canvas.toDataURL("image/jpeg", 0.92);
-
-    let y = 0;
-    let first = true;
-    while (y < imgH - 0.2) {
-      if (!first) pdf.addPage();
-      first = false;
-      pdf.addImage(imgData, "JPEG", margin, margin - y, printW, imgH);
-      y += pageInnerH;
-    }
-
-    pdf.save(input.filename);
+    const pagePx = pageInnerH * (canvas.width / printW);
+    const rootRect = root.getBoundingClientRect();
+    const scaleY = rootRect.height > 0 ? canvas.height / rootRect.height : 2;
+    const blocks: KeepBlock[] = [...root.querySelectorAll("[data-pdf-keep]")].map((el) => {
+      const rect = el.getBoundingClientRect();
+      return {
+        top: (rect.top - rootRect.top) * scaleY,
+        bottom: (rect.bottom - rootRect.top) * scaleY,
+      };
+    });
+    const cuts = planPdfCuts(canvas.height, pagePx, blocks);
+    const pages = cuts.slice(0, -1).map((y, i) => slicePage(canvas, y, cuts[i + 1], pagePx));
+    return { pdf, printW, pageInnerH, pages };
   } finally {
     host.remove();
   }
+}
+
+export async function downloadBriefPdf(input: BriefPdfInput) {
+  const { pdf, printW, pageInnerH, pages } = await rasterBrief(input);
+  pages.forEach((page, i) => {
+    if (i > 0) pdf.addPage();
+    pdf.addImage(page.toDataURL("image/jpeg", 0.92), "JPEG", 8, 8, printW, pageInnerH);
+  });
+  pdf.save(input.filename);
 }

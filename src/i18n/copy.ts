@@ -458,6 +458,11 @@ export const copy = {
       en: "Choose a curated itinerary as-is, or build on it with our travel concierge — we reply within 24 hours.",
       zh: "直接按现有路线出发，或在基础上深度调整；旅游管家 24 小时内回复。",
     },
+    ctaTitle: { en: "Start planning your trip", zh: "开始规划这趟旅程" },
+    ctaSub: {
+      en: "See boutique route prices, or design a deeper custom journey",
+      zh: "查看精品线路价格或深度定制",
+    },
     tabBook: {
       en: "Book our boutique routes directly",
       zh: "直接预订我们的精品线路",
@@ -481,7 +486,8 @@ export const copy = {
     bookSteps: [
       { en: "Route & dates", zh: "选择路线与时间" },
       { en: "Who's coming", zh: "同行成员" },
-      { en: "Add-ons", zh: "增值服务" },
+      { en: "Light experiences", zh: "轻体验" },
+      { en: "Other add-ons", zh: "其他增值服务" },
     ],
     designSteps: [
       { en: "Base route", zh: "选择基础路线" },
@@ -535,6 +541,10 @@ export const copy = {
       en: "Select all that apply — helps us tailor the experience",
       zh: "可多选，帮助我们更好地安排体验",
     },
+    lightHint: {
+      en: "Optional. Arranged according to the actual itinerary. Not included in the group total for now.",
+      zh: "可选。根据实际情况安排，暂不计团费总额。",
+    },
     addOnHint: {
       en: "Multi-select — tick anything you would like us to arrange",
       zh: "可复选，告诉我们您希望额外安排哪些服务",
@@ -579,10 +589,12 @@ export const copy = {
     pdfAgain: { en: "Download updated PDF", zh: "下载更新后的 PDF" },
     summary: { en: "BOOKING SUMMARY", zh: "预定摘要" },
     rowRoute: { en: "Route", zh: "选择路线" },
+    rowPlaces: { en: "Places", zh: "途经" },
     rowDates: { en: "Dates", zh: "出发时间" },
     rowPeople: { en: "Travellers", zh: "人数" },
     rowGroup: { en: "Group type", zh: "成员类型" },
-    rowAddons: { en: "Add-ons", zh: "附加服务" },
+    rowLight: { en: "Light experiences", zh: "轻体验" },
+    rowAddons: { en: "Other add-ons", zh: "其他增值服务" },
     rowNotes: { en: "Special requests", zh: "特别要求" },
     r1Short: { en: "Three Realms Traverse · 14d", zh: "三境溯游 · 14日" },
     r2Short: { en: "Southern Loop · 11d", zh: "南疆回环 · 11日" },
@@ -707,6 +719,18 @@ export const copy = {
       zh: "请管家联系我确认更多细节",
     },
     yourName: { en: "Your name", zh: "您的姓名" },
+    title: { en: "Title", zh: "称谓" },
+    titleSelect: { en: "Select", zh: "请选择" },
+    titles: [
+      { id: "mr", en: "Mr", zh: "先生" },
+      { id: "mrs", en: "Mrs", zh: "夫人" },
+      { id: "ms", en: "Ms", zh: "女士" },
+      { id: "miss", en: "Miss", zh: "小姐" },
+      { id: "dr", en: "Dr", zh: "博士" },
+      { id: "mx", en: "Mx", zh: "其他" },
+    ],
+    firstName: { en: "First name", zh: "名" },
+    lastName: { en: "Last name", zh: "姓" },
     yourContact: {
       en: "Email or WhatsApp",
       zh: "邮箱或 WhatsApp",
@@ -722,9 +746,10 @@ export const copy = {
       zh: "已提交！我们的旅游管家会在 24 小时内给您详细回复。",
     },
     startOver: { en: "Start over", zh: "重新填写" },
+    rewriteAll: { en: "Rewrite all", zh: "全部重写" },
     err: {
-      en: "Check name and WeChat / WhatsApp / email.",
-      zh: "请填写姓名，以及微信、WhatsApp 或邮箱。",
+      en: "Please fill in title, first name, last name, and email or WhatsApp.",
+      zh: "请填写称谓、名、姓，以及邮箱或 WhatsApp。",
     },
     sendFail: {
       en: "Couldn't send just now — please retry, or reach us on WeChat / WhatsApp.",
@@ -860,13 +885,6 @@ export const copy = {
       zh: "还有其他疑问？直接告诉我们。",
     },
     cta: { en: "Get in touch", zh: "联系我们" },
-  },
-  partners: {
-    h2: { en: "Local partners we trust", zh: "我们信任的当地合作商家" },
-    sub: {
-      en: "Each partner below has been visited in person and vetted through ongoing collaboration. Click to find them on the map or visit their site.",
-      zh: "以下商家经过我们实地考察与长期合作，纳入路线推荐体系。点击可查看地图位置或访问其官网。",
-    },
   },
   footer: {
     brand: { en: "有闲旅行", zh: "有闲旅行" },

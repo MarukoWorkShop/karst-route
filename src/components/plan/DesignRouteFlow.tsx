@@ -18,6 +18,7 @@ import { SendFailDialog } from "@/components/plan/SendFailDialog";
 import {
   Chip,
   ConciergeForm,
+  guestName,
   FieldLabel,
   NavRow,
   OptionBtn,
@@ -98,7 +99,9 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
   const [pickedSkus, setPickedSkus] = useState<string[]>(() => [...readLikes()]);
   const [skuTouched, setSkuTouched] = useState(false);
   const [notes, setNotes] = useState("");
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [contact, setContact] = useState("");
   const [phase, setPhase] = useState<"ask" | "contact">("ask");
   const [sent, setSent] = useState(false);
@@ -205,7 +208,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
       ...(notes.trim()
         ? [{ label: t(copy.plan.rowNotes), value: notes.trim() }]
         : []),
-      { label: t(copy.plan.rowName), value: name.trim() || t(copy.plan.dash) },
+      { label: t(copy.plan.rowName), value: guestName({ title, first: firstName, last: lastName }, locale) || t(copy.plan.dash) },
       { label: t(copy.plan.rowContact), value: contact.trim() || t(copy.plan.dash) },
     ];
   }
@@ -218,7 +221,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
   }
 
   async function submit() {
-    if (name.trim().length < 2 || !contact.trim()) {
+    if (!title || !firstName.trim() || !lastName.trim() || !contact.trim()) {
       setError(true);
       return;
     }
@@ -237,7 +240,7 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
     const hotel = HOTEL_TIERS.find((h) => h.id === hotelTier);
     const ok = await sendEnquiry({
       subject: `New custom route request — ${rid}`,
-      name: name.trim(),
+      name: guestName({ title, first: firstName, last: lastName }, locale),
       contact: contact.trim(),
       path: "design",
       route: rid,
@@ -296,12 +299,16 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
         ) : (
           <>
             <ConciergeForm
-              name={name}
+              title={title}
+              firstName={firstName}
+              lastName={lastName}
               contact={contact}
               sending={sending}
               error={error}
               errorText={sendError ? t(copy.plan.sendFail) : undefined}
-              onName={setName}
+              onTitle={setTitle}
+              onFirstName={setFirstName}
+              onLastName={setLastName}
               onContact={setContact}
               onSend={() => void submit()}
             />

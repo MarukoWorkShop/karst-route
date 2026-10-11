@@ -11,7 +11,6 @@ import { About } from "@/components/about/About";
 import { Explore } from "@/components/explore/Explore";
 import { PlanSection } from "@/components/plan/PlanSection";
 import { Faq } from "@/components/faq/Faq";
-import { Partners } from "@/components/partners/Partners";
 import { PwaInstallPrompt } from "@/components/pwa/PwaInstallPrompt";
 
 function go(id: string) {
@@ -22,6 +21,7 @@ export default function App() {
   const [route, setRoute] = useState<RouteId>("r1");
   const [intent, setIntent] = useState<"boutique" | "custom">("boutique");
   const [itinOpen, setItinOpen] = useState(false);
+  const [planOpen, setPlanOpen] = useState(false);
 
   // 首屏（Hero）占据视野时收起底部导航，让画面整屏呈现
   const [heroInView, setHeroInView] = useState(true);
@@ -48,7 +48,12 @@ export default function App() {
 
   return (
     <>
-      <Header onPlan={() => setIntent("custom")} />
+      <Header
+        onPlan={() => {
+          setIntent("custom");
+          setPlanOpen(true);
+        }}
+      />
       <main className="bg-paper">
         <Hero />
         <BoutiqueTours
@@ -66,15 +71,21 @@ export default function App() {
           onPlanQuote={(id) => {
             setRoute(id);
             setIntent("boutique");
+            setPlanOpen(true);
             go("plan");
           }}
         />
         <Experience />
-        <PlanSection tab={intent} onTab={setIntent} route={route} />
+        <PlanSection
+          tab={intent}
+          onTab={setIntent}
+          route={route}
+          open={planOpen}
+          onToggle={() => setPlanOpen((open) => !open)}
+        />
         <About />
         <Explore />
         <Faq />
-        <Partners />
       </main>
       <Footer />
       <MobileDock
@@ -82,6 +93,7 @@ export default function App() {
         onTours={() => go("tours")}
         onPlan={() => {
           setIntent("custom");
+          setPlanOpen(true);
           go("plan");
         }}
       />
