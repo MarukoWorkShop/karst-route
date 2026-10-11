@@ -227,13 +227,13 @@ function RouteExpandModal({
       <article
         role="dialog"
         aria-modal="true"
-        className="relative z-[1] flex h-dvh w-full flex-col overflow-y-auto overscroll-contain bg-surface p-4 pt-14 shadow-none ring-0 md:my-auto md:grid md:h-auto md:max-h-none md:w-[min(92vw,1080px)] md:grid-cols-[1.05fr_1fr] md:gap-6 md:overflow-visible md:rounded-xl md:p-6 md:pt-6 md:shadow-[0_24px_64px_rgba(16,28,22,0.22)] md:ring-1 md:ring-line"
+        className="relative z-[1] flex h-dvh w-full flex-col overflow-y-auto overscroll-contain bg-surface p-4 pt-[calc(env(safe-area-inset-top)+3.5rem)] shadow-none ring-0 md:my-auto md:grid md:h-auto md:max-h-none md:w-[min(92vw,1080px)] md:grid-cols-[1.05fr_1fr] md:gap-6 md:overflow-visible md:rounded-xl md:p-6 md:pt-6 md:shadow-[0_24px_64px_rgba(16,28,22,0.22)] md:ring-1 md:ring-line"
       >
         <button
           type="button"
           aria-label={t(copy.tours.expandClose)}
           onClick={onClose}
-          className="absolute top-3 right-3 z-[2] flex h-10 w-10 items-center justify-center rounded-full border border-line bg-paper text-ink-soft transition hover:border-cta/40 hover:text-cta md:h-8 md:w-8"
+          className="absolute top-[calc(env(safe-area-inset-top)+0.75rem)] right-3 z-[2] flex h-10 w-10 items-center justify-center rounded-full border border-line bg-paper text-ink-soft transition hover:border-cta/40 hover:text-cta md:top-3 md:h-8 md:w-8"
         >
           <IconClose className="h-4 w-4" />
         </button>

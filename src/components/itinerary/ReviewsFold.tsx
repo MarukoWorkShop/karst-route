@@ -107,7 +107,7 @@ export function ReviewsFold({
           <aside
             role="dialog"
             aria-modal="true"
-            className="place-drawer is-open absolute inset-y-0 right-0 flex w-full max-w-[420px] flex-col overflow-y-auto bg-paper px-[22px] pt-14 pb-12"
+            className="place-drawer is-open absolute inset-y-0 right-0 flex w-full max-w-[420px] flex-col overflow-y-auto bg-paper px-[22px] pt-[calc(env(safe-area-inset-top)+3.5rem)] pb-12 md:pt-14"
           >
             <div className="mb-6 flex items-start justify-between gap-3">
               <div className="flex items-center gap-3.5">

@@ -109,7 +109,7 @@ export function Explore() {
         }`}
       >
         {drawer ? (
-          <div className="pt-[max(56px,env(safe-area-inset-top))] pb-12">
+          <div className="pt-[calc(env(safe-area-inset-top)+3.5rem)] pb-12 md:pt-14">
             <div className="flex items-center justify-between px-5 pb-5">
               <p id="explore-drawer-title" className="type-h3 text-ink">
                 {drawerTitle}
@@ -154,7 +154,7 @@ export function Explore() {
             type="button"
             aria-label={t(copy.nav.close)}
             onClick={() => setActiveVideo(null)}
-            className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-paper/20 bg-paper/12 text-paper"
+            className="absolute top-[calc(env(safe-area-inset-top)+1rem)] right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-paper/20 bg-paper/12 text-paper md:top-4"
           >
             <IconClose className="h-5 w-5" />
           </button>

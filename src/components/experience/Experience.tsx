@@ -218,7 +218,7 @@ function LightModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className={`scrollbar-none relative z-[1] flex h-dvh w-full max-w-full flex-col overflow-x-hidden overflow-y-auto overscroll-contain bg-surface p-4 pt-14 shadow-none ring-0 md:my-auto md:h-auto md:max-h-none md:w-[min(92vw,960px)] md:overflow-x-hidden md:overflow-y-visible md:rounded-xl md:p-6 md:pt-6 md:shadow-[0_24px_64px_rgba(16,28,22,0.22)] md:ring-1 md:ring-line ${
+        className={`scrollbar-none relative z-[1] flex h-dvh w-full max-w-full flex-col overflow-x-hidden overflow-y-auto overscroll-contain bg-surface p-4 pt-[calc(env(safe-area-inset-top)+3.5rem)] shadow-none ring-0 md:my-auto md:h-auto md:max-h-none md:w-[min(92vw,960px)] md:overflow-x-hidden md:overflow-y-visible md:rounded-xl md:p-6 md:pt-6 md:shadow-[0_24px_64px_rgba(16,28,22,0.22)] md:ring-1 md:ring-line ${
           item ? "md:grid md:grid-cols-[1.15fr_0.85fr] md:items-start md:gap-x-6" : ""
         }`}
       >
@@ -226,7 +226,7 @@ function LightModal({
           type="button"
           aria-label={t(copy.nav.close)}
           onClick={onClose}
-          className="absolute top-3 right-3 z-[2] flex h-10 w-10 items-center justify-center rounded-full border border-line bg-paper text-ink-soft transition hover:border-cta/40 hover:text-cta md:h-8 md:w-8"
+          className="absolute top-[calc(env(safe-area-inset-top)+0.75rem)] right-3 z-[2] flex h-10 w-10 items-center justify-center rounded-full border border-line bg-paper text-ink-soft transition hover:border-cta/40 hover:text-cta md:top-3 md:h-8 md:w-8"
         >
           <IconClose className="h-4 w-4" />
         </button>
