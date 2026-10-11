@@ -12,6 +12,7 @@ import { Explore } from "@/components/explore/Explore";
 import { PlanSection } from "@/components/plan/PlanSection";
 import { Faq } from "@/components/faq/Faq";
 import { Partners } from "@/components/partners/Partners";
+import { PwaInstallPrompt } from "@/components/pwa/PwaInstallPrompt";
 
 function go(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -84,6 +85,7 @@ export default function App() {
           go("plan");
         }}
       />
+      <PwaInstallPrompt blocked={heroInView} />
     </>
   );
 }
