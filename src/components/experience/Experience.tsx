@@ -8,15 +8,14 @@ import {
 } from "@/data/lightExperiences";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { IconClose, IconFlame, IconHeart, IconUsers } from "@/components/icons";
+import { IconClose, IconHeart, IconUsers } from "@/components/icons";
 import { SectionIntro } from "@/components/ui/SectionIntro";
 import { User, Baby, Minus, Plus } from "lucide-react";
 import { FieldLabel, IconSend } from "@/components/plan/PlanUi";
 import { CurrencyToggle } from "@/components/ui/CurrencyToggle";
 import { formatMoney, fmtCny } from "@/lib/fx";
 import { sendEnquiry } from "@/lib/enquiry";
-import { lineTotalCny, priceOf, formatSkuPriceParts, priceNoteOf, stripPriceFromBlurb } from "@/lib/lightPrice";
-import { bumpSkuClick, popularityScore, readSkuClicks } from "@/lib/lightClicks";
+import { fromCny, lineTotalCny, priceOf, formatSkuPriceParts, priceNoteOf, stripPriceFromBlurb } from "@/lib/lightPrice";
 import { likeKey, readLikes, writeLikes } from "@/lib/lightLikes";
 import { LightReviews } from "@/components/experience/LightReviews";
 import { useFxRates, usePriceCurrency } from "@/hooks/useFx";
@@ -82,10 +81,7 @@ export function Experience() {
     setLikes((prev) => {
       const next = new Set(prev);
       if (next.has(key)) next.delete(key);
-      else {
-        next.add(key);
-        bumpSkuClick(routeId);
-      }
+      else next.add(key);
       writeLikes(next);
       return next;
     });
@@ -254,44 +250,29 @@ function IndexBody({
   titleId: string;
   onPick: (id: LightId) => void;
 }) {
-  const { t } = useLocale();
-  const [clicks, setClicks] = useState<Record<string, number>>({});
+  const { t, locale } = useLocale();
+  const { rates } = useFxRates();
+  const { currency } = usePriceCurrency();
+  const money = (cny: number) => formatMoney(cny, { locale, currency, rates });
 
-  useEffect(() => {
-    setClicks(readSkuClicks());
-  }, []);
+  const rows = lightExperiences.flatMap((cat) =>
+    [...(cat.routes ?? []), ...(cat.meals ?? [])].map((route) => ({
+      key: likeKey(cat.id, route.id),
+      categoryId: cat.id,
+      categoryBadge: cat.badge,
+      route,
+    })),
+  );
 
-  const ranked = useMemo(() => {
-    type Row = {
-      key: string;
-      skuId: string;
-      categoryId: LightId;
-      categoryBadge: Tx;
-      categoryTitle: Tx;
-      route: LightRoute;
-      score: number;
-    };
-    const rows: Row[] = [];
-    for (const cat of lightExperiences) {
-      for (const route of [...(cat.routes ?? []), ...(cat.meals ?? [])]) {
-        rows.push({
-          key: likeKey(cat.id, route.id),
-          skuId: route.id,
-          categoryId: cat.id,
-          categoryBadge: cat.badge,
-          categoryTitle: cat.title,
-          route,
-          score: popularityScore(route.id, route.sort, clicks),
-        });
-      }
-    }
-    rows.sort((a, b) => b.score - a.score || a.skuId.localeCompare(b.skuId));
-    return rows;
-  }, [clicks]);
-
-  function openSku(row: (typeof ranked)[number]) {
-    setClicks(bumpSkuClick(row.skuId));
-    onPick(row.categoryId);
+  function fromLabel(route: LightRoute) {
+    const price = route.price ?? priceOf(route.id);
+    if (!price) return "";
+    const amount = fromCny(price);
+    if (!amount) return "";
+    const shown = money(amount);
+    return locale === "zh"
+      ? `${shown} ${t(copy.light.priceFrom)}`
+      : `${t(copy.light.priceFrom)} ${shown}`;
   }
 
   return (
@@ -302,53 +283,41 @@ function IndexBody({
       </h3>
 
       <ul className="mt-5 flex flex-col">
-        {ranked.map((row, i) => {
-          const hot = i < 5;
-          const cover = row.route.images[0] ?? "";
+        {rows.map((row, i) => {
+          const cover = row.route.images[0]?.replace(/#contain$/, "") ?? "";
           const intro = row.route.blurb[0];
+          const from = fromLabel(row.route);
           return (
             <li key={row.key} className={i > 0 ? "border-t border-line" : ""}>
               <button
                 type="button"
-                onClick={() => openSku(row)}
-                className="flex w-full items-center gap-3.5 py-3.5 text-left transition hover:bg-bone/60"
+                onClick={() => onPick(row.categoryId)}
+                className="grid w-full grid-cols-[7.5rem_minmax(0,1fr)] items-start gap-x-3.5 gap-y-2 py-4 text-left transition hover:bg-bone/60 md:grid-cols-[9rem_minmax(0,1fr)_auto] md:items-center md:gap-x-5"
               >
                 {cover ? (
                   <img
                     loading="lazy"
                     src={cover}
                     alt=""
-                    className="h-16 w-24 shrink-0 rounded-md object-cover"
+                    className="col-start-1 row-start-1 aspect-square w-full rounded-md object-cover"
                   />
                 ) : (
-                  <span className="h-16 w-24 shrink-0 rounded-md bg-bone" />
+                  <span className="col-start-1 row-start-1 aspect-square w-full rounded-md bg-bone" />
                 )}
-                <span className="min-w-0 flex-1">
-                  <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <span className="type-meta text-cta">{t(row.categoryBadge)}</span>
-                    {hot ? (
-                      <span
-                        className="inline-flex shrink-0 text-[#E84B3C]"
-                        title={t(copy.light.hotTag)}
-                        aria-label={t(copy.light.hotTag)}
-                      >
-                        <IconFlame className="hot-flame h-3.5 w-3.5" />
-                      </span>
-                    ) : null}
-                  </span>
-                  <span className="type-sub mt-0.5 block font-medium text-ink">{t(row.route.title)}</span>
+                <span className="col-start-2 row-start-1 min-w-0">
+                  <span className="type-meta text-cta">{t(row.categoryBadge)}</span>
+                  <span className="type-sub mt-1 block font-medium text-ink">{t(row.route.title)}</span>
                   {intro ? (
-                    <span className="type-aux mt-0.5 line-clamp-2 block text-ink-soft">{t(intro)}</span>
-                  ) : null}
-                  <span className="type-meta mt-1 block font-normal normal-case tracking-normal text-ink-soft/75">
-                    {t(row.categoryTitle)}
-                    <span className="mx-1.5 text-ink-soft/35" aria-hidden>
-                      ·
+                    <span className="type-aux mt-1 line-clamp-2 block text-ink-soft md:line-clamp-3">
+                      {t(intro)}
                     </span>
-                    {t(copy.light.popularity).replace("{n}", String(row.score))}
-                  </span>
+                  ) : null}
                 </span>
-                <span className="type-aux shrink-0 text-cta">{t(copy.light.view)} →</span>
+                {from ? (
+                  <span className="type-price col-start-2 row-start-2 text-ink md:col-start-3 md:row-start-1 md:text-right">
+                    {from}
+                  </span>
+                ) : null}
               </button>
             </li>
           );

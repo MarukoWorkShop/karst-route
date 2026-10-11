@@ -280,8 +280,7 @@ export const copy = {
     },
     kicker: { en: "Light travel experiences", zh: "轻旅行体验" },
     allTitle: { en: "Popular activities", zh: "热门活动小产品" },
-    hotTag: { en: "Hot", zh: "Hot" },
-    popularity: { en: "{n} views", zh: "热度 {n}" },
+    priceFrom: { en: "from", zh: "起" },
     pick: { en: "Choose an experience", zh: "选择体验" },
     duration: { en: "Duration", zh: "时长" },
     group: { en: "Group size", zh: "成团人数" },
@@ -295,7 +294,6 @@ export const copy = {
       zh: "按人数与日期报价，提交需求后为您核算。",
     },
     quote: { en: "Enquire", zh: "咨询报价" },
-    view: { en: "View details", zh: "查看详情" },
     back: { en: "Popular list", zh: "热门列表" },
     routes: { en: "Route options", zh: "路线小产品" },
     routesSub: {

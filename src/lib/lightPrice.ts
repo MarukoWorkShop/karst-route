@@ -190,6 +190,14 @@ export function priceOf(skuId: string): LightSkuPrice | undefined {
   return YAML.prices[skuId] ?? LIGHT_SKU_PRICE[skuId];
 }
 
+/** 列表起价：人数档取最低单价，筏/一口价取标价。 */
+export function fromCny(price: LightSkuPrice): number {
+  if (price.unit === "raft") return round10(price.raftCny);
+  if (price.unit === "flat") return round10(price.flatCny);
+  const amounts = price.bands.map((band) => round10(band.cny)).filter((n) => n > 0);
+  return amounts.length ? Math.min(...amounts) : 0;
+}
+
 export function priceNoteOf(skuId: string, locale: "en" | "zh"): string {
   const n = YAML.notes[skuId] ?? LIGHT_SKU_PRICE_NOTE[skuId];
   return n ? n[locale] : "";
