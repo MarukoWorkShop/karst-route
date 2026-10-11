@@ -35,26 +35,13 @@ function toggle(arr: string[], val: string) {
   return arr.includes(val) ? arr.filter((x) => x !== val) : [...arr, val];
 }
 
-function defaultDays(id: RouteId) {
-  if (id === "r1") return 14;
-  if (id === "r2") return 11;
-  return 7;
-}
-
-function durationRange(id: RouteId) {
-  if (id === "r3") return { min: 5, max: 12 };
-  if (id === "r2") return { min: 8, max: 14 };
-  return { min: 8, max: 18 };
-}
+const DAY_MIN = 8;
+const DAY_MAX = 18;
 
 function routeTitle(id: RouteId) {
   if (id === "r1") return copy.plan.r1Title;
   if (id === "r2") return copy.plan.r2Title;
   return copy.plan.r3Title;
-}
-
-function asRoute(id: RouteId | ""): RouteId {
-  return id === "r2" || id === "r3" ? id : "r1";
 }
 
 const WEEK_ZH = ["日", "一", "二", "三", "四", "五", "六"];
@@ -78,11 +65,11 @@ const SKU_CATALOG = lightExperiences.map((cat) => ({
   })),
 })).filter((group) => group.skus.length > 0);
 
-export function DesignRouteFlow({ route }: { route: RouteId }) {
+export function DesignRouteFlow() {
   const { t, locale } = useLocale();
   const [step, setStep] = useState(0);
-  const [baseRoute, setBaseRoute] = useState<RouteId | "">(route);
-  const [duration, setDuration] = useState(defaultDays(route));
+  const [baseRoute, setBaseRoute] = useState<RouteId | "">("");
+  const [duration, setDuration] = useState(14);
   const [extraDests, setExtraDests] = useState<string[]>([]);
   const [customDest, setCustomDest] = useState("");
   const [entryCity, setEntryCity] = useState("");
@@ -111,11 +98,6 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
   const [failOpen, setFailOpen] = useState(false);
 
   useEffect(() => {
-    setBaseRoute(route);
-    setDuration(defaultDays(route));
-  }, [route]);
-
-  useEffect(() => {
     if (skuTouched) return;
     const sync = () => setPickedSkus([...readLikes()]);
     sync();
@@ -123,8 +105,6 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
     return () => window.removeEventListener("light-likes", sync);
   }, [skuTouched]);
 
-  const rid = asRoute(baseRoute);
-  const daysRange = durationRange(rid);
   const partyN = adults + children;
   const autoEnd = dateValue && duration ? endIso(dateValue, duration) : "";
 
@@ -160,15 +140,26 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
     return groups;
   }
 
+  function routeChoiceLabel() {
+    if (baseRoute === "r1" || baseRoute === "r2" || baseRoute === "r3") return t(routeTitle(baseRoute));
+    return t(copy.plan.notSure);
+  }
+
+  function durationLabel() {
+    if (duration <= DAY_MIN) return t(copy.plan.daysMin);
+    if (duration >= DAY_MAX) return t(copy.plan.daysMax);
+    return `${duration} ${t(copy.plan.daysUnit)}`;
+  }
+
   function briefRows() {
     const hotel = HOTEL_TIERS.find((h) => h.id === hotelTier);
     const sep = locale === "zh" ? "、" : ", ";
     return [
       {
         label: t(copy.plan.rowRoute),
-        value: t(routeTitle(rid)),
+        value: routeChoiceLabel(),
       },
-      { label: t(copy.plan.rowDuration), value: `${duration} ${t(copy.plan.daysUnit)}` },
+      { label: t(copy.plan.rowDuration), value: durationLabel() },
       { label: t(copy.plan.durationNoteLabel), value: t(copy.plan.durationNote) },
       {
         label: t(copy.plan.rowPeople),
@@ -239,12 +230,12 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
   async function sendBrief() {
     const hotel = HOTEL_TIERS.find((h) => h.id === hotelTier);
     const ok = await sendEnquiry({
-      subject: `New custom route request — ${rid}`,
+      subject: `New custom route request — ${baseRoute || "not-sure"}`,
       name: guestName({ title, first: firstName, last: lastName }, locale),
       contact: contact.trim(),
       path: "design",
-      route: rid,
-      duration: String(duration),
+      route: baseRoute || "not-sure",
+      duration: durationLabel(),
       travelers: String(partyN),
       adults: String(adults),
       children: String(children),
@@ -315,9 +306,9 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
             {sendError ? (
               <ConciergeFallback
                 rows={briefRows()}
-                filename={`karst-design-request-${rid}.pdf`}
+                filename={`karst-design-request-${baseRoute || "open"}.pdf`}
                 kicker={t(copy.plan.designLead)}
-                title={t(routeTitle(rid))}
+                title={routeChoiceLabel()}
               />
             ) : null}
           </>
@@ -338,9 +329,9 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
           open={failOpen && sendError}
           sending={sending}
           rows={briefRows()}
-          filename={`karst-design-request-${rid}.pdf`}
+          filename={`karst-design-request-${baseRoute || "open"}.pdf`}
           kicker={t(copy.plan.designLead)}
-          title={t(routeTitle(rid))}
+          title={routeChoiceLabel()}
           onRetry={() => void submit()}
           onClose={() => setFailOpen(false)}
         />
@@ -357,43 +348,55 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
 
   return (
     <div>
-      <p className="mb-5 text-[13px] leading-[22px] text-ink-soft">{t(copy.plan.designLead)}</p>
+      {step === 0 ? (
+        <>
+          <div className="mb-4 flex items-start gap-4 rounded-xl bg-sage px-4 py-4 md:px-5">
+            <div className="flex w-[72px] shrink-0 flex-col items-center">
+              <span
+                className="flex h-16 w-16 items-center justify-center rounded-full bg-cta text-[22px] font-semibold text-paper"
+                aria-hidden
+              >
+                {t(copy.plan.conciergeName).slice(0, 1)}
+              </span>
+              <span className="mt-1.5 text-center text-[12px] font-semibold leading-4 text-ink">
+                {t(copy.plan.conciergeName)}
+              </span>
+            </div>
+            <p className="min-w-0 text-[13.5px] leading-[1.7] text-ink">{t(copy.plan.designLead)}</p>
+          </div>
+          <label className="mb-6 block">
+            <span className="mb-1.5 block text-[13px] font-semibold text-ink">{t(copy.plan.baseRouteLabel)}</span>
+            <span className="relative block">
+              <select
+                value={baseRoute}
+                onChange={(e) => setBaseRoute((e.target.value || "") as RouteId | "")}
+                className="h-12 w-full appearance-none rounded-lg border-[1.5px] border-cta bg-paper px-3.5 pr-10 text-[15px] text-ink outline-none"
+              >
+                <option value="">{t(copy.plan.notSure)}</option>
+                <option value="r1">{t(copy.plan.r1Title)}</option>
+                <option value="r2">{t(copy.plan.r2Title)}</option>
+                <option value="r3">{t(copy.plan.r3Title)}</option>
+              </select>
+              <svg
+                className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-ink"
+                viewBox="0 0 14 14"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                aria-hidden
+              >
+                <path d="M2.75 5.25 7 9.25l4.25-4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </label>
+        </>
+      ) : null}
       <Progress step={step} total={6} />
       <StepKicker>{copy.plan.designSteps[step] ? t(copy.plan.designSteps[step]) : null}</StepKicker>
 
       {step === 0 ? (
         <div className="grid items-start gap-6 md:grid-cols-[minmax(0,1.15fr)_minmax(280px,0.95fr)] md:gap-8">
-          {/* 左：路线卡片 + 出行人数（与直接预订的格式一致） */}
           <div className="flex min-w-0 flex-col gap-6">
-            <div>
-              <FieldLabel>{t(copy.plan.chooseRoute)}</FieldLabel>
-              <div className="mt-2 flex flex-col gap-2.5">
-                {(
-                  [
-                    { val: "r1" as const, days: 14, title: copy.plan.r1Title, sub: copy.plan.r1SubLong },
-                    { val: "r2" as const, days: 11, title: copy.plan.r2Title, sub: copy.plan.r2SubLong },
-                    { val: "r3" as const, days: 7, title: copy.plan.r3Title, sub: copy.plan.r3SubLong },
-                  ] as const
-                ).map((r) => {
-                  const on = baseRoute === r.val;
-                  return (
-                    <OptionBtn
-                      key={r.val}
-                      active={on}
-                      onClick={() => {
-                        setBaseRoute(r.val);
-                        const range = durationRange(r.val);
-                        setDuration(Math.min(Math.max(r.days, range.min), range.max));
-                      }}
-                    >
-                      <div className="mb-[3px] font-semibold">{t(r.title)}</div>
-                      <div className={`text-[12px] ${on ? "text-cta" : "text-ink-soft"}`}>{t(r.sub)}</div>
-                    </OptionBtn>
-                  );
-                })}
-              </div>
-            </div>
-
             <div>
               <FieldLabel>{t(copy.plan.travelersN).replace("{n}", String(partyN))}</FieldLabel>
               <div className="mt-2 grid grid-cols-2 gap-3">
@@ -417,26 +420,18 @@ export function DesignRouteFlow({ route }: { route: RouteId }) {
 
           {/* 右：总天数调整 */}
           <div className="min-w-0">
-            <FieldLabel>{t(copy.plan.totalDays).replace("{n}", String(duration))}</FieldLabel>
+            <FieldLabel>{t(copy.plan.totalDays).replace("{n}", durationLabel())}</FieldLabel>
             <input
               type="range"
-              min={daysRange.min}
-              max={daysRange.max}
-              value={Math.min(Math.max(duration, daysRange.min), daysRange.max)}
+              min={DAY_MIN}
+              max={DAY_MAX}
+              value={Math.min(Math.max(duration, DAY_MIN), DAY_MAX)}
               onChange={(e) => setDuration(Number(e.target.value))}
               className="range-forest mt-3 w-full"
             />
-            <div className="mt-1 flex justify-between text-[11px] text-ink-soft">
-              <span>
-                {daysRange.min}
-                {t(copy.plan.daysUnit)}
-                {locale === "zh" ? "（精简）" : ""}
-              </span>
-              <span>
-                {daysRange.max}
-                {t(copy.plan.daysUnit)}
-                {locale === "zh" ? "（深度）" : ""}
-              </span>
+            <div className="mt-1 flex justify-between gap-3 text-[11px] text-ink-soft">
+              <span>{t(copy.plan.daysMin)}</span>
+              <span>{t(copy.plan.daysMax)}</span>
             </div>
             <div className="mt-4 rounded-lg bg-sage px-3.5 py-2.5 text-[12.5px] leading-5 text-ink-soft">
               {locale === "zh"

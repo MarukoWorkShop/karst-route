@@ -476,9 +476,12 @@ export const copy = {
       zh: "选择现有路线出发，不改行程顺序，只告诉我们时间、人数与特别需求。",
     },
     designLead: {
-      en: "Build on an existing route: add or drop destinations, or combine it with your other travel. Please tell us what this journey means to you — a wedding anniversary, a return to a familiar place, a short stay, a business study trip, rest and recovery, and so on. Our travel concierge will reply within 24 hours, marshall our best resources, and tailor an experience you will remember for life.",
-      zh: "以现有路线为基础，增减目的地，或与您的其他行程结合，支持深度定制。请务必告诉我们这趟旅程对您的特殊意义（结婚纪念，故地重游，短期旅居，商务考察，疗愈与放松，等等）。旅游管家会在 24 小时内给您回复，调度我们的精华资源，为您定制终身难忘的体验。",
+      en: "Hello, I'm Xiaxia, your travel planner. If you don't yet have a clear plan for this trip, or you're simply set on chasing a certain feeling, we can still shape the journey you want. Please tell us what this journey means to you — a wedding anniversary, a return to a familiar place, a short stay, a business study trip, rest and recovery, and so on. I'll reply within 24 hours, draw on our best resources, and tailor an experience you will remember for life.",
+      zh: "您好，我是您的旅游规划师夏夏，如果你对这次旅行还没有明确的规划，或者只是坚定地追寻某种“感觉”，我们都能帮助您规划想要的旅行。请务必告诉我们这趟旅程对您的特殊意义（结婚纪念，故地重游，短期旅居，商务考察，疗愈与放松，等等）。我会在 24 小时内给您回复，调度我们的精华资源，为您定制终身难忘的体验。",
     },
+    conciergeName: { en: "Xiaxia", zh: "夏夏" },
+    baseRouteLabel: { en: "Base route", zh: "感兴趣的基础路线" },
+    notSure: { en: "Not sure yet", zh: "还不确定" },
     designSubmitLead: {
       en: "Leave your name and a way to reach you. Our travel concierge will reply in detail within 24 hours.",
       zh: "留下姓名和联系方式。我们的旅游管家会在 24 小时内给您详细回复。",
@@ -490,7 +493,7 @@ export const copy = {
       { en: "Other add-ons", zh: "其他增值服务" },
     ],
     designSteps: [
-      { en: "Base route", zh: "选择基础路线" },
+      { en: "Party & length", zh: "人数与天数" },
       { en: "Dates & connections", zh: "出发时间与行程衔接" },
       { en: "Destinations", zh: "调整目的地" },
       { en: "Hotel tier", zh: "住宿偏好" },
@@ -773,9 +776,9 @@ export const copy = {
     fallbackDownload: { en: "Download my request as PDF", zh: "下载我的需求单 PDF" },
     copyHint: { en: "tap to copy", zh: "点击复制" },
     copied: { en: "copied ✓", zh: "已复制 ✓" },
-    totalDays: { en: "Preferred total days: {n}", zh: "期望总天数：{n} 天" },
-    daysMin: { en: "8 days", zh: "8天（精简）" },
-    daysMax: { en: "18 days", zh: "18天（深度）" },
+    totalDays: { en: "Preferred length: {n}", zh: "期望总天数：{n}" },
+    daysMin: { en: "8 days or fewer", zh: "小于等于8天" },
+    daysMax: { en: "18 days or more", zh: "大于等于18天" },
     entryCityLabel: {
       en: "Arrival city — where are you coming from?",
       zh: "入口城市 —— 您从哪里出发 / 抵达？",

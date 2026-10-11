@@ -115,7 +115,7 @@ export function PlanSection({
               <BookRouteFlow route={route} />
             </div>
             <div className={boutique ? "hidden" : ""}>
-              <DesignRouteFlow route={route} />
+              <DesignRouteFlow />
             </div>
           </div>
 
