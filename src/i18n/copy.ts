@@ -464,20 +464,20 @@ export const copy = {
       zh: "查看精品线路价格或深度定制",
     },
     tabBook: {
-      en: "Book our boutique routes directly",
-      zh: "直接预订我们的精品线路",
+      en: "Book a boutique route",
+      zh: "直接预订精品路线",
     },
     tabDesign: {
-      en: "Enquire about a deeper custom itinerary",
-      zh: "我想咨询更深度的定制方案",
+      en: "Custom itinerary",
+      zh: "深度定制方案",
     },
     bookLead: {
       en: "Travel one of our curated routes as designed — just tell us when, who and any special requests.",
       zh: "选择现有路线出发，不改行程顺序，只告诉我们时间、人数与特别需求。",
     },
     designLead: {
-      en: "Hello, I'm Xiaxia, your travel planner. If you don't yet have a clear plan for this trip, or you're simply set on chasing a certain feeling, we can still shape the journey you want. Please tell us what this journey means to you — a wedding anniversary, a return to a familiar place, a short stay, a business study trip, rest and recovery, and so on. I'll reply within 24 hours, draw on our best resources, and tailor an experience you will remember for life.",
-      zh: "您好，我是您的旅游规划师夏夏，如果你对这次旅行还没有明确的规划，或者只是坚定地追寻某种“感觉”，我们都能帮助您规划想要的旅行。请务必告诉我们这趟旅程对您的特殊意义（结婚纪念，故地重游，短期旅居，商务考察，疗愈与放松，等等）。我会在 24 小时内给您回复，调度我们的精华资源，为您定制终身难忘的体验。",
+      en: "Hello, I'm Xiaxia, your travel planner. If you don't yet have a clear plan for the destination, tell me the travel style you prefer, the kinds of activities you enjoy, and what this journey means to you. I'll reply within 48 hours, draw on our best resources, and tailor a trip you will remember for life.",
+      zh: "您好，我是旅游规划师夏夏，如果对目的地还没有明确的规划，可以把您偏好的旅行风格，喜欢的活动类型，以及这趟旅程对您的特殊意义告诉我，我将在48小时内给您回复，调度我们的精华资源，为您定制终身难忘的旅行体验！",
     },
     conciergeName: { en: "Xiaxia", zh: "夏夏" },
     baseRouteLabel: { en: "Base route", zh: "感兴趣的基础路线" },
