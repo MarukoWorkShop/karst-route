@@ -249,27 +249,29 @@ function RouteExpandModal({
               />
             </div>
           ))}
-          <div className="relative aspect-square overflow-hidden rounded-md bg-sage ring-1 ring-line">
-            <video
-              key={media.video}
-              className={`absolute inset-0 h-full w-full object-cover ${videoOk ? "opacity-100" : "opacity-0"}`}
-              src={routeVideoSrc(media.video)}
-              controls={videoOk}
-              playsInline
-              preload="metadata"
-              poster={asset(`/${media.gallery[0]}`)}
-              onLoadedData={() => setVideoOk(true)}
-              onError={() => setVideoOk(false)}
-            />
-            {!videoOk ? (
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 px-3 text-center">
-                <p className="type-aux text-ink-soft">{t(copy.tours.videoSoon)}</p>
-                <p className="type-meta font-mono font-normal normal-case tracking-normal text-ink-soft/65">
-                  {media.video}
-                </p>
-              </div>
-            ) : null}
-          </div>
+          {media.video ? (
+            <div className="relative aspect-square overflow-hidden rounded-md bg-sage ring-1 ring-line">
+              <video
+                key={media.video}
+                className={`absolute inset-0 h-full w-full object-cover ${videoOk ? "opacity-100" : "opacity-0"}`}
+                src={routeVideoSrc(media.video)}
+                controls={videoOk}
+                playsInline
+                preload="metadata"
+                poster={asset(`/${media.gallery[0]}`)}
+                onLoadedData={() => setVideoOk(true)}
+                onError={() => setVideoOk(false)}
+              />
+              {!videoOk ? (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 px-3 text-center">
+                  <p className="type-aux text-ink-soft">{t(copy.tours.videoSoon)}</p>
+                  <p className="type-meta font-mono font-normal normal-case tracking-normal text-ink-soft/65">
+                    {media.video}
+                  </p>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
         </div>
 
         <div className="mt-4 flex min-w-0 flex-1 flex-col md:mt-0">
