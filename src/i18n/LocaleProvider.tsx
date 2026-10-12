@@ -24,6 +24,13 @@ type Ctx = {
 
 const LocaleContext = createContext<Ctx | null>(null);
 
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 function applyHead(locale: Locale) {
   const html = document.documentElement;
   html.lang = locale === "zh" ? "zh-Hans" : "en";
@@ -58,6 +65,18 @@ function applyHead(locale: Locale) {
   ensure("alternate", "x-default", pairs[3][1]);
 }
 
+/** 自动 page_view 已关闭。语言路径变化时补发一次，锚点展开不记成新页面。 */
+function sendPageView() {
+  const gtag = window.gtag;
+  if (!gtag) return;
+  const path = window.location.pathname + window.location.search;
+  gtag("event", "page_view", {
+    page_title: document.title,
+    page_location: window.location.origin + path,
+    page_path: path,
+  });
+}
+
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(() =>
     typeof window === "undefined" ? "en" : localeFromPath(window.location.pathname),
@@ -72,6 +91,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     applyHead(locale);
+    sendPageView();
   }, [locale]);
 
   useEffect(() => {

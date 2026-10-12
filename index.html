@@ -3,6 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="google-site-verification" content="ycW7_0DArgWNU67OBGq5JyL-Dhjqn0-QhTbovXEkeEY" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9L654XLQD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // 精确控制：单页应用关闭默认自动捕获，交给前端路由精确管理
+      gtag('config', 'G-N9L654XLQD', { send_page_view: false });
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#1E3329" />
     <meta name="application-name" content="__APP_NAME__" />

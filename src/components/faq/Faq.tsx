@@ -6,7 +6,7 @@ import { IconChevron } from "@/components/icons";
 import { ContactDialog } from "@/components/contact/ContactDialog";
 
 export function Faq() {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
   const [openId, setOpenId] = useState<string | null>(null);
   const [contactOpen, setContactOpen] = useState(false);
   const [filter, setFilter] = useState<string>("all");
@@ -38,6 +38,23 @@ export function Faq() {
     window.addEventListener("hashchange", applyHash);
     return () => window.removeEventListener("hashchange", applyHash);
   }, []);
+
+  function toggleFaq(faqId: string, questionEn: string) {
+    const isOpening = openId !== faqId;
+    setOpenId(isOpening ? faqId : null);
+    if (!isOpening || typeof window.gtag !== "function") return;
+    const url = new URL(window.location.href);
+    url.hash = faqId;
+    window.gtag("event", "faq_expand", {
+      faq_id: faqId,
+      faq_title: questionEn,
+      language: locale,
+      page_location: url.href,
+    });
+    if (import.meta.env.DEV) {
+      console.log(`[GA4] faq_expand ${faqId} (${locale})`);
+    }
+  }
 
   return (
     <section id="faq" className="scroll-mt-24 bg-sage py-12 md:py-14">
@@ -110,7 +127,7 @@ export function Faq() {
                       <button
                         type="button"
                         aria-expanded={isOpen}
-                        onClick={() => setOpenId(isOpen ? null : faq.id)}
+                        onClick={() => toggleFaq(faq.id, faq.q.en)}
                         className="flex w-full items-start justify-between gap-4 py-[18px] text-left"
                       >
                         {/* 问题：衬线体 + medium，重要标题统一字重 */}
