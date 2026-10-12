@@ -1,21 +1,14 @@
-# 管家联系方式 —— 用于「发送失败」时的兜底通道，确保线索不丢
-#
-# 留空的通道不会显示；至少填一个（推荐微信 + 邮箱）。
-# 二维码图片：把图放进 public/concierge/ 下，这里写相对路径即可。
-#
-# 改完本文件即可生效（Notion 暂不管理此表，避免密钥性质的联系方式外泄）。
+# 管家联系方式 —— 询单发送失败时的兜底通道
+# 真源：Notion「管家联系方式」→ npm run content:notion → 本文件
+# 一行一个通道。留空或标「已下线」的通道网站不显示。
+# 二维码写 public/ 下相对路径，例如 concierge/wechat-qr.jpg
+# WhatsApp 只保留数字（国家码+号码）
 
 src: zh
-
-# 微信号（客人搜索用的那个号，不是昵称）
-wechatId: ""
-# 微信二维码图片路径，例如 concierge/wechat-qr.jpg
+wechatId: lvrunxia
 wechatQr: ""
-# WhatsApp 号码：国家码 + 号码，不要写 + 和空格，例如 8613800000000
 whatsapp: "41765847386"
-# 邮箱，例如 hello@guilinvillage.com
-email: "solana.chen@gmail.com"
-# 一句话说明（可留空）
+email: solana.chen@gmail.com
 note:
-  en: "Sending failed? Reach us directly — we'll pick it up from here."
-  zh: "没发送成功也没关系，换个方式找到我们，剩下的交给我们。"
+  en: Sending failed? Reach us directly — we'll pick it up from here.
+  zh: 没发送成功也没关系，换个方式找到我们，剩下的交给我们。

@@ -524,6 +524,39 @@ html[lang|="zh"] #plan {
   cursor: pointer;
 }
 
+/* 夏夏头像：2px 金边完整包住圆图，亮度轻轻起伏，宽度不变 */
+.xiaxia-avatar {
+  position: relative;
+  display: block;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 999px;
+  box-shadow: 0 0 0 2px var(--color-gold-bright);
+}
+.xiaxia-avatar img {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-sage);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .xiaxia-avatar {
+    animation: xiaxia-halo 3.6s ease-in-out infinite;
+  }
+  @keyframes xiaxia-halo {
+    0%,
+    100% {
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-gold-bright) 82%, white);
+    }
+    50% {
+      box-shadow: 0 0 0 2px #fff6e0;
+    }
+  }
+}
+
 /* CTA 条光泽：一道高光缓慢扫过，克制不刺眼 */
 .cta-sheen {
   position: relative;

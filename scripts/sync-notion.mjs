@@ -1644,6 +1644,56 @@ async function main() {
     }
   }
 
+  // --- 管家联系方式（一行一个通道）→ content/concierge.yaml ---
+  if (dbs.concierge) {
+    const pages = (await queryAll(token, dbs.concierge)).filter(published);
+    const rel = "content/concierge.yaml";
+    if (pages.length && takeNotion(pages, rel)) {
+      const prev = existingYaml(rel);
+      const channelKey = {
+        说明: "note",
+        微信: "wechat",
+        WhatsApp: "whatsapp",
+        邮箱: "email",
+      };
+      const byKey = new Map();
+      for (const page of pages) {
+        const key = channelKey[text(page, "通道")];
+        if (key && !byKey.has(key)) byKey.set(key, page);
+      }
+      const notePage = byKey.get("note");
+      const srcLang = (notePage && text(notePage, "src")) || prev.src || "zh";
+      const note = keepTx(
+        srcLang,
+        notePage ? text(notePage, "note_zh") : "",
+        notePage ? text(notePage, "note_en") : "",
+        prev.note,
+      );
+      const account = (key) => {
+        const page = byKey.get(key);
+        return page ? text(page, "账号").trim() : "";
+      };
+      const wechat = byKey.get("wechat");
+      writeYaml(
+        rel,
+        `# 管家联系方式 —— 询单发送失败时的兜底通道
+# 真源：Notion「管家联系方式」→ npm run content:notion → 本文件
+# 一行一个通道。留空或标「已下线」的通道网站不显示。
+# 二维码写 public/ 下相对路径，例如 concierge/wechat-qr.jpg
+# WhatsApp 只保留数字（国家码+号码）`,
+        {
+          src: srcLang,
+          wechatId: account("wechat"),
+          wechatQr: wechat ? text(wechat, "二维码").trim() : "",
+          whatsapp: account("whatsapp").replace(/\D/g, ""),
+          email: account("email"),
+          note: note || { zh: "", en: "" },
+        },
+      );
+      mark();
+    }
+  }
+
   // --- About ---
   if (dbs.about) {
     const pages = (await queryAll(token, dbs.about)).filter(published);

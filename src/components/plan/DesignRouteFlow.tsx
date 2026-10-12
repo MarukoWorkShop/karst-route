@@ -30,6 +30,7 @@ import {
   fieldClass,
 } from "@/components/plan/PlanUi";
 import { todayIso } from "@/lib/briefPdf";
+import { asset } from "@/lib/asset";
 
 function toggle(arr: string[], val: string) {
   return arr.includes(val) ? arr.filter((x) => x !== val) : [...arr, val];
@@ -352,11 +353,12 @@ export function DesignRouteFlow() {
         <>
           <div className="mb-4 flex items-start gap-4 rounded-xl bg-sage px-4 py-4 md:px-5">
             <div className="flex w-[72px] shrink-0 flex-col items-center">
-              <span
-                className="flex h-16 w-16 items-center justify-center rounded-full bg-cta text-[22px] font-semibold text-paper"
-                aria-hidden
-              >
-                {t(copy.plan.conciergeName).slice(0, 1)}
+              <span className="xiaxia-avatar" aria-hidden>
+                <img
+                  src={asset("concierge/xiaxia.jpg")}
+                  alt=""
+                  className="object-cover object-[center_24%]"
+                />
               </span>
               <span className="mt-1.5 text-center text-[12px] font-semibold leading-4 text-ink">
                 {t(copy.plan.conciergeName)}

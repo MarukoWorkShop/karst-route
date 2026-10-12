@@ -476,10 +476,10 @@ export const copy = {
       zh: "选择现有路线出发，不改行程顺序，只告诉我们时间、人数与特别需求。",
     },
     designLead: {
-      en: "Hello, I'm Xiaxia, your travel planner. If you don't yet have a clear plan for the destination, tell me the travel style you prefer, the kinds of activities you enjoy, and what this journey means to you. I'll reply within 48 hours, draw on our best resources, and tailor a trip you will remember for life.",
-      zh: "您好，我是旅游规划师夏夏，如果对目的地还没有明确的规划，可以把您偏好的旅行风格，喜欢的活动类型，以及这趟旅程对您的特殊意义告诉我，我将在48小时内给您回复，调度我们的精华资源，为您定制终身难忘的旅行体验！",
+      en: "Hi, I’m Summer, your personal travel designer. Wherever you are in your planning process—even if you just have a blank notebook and a dream—I’m here to help. Tell me your travel style, the experiences that light you up, and what this journey means to you. I’ll get back to you within 24 hours with insider expertise, crafting a bespoke itinerary you'll treasure for a lifetime.",
+      zh: "嗨，我是夏夏，负责帮你定制行程。不管你想走就走还是毫无头绪——哪怕现在你只是脑子一热想去一个陌生的城市走走，我都随时在线。告诉我你喜欢什么样的旅行节奏、想解锁哪些私藏好玩的景点，或者这趟旅行对你有什么特殊意义。24 小时内，我会把那些只有本地人才知道的隐藏玩法和避坑指南打包发你，带你体验一次不踩坑的梦幻旅程",
     },
-    conciergeName: { en: "Xiaxia", zh: "夏夏" },
+    conciergeName: { en: "Summer", zh: "夏夏" },
     baseRouteLabel: { en: "Base route", zh: "感兴趣的基础路线" },
     notSure: { en: "Not sure yet", zh: "还不确定" },
     designSubmitLead: {

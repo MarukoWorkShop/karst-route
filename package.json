@@ -38,6 +38,7 @@
     "content:notion:create-market-tiers": "node scripts/notion-create-market-tiers.mjs",
     "content:notion:create-light-skus": "node scripts/notion-create-light-skus.mjs",
     "content:notion:create-light-reviews": "node scripts/notion-create-light-reviews.mjs",
+    "content:notion:create-concierge": "node scripts/notion-create-concierge.mjs",
     "content:notion:organize-light": "node scripts/notion-organize-light.mjs",
     "content:notion:split-light": "node scripts/notion-split-light-tables.mjs",
     "content:cos:light-reviews": "python3 scripts/cos-sync-public.py light/reviews",
