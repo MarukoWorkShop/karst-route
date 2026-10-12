@@ -118,13 +118,6 @@ catalogs:
       maxPax: 6
       dayRate: 800
       segment: 国内
-    - id: ""
-      name:
-        en: ""
-        zh: ""
-      maxPax: 0
-      dayRate: 0
-      segment: ""
     - id: van-cn-1000
       name:
         en: 国内用车·线路二参考
