@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { RouteId, Tx } from "@/types";
 import { about } from "@/content/about";
 import { copy } from "@/i18n/copy";
@@ -24,6 +24,18 @@ import {
 
 const ROUTE_IDS: RouteId[] = ["r1", "r2", "r3"];
 
+/** 一次页面加载里每张卡只记一次曝光。模块级集合能扛住开发模式的重复挂载。 */
+const impressedRoutes = new Set<RouteId>();
+
+function trackRoute(
+  name: "route_card_impression" | "route_card_open" | "route_card_close",
+  payload: Record<string, string | number>,
+) {
+  if (typeof window.gtag !== "function") return;
+  window.gtag("event", name, payload);
+  if (import.meta.env.DEV) console.log(`[GA4] ${name}`, payload);
+}
+
 /** Images on Pages; intro.mp4 is gitignored → COS in production, local public/ in dev. */
 function routeVideoSrc(path: string) {
   return import.meta.env.DEV ? asset(`/${path}`) : cosUrl(path);
@@ -48,8 +60,10 @@ export function BoutiqueTours({
   onSelect: (id: RouteId) => void;
   onOpenItinerary: (id: RouteId) => void;
 }) {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
   const [expanded, setExpanded] = useState<RouteId | null>(null);
+  const layerStart = useRef<{ id: RouteId; at: number } | null>(null);
+  const settleRef = useRef<() => void>(() => {});
 
   const fallbackFor = (id: RouteId): RouteContent => {
     const f = routeFacts[id];
@@ -76,12 +90,34 @@ export function BoutiqueTours({
     ROUTE_IDS.map((id) => [id, routeContent(id, fallbackFor(id))]),
   ) as Record<RouteId, RouteContent>;
 
+  settleRef.current = () => {
+    const start = layerStart.current;
+    layerStart.current = null;
+    if (!start) return;
+    const viewMs = Math.round(performance.now() - start.at);
+    if (viewMs < 500) {
+      if (import.meta.env.DEV) {
+        console.log(`[GA4] route_card_close skipped ${start.id} ${viewMs}ms`);
+      }
+      return;
+    }
+    trackRoute("route_card_close", {
+      route_id: start.id,
+      route_title: contents[start.id].name.en,
+      language: locale,
+      view_ms: viewMs,
+    });
+  };
+
   useEffect(() => {
     if (!expanded) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setExpanded(null);
+      if (e.key === "Escape") {
+        settleRef.current();
+        setExpanded(null);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => {
@@ -93,6 +129,18 @@ export function BoutiqueTours({
   function openCard(id: RouteId) {
     onSelect(id);
     setExpanded(id);
+    layerStart.current = { id, at: performance.now() };
+    trackRoute("route_card_open", {
+      route_id: id,
+      route_title: contents[id].name.en,
+      language: locale,
+      page_location: window.location.href,
+    });
+  }
+
+  function closeLayer() {
+    settleRef.current();
+    setExpanded(null);
   }
 
   return (
@@ -121,11 +169,12 @@ export function BoutiqueTours({
         <RouteExpandModal
           routeId={expanded}
           content={contents[expanded]}
-          onClose={() => setExpanded(null)}
+          onClose={closeLayer}
           onOpenItinerary={() => {
             const id = expanded;
+            settleRef.current();
             setExpanded(null);
-            onOpenItinerary(id);
+            if (id) onOpenItinerary(id);
           }}
         />
       ) : null}
@@ -148,13 +197,37 @@ function RouteCard({
   const { t, locale } = useLocale();
   const { rates } = useFxRates();
   const { currency } = usePriceCurrency();
+  const cardRef = useRef<HTMLElement>(null);
   const cover = asset(`/${routeMedia[routeId].cover}`);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el || impressedRoutes.has(routeId)) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.25);
+        if (!visible || impressedRoutes.has(routeId)) return;
+        impressedRoutes.add(routeId);
+        io.disconnect();
+        trackRoute("route_card_impression", {
+          route_id: routeId,
+          route_title: content.name.en,
+          language: locale,
+          page_location: window.location.href,
+        });
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [routeId, locale, content.name.en]);
   const range = marketPriceRange(routeId);
   const fromPrice = range?.adultFrom ?? content.priceCny.from;
   const price = formatMoney(fromPrice, { locale, currency, rates });
 
   return (
     <article
+      ref={cardRef}
       className="group relative aspect-[3/4] overflow-hidden rounded-xl bg-night text-left ring-1 ring-line shadow-[0_8px_24px_rgba(16,28,22,0.08)] will-change-transform transition-[transform,box-shadow,ring-color] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:-translate-y-1 hover:ring-gold/60 hover:shadow-[0_18px_38px_rgba(16,28,22,0.18)] md:aspect-[4/5] lg:aspect-[3/4]"
     >
       <button
