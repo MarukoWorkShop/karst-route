@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fillBrand } from "@/content/about";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { IconClose, IconExternal } from "@/components/icons";
@@ -247,7 +248,7 @@ function TimeCard() {
           className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${online ? "bg-ok" : "bg-ink-soft/50"}`}
           aria-hidden
         />
-        <span>{online ? t(copy.toolbox.timeOnline) : t(copy.toolbox.timeNight)}</span>
+        <span>{online ? t(fillBrand(copy.toolbox.timeOnline)) : t(copy.toolbox.timeNight)}</span>
       </p>
     </section>
   );

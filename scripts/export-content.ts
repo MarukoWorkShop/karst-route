@@ -84,22 +84,7 @@ for (const id of ["r1", "r2", "r3"] as RouteId[]) {
   );
 }
 
-write(
-  "content/about.yaml",
-  {
-    kicker: copy.about.kicker,
-    name: copy.about.name,
-    role: copy.about.role,
-    body1: copy.about.body1,
-    body2Lead: copy.about.body2Lead,
-    body2: copy.about.body2,
-    points: copy.about.points,
-    credsTitle: copy.about.credsTitle,
-    credsSub: copy.about.credsSub,
-    creds: copy.about.creds,
-  },
-  "# 关于我们 About Us\n# 公司介绍、三点摘要、资质与保障\n",
-);
+console.log("skip content/about.yaml（关于我们与客户配置由 Notion 同步，不再从 copy.ts 导出）");
 
 const routeLabel: Record<string, "r1" | "r2" | "r3"> = {};
 for (const r of travelerReviews) {

@@ -1,4 +1,5 @@
 import type { ReactNode, SVGProps } from "react";
+import { about } from "@/content/about";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 
@@ -22,13 +23,13 @@ export function Footer() {
         <div className="grid items-start gap-9 md:mb-10 md:grid-cols-[1fr_auto_1fr] md:gap-12">
           <div className="text-center md:text-left">
             <p className="text-2xl font-medium tracking-[0.06em] text-paper md:text-[26px]">
-              {t(copy.footer.brand)}
+              {about.name.zh}
             </p>
             <p className="mt-1 max-w-[280px] text-[11px] leading-4 text-[rgba(250,248,242,0.4)] md:max-w-none">
-              {t(copy.footer.brandEn)}
+              {about.name.en}
             </p>
             <p className="mx-auto mt-3.5 max-w-[280px] text-[13px] leading-6 text-[rgba(250,248,242,0.5)] md:mx-0">
-              {t(copy.footer.tagline)}
+              {t(about.brandSlogan)}
             </p>
           </div>
           <div className="hidden w-px self-stretch bg-[rgba(250,248,242,0.08)] md:block" />
@@ -51,7 +52,7 @@ export function Footer() {
         <div className="mt-7 h-px bg-[rgba(250,248,242,0.08)] md:mt-0 md:mb-6" />
         <div className="flex flex-col items-center justify-between gap-2.5 pb-2 text-center md:flex-row md:text-left">
           <p className="text-[11px] text-[rgba(250,248,242,0.28)]">
-            © {year} {t(copy.footer.brand)} · {t(copy.footer.brandEn)} · {t(copy.footer.rights)}
+            © {year} {about.name.zh} · {about.name.en} · {t(copy.footer.rights)}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             {(

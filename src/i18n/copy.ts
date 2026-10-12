@@ -37,12 +37,12 @@ export const copy = {
     time: { en: "Time", zh: "时间" },
     timeBeijing: { en: "Beijing (UTC+8)", zh: "北京（UTC+8）" },
     timeLocal: { en: "Your time", zh: "您的时区" },
-    timeOnline: { en: "Youxian concierge online · ~5-min reply", zh: "有闲旅游专属顾问在线，平均 5 分钟内响应" },
+    timeOnline: { en: "{brand} concierge online · ~5-min reply", zh: "{brand}专属顾问在线，平均 5 分钟内响应" },
     timeNight: { en: "Local night — send your request and we'll pick it up first at Beijing 9:00", zh: "当前为当地夜间，您可直接提交定制意向，我们将在北京时间早 9:00 优先处理" },
   },
   pwa: {
     kicker: { en: "QUICK ACCESS", zh: "快捷访问" },
-    title: { en: "Keep LeisureTime close", zh: "把 LeisureTime 带在身边" },
+    title: { en: "Keep {brand} close", zh: "把 {brand} 带在身边" },
     body: {
       en: "Add it to your Home Screen and return to your journeys like an app.",
       zh: "添加到主屏幕，下次像打开 App 一样快速查看旅行灵感与私人路书。",
@@ -209,10 +209,6 @@ export const copy = {
       en: "Best for first-time visitors who want a zero-worry, seamless vacation.",
       zh: "最适合第一次来中国、或者想彻底省心度假的人。",
     },
-    moduleDesc: {
-      en: "If you don’t want to spend hours researching transport, booking hotels, or figuring out cross-border transfers, choose this. We bundle the must-see highlights of Southern China into a relaxed, unhurried loop. It’s private, comfortable, and moves at a loose, flexible pace to give you a perfect first taste of the region.",
-      zh: "如果你不想花几个小时查交通、订酒店，或者为复杂的跨境接送而头疼，选这个就对了。我们把南境中国最精华、最不容错过的景点打包进一条轻松、不赶时间的环线里。纯私家车和专属导游，时间非常松弛，让你用最舒服的方式在本地转上一圈。",
-    },
     priceAdult: { en: "Adult", zh: "成人" },
     priceChild: { en: "Child", zh: "儿童" },
     fxNote: {
@@ -358,76 +354,7 @@ export const copy = {
     },
   },
   about: {
-    kicker: { en: "About Us", zh: "关于我们" },
-    name: { en: "Leisure Time International Travel Service", zh: "有闲旅行" },
     website: { en: "Official website", zh: "前往官网" },
-    role: {
-      en: "Bespoke Luxury Travel Across China",
-      zh: "中国全域高端定制旅行服务商",
-    },
-    body1: {
-      en: "We specialize in curated private journeys, immersive themed expeditions, and premium corporate incentive travel. Our signature approach seamlessly weaves iconic landmarks with ultra-exclusive, off-the-beaten-path experiences.",
-      zh: "我们专注于高端私人定制、主题深度探索及企业奖励旅游，致力于将经典地标与隐秘奢华的小众体验完美融合。",
-    },
-    body2Lead: {
-      en: "Trust Built on Firsthand Perfection",
-      zh: "因为严苛，所以信任",
-    },
-    body2: {
-      en: "We strictly adhere to our ethos—never design a journey we haven't personally experienced. Our specialists scout the field year-round, meticulously vetting every detail. This dedication has allowed us to amass an elite portfolio of China's finest luxury resources. By continuously pioneering innovative itineraries and leveraging rare, insider access, we craft unrivaled, bespoke journeys for the discerning traveler.",
-      zh: "我们坚持“不踩线，不设计”的原则，所有行程均由资深定制师常年亲赴一线实地考察。凭借匠心打磨的极致细节，我们建立起庞大的顶级奢华资源库。通过不断创新创意行程，我们用最稀缺、最顶尖的本土资源，为您编织独一无二的中国传奇之旅。",
-    },
-    points: [
-      {
-        en: "Private journeys · themed expeditions · incentive travel",
-        zh: "高端私人定制·主题深度·企业奖励",
-      },
-      {
-        en: "Never design a journey we haven't experienced",
-        zh: "不踩线，不设计",
-      },
-      {
-        en: "Elite luxury and rare resources",
-        zh: "顶级奢华与稀缺资源",
-      },
-    ],
-    credsTitle: { en: "Licensed, insured, accountable", zh: "资质与保障" },
-    credsSub: {
-      en: "Every booking runs through our licensed agency — documented, insured, and with a cancellation policy you can read before you pay.",
-      zh: "每一单都由持证旅行社承接：资质可查、含保险、退改政策在付款前就能看清。",
-    },
-    creds: [
-      {
-        icon: "",
-        en: "Licensed travel agency · business registration on file",
-        zh: "旅行社业务经营许可证 · 营业执照",
-      },
-      {
-        icon: "",
-        en: "Nationally licensed guides on every departure",
-        zh: "全员持证向导",
-      },
-      {
-        icon: "",
-        en: "Travel accident insurance on every booking",
-        zh: "每单含旅游意外险",
-      },
-      {
-        icon: "",
-        en: "Free cancellation or date change up to 30 days out",
-        zh: "出发前 30 天免费取消 / 改期",
-      },
-      {
-        icon: "",
-        en: "8 years operating · 500+ travellers served",
-        zh: "8 年运营 · 服务 500+ 位旅行者",
-      },
-      {
-        icon: "",
-        en: "Long-term partnerships with leading independent bespoke travel agencies",
-        zh: "知名独立定制旅行机构长期合作",
-      },
-    ],
   },
   explore: {
     h2: { en: "Feel the land before you arrive", zh: "在出发前，先感受这片土地" },
@@ -475,11 +402,6 @@ export const copy = {
       en: "Travel one of our curated routes as designed — just tell us when, who and any special requests.",
       zh: "选择现有路线出发，不改行程顺序，只告诉我们时间、人数与特别需求。",
     },
-    designLead: {
-      en: "Hi, I’m Summer, your personal travel designer. Wherever you are in your planning process—even if you just have a blank notebook and a dream—I’m here to help. Tell me your travel style, the experiences that light you up, and what this journey means to you. I’ll get back to you within 24 hours with insider expertise, crafting a bespoke itinerary you'll treasure for a lifetime.",
-      zh: "嗨，我是夏夏，负责帮你定制行程。不管你想走就走还是毫无头绪——哪怕现在你只是脑子一热想去一个陌生的城市走走，我都随时在线。告诉我你喜欢什么样的旅行节奏、想解锁哪些私藏好玩的景点，或者这趟旅行对你有什么特殊意义。24 小时内，我会把那些只有本地人才知道的隐藏玩法和避坑指南打包发你，带你体验一次不踩坑的梦幻旅程",
-    },
-    conciergeName: { en: "Summer", zh: "夏夏" },
     baseRouteLabel: { en: "Base route", zh: "感兴趣的基础路线" },
     notSure: { en: "Not sure yet", zh: "还不确定" },
     designSubmitLead: {
@@ -890,26 +812,11 @@ export const copy = {
     cta: { en: "Get in touch", zh: "联系我们" },
   },
   footer: {
-    brand: { en: "有闲旅行", zh: "有闲旅行" },
-    brandEn: {
-      en: "Leisure Time International Travel Service",
-      zh: "Leisure Time International Travel Service",
-    },
-    tagline: {
-      en: "Private Journeys. Authentic Connections. The Irreplaceable Human Heritage.",
-      zh: "私密同行。真实联结。无可替代的人文原乡。",
-    },
     connect: { en: "Connect with us", zh: "联系与关注" },
     rights: { en: "All rights reserved", zh: "版权所有" },
     privacy: { en: "Privacy Policy", zh: "隐私政策" },
     terms: { en: "Terms of Service", zh: "服务条款" },
     disclaimer: { en: "Disclaimer", zh: "免责声明" },
-  },
-  meta: {
-    title: {
-      en: "The Southern Curations — South China & Northern Vietnam",
-      zh: "南境拾遗 — 南中国与越南北部的人文深度体验",
-    },
   },
 } as const;
 

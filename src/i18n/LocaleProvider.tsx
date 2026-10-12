@@ -7,8 +7,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { about } from "@/content/about";
 import {
-  copy,
   localeFromPath,
   pathFor,
   t,
@@ -27,7 +27,8 @@ const LocaleContext = createContext<Ctx | null>(null);
 function applyHead(locale: Locale) {
   const html = document.documentElement;
   html.lang = locale === "zh" ? "zh-Hans" : "en";
-  document.title = t(copy.meta.title, locale);
+  const title = t(about.siteTitle, locale);
+  if (title) document.title = title;
 
   const origin = window.location.origin;
   const pairs: [string, string][] = [

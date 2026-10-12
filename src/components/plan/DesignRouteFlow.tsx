@@ -9,6 +9,7 @@ import {
   type HotelTierId,
 } from "@/data/planOptions";
 import { lightExperiences } from "@/data/lightExperiences";
+import { about } from "@/content/about";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { labelsOf, sendEnquiry } from "@/lib/enquiry";
@@ -308,7 +309,7 @@ export function DesignRouteFlow() {
               <ConciergeFallback
                 rows={briefRows()}
                 filename={`karst-design-request-${baseRoute || "open"}.pdf`}
-                kicker={t(copy.plan.designLead)}
+                kicker={t(about.conciergeLead)}
                 title={routeChoiceLabel()}
               />
             ) : null}
@@ -331,7 +332,7 @@ export function DesignRouteFlow() {
           sending={sending}
           rows={briefRows()}
           filename={`karst-design-request-${baseRoute || "open"}.pdf`}
-          kicker={t(copy.plan.designLead)}
+          kicker={t(about.conciergeLead)}
           title={routeChoiceLabel()}
           onRetry={() => void submit()}
           onClose={() => setFailOpen(false)}
@@ -355,16 +356,16 @@ export function DesignRouteFlow() {
             <div className="flex w-[72px] shrink-0 flex-col items-center">
               <span className="xiaxia-avatar" aria-hidden>
                 <img
-                  src={asset("concierge/xiaxia.jpg")}
+                  src={asset(about.conciergeAvatar)}
                   alt=""
                   className="object-cover object-[center_24%]"
                 />
               </span>
               <span className="mt-1.5 text-center text-[12px] font-semibold leading-4 text-ink">
-                {t(copy.plan.conciergeName)}
+                {t(about.conciergeName)}
               </span>
             </div>
-            <p className="min-w-0 text-[13.5px] leading-[1.7] text-ink">{t(copy.plan.designLead)}</p>
+            <p className="min-w-0 text-[13.5px] leading-[1.7] text-ink">{t(about.conciergeLead)}</p>
           </div>
           <label className="mb-6 block">
             <span className="mb-1.5 block text-[13px] font-semibold text-ink">{t(copy.plan.baseRouteLabel)}</span>

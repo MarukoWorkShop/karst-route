@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { IconClose, IconMore, IconShare, IconSmartphone } from "@/components/icons";
+import { fillBrand } from "@/content/about";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 
@@ -132,7 +133,7 @@ export function PwaInstallPrompt({ blocked = false }: { blocked?: boolean }) {
   return (
     <>
       <aside
-        aria-label={t(copy.pwa.title)}
+        aria-label={t(fillBrand(copy.pwa.title))}
         aria-hidden={!visible}
         inert={!visible ? true : undefined}
         className={`fixed right-3 bottom-[calc(env(safe-area-inset-bottom)+3rem)] left-3 z-50 mx-auto max-w-sm rounded-xl border border-paper/15 bg-night/96 p-3.5 text-paper shadow-[0_18px_48px_rgba(16,28,22,0.3)] backdrop-blur-md transition-[transform,opacity] duration-300 md:hidden ${
@@ -154,7 +155,7 @@ export function PwaInstallPrompt({ blocked = false }: { blocked?: boolean }) {
             />
           </a>
           <div className="min-w-0 flex-1">
-            <p className="type-sub font-semibold text-paper">{t(copy.pwa.title)}</p>
+            <p className="type-sub font-semibold text-paper">{t(fillBrand(copy.pwa.title))}</p>
             <p className="type-aux mt-1 text-paper/70">{t(copy.pwa.body)}</p>
           </div>
           <button

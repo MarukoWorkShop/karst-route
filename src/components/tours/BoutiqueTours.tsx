@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type { RouteId, Tx } from "@/types";
+import { about } from "@/content/about";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { asset } from "@/lib/asset";
@@ -100,7 +101,7 @@ export function BoutiqueTours({
         <SectionIntro
           title={t(copy.tours.moduleTitle)}
           sub={t(copy.tours.moduleSub)}
-          desc={t(copy.tours.moduleDesc)}
+          desc={t(about.toursIntro)}
         />
 
         <div className="mt-7 grid grid-cols-1 items-start gap-4 md:mt-8 md:grid-cols-2 md:gap-5 lg:grid-cols-3 lg:gap-4">

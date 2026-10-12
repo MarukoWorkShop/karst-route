@@ -3,6 +3,26 @@
 
 src: zh   # 原文语言。只改这种语言；其它语言上线前补齐
 
+# 客户配置（Core）。换客户时改这里，或在 Notion「关于我们」里改同名字段。
+# 不要把客户名、标语、表单 Key 写进 src/i18n/copy.ts。
+conciergeName:
+  en: Summer
+  zh: 夏夏
+conciergeAvatar: concierge/xiaxia.jpg
+conciergeLead:
+  en: "Hi, I’m Summer, your personal travel designer. Wherever you are in your planning process—even if you just have a blank notebook and a dream—I’m here to help. Tell me your travel style, the experiences that light you up, and what this journey means to you. I’ll get back to you within 24 hours with insider expertise, crafting a bespoke itinerary you'll treasure for a lifetime."
+  zh: "嗨，我是夏夏，负责帮你定制行程。不管你想走就走还是毫无头绪——哪怕现在你只是脑子一热想去一个陌生的城市走走，我都随时在线。告诉我你喜欢什么样的旅行节奏、想解锁哪些私藏好玩的景点，或者这趟旅行对你有什么特殊意义。24 小时内，我会把那些只有本地人才知道的隐藏玩法和避坑指南打包发你，带你体验一次不踩坑的梦幻旅程"
+brandSlogan:
+  en: "Private Journeys. Authentic Connections. The Irreplaceable Human Heritage."
+  zh: "私密同行。真实联结。无可替代的人文原乡。"
+siteTitle:
+  en: "The Southern Curations — South China & Northern Vietnam"
+  zh: "南境拾遗 — 南中国与越南北部的人文深度体验"
+web3formsAccessKey: "613e86c9-fcfd-49bc-bdc9-c85fd1380588"
+toursIntro:
+  en: "If you don’t want to spend hours researching transport, booking hotels, or figuring out cross-border transfers, choose this. We bundle the must-see highlights of Southern China into a relaxed, unhurried loop. It’s private, comfortable, and moves at a loose, flexible pace to give you a perfect first taste of the region."
+  zh: "如果你不想花几个小时查交通、订酒店，或者为复杂的跨境接送而头疼，选这个就对了。我们把南境中国最精华、最不容错过的景点打包进一条轻松、不赶时间的环线里。纯私家车和专属导游，时间非常松弛，让你用最舒服的方式在本地转上一圈。"
+
 kicker:
   en: "About Us"
   zh: "关于我们"

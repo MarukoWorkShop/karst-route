@@ -10,6 +10,9 @@
  *   if src changed but Notion translation is empty or still the old companion text,
  *   clear translation so deploy can re-translate. Empty Notion alone never clears
  *   translation when src is unchanged.
+ *
+ * 只补「关于我们」客户配置字段（不拉取其它库）：
+ *   node scripts/sync-notion.mjs --about-core
  */
 import { execSync } from "node:child_process";
 import fs from "node:fs";
@@ -339,6 +342,119 @@ function existingYaml(rel) {
   return doc;
 }
 
+function keepStr(notion, prev) {
+  const n = String(notion ?? "").trim();
+  if (n) return n;
+  return typeof prev === "string" ? prev.trim() : "";
+}
+
+function txOrBlank(srcLang, notionZh, notionEn, prev) {
+  return keepTx(srcLang, notionZh, notionEn, prev) || { en: "", zh: "" };
+}
+
+function richText(content) {
+  const text = String(content ?? "");
+  if (!text) return { rich_text: [] };
+  const chunks = [];
+  for (let i = 0; i < text.length; i += 1900) {
+    chunks.push({ type: "text", text: { content: text.slice(i, i + 1900) } });
+  }
+  return { rich_text: chunks };
+}
+
+const ABOUT_CORE_SCHEMA = {
+  concierge_name_zh: { rich_text: {} },
+  concierge_name_en: { rich_text: {} },
+  concierge_avatar: { rich_text: {} },
+  concierge_lead_zh: { rich_text: {} },
+  concierge_lead_en: { rich_text: {} },
+  brand_slogan_zh: { rich_text: {} },
+  brand_slogan_en: { rich_text: {} },
+  site_title_zh: { rich_text: {} },
+  site_title_en: { rich_text: {} },
+  web3forms_access_key: { rich_text: {} },
+  tours_intro_zh: { rich_text: {} },
+  tours_intro_en: { rich_text: {} },
+};
+
+function fillWeb3formsFromEnv() {
+  const rel = path.join(root, "content/about.yaml");
+  const raw = fs.readFileSync(rel, "utf8");
+  const doc = parseYaml(raw) ?? {};
+  if (String(doc.web3formsAccessKey ?? "").trim()) return doc;
+  const fromEnv = process.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
+  if (!fromEnv) return doc;
+  const next = raw.replace(/web3formsAccessKey:\s*(?:""|''|)\s*$/m, `web3formsAccessKey: ${JSON.stringify(fromEnv)}`);
+  if (next === raw) return doc;
+  fs.writeFileSync(rel, next);
+  console.log("content/about.yaml web3formsAccessKey 已从环境变量写入（值不打印）");
+  return parseYaml(next) ?? doc;
+}
+
+function coreValuesFromYaml(doc) {
+  const tx = (key) => (doc?.[key] && typeof doc[key] === "object" ? doc[key] : {});
+  return {
+    concierge_name_zh: tx("conciergeName").zh ?? "",
+    concierge_name_en: tx("conciergeName").en ?? "",
+    concierge_avatar: typeof doc?.conciergeAvatar === "string" ? doc.conciergeAvatar : "",
+    concierge_lead_zh: tx("conciergeLead").zh ?? "",
+    concierge_lead_en: tx("conciergeLead").en ?? "",
+    brand_slogan_zh: tx("brandSlogan").zh ?? "",
+    brand_slogan_en: tx("brandSlogan").en ?? "",
+    site_title_zh: tx("siteTitle").zh ?? "",
+    site_title_en: tx("siteTitle").en ?? "",
+    web3forms_access_key: typeof doc?.web3formsAccessKey === "string" ? doc.web3formsAccessKey : "",
+    tours_intro_zh: tx("toursIntro").zh ?? "",
+    tours_intro_en: tx("toursIntro").en ?? "",
+  };
+}
+
+async function seedAboutCore(token, databaseId) {
+  if (!databaseId) {
+    console.error("content/notion.yaml 缺少 databases.about");
+    return;
+  }
+  const doc = fillWeb3formsFromEnv();
+  const id = uuid(databaseId);
+  const db = await notionFetch(token, `https://api.notion.com/v1/databases/${id}`, {});
+  const have = new Set(Object.keys(db.properties ?? {}));
+  const missing = {};
+  for (const [name, schema] of Object.entries(ABOUT_CORE_SCHEMA)) {
+    if (!have.has(name)) missing[name] = schema;
+  }
+  if (Object.keys(missing).length) {
+    await notionFetch(token, `https://api.notion.com/v1/databases/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ properties: missing }),
+    });
+    console.log(`about 数据库已添加字段: ${Object.keys(missing).join(", ")}`);
+  } else {
+    console.log("about 数据库已有客户配置字段");
+  }
+  const pages = (await queryAll(token, databaseId)).filter(published);
+  if (!pages.length) {
+    console.warn("about 数据库没有已发布页面，未写入字段值");
+    return;
+  }
+  const page = pages[0];
+  const want = coreValuesFromYaml(doc);
+  const props = {};
+  for (const [name, value] of Object.entries(want)) {
+    if (!String(value ?? "").trim()) continue;
+    if (text(page, name).trim()) continue;
+    props[name] = richText(value);
+  }
+  if (!Object.keys(props).length) {
+    console.log("about 页面的客户配置已有内容，未覆盖");
+    return;
+  }
+  await notionFetch(token, `https://api.notion.com/v1/pages/${page.id}`, {
+    method: "PATCH",
+    body: JSON.stringify({ properties: props }),
+  });
+  console.log(`about 页面已写入空字段: ${Object.keys(props).join(", ")}`);
+}
+
 function daysPair(page, prev, srcLang) {
   let notionZh = text(page, "days_zh");
   let notionEn = text(page, "days_en");
@@ -374,6 +490,11 @@ async function main() {
 
 然后运行：npm run content:notion
 `);
+    return;
+  }
+
+  if (process.argv.includes("--about-core")) {
+    await seedAboutCore(token, dbs.about);
     return;
   }
 
@@ -1702,29 +1823,50 @@ async function main() {
     const all = [...pages, ...creds];
     if (pages.length && takeNotion(all, rel)) {
       const page = pages[0];
-      const pointsZh = splitLines(text(page, "points_zh"));
-      const pointsEn = splitLines(text(page, "points_en"));
-      const n = Math.max(pointsZh.length, pointsEn.length);
-      const points = [];
-      for (let i = 0; i < n; i++) points.push(pair(pointsZh[i] ?? "", pointsEn[i] ?? ""));
-      const credItems = creds.map((c) => ({
-        icon: text(c, "icon"),
-        ...pair(text(c, "zh"), text(c, "en")),
+      const prev = existingYaml(rel);
+      const srcLang = text(page, "src") || prev.src || "zh";
+      const prevCreds = Array.isArray(prev.creds) ? prev.creds : [];
+      const points = keepTxLines(srcLang, text(page, "points_zh"), text(page, "points_en"), prev.points);
+      const credItems = creds.map((c, i) => ({
+        icon: text(c, "icon") || prevCreds[i]?.icon || "",
+        ...txOrBlank(srcLang, text(c, "zh"), text(c, "en"), prevCreds[i]),
       }));
       writeYaml(
         rel,
-        `# 关于我们 About Us\n# 公司介绍、三点摘要、资质与保障`,
+        `# 关于我们 About Us\n# 公司介绍、三点摘要、资质与保障\n# 客户配置：conciergeName conciergeAvatar conciergeLead brandSlogan siteTitle web3formsAccessKey toursIntro\n# Notion 字段用 _zh / _en；标语是 brand_slogan_zh / brand_slogan_en，表单 Key 是 web3forms_access_key`,
         {
-          src: text(page, "src") || "zh",
-          kicker: pair(text(page, "kicker_zh"), text(page, "kicker_en")),
-          name: pair(text(page, "name_zh"), text(page, "name_en")),
-          role: pair(text(page, "role_zh"), text(page, "role_en")),
-          body1: pair(text(page, "body1_zh"), text(page, "body1_en")),
-          body2Lead: pair(text(page, "body2Lead_zh"), text(page, "body2Lead_en")),
-          body2: pair(text(page, "body2_zh"), text(page, "body2_en")),
+          src: srcLang,
+          conciergeName: txOrBlank(
+            srcLang,
+            text(page, "concierge_name_zh"),
+            text(page, "concierge_name_en"),
+            prev.conciergeName,
+          ),
+          conciergeAvatar: keepStr(text(page, "concierge_avatar"), prev.conciergeAvatar),
+          conciergeLead: txOrBlank(
+            srcLang,
+            text(page, "concierge_lead_zh"),
+            text(page, "concierge_lead_en"),
+            prev.conciergeLead,
+          ),
+          brandSlogan: txOrBlank(
+            srcLang,
+            text(page, "brand_slogan_zh"),
+            text(page, "brand_slogan_en"),
+            prev.brandSlogan,
+          ),
+          siteTitle: txOrBlank(srcLang, text(page, "site_title_zh"), text(page, "site_title_en"), prev.siteTitle),
+          web3formsAccessKey: keepStr(text(page, "web3forms_access_key"), prev.web3formsAccessKey),
+          toursIntro: txOrBlank(srcLang, text(page, "tours_intro_zh"), text(page, "tours_intro_en"), prev.toursIntro),
+          kicker: txOrBlank(srcLang, text(page, "kicker_zh"), text(page, "kicker_en"), prev.kicker),
+          name: txOrBlank(srcLang, text(page, "name_zh"), text(page, "name_en"), prev.name),
+          role: txOrBlank(srcLang, text(page, "role_zh"), text(page, "role_en"), prev.role),
+          body1: txOrBlank(srcLang, text(page, "body1_zh"), text(page, "body1_en"), prev.body1),
+          body2Lead: txOrBlank(srcLang, text(page, "body2Lead_zh"), text(page, "body2Lead_en"), prev.body2Lead),
+          body2: txOrBlank(srcLang, text(page, "body2_zh"), text(page, "body2_en"), prev.body2),
           points,
-          credsTitle: pair(text(page, "credsTitle_zh"), text(page, "credsTitle_en")),
-          credsSub: pair(text(page, "credsSub_zh"), text(page, "credsSub_en")),
+          credsTitle: txOrBlank(srcLang, text(page, "credsTitle_zh"), text(page, "credsTitle_en"), prev.credsTitle),
+          credsSub: txOrBlank(srcLang, text(page, "credsSub_zh"), text(page, "credsSub_en"), prev.credsSub),
           creds: credItems,
         },
       );

@@ -1,6 +1,7 @@
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import type { DayStop, Tx } from "@/types";
+import { about } from "@/content/about";
 import { copy } from "@/i18n/copy";
 
 export type BriefRow = { label: string; value: string };
@@ -167,6 +168,13 @@ function dayHtml(day: BriefDay, labels: BriefPdfInput["labels"]) {
   </section>`;
 }
 
+function brandMark() {
+  const cut = (s: string) => s.split("—")[0].trim();
+  const en = cut(about.siteTitle.en).toUpperCase();
+  const zh = cut(about.siteTitle.zh);
+  return [en, zh].filter(Boolean).join(" · ");
+}
+
 function documentHtml(doc: BriefPdfInput) {
   const rows = doc.rows.map((r) => rowHtml(r.label, r.value)).join("");
   const days = doc.days.map((d) => dayHtml(d, doc.labels)).join("");
@@ -176,7 +184,7 @@ function documentHtml(doc: BriefPdfInput) {
     <table style="width:100%;border-collapse:collapse;margin-bottom:22px;border-top:1px solid #d9d6cc;">${rows}</table>`
       : "";
   return `<div style="width:794px;box-sizing:border-box;padding:36px 40px 48px;background:#faf8f2;color:#1e3329;font-family:'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif;">
-    <div style="font-size:11px;letter-spacing:0.16em;color:#a88c56;font-weight:500;">THE SOUTHERN CURATIONS · 南境拾遗</div>
+    <div style="font-size:11px;letter-spacing:0.16em;color:#a88c56;font-weight:500;">${esc(brandMark())}</div>
     <div style="margin-top:10px;display:inline-block;font-size:10px;letter-spacing:0.08em;color:#2f5344;border:1px solid #2f5344;border-radius:999px;padding:3px 10px;">${esc(doc.kicker)}</div>
     <h1 style="margin:10px 0 4px;font-size:22px;font-weight:500;line-height:1.35;">${esc(doc.title)}</h1>
     <div style="font-size:11px;color:#5e7368;margin-bottom:22px;">${esc(doc.generated)}</div>

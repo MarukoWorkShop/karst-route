@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { IconToolbox } from "@/components/icons";
+import { about } from "@/content/about";
 import { copy } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { ToolsDrawer } from "@/components/layout/ToolsDrawer";
@@ -74,7 +75,7 @@ function BrandLogo({ solid, className }: { solid: boolean; className?: string })
     <a href="#top" className={`flex items-center ${className ?? ""}`}>
       <img
         src={asset("brand/youxian-logo.png")}
-        alt={t(copy.footer.brand)}
+        alt={t(about.name)}
         className={`h-[26px] w-auto max-w-[196px] object-contain object-left md:h-8 md:max-w-[220px] ${
           solid ? "" : "invisible opacity-0 pointer-events-none"
         }`}

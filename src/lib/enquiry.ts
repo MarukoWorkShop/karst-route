@@ -1,3 +1,5 @@
+import { about } from "@/content/about";
+
 /** 询单发送超时时间：境外服务在弱网下可能长时间挂起，必须自己掐断。 */
 const TIMEOUT_MS = 15_000;
 
@@ -9,9 +11,11 @@ const TIMEOUT_MS = 15_000;
  * - 失败一律返回 false，由调用方决定提示文案
  */
 export async function sendEnquiry(fields: Record<string, string>): Promise<boolean> {
-  const key = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  const key =
+    about.web3formsAccessKey.trim() ||
+    String(import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ?? "").trim();
   if (!key) {
-    console.warn("[enquiry] 未配置 VITE_WEB3FORMS_ACCESS_KEY，询单未发送");
+    console.warn("[enquiry] 未配置表单接收 Key，询单未发送");
     return false;
   }
 
