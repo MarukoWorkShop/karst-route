@@ -169,7 +169,7 @@ function dayHtml(day: BriefDay, labels: BriefPdfInput["labels"]) {
 }
 
 function brandMark() {
-  const cut = (s: string) => s.split("—")[0].trim();
+  const cut = (s: string) => s.split(/\s*[|—]\s*/)[0].trim();
   const en = cut(about.siteTitle.en).toUpperCase();
   const zh = cut(about.siteTitle.zh);
   return [en, zh].filter(Boolean).join(" · ");
