@@ -1,5 +1,7 @@
 node_modules
 dist
+# 由 scripts/sync-notion.mjs 在构建前写入，Vite 再拷进 dist/
+public/sitemap.xml
 .DS_Store
 .env
 .env.local

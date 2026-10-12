@@ -13,6 +13,10 @@
  *
  * 只补「关于我们」客户配置字段（不拉取其它库）：
  *   node scripts/sync-notion.mjs --about-core
+ *
+ * 只根据当前 YAML 写 public/sitemap.xml（不访问 Notion）：
+ *   node scripts/sync-notion.mjs --sitemap
+ * 正常同步结束时也会写这份文件，供随后的 vite build 拷进 dist/。
  */
 import { execSync } from "node:child_process";
 import fs from "node:fs";
@@ -1877,11 +1881,99 @@ async function main() {
   if (!changed) console.log("Notion 无更新（GitHub yaml 更新或内容相同），未改文件。");
 }
 
-main().catch((err) => {
-  console.error(err.message || err);
-  if (process.env.GITHUB_ACTIONS) {
-    console.warn("Notion 同步失败，已回退为仓库里的 yaml 继续构建。");
-    process.exit(0);
+const SITE_ORIGIN = (process.env.SITE_ORIGIN || "https://boutique-routes.guilinvillage.com").replace(/\/$/, "");
+
+/** 与 src/i18n/copy.ts 的 pathFor 一致：英文在根路径，中文在 /zh/。 */
+function localeUrl(code) {
+  if (code === "en") return `${SITE_ORIGIN}/`;
+  return `${SITE_ORIGIN}/${code}/`;
+}
+
+function hreflangOf(code) {
+  return code === "zh" ? "zh-Hans" : code;
+}
+
+function xmlEscape(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function servedLocales() {
+  const fallback = ["en", "zh"];
+  try {
+    const doc = parseYaml(fs.readFileSync(path.join(root, "content/langs.yaml"), "utf8")) ?? {};
+    const served = Array.isArray(doc.served) ? doc.served.map((code) => String(code).trim()).filter(Boolean) : [];
+    const known = served.filter((code) => code === "en" || code === "zh");
+    return known.length ? known : fallback;
+  } catch {
+    return fallback;
   }
-  process.exit(1);
-});
+}
+
+function contentLastmod() {
+  let max = 0;
+  const dir = path.join(root, "content");
+  const walk = (current) => {
+    for (const name of fs.readdirSync(current)) {
+      const abs = path.join(current, name);
+      if (fs.statSync(abs).isDirectory()) {
+        walk(abs);
+        continue;
+      }
+      if (!name.endsWith(".yaml") && !name.endsWith(".yml")) continue;
+      const rel = path.relative(root, abs);
+      const edited = githubTime(rel);
+      if (edited > max) max = edited;
+    }
+  };
+  if (fs.existsSync(dir)) walk(dir);
+  return max ? new Date(max).toISOString().slice(0, 10) : "";
+}
+
+function writeSitemap() {
+  const locales = servedLocales();
+  const lastmod = contentLastmod();
+  const urls = locales.map((code) => {
+    const alternates = [
+      ...locales.map(
+        (alt) =>
+          `    <xhtml:link rel="alternate" hreflang="${hreflangOf(alt)}" href="${xmlEscape(localeUrl(alt))}"/>`,
+      ),
+      `    <xhtml:link rel="alternate" hreflang="x-default" href="${xmlEscape(localeUrl("en"))}"/>`,
+    ].join("\n");
+    const last = lastmod ? `    <lastmod>${lastmod}</lastmod>\n` : "";
+    return `  <url>\n    <loc>${xmlEscape(localeUrl(code))}</loc>\n${last}${alternates}\n  </url>`;
+  });
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${urls.join("\n")}
+</urlset>
+`;
+  const out = path.join(root, "public/sitemap.xml");
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  fs.writeFileSync(out, xml, "utf8");
+  console.log(`sitemap ${locales.length} urls → public/sitemap.xml`);
+}
+
+if (process.argv.includes("--sitemap")) {
+  writeSitemap();
+} else {
+  main()
+    .then(() => writeSitemap())
+    .catch((err) => {
+      console.error(err.message || err);
+      try {
+        writeSitemap();
+      } catch (sitemapErr) {
+        console.warn("sitemap 未生成:", sitemapErr.message || sitemapErr);
+      }
+      if (process.env.GITHUB_ACTIONS) {
+        console.warn("Notion 同步失败，已回退为仓库里的 yaml 继续构建。");
+        process.exit(0);
+      }
+      process.exit(1);
+    });
+}
