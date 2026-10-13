@@ -5,7 +5,7 @@ src: zh
 groups:
   - id: comfort
     label:
-      en: Food
+      en: Health & Everyday Comfort
       zh: 餐饮、卫生与常识
     items:
       - id: faq-safety
@@ -86,9 +86,24 @@ groups:
           en: How does the 240-Hour Visa-Free Transit work for international travelers?
           zh: 我没有中国签证，可以利用 240 小时过境免签政策来体验喀斯特路线吗？
         a:
-          en: "It is a wonderful option if you are planning a brief stopover! China has relaxed this policy considerably: travellers from an expanding list of eligible countries (currently over 50) can now stay in designated regions for up to 10 days — 240 hours — without a visa, provided they are transiting to a third country or region (for example: London → Shanghai → Hanoi). All you need to do is show your confirmed onward ticket at the airport's special transit counter. It is a fantastic, stress-free way to sample the country's rich culture on your way to another destination."
+          en: |
+            According to the latest official announcement from the National Immigration Administration (NIA), China has fully optimized its visa-free transit policy, extending the permitted stay for foreign nationals from 72/144 hours to a unified 240 hours (10 days). Currently, this policy applies to citizens from 55 eligible countries, allowing travelers to enter visa-free through any of the 60 designated open ports across 24 provinces, autonomous regions, and municipalities.
+
+            You can enjoy a smooth, hassle-free journey as long as you meet these 4 core requirements:
+            1. No-Backtracking Route (The Golden Rule): Your journey must form a transit loop from Country/Region A → Mainland China (staying less than 240 hours) → Country/Region B. For example, London → Shanghai → Tokyo, or New York → Guangzhou → Hong Kong forms a perfect, compliant loop.
+            2. Confirmed Onward Tickets: At the dedicated transit counter at your port of entry, you must present your confirmed onward flight/train/ship tickets to a third country or region, with fixed dates and seats already booked.
+            3. Passport Validity: Hold a valid physical ordinary passport with at least 3 months of validity remaining from your date of entry.
+            4. Aligned Travel Area: Once admitted, you are allowed to travel freely within the officially permitted provinces and interconnected economic zones, which perfectly covers our curated tour routes.
+
+            Please note that the 240-hour clock only starts ticking at 00:00 AM on the day following your entry! For every bespoke journey booked with us, our concierge team will issue border-compliant, full-English hotel itineraries and international safety insurance certificates to ensure you and your family cruise through immigration flawlessly. 
+
+            Before your departure, you can visit the NIA Official Government Service Platform to verify your country's latest visa-free eligibility and review the full list of the 60 open ports in real-time.
           zh: |-
-            根据 中国国家移民管理局 (NIA) 官方最新公告，中国已全面放宽优化过境免签政策，将外籍人员在华停留时间由原先的 72/144 小时统一延长至 240 小时（10天）。目前，该政策已覆盖美国、英国、加拿大、俄罗斯、澳大利亚等 55 个国家，旅客可从全国 24 个省（区、市）的 60 个对外开放口岸中任一口岸免签入境。只需满足以下 4 个条件即可说走就走：
+            根据 中国国家移民管理局 (NIA) 官方最新公告，中国已全面放宽优化过境免签政策，将外籍人员在华停留时间由原先的 72/144 小时统一延长至 240 小时（10天）。
+
+            目前，该政策已覆盖美国、英国、加拿大、俄罗斯、澳大利亚等 55 个国家，旅客可从全国 24 个省（区、市）的 60 个对外开放口岸中任一口岸免签入境。
+
+            只需满足以下 4 个条件即可说走就走：
             1. 目的地不走回头路（核心规则）：行程必须是从 A国/地区 → 中国大陆（停留少于240小时） → B国/地区。例如：伦敦 → 上海→ 东京，或者 纽约 → 广州 → 香港 均可完美闭环。
             2. 准备好联程机票：在入境口岸的专用过境柜台，必须出示已确定日期及座位、前往第三国或地区的联程机票。
             3. 证件有效期合规：持有有效期不少于 3 个月的本人有效普通护照。
@@ -164,8 +179,13 @@ groups:
           en: Will my standard social media, Google Maps, and Gmail work in China?
           zh: 我常用的社交软件、谷歌地图和 Gmail 在中国能用吗？
         a:
-          en: If you use your home country's international roaming plan or an international eSIM, your social media, Google Maps, and Gmail will work normally in China. This is because international roaming traffic is routed directly through your home network, seamlessly resolving any connectivity issues. However, if you switch to a local Chinese SIM card or connect to local hotel Wi-Fi, these specific services may not load properly; in that case, we highly recommend trying local alternatives like WeChat for messaging and Apple Maps or Baidu Maps for navigation to ensure a smooth trip.
-          zh: 如果您在华期间使用本国运营商的国际漫游套餐或购买国际 eSIM 数据卡，您常用的社交软件、谷歌地图和 Gmail 都是可以正常使用的。 这是因为国际漫游流量会直接通过您母国的网络进行传输，能够无缝解决网络连接问题。不过需要注意的是，如果您在当地换成了中国本土的 SIM 卡，或是直接连接酒店的本地 Wi-Fi，这些境外应用可能无法顺畅加载；届时我们非常建议您尝试使用微信（WeChat）进行日常沟通，或使用苹果地图、百度地图进行导航，以确保旅程顺畅。
+          en: |
+            If you use your home country's international roaming plan or an international travel eSIM before you fly, your favorite apps like WhatsApp, Google Maps, and Gmail will work completely normally. This is because roaming data automatically routes your internet traffic back through your home country's network, seamlessly bypassing the local internet restrictions without needing any extra software.
+
+            However, keep in mind that if you switch to a local Chinese physical SIM card or connect directly to local hotel Wi-Fi, these Western services will not load. If you prefer to use local Wi-Fi or a local SIM, utilizing a reliable VPN is your go-to companion. The absolute golden rule is that you must download, install, and fully test your VPN on all your devices before you land in China. Once you pass through customs, local app stores will block you from downloading them entirely.
+
+            Before you set off, please double-check if your phone hardware supports eSIM profiles (as some regional device models have restrictions).
+          zh: 如果您在华期间使用本国运营商的国际漫游套餐或购买国际 eSIM 数据卡，您常用的社交软件、谷歌地图和 Gmail 都是可以正常使用的。这是因为国际漫游流量会直接通过您母国的网络进行传输，能够无缝解决网络连接问题。不过需要注意的是，如果您在当地换成了中国本土的 SIM 卡，或是直接连接酒店的本地 Wi-Fi，这些境外应用就无法顺畅加载了。这时候如果您需要使用备用的网络辅助工具（VPN），请务必、一定要在入境中国前就全部下载并安装好！ 因为一旦通过中国海关，本地的应用商店将无法再下载这类工具。在您出发前，请提前确认您的手机是否支持 eSIM 功能（大部分海外机型支持，但部分地区版本有限制）。
   - id: money
     label:
       en: Payment & Money
