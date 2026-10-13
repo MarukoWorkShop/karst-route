@@ -997,6 +997,7 @@ export const copy = {
     wechatScan: { en: "Long-press to scan", zh: "长按扫码" },
     wechatCopy: { en: "Copy WeChat ID", zh: "复制客服号" },
     wechatCopied: { en: "Copied", zh: "已复制" },
+    xhsCopy: { en: "Copy Xiaohongshu ID", zh: "复制小红书号" },
   },
 } as const;
 

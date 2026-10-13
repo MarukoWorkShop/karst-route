@@ -3,27 +3,25 @@ import { about } from "@/content/about";
 import { conciergeContact } from "@/data/concierge";
 import { copy, pathFor } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { WechatDialog, WechatIconButton } from "@/components/layout/WechatContact";
+import { QrDialog, QrIconButton, type QrContactKind } from "@/components/layout/WechatContact";
 
 type P = SVGProps<SVGSVGElement>;
 
 export function Footer() {
   const { locale, t } = useLocale();
-  const [wechatOpen, setWechatOpen] = useState(false);
-  const openWechat = useCallback(() => setWechatOpen(true), []);
-  const closeWechat = useCallback(() => setWechatOpen(false), []);
+  const [qrOpen, setQrOpen] = useState<QrContactKind | null>(null);
+  const openQr = useCallback((kind: QrContactKind) => setQrOpen(kind), []);
+  const closeQr = useCallback(() => setQrOpen(null), []);
   const year = new Date().getFullYear();
   const whatsappDigits = conciergeContact.whatsapp.replace(/\D/g, "");
-  const socials: { label: string; href: string; icon: ReactNode; wechat?: boolean }[] = [
+  const socials: { label: string; href: string; icon: ReactNode; qr?: QrContactKind }[] = [
     {
       label: "WhatsApp",
       href: whatsappDigits ? `https://wa.me/${whatsappDigits}` : "#",
       icon: <IconWhatsApp />,
     },
-    { label: "微信", href: "#", icon: <IconWechat />, wechat: true },
-    { label: "微博", href: "#", icon: <IconWeibo /> },
-    { label: "小红书", href: "#", icon: <IconXiaohongshu /> },
-    { label: "Instagram", href: "#", icon: <IconInstagram /> },
+    { label: "微信", href: "#", icon: <IconWechat />, qr: "wechat" },
+    { label: "小红书", href: "#", icon: <IconXiaohongshu />, qr: "xhs" },
     {
       label: "Email",
       href: conciergeContact.email ? `mailto:${conciergeContact.email}` : "#",
@@ -51,7 +49,7 @@ export function Footer() {
             <p className="mb-4 text-[10px] tracking-[0.12em] text-[rgba(250,248,242,0.3)] uppercase">
               {t(copy.footer.connect)}
             </p>
-            <SocialRow socials={socials} onWechat={openWechat} />
+            <SocialRow socials={socials} onQr={openQr} />
           </div>
         </div>
 
@@ -60,7 +58,7 @@ export function Footer() {
           <p className="mb-[18px] text-[10px] tracking-[0.12em] text-[rgba(250,248,242,0.3)] uppercase">
             {t(copy.footer.connect)}
           </p>
-          <SocialRow socials={socials} centered onWechat={openWechat} />
+          <SocialRow socials={socials} centered onQr={openQr} />
         </div>
 
         <div className="mt-7 h-px bg-[rgba(250,248,242,0.08)] md:mt-0 md:mb-6" />
@@ -87,7 +85,7 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <WechatDialog open={wechatOpen} onClose={closeWechat} />
+      <QrDialog kind={qrOpen} onClose={closeQr} />
     </footer>
   );
 }
@@ -95,21 +93,25 @@ export function Footer() {
 function SocialRow({
   socials,
   centered,
-  onWechat,
+  onQr,
 }: {
-  socials: { label: string; href: string; icon: ReactNode; wechat?: boolean }[];
+  socials: { label: string; href: string; icon: ReactNode; qr?: QrContactKind }[];
   centered?: boolean;
-  onWechat: () => void;
+  onQr: (kind: QrContactKind) => void;
 }) {
   return (
     <div>
       <div className={`flex flex-wrap gap-2.5 ${centered ? "justify-center" : ""}`}>
-        {socials.map((s) =>
-          s.wechat ? (
-            <WechatIconButton key={s.label} onOpen={onWechat}>
-              {s.icon}
-            </WechatIconButton>
-          ) : (
+        {socials.map((s) => {
+          const kind = s.qr;
+          if (kind) {
+            return (
+              <QrIconButton key={s.label} kind={kind} onOpen={() => onQr(kind)}>
+                {s.icon}
+              </QrIconButton>
+            );
+          }
+          return (
             <a
               key={s.label}
               href={s.href}
@@ -120,8 +122,8 @@ function SocialRow({
             >
               {s.icon}
             </a>
-          ),
-        )}
+          );
+        })}
       </div>
       {centered ? (
         <div className="mt-2 flex flex-wrap justify-center gap-2.5">
@@ -153,26 +155,10 @@ function IconWechat(p: P) {
     </svg>
   );
 }
-function IconWeibo(p: P) {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden {...p}>
-      <path d="M8.5 13.5c-2.485 0-4.5-.895-4.5-2s2.015-2 4.5-2 4.5.895 4.5 2-2.015 2-4.5 2zm0-3.2c-1.878 0-3.4.538-3.4 1.2s1.522 1.2 3.4 1.2 3.4-.538 3.4-1.2-1.522-1.2-3.4-1.2zM14.5 5a2.5 2.5 0 0 0-2.5 2.5c0 .18.02.35.05.52A5.5 5.5 0 0 0 8.5 7C5.46 7 3 8.79 3 11s2.46 4 5.5 4 5.5-1.79 5.5-4c0-.88-.38-1.69-1.01-2.36.34-.43.51-.96.51-1.64 0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5c0 .18.03.36.09.52a3.5 3.5 0 0 1 .41-.02c1.26 0 2.37.43 3.14 1.11.12-.34.19-.71.19-1.11A2.5 2.5 0 0 0 14.5 5z" />
-    </svg>
-  );
-}
 function IconXiaohongshu(p: P) {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden {...p}>
       <path d="M10 2a8 8 0 1 0 0 16A8 8 0 0 0 10 2zm.75 4.5h1.5v1h-1.5v3.25h-1V7.5H8.25v-1h1.5V5h1v1.5zm-3.5 5.25h5.5v1h-5.5v-1z" />
-    </svg>
-  );
-}
-function IconInstagram(p: P) {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden {...p}>
-      <rect x="3" y="3" width="14" height="14" rx="4" />
-      <circle cx="10" cy="10" r="3.5" />
-      <circle cx="14" cy="6" r=".75" fill="currentColor" stroke="none" />
     </svg>
   );
 }

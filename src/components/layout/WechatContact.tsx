@@ -1,31 +1,47 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { IconClose } from "@/components/icons";
-import { copy } from "@/i18n/copy";
+import { copy, type Tx } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { asset } from "@/lib/asset";
 
-/** 页脚微信客服号。二维码内容与此号码一致。 */
-export const WECHAT_ID = "13507735008";
+/** 页脚可扫码的社交号。二维码内容与号码一致。 */
+export const QR_CONTACTS = {
+  wechat: {
+    id: "13507735008",
+    label: "微信",
+    qr: asset("concierge/wechat-qr.png"),
+    copy: copy.footer.wechatCopy,
+  },
+  xhs: {
+    id: "49321925599",
+    label: "小红书",
+    qr: asset("concierge/xhs-qr.png"),
+    copy: copy.footer.xhsCopy,
+  },
+} as const;
 
-const QR_SRC = asset("concierge/wechat-qr.png");
+export type QrContactKind = keyof typeof QR_CONTACTS;
 
 const ICON_BTN =
   "flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(250,248,242,0.1)] bg-[rgba(250,248,242,0.06)] text-[rgba(250,248,242,0.6)] hover:border-[rgba(250,248,242,0.22)] hover:bg-[rgba(250,248,242,0.12)] hover:text-paper";
 
-export function WechatIconButton({
+export function QrIconButton({
+  kind,
   children,
   onOpen,
 }: {
+  kind: QrContactKind;
   children: ReactNode;
   onOpen: () => void;
 }) {
+  const contact = QR_CONTACTS[kind];
   return (
     <div className="group relative">
       <button
         type="button"
-        aria-label="微信"
+        aria-label={contact.label}
         aria-haspopup="dialog"
-        title="微信"
+        title={contact.label}
         onClick={onOpen}
         className={ICON_BTN}
       >
@@ -34,7 +50,7 @@ export function WechatIconButton({
       <div className="pointer-events-none absolute bottom-[calc(100%+10px)] left-1/2 z-30 hidden w-[148px] -translate-x-1/2 group-hover:block">
         <div className="relative rounded-xl bg-paper p-2 shadow-[0_12px_32px_rgba(16,28,22,0.28)]">
           <img
-            src={QR_SRC}
+            src={contact.qr}
             alt=""
             width={132}
             height={132}
@@ -47,9 +63,17 @@ export function WechatIconButton({
   );
 }
 
-export function WechatDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function QrDialog({
+  kind,
+  onClose,
+}: {
+  kind: QrContactKind | null;
+  onClose: () => void;
+}) {
   const { t } = useLocale();
   const [copied, setCopied] = useState(false);
+  const open = kind !== null;
+  const contact = kind ? QR_CONTACTS[kind] : null;
 
   useEffect(() => {
     if (!open) return;
@@ -69,18 +93,18 @@ export function WechatDialog({ open, onClose }: { open: boolean; onClose: () => 
     if (!open) setCopied(false);
   }, [open]);
 
-  if (!open) return null;
+  if (!contact) return null;
 
-  async function copyId() {
+  async function copyId(value: string) {
     try {
-      await navigator.clipboard.writeText(WECHAT_ID);
+      await navigator.clipboard.writeText(value);
       setCopied(true);
       return;
     } catch {
       /* 浏览器拦住剪贴板接口时，改用选区复制 */
     }
     const field = document.createElement("textarea");
-    field.value = WECHAT_ID;
+    field.value = value;
     field.setAttribute("readonly", "");
     field.style.position = "fixed";
     field.style.left = "-9999px";
@@ -92,11 +116,44 @@ export function WechatDialog({ open, onClose }: { open: boolean; onClose: () => 
   }
 
   return (
+    <QrDialogBody
+      label={contact.label}
+      id={contact.id}
+      qr={contact.qr}
+      copyLabel={contact.copy}
+      copied={copied}
+      onCopy={() => void copyId(contact.id)}
+      onClose={onClose}
+      t={t}
+    />
+  );
+}
+
+function QrDialogBody({
+  label,
+  id,
+  qr,
+  copyLabel,
+  copied,
+  onCopy,
+  onClose,
+  t,
+}: {
+  label: string;
+  id: string;
+  qr: string;
+  copyLabel: Tx;
+  copied: boolean;
+  onCopy: () => void;
+  onClose: () => void;
+  t: (tx: Tx) => string;
+}) {
+  return (
     <div
       className="fixed inset-0 z-[260] flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
-      aria-label="微信"
+      aria-label={label}
     >
       <button
         type="button"
@@ -114,20 +171,20 @@ export function WechatDialog({ open, onClose }: { open: boolean; onClose: () => 
           <IconClose className="h-4 w-4" />
         </button>
         <img
-          src={QR_SRC}
-          alt={WECHAT_ID}
+          src={qr}
+          alt={id}
           width={200}
           height={200}
           className="mx-auto h-[200px] w-[200px] max-w-none rounded-md"
         />
         <p className="mt-3 text-[13px] text-ink-soft">{t(copy.footer.wechatScan)}</p>
-        <p className="mt-1 text-[16px] font-medium tracking-[0.04em] text-ink">{WECHAT_ID}</p>
+        <p className="mt-1 text-[16px] font-medium tracking-[0.04em] text-ink">{id}</p>
         <button
           type="button"
-          onClick={() => void copyId()}
+          onClick={onCopy}
           className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-lg bg-cta text-[14px] font-medium text-paper"
         >
-          {copied ? t(copy.footer.wechatCopied) : t(copy.footer.wechatCopy)}
+          {copied ? t(copy.footer.wechatCopied) : t(copyLabel)}
         </button>
       </div>
     </div>
