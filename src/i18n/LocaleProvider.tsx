@@ -9,7 +9,9 @@ import {
 } from "react";
 import { about } from "@/content/about";
 import {
+  copy,
   localeFromPath,
+  pageFromPath,
   pathFor,
   t,
   type Locale,
@@ -34,15 +36,18 @@ declare global {
 function applyHead(locale: Locale) {
   const html = document.documentElement;
   html.lang = locale === "zh" ? "zh-Hans" : "en";
-  const title = t(about.siteTitle, locale);
+  const page = pageFromPath(window.location.pathname);
+  const siteTitle = t(about.siteTitle, locale);
+  const title =
+    page === "home" ? siteTitle : `${t(copy[page].title, locale)} · ${t(about.name, locale)}`;
   if (title) document.title = title;
 
   const origin = window.location.origin;
   const pairs: [string, string][] = [
-    ["canonical", origin + pathFor(locale)],
-    ["en", origin + pathFor("en")],
-    ["zh-Hans", origin + pathFor("zh")],
-    ["x-default", origin + pathFor("en")],
+    ["canonical", origin + pathFor(locale, page)],
+    ["en", origin + pathFor("en", page)],
+    ["zh-Hans", origin + pathFor("zh", page)],
+    ["x-default", origin + pathFor("en", page)],
   ];
 
   const ensure = (rel: string, hreflang: string | null, href: string) => {
@@ -84,7 +89,8 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   const setLocale = useCallback((next: Locale) => {
     const hash = window.location.hash;
-    const url = pathFor(next) + hash;
+    const page = pageFromPath(window.location.pathname);
+    const url = pathFor(next, page) + hash;
     window.history.pushState({ locale: next }, "", url);
     setLocaleState(next);
   }, []);

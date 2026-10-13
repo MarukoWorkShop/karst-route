@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import { IconToolbox } from "@/components/icons";
 import { about } from "@/content/about";
-import { copy } from "@/i18n/copy";
+import { copy, pathFor } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { ToolsDrawer } from "@/components/layout/ToolsDrawer";
 import { asset } from "@/lib/asset";
 
-export function Header({ onPlan }: { onPlan: () => void }) {
-  const { t } = useLocale();
+export function Header({ onPlan, pinned = false }: { onPlan: () => void; pinned?: boolean }) {
+  const { locale, t } = useLocale();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [solid, setSolid] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const solid = pinned || scrolled;
+  const home = pinned ? pathFor(locale) : "";
   useEffect(() => {
-    const onScroll = () => setSolid(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -34,34 +36,36 @@ export function Header({ onPlan }: { onPlan: () => void }) {
           <div className="flex justify-start">
             <MenuButton onClick={() => setDrawerOpen(true)} className={muted} expanded={drawerOpen} />
           </div>
-          <BrandLogo solid={solid} className="justify-center" />
-          <div className="flex justify-end">
+          <BrandLogo solid={solid} href={pinned ? pathFor(locale) : "#top"} className="justify-center" />
+          <div className="flex items-center justify-end">
             <CompactLangToggle className={muted} />
+            {pinned ? <CloseHome /> : null}
           </div>
         </div>
 
         <div className="mx-auto hidden h-[60px] max-w-[1060px] items-center px-6 md:flex">
           <div className="flex w-[268px] items-center">
             <MenuButton onClick={() => setDrawerOpen(true)} className={muted} expanded={drawerOpen} />
-            <BrandLogo solid={solid} className="min-w-0" />
+            <BrandLogo solid={solid} href={pinned ? pathFor(locale) : "#top"} className="min-w-0" />
           </div>
           <nav className="flex flex-1 items-center justify-center gap-7">
-            <a href="#tours" className={`type-btn ${ink}`}>
+            <a href={`${home}#tours`} className={`type-btn ${ink}`}>
               {t(copy.nav.tours)}
             </a>
-            <a href="#plan" onClick={onPlan} className={`type-btn ${ink}`}>
+            <a href={`${home}#plan`} onClick={onPlan} className={`type-btn ${ink}`}>
               {t(copy.nav.plan)}
             </a>
-            <a href="#about" className={`type-btn ${ink}`}>
+            <a href={`${home}#about`} className={`type-btn ${ink}`}>
               {t(copy.nav.about)}
             </a>
             <span className={`h-4 w-px ${solid ? "bg-line" : "bg-paper/25"}`} aria-hidden />
-            <a href="#faq" className={`type-btn ${ink}`}>
+            <a href={`${home}#faq`} className={`type-btn ${ink}`}>
               {t(copy.nav.faq)}
             </a>
           </nav>
-          <div className="flex w-[268px] items-center justify-end">
+          <div className="flex w-[268px] items-center justify-end gap-2">
             <LangToggle solid={solid} />
+            {pinned ? <CloseHome /> : null}
           </div>
         </div>
       </header>
@@ -69,10 +73,18 @@ export function Header({ onPlan }: { onPlan: () => void }) {
   );
 }
 
-function BrandLogo({ solid, className }: { solid: boolean; className?: string }) {
+function BrandLogo({
+  solid,
+  className,
+  href,
+}: {
+  solid: boolean;
+  className?: string;
+  href: string;
+}) {
   const { t } = useLocale();
   return (
-    <a href="#top" className={`flex items-center ${className ?? ""}`}>
+    <a href={href} className={`flex items-center ${className ?? ""}`}>
       <img
         src={asset("brand/youxian-logo.png")}
         alt={t(about.name)}
@@ -105,6 +117,21 @@ function MenuButton({
     >
       <IconToolbox className="h-6 w-6" />
     </button>
+  );
+}
+
+function CloseHome() {
+  const { locale, t } = useLocale();
+  return (
+    <a
+      href={pathFor(locale)}
+      aria-label={t(copy.nav.close)}
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-ink/25 bg-paper text-[26px] leading-none text-ink"
+    >
+      <span className="-mt-0.5" aria-hidden>
+        ×
+      </span>
+    </a>
   );
 }
 

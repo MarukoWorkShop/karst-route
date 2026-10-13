@@ -12,12 +12,32 @@ import { Explore } from "@/components/explore/Explore";
 import { PlanSection } from "@/components/plan/PlanSection";
 import { Faq } from "@/components/faq/Faq";
 import { PwaInstallPrompt } from "@/components/pwa/PwaInstallPrompt";
+import { CookieBanner } from "@/components/cookie/CookieBanner";
+import { LegalPage } from "@/components/legal/LegalPage";
+import { pageFromPath, type LegalPageId } from "@/i18n/copy";
 
 function go(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 }
 
 export default function App() {
+  const page = pageFromPath(typeof window === "undefined" ? "/" : window.location.pathname);
+  if (page !== "home") return <LegalRoute page={page} />;
+  return <Home />;
+}
+
+function LegalRoute({ page }: { page: LegalPageId }) {
+  return (
+    <>
+      <Header pinned onPlan={() => undefined} />
+      <LegalPage page={page} />
+      <Footer />
+      <CookieBanner />
+    </>
+  );
+}
+
+function Home() {
   const [route, setRoute] = useState<RouteId>("r1");
   const [intent, setIntent] = useState<"boutique" | "custom">("boutique");
   const [itinOpen, setItinOpen] = useState(false);
@@ -98,6 +118,7 @@ export default function App() {
         }}
       />
       <PwaInstallPrompt blocked={heroInView} />
+      <CookieBanner lift={!heroInView} />
     </>
   );
 }

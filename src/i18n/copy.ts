@@ -796,6 +796,183 @@ export const copy = {
     insurance: { en: "Travel insurance included", zh: "含旅游意外险" },
     cancel: { en: "Free cancellation 30 days out", zh: "出发前 30 天免费取消" },
   },
+  cookie: {
+    noteBefore: {
+      en: "This website utilizes cookies to optimize performance and tailor an experience just for you. By continuing to use our site, you accept our ",
+      zh: "本网站利用 Cookie 优化界面性能并量身定制您的专属体验。继续使用本网站即代表您接受我们的",
+    },
+    privacy: { en: "Privacy Policy", zh: "隐私条款" },
+    noteAfter: {
+      en: " and Cookie Practices.",
+      zh: "与 Cookie 政策。",
+    },
+    accept: { en: "Accept", zh: "接受" },
+  },
+  privacy: {
+    title: { en: "Privacy Policy", zh: "隐私政策" },
+    back: { en: "Back to the site", zh: "返回首页" },
+    sections: [
+      {
+        h: { en: "Data We Collect and Purposes", zh: "我们收集的数据与使用目的" },
+        items: [
+          {
+            lead: { en: "Anonymous Click Analytics", zh: "匿名点击统计" },
+            body: {
+              en: "When you browse our website, we record your click actions, pages visited, and time spent. Please rest assured that this data is entirely anonymous and de-identified. We collect this information solely to statistically understand which travel routes are more popular and to optimize website user experience. We never link, and have no way to link, these click actions to your real identity.",
+              zh: "当您浏览本站时，我们会记录您的点击动作、访问页面和停留时间。请您放心，这些数据是完全匿名且去中心化的。我们收集这些数据纯粹是为了统计哪些旅游路线更受欢迎，从而优化网站体验。我们绝不会、也无法将这些点击动作与您的真实身份进行关联。",
+            },
+          },
+          {
+            lead: { en: "Itinerary Consultation", zh: "行程咨询" },
+            body: {
+              en: "This website does not feature a member registration system, and we do not maintain a user database. Only when you actively submit an inquiry form or send us an email will we collect the contact details (e.g., name, email, phone number) and preferences you provide. This information is strictly used to deliver your customized travel services.",
+              zh: "本站不设会员注册系统，我们不会在后台建立您的个人账户。只有当您主动填写表单或发送邮件向我们咨询行程时，我们才会收集您提供的联系方式（如姓名、邮箱、电话）及行程偏好。这些信息仅用于为您提供定制化的旅游咨询服务。",
+            },
+          },
+        ],
+      },
+      {
+        h: {
+          en: "On-Device Privacy Mode: Your Data Stays on Your Device",
+          zh: "独创的本地隐私模式：我的网站，您的设备",
+        },
+        items: [
+          {
+            lead: { en: "100% Localized", zh: "完全本地化" },
+            body: {
+              en: "We firmly believe in data minimization. Before you actively initiate an email consultation, all your private interactions on our site—including your favorited destinations and saved itineraries—are stored 100% locally within your current browser (LocalStorage).",
+              zh: "我们坚持“非必要不收集”的原则。在您主动发邮件咨询之前，您在网站上的所有私密操作（如：收藏的景点、暂存的行程单、您的偏好设置）将100% 存储在您当前的浏览器和设备本地（LocalStorage）。",
+            },
+          },
+          {
+            lead: { en: "We Cannot Access It", zh: "我们读不到" },
+            body: {
+              en: "Our servers do not sync, store, or have access to any of this local data. You remain entirely untracked and anonymous on our platform until you choose to contact us.",
+              zh: "我们的服务器不会同步、也无法读取这些本地数据。如果您不主动联系我们，您在互联网上就是完全隐形且自由的。",
+            },
+          },
+          {
+            lead: { en: "A Friendly Reminder", zh: "风险提示" },
+            body: {
+              en: "Because you are in absolute control of this data, clearing your browser cache, using incognito mode, or switching devices will permanently erase your saved itineraries.",
+              zh: "由于数据完全由您掌控，一旦您清理了浏览器缓存、使用隐私模式或更换了设备，这些本地收藏和暂存的行程将会彻底消失。",
+            },
+          },
+        ],
+      },
+      {
+        h: { en: "Your Privacy Rights & Data Erasure", zh: "您的隐私权利与数据擦除" },
+        p: {
+          en: "No matter where you are (whether the EU GDPR, China's Personal Information Protection Law, or the California CCPA applies), we respect your control over your data in the same way. Because we do not keep a member database, the clicks and favorites left on your device can be wiped completely in one step at any time by clearing your browser cache. If you have sent us an inquiry email, you may reply to that email, or use the contact details at the bottom of the page, and ask us to permanently delete or anonymize your email inquiry records.",
+          zh: "无论您身处何地（无论适用欧盟 GDPR、中国《个人信息保护法》还是美国加州 CCPA），我们都一视同仁地尊重您对数据的控制权。由于我们没有会员数据库，您留在本地的点击和收藏数据您可以随时通过清理浏览器缓存来实现“一键彻底擦除”。如果您曾向我们发送过咨询邮件，您可以随时回复该邮件或通过底部联系方式，要求我们永久删除或匿名化您的邮件咨询记录。",
+        },
+      },
+    ],
+  },
+  terms: {
+    title: { en: "Terms of Service", zh: "服务条款" },
+    back: { en: "Back to the site", zh: "返回首页" },
+    sections: [
+      {
+        h: { en: "Booking Confirmation Standards", zh: "预订生效标准" },
+        p: {
+          en: "Submitting an itinerary inquiry form or sending an email does not constitute a successful booking. A booking becomes legally binding only after you have confirmed the final itinerary with us, signed the formal agreement, paid the full amount (or agreed deposit), and received a \"Booking Confirmation\" email containing a unique booking ID from us.",
+          zh: "在本站提交行程咨询表单或发送邮件并不视为预订成功。只有当您与我们确认最终行程、签署正式确认书并支付全额团款（或约定的定金），且收到我们发送的带有唯一编号的“预订确认邮件（Booking Confirmation）”后，您的旅游预订方正式具有法律效力。",
+        },
+      },
+      {
+        h: { en: "Information Required From You", zh: "需要您提供的信息" },
+        p: {
+          en: "To ensure seamless travel arrangements, hotel/flight bookings, and destination compliance, you must provide accurate and valid information for all travelers at the time of formal booking, including but not limited to: Full Passport Names, Passport Numbers, Date of Birth, Nationality, Contact Information, and any essential medical or dietary requirements.",
+          zh: "为了能够为您顺利安排行程、预订机票/酒店以及满足目的地的合规要求，在正式预订时您必须提供所有出行人的真实有效信息，包括但不限于：护照姓名、护照号码、出生日期、国籍、联系电话以及任何必要的特殊健康或饮食需求。",
+        },
+      },
+      {
+        h: { en: "Inclusions and Child Policy", zh: "费用包含与儿童政策" },
+        items: [
+          {
+            lead: { en: "Inclusions", zh: "费用包含" },
+            body: {
+              en: "Specific inclusions (e.g., accommodation, transport, guiding services, entry fees) are strictly limited to those explicitly itemized in your \"Booking Confirmation\" or the attached itinerary. Any expenses not itemized are the traveler's own responsibility.",
+              zh: "每一笔订单的具体包含项目（如住宿、指定交通、导游、门票等）均以您的“预订确认邮件”或随附行程单中所列明的细则为准。任何未明确列出的费用均属于自理费用。",
+            },
+          },
+          {
+            lead: { en: "Child Policy", zh: "儿童政策" },
+            body: {
+              en: "Child rates are strictly subject to the child's actual age or height on the date of travel. Criteria vary by destination, hotels, and attractions; please refer to the specific itinerary details. Accurate age declaration at the time of booking is mandatory.",
+              zh: "儿童团费的认定严格依据出行当日儿童的实际年龄或身高。由于不同目的地、酒店和景点的儿童判定标准各异，具体请参照单项行程说明。预订时请务必如实申报儿童年龄。",
+            },
+          },
+        ],
+      },
+      {
+        h: { en: "30-Day Free Cancellation & Amendment Policy", zh: "30天免费取消与改期政策" },
+        items: [
+          {
+            lead: { en: "≥ 30 Days Before Departure", zh: "出发前 ≥ 30 天" },
+            body: {
+              en: "You are eligible for free cancellation or free rescheduling. Upon cancellation, a full refund will be processed, minus any non-refundable third-party costs already incurred (e.g., non-refundable flight tickets or specific hotel non-refundable deposits, if applicable).",
+              zh: "您可以申请免费取消订单或免费改期。取消后，我们将在扣除无法退还的第三方实际损失（如已开票的不可退机票、特定酒店的不可退定金，如有）后，将余款全额退还。",
+            },
+          },
+          {
+            lead: { en: "< 30 Days Before Departure", zh: "出发前 < 30 天" },
+            body: {
+              en: "Cancellations or amendments will be subject to a cancellation fee based on a tiered schedule outlined in the specific itinerary's Cancellation & Refund Policy.",
+              zh: "取消或改期将根据具体的时间节点收取相应比例的违约金，具体阶梯式比例请参照您所订行程的《退改说明细则》。",
+            },
+          },
+        ],
+      },
+    ],
+  },
+  disclaimer: {
+    title: { en: "Disclaimer", zh: "免责声明" },
+    back: { en: "Back to the site", zh: "返回首页" },
+    sections: [
+      {
+        h: { en: "Quotes and Information for Reference Only", zh: "报价与信息参考" },
+        p: {
+          en: "All prices, itineraries, images, and schedules displayed on this website are for reference purposes only. Actual prices may fluctuate due to seasonality, currency exchange rates, hotel availability, and real-time airfares. The final binding price and itinerary will be strictly stipulated in the formal booking confirmation issued by us.",
+          zh: "本网站上显示的所有价格、行程安排、图片及时间表仅供参考。实际价格可能会因季节、汇率、酒店房态及实时机票价格而有所波动。最终确切的团款和行程以我司开具的正式预订确认书为准。",
+        },
+      },
+      {
+        h: { en: "Dynamic Itinerary Adjustments (Force Majeure)", zh: "行程动态调整（不可抗力）" },
+        p: {
+          en: "Due to the inherent nature of travel, in the event of Force Majeure (including but not limited to severe weather, natural disasters, strikes, government or visa policy changes, traffic controls, or flight cancellations), we and our local operators reserve the right to reasonably adjust the sequence of the itinerary, attractions visited, accommodations, or transport to ensure passenger safety as our top priority.",
+          zh: "鉴于旅游行业的特殊性，如遇不可抗力因素（包括但不限于恶劣天气、自然灾害、罢工、政府政策或签证调整、交通管制、航空管制等），本站及当地接待方保留对行程顺序、游览景点、住宿酒店或交通工具进行合理调整的权利，以第一优先确保团队人身安全。",
+        },
+      },
+      {
+        h: { en: "Partner Venues and External Links", zh: "合作场所与外部链接" },
+        items: [
+          {
+            lead: { en: "Third-Party Venues", zh: "第三方场所" },
+            body: {
+              en: "Accommodations, restaurants, attractions, and entertainment facilities involved in the itinerary are operated by independent third-party partners. While we select partners carefully, we are not directly liable for service fluctuations or temporary closures beyond our control.",
+              zh: "行程中涉及的酒店、餐厅、景区、娱乐设施等均由独立的第三方合作商负责运营。若因第三方非我司可控之原因导致服务质量波动或临时关闭，我司将积极协助沟通协调，但不承担直接赔偿责任。",
+            },
+          },
+          {
+            lead: { en: "Maps, Videos, and External Links", zh: "地图、影片与外链" },
+            body: {
+              en: "Maps, promotional videos, and hyperlinks to external websites are provided solely for your visual and geographical reference. We do not assume any legal responsibility for the content, privacy practices, or availability of external sites.",
+              zh: "本站引用的地图、宣传影片及跳转至外部网站的链接仅用于为您提供直观的地理及视觉参考。我们不对外部第三方网站的内容真实性、隐私政策或其稳定性承担任何法律责任。",
+            },
+          },
+        ],
+      },
+      {
+        h: { en: "Travel Accident Insurance Notice", zh: "旅游意外险说明" },
+        p: {
+          en: "For your safety, every qualified travel booking confirmed through our platform automatically includes a basic \"Travel Accident Insurance\" policy. The coverage, claims process, and deductibles are strictly governed by the official policy issued by the insurance company. We highly recommend that you purchase additional comprehensive international travel and medical insurance prior to departure based on your personal needs.",
+          zh: "为了您的出行安全，本站出售的每一笔合格旅游订单均已包含一份基本的“旅游意外伤害保险”。保险的保额、理赔范围和免赔额度均以保险公司出具的电子保单及标准条款为准。我们强烈建议您根据个人需求及目的地特点，在出发前额外自行购买更高保额的国际医疗及旅行救援保险。",
+        },
+      },
+    ],
+  },
   dock: {
     tours: { en: "Tours", zh: "路线" },
     plan: { en: "Plan", zh: "定制" },
@@ -832,9 +1009,25 @@ export function t(tx: Tx, locale: Locale): string {
   return "";
 }
 
-export function pathFor(locale: Locale): string {
+export type LegalPageId = "privacy" | "terms" | "disclaimer";
+export type SitePage = "home" | LegalPageId;
+
+const LEGAL_SLUGS: LegalPageId[] = ["privacy", "terms", "disclaimer"];
+
+export function pageFromPath(pathname: string): SitePage {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+  const rest = base && pathname.startsWith(base) ? pathname.slice(base.length) : pathname;
+  const p = (rest.startsWith("/") ? rest : `/${rest}`).replace(/\/+$/, "") || "/";
+  for (const slug of LEGAL_SLUGS) {
+    if (p === `/${slug}` || p === `/zh/${slug}`) return slug;
+  }
+  return "home";
+}
+
+export function pathFor(locale: Locale, page: SitePage = "home"): string {
   const base = import.meta.env.BASE_URL;
-  return locale === "zh" ? `${base}zh/` : base;
+  if (page === "home") return locale === "zh" ? `${base}zh/` : base;
+  return locale === "zh" ? `${base}zh/${page}` : `${base}${page}`;
 }
 
 export function localeFromPath(pathname: string): Locale {

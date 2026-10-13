@@ -5,6 +5,96 @@ import { useLocale } from "@/i18n/LocaleProvider";
 import { IconChevron } from "@/components/icons";
 import { ContactDialog } from "@/components/contact/ContactDialog";
 
+type FaqBlock =
+  | { type: "p"; text: string }
+  | { type: "h3"; text: string }
+  | { type: "ul" | "ol"; items: string[] };
+
+/** 答案仍是纯文本。空行分段落，行首的 # / - / 1. 变成标题和列表。 */
+function faqBlocks(raw: string): FaqBlock[] {
+  const blocks: FaqBlock[] = [];
+  let para: string[] = [];
+  let list: { type: "ul" | "ol"; items: string[] } | null = null;
+
+  const flushPara = () => {
+    const text = para.join(" ").replace(/\s+/g, " ").trim();
+    para = [];
+    if (text) blocks.push({ type: "p", text });
+  };
+  const flushList = () => {
+    if (list?.items.length) blocks.push(list);
+    list = null;
+  };
+
+  for (const line of raw.replace(/\r\n/g, "\n").split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      flushPara();
+      flushList();
+      continue;
+    }
+    const heading = trimmed.match(/^#{1,3}\s+(.+)$/);
+    if (heading) {
+      flushPara();
+      flushList();
+      blocks.push({ type: "h3", text: heading[1].trim() });
+      continue;
+    }
+    const ordered = trimmed.match(/^\d+[.)]\s+(.+)$/);
+    const bullet = trimmed.match(/^[-*]\s+(.+)$/);
+    if (ordered || bullet) {
+      flushPara();
+      const type = ordered ? "ol" : "ul";
+      const item = (ordered ?? bullet)![1].trim();
+      if (!list || list.type !== type) {
+        flushList();
+        list = { type, items: [] };
+      }
+      list.items.push(item);
+      continue;
+    }
+    flushList();
+    para.push(trimmed);
+  }
+  flushPara();
+  flushList();
+  return blocks;
+}
+
+function FaqAnswer({ text }: { text: string }) {
+  const blocks = faqBlocks(text);
+  if (blocks.length === 0) return null;
+  return (
+    <div className="pr-8 pb-[18px] text-[14px] leading-[26px] text-ink-soft">
+      {blocks.map((block, i) => {
+        const gap = i > 0 ? "mt-3" : "";
+        if (block.type === "h3") {
+          return (
+            <h3 key={i} className={`${gap} text-[15px] font-medium text-ink`}>
+              {block.text}
+            </h3>
+          );
+        }
+        if (block.type === "p") {
+          return (
+            <p key={i} className={gap}>
+              {block.text}
+            </p>
+          );
+        }
+        const List = block.type === "ol" ? "ol" : "ul";
+        return (
+          <List key={i} className={`${gap} space-y-1.5 pl-5 ${block.type === "ol" ? "list-decimal" : "list-disc"}`}>
+            {block.items.map((item, j) => (
+              <li key={j}>{item}</li>
+            ))}
+          </List>
+        );
+      })}
+    </div>
+  );
+}
+
 export function Faq() {
   const { locale, t } = useLocale();
   const [openId, setOpenId] = useState<string | null>(null);
@@ -148,12 +238,7 @@ export function Faq() {
                           {isOpen ? "−" : "+"}
                         </span>
                       </button>
-                      {isOpen ? (
-                        // 回答：墨色转淡 + 放宽行高，展开后读起来不压眼
-                        <p className="pr-8 pb-[18px] text-[14px] leading-[26px] text-ink-soft">
-                          {t(faq.a)}
-                        </p>
-                      ) : null}
+                      {isOpen ? <FaqAnswer text={t(faq.a)} /> : null}
                     </div>
                   );
                 })}

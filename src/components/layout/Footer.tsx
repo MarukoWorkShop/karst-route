@@ -1,12 +1,12 @@
 import type { ReactNode, SVGProps } from "react";
 import { about } from "@/content/about";
-import { copy } from "@/i18n/copy";
+import { copy, pathFor } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
 
 type P = SVGProps<SVGSVGElement>;
 
 export function Footer() {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
   const year = new Date().getFullYear();
   const socials: { label: string; href: string; icon: ReactNode }[] = [
     { label: "WhatsApp", href: "#", icon: <IconWhatsApp /> },
@@ -18,7 +18,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-ink pb-[calc(80px+env(safe-area-inset-bottom))] md:pb-[60px]">
+    <footer className="bg-ink pb-[calc(80px+env(safe-area-inset-bottom))] md:pb-[60px] [html.cookie-open_&]:pb-[calc(168px+env(safe-area-inset-bottom))] md:[html.cookie-open_&]:pb-[calc(132px+env(safe-area-inset-bottom))]">
       <div className="page-col pt-[52px] md:pt-14">
         <div className="grid items-start gap-9 md:mb-10 md:grid-cols-[1fr_auto_1fr] md:gap-12">
           <div className="text-center md:text-left">
@@ -57,9 +57,9 @@ export function Footer() {
           <div className="flex flex-wrap justify-center gap-4">
             {(
               [
-                { href: "#", label: copy.footer.privacy },
-                { href: "#", label: copy.footer.terms },
-                { href: "#", label: copy.footer.disclaimer },
+                { href: pathFor(locale, "privacy"), label: copy.footer.privacy },
+                { href: pathFor(locale, "terms"), label: copy.footer.terms },
+                { href: pathFor(locale, "disclaimer"), label: copy.footer.disclaimer },
               ] as const
             ).map((link) => (
               <a
