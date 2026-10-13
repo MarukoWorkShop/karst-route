@@ -1,34 +1,48 @@
-import type { ReactNode, SVGProps } from "react";
+import { useCallback, useState, type ReactNode, type SVGProps } from "react";
 import { about } from "@/content/about";
+import { conciergeContact } from "@/data/concierge";
 import { copy, pathFor } from "@/i18n/copy";
 import { useLocale } from "@/i18n/LocaleProvider";
+import { WechatDialog, WechatIconButton } from "@/components/layout/WechatContact";
 
 type P = SVGProps<SVGSVGElement>;
 
 export function Footer() {
   const { locale, t } = useLocale();
+  const [wechatOpen, setWechatOpen] = useState(false);
+  const openWechat = useCallback(() => setWechatOpen(true), []);
+  const closeWechat = useCallback(() => setWechatOpen(false), []);
   const year = new Date().getFullYear();
-  const socials: { label: string; href: string; icon: ReactNode }[] = [
-    { label: "WhatsApp", href: "#", icon: <IconWhatsApp /> },
-    { label: "微信", href: "#", icon: <IconWechat /> },
+  const whatsappDigits = conciergeContact.whatsapp.replace(/\D/g, "");
+  const socials: { label: string; href: string; icon: ReactNode; wechat?: boolean }[] = [
+    {
+      label: "WhatsApp",
+      href: whatsappDigits ? `https://wa.me/${whatsappDigits}` : "#",
+      icon: <IconWhatsApp />,
+    },
+    { label: "微信", href: "#", icon: <IconWechat />, wechat: true },
     { label: "微博", href: "#", icon: <IconWeibo /> },
     { label: "小红书", href: "#", icon: <IconXiaohongshu /> },
     { label: "Instagram", href: "#", icon: <IconInstagram /> },
-    { label: "Email", href: "#", icon: <IconEmail /> },
+    {
+      label: "Email",
+      href: conciergeContact.email ? `mailto:${conciergeContact.email}` : "#",
+      icon: <IconEmail />,
+    },
   ];
 
   return (
     <footer className="bg-ink pb-[calc(80px+env(safe-area-inset-bottom))] md:pb-[60px] [html.cookie-open_&]:pb-[calc(168px+env(safe-area-inset-bottom))] md:[html.cookie-open_&]:pb-[calc(132px+env(safe-area-inset-bottom))]">
       <div className="page-col pt-[52px] md:pt-14">
         <div className="grid items-start gap-9 md:mb-10 md:grid-cols-[1fr_auto_1fr] md:gap-12">
-          <div className="text-center md:text-left">
+          <div className="text-center">
             <p className="text-2xl font-medium tracking-[0.06em] text-paper md:text-[26px]">
               {about.name.zh}
             </p>
-            <p className="mt-1 max-w-[280px] text-[11px] leading-4 text-[rgba(250,248,242,0.4)] md:max-w-none">
+            <p className="mx-auto mt-1 max-w-[280px] text-[11px] leading-4 text-[rgba(250,248,242,0.4)] md:max-w-none">
               {about.name.en}
             </p>
-            <p className="mx-auto mt-3.5 max-w-[280px] text-[13px] leading-6 text-[rgba(250,248,242,0.5)] md:mx-0">
+            <p className="mx-auto mt-3.5 max-w-[280px] text-[13px] leading-6 text-[rgba(250,248,242,0.5)] md:max-w-none">
               {t(about.brandSlogan)}
             </p>
           </div>
@@ -37,7 +51,7 @@ export function Footer() {
             <p className="mb-4 text-[10px] tracking-[0.12em] text-[rgba(250,248,242,0.3)] uppercase">
               {t(copy.footer.connect)}
             </p>
-            <SocialRow socials={socials} />
+            <SocialRow socials={socials} onWechat={openWechat} />
           </div>
         </div>
 
@@ -46,7 +60,7 @@ export function Footer() {
           <p className="mb-[18px] text-[10px] tracking-[0.12em] text-[rgba(250,248,242,0.3)] uppercase">
             {t(copy.footer.connect)}
           </p>
-          <SocialRow socials={socials} centered />
+          <SocialRow socials={socials} centered onWechat={openWechat} />
         </div>
 
         <div className="mt-7 h-px bg-[rgba(250,248,242,0.08)] md:mt-0 md:mb-6" />
@@ -73,6 +87,7 @@ export function Footer() {
           </div>
         </div>
       </div>
+      <WechatDialog open={wechatOpen} onClose={closeWechat} />
     </footer>
   );
 }
@@ -80,24 +95,33 @@ export function Footer() {
 function SocialRow({
   socials,
   centered,
+  onWechat,
 }: {
-  socials: { label: string; href: string; icon: ReactNode }[];
+  socials: { label: string; href: string; icon: ReactNode; wechat?: boolean }[];
   centered?: boolean;
+  onWechat: () => void;
 }) {
   return (
     <div>
       <div className={`flex flex-wrap gap-2.5 ${centered ? "justify-center" : ""}`}>
-        {socials.map((s) => (
-          <a
-            key={s.label}
-            href={s.href}
-            aria-label={s.label}
-            title={s.label}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(250,248,242,0.1)] bg-[rgba(250,248,242,0.06)] text-[rgba(250,248,242,0.6)] hover:border-[rgba(250,248,242,0.22)] hover:bg-[rgba(250,248,242,0.12)] hover:text-paper"
-          >
-            {s.icon}
-          </a>
-        ))}
+        {socials.map((s) =>
+          s.wechat ? (
+            <WechatIconButton key={s.label} onOpen={onWechat}>
+              {s.icon}
+            </WechatIconButton>
+          ) : (
+            <a
+              key={s.label}
+              href={s.href}
+              aria-label={s.label}
+              title={s.label}
+              {...(s.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(250,248,242,0.1)] bg-[rgba(250,248,242,0.06)] text-[rgba(250,248,242,0.6)] hover:border-[rgba(250,248,242,0.22)] hover:bg-[rgba(250,248,242,0.12)] hover:text-paper"
+            >
+              {s.icon}
+            </a>
+          ),
+        )}
       </div>
       {centered ? (
         <div className="mt-2 flex flex-wrap justify-center gap-2.5">

@@ -994,6 +994,9 @@ export const copy = {
     privacy: { en: "Privacy Policy", zh: "隐私政策" },
     terms: { en: "Terms of Service", zh: "服务条款" },
     disclaimer: { en: "Disclaimer", zh: "免责声明" },
+    wechatScan: { en: "Long-press to scan", zh: "长按扫码" },
+    wechatCopy: { en: "Copy WeChat ID", zh: "复制客服号" },
+    wechatCopied: { en: "Copied", zh: "已复制" },
   },
 } as const;
 
