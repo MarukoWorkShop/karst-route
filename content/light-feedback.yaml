@@ -59,7 +59,7 @@ items:
 
   - id: hp-muslim-dining
     category: foodfilm
-    kind: photo
+    kind: note
     flag: ✦
     name: Guest D
     country: ""
@@ -71,20 +71,6 @@ items:
     photos:
       - light/reviews/hp-9.jpeg
       - light/reviews/hp-10.jpeg
-
-  - id: hp-irish-pub
-    category: foodfilm
-    kind: photo
-    flag: ✦
-    name: Guest E
-    country: ""
-    rating: 5
-    date: 2025-02-21
-    body:
-      zh: 此行最喜欢爱尔兰酒吧，可以有各种选择。
-      en: Our favourite stop this trip was the Irish pub — so many choices.
-    photos:
-      - light/reviews/hp-14.jpeg
 
   - id: hp-climb
     category: hike
@@ -141,7 +127,7 @@ items:
     date: 2026-10-14
     body:
       zh: '巴西名模Mayllan在"千里江山图"景区体验中国古装造型拍摄'
-      en: Brazilian model Mayllan tries a traditional Chinese costume photoshoot at the Thousand Li of Rivers and Mountains scenic area.
+      en: Mayllan (Brazil), a model, tries a traditional Chinese costume photoshoot at the Thousand Li of Rivers and Mountains scenic area.
     photos:
       - feedback/mayllan-hanfu.jpg
 
@@ -155,7 +141,7 @@ items:
     date: 2026-10-14
     body:
       zh: 美国客人大卫·梅正在专心学习中国书法
-      en: American guest David May is absorbed in learning Chinese calligraphy.
+      en: David May (U.S.) is absorbed in learning Chinese calligraphy.
     photos:
       - feedback/david-calligraphy.jpg
 
@@ -169,7 +155,7 @@ items:
     date: 2026-10-14
     body:
       zh: 巴西客人Erick和Chily旅居阳朔半个月，和当地人一起徒步，探洞，做美食
-      en: Brazilian guests Erick and Chily spent half a month living in Yangshuo, hiking, exploring caves, and cooking with local people.
+      en: Erick and Chily (Brazil) spent half a month living in Yangshuo, hiking, exploring caves, and cooking with local people.
     photos:
       - feedback/erick-chily-cooking.jpg
       - feedback/erick-chily-drinks.jpg
@@ -186,7 +172,7 @@ items:
     date: 2026-10-14
     body:
       zh: 新西兰客人WALSH一家5口共同游览如意峰，龙脊梯田长发村
-      en: New Zealand guests, the Walsh family of five, visited Ruyi Peak and Changfa Village in the Longji rice terraces together.
+      en: The Walsh family of five (New Zealand) visited Ruyi Peak and Changfa Village in the Longji rice terraces together.
     photos:
       - feedback/walsh-ruyi-peak.jpg
       - feedback/walsh-changfa-village.jpg
@@ -218,7 +204,7 @@ items:
     date: 2026-10-14
     body:
       zh: 西班牙客人Jolia夫妇去探索阳朔溶洞，贴壁飞拉达体验
-      en: Spanish guests Jolia and her husband explore a Yangshuo cave on a wall-hugging via ferrata.
+      en: Jolia and her husband (Spain) explore a Yangshuo cave on a wall-hugging via ferrata.
     photos:
       - feedback/jolia-via-ferrata-1.jpg
       - feedback/jolia-via-ferrata-2.jpg
@@ -233,7 +219,7 @@ items:
     date: 2026-10-14
     body:
       zh: 桂林拥有世界级喀斯特地貌资源，俄罗斯地质学家阿莫西诺娃Я Svetlana Anisimova 在阳朔的桂花古道，阳朔最佳看日出地方——云涧院子，及阳朔“千里江山图”等地研究3.7亿年前的叠层石
-      en: "Guilin holds world-class karst landforms. Russian geologist Svetlana Anisimova studied 370-million-year-old stromatolites at Yangshuo's Osmanthus Ancient Trail, at Yunjian Courtyard — the best place in Yangshuo to watch the sunrise — and at the Thousand Li of Rivers and Mountains scenic area."
+      en: "Guilin holds world-class karst landforms. Svetlana Anisimova (Russia), a geologist, studied 370-million-year-old stromatolites at Yangshuo's Osmanthus Ancient Trail, at Yunjian Courtyard — the best place in Yangshuo to watch the sunrise — and at the Thousand Li of Rivers and Mountains scenic area."
     photos:
       - feedback/svetlana-guihua-1.jpg
       - feedback/svetlana-guihua-2.jpg
@@ -263,7 +249,7 @@ items:
     date: 2026-10-14
     body:
       zh: 来阳朔过结婚纪念日英国客人Matthew夫妇，他们去了阳朔的云涧院子，让山水见证他们的感情
-      en: British guests Matthew and his wife came to Yangshuo for their wedding anniversary. They visited Yunjian Courtyard and let the landscape witness their love.
+      en: Matthew and his wife (U.K.) came to Yangshuo for their wedding anniversary. They visited Yunjian Courtyard and let the landscape witness their love.
     photos:
       - feedback/matthew-yunjian-window.jpg
       - feedback/matthew-yunjian-deck.jpg
@@ -278,7 +264,7 @@ items:
     date: 2026-10-15
     body:
       zh: 英国客人Amy和巴西客人Arlei夫妇在老师的带领下学习中国画
-      en: British guest Amy and Brazilian guest Arlei, a couple, learn Chinese painting with their teacher.
+      en: Amy (U.K.) and Arlei (Brazil), a couple, learn Chinese painting with their teacher.
     photos:
       - feedback/amy-arlei-ink-1.jpg#wide
       - feedback/amy-arlei-ink-2.jpg#wide
@@ -293,6 +279,6 @@ items:
     date: 2026-10-15
     body:
       zh: 美国客人安德鲁跟随中国著名画家刘绍荟先生学习书法并获赠其作品
-      en: American guest Andrew studies calligraphy with the renowned Chinese painter Liu Shaohui and receives one of his works.
+      en: Andrew (U.S.) studies calligraphy with the renowned Chinese painter Liu Shaohui and receives one of his works.
     photos:
       - feedback/andrew-liu-calligraphy.jpg
