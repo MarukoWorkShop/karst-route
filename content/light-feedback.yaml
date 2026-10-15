@@ -254,7 +254,7 @@ items:
       en: "Even in the rain, we asked geology teacher Zhou to lead us along the Osmanthus Ancient Trail. Here we could see not only the century-old trail and the osmanthus trees — this is also the landscape on the postage stamp, where the Li River makes a bend!"
 
   - id: hp-matthew-yunjian
-    category: village
+    category: wellness
     kind: photo
     flag: ✦
     name: Matthew
@@ -269,7 +269,7 @@ items:
       - feedback/matthew-yunjian-deck.jpg
 
   - id: hp-amy-arlei-ink
-    category: wellness
+    category: craft
     kind: photo
     flag: ✦
     name: Amy & Arlei
@@ -278,13 +278,13 @@ items:
     date: 2026-10-15
     body:
       zh: 英国客人Amy和巴西客人Arlei夫妇在老师的带领下学习中国画
-      en: British guest Amy and Brazilian couple Arlei learn Chinese painting with their teacher.
+      en: British guest Amy and Brazilian guest Arlei, a couple, learn Chinese painting with their teacher.
     photos:
       - feedback/amy-arlei-ink-1.jpg#wide
       - feedback/amy-arlei-ink-2.jpg#wide
 
   - id: hp-andrew-liu-calligraphy
-    category: wellness
+    category: craft
     kind: photo
     flag: ✦
     name: Andrew
