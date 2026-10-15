@@ -43,20 +43,14 @@ export function About() {
         <p className="type-sub mt-2 max-w-[640px] text-ink-soft">{t(about.role)}</p>
         <p className="type-body mt-6 max-w-[720px]">{t(about.body1)}</p>
         <p className="type-body mt-5 max-w-[720px]">
-          <span className="font-semibold">{t(about.body2Lead)}</span>
-          {colon}
+          {about.body2Lead[locale].trim() ? (
+            <span className="font-semibold">
+              {about.body2Lead[locale].trim()}
+              {colon}
+            </span>
+          ) : null}
           {t(about.body2)}
         </p>
-        <ul className="mt-8 grid gap-3 sm:grid-cols-3">
-          {about.points.map((point) => (
-            <li
-              key={point.en}
-              className="type-body border-t border-line pt-3 font-medium text-cta"
-            >
-              {t(point)}
-            </li>
-          ))}
-        </ul>
 
         {/* 资质与保障：执照 / 持证向导 / 保险 / 退改 / 运营数据 / 媒体背书 */}
         <div className="mt-9">
