@@ -161,6 +161,14 @@ html[lang|="zh"] #plan {
   font-family: var(--font-serif);
 }
 
+/* 客人留言：细衬线，和正文无衬线区分开 */
+.feedback-quote {
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", "Songti SC", "Source Han Serif SC",
+    "Noto Serif SC", "STSong", "SimSun", serif;
+  font-weight: 300;
+  font-synthesis: none;
+}
+
 .region-map-sea {
   fill: #d5e4f0;
 }

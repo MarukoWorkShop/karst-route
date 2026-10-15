@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 在 Notion 建/刷新「轻体验评价」表，从 content/light-reviews.yaml 填入，
+ * 在 Notion 建/刷新「轻体验评价」表，从 content/light-feedback.yaml 填入，
  * 更新「轻体验 · YAML 映射说明」，并把 database id 写进 content/notion.yaml。
  *
  * 用法：
@@ -172,7 +172,7 @@ if (!dbId) {
         type: "text",
         text: {
           content:
-            "轻体验详情卡右侧「客人评价」。photos 一行一条，写 light/reviews/文件名.jpeg（与 COS / public 同路径）。改完跑 npm run content:notion → content/light-reviews.yaml。",
+            "轻体验详情卡右侧「真实反馈」。kind 填 photo（照片+一句话）或 note（客人留言）。photos 一行一条，写 light/reviews/文件名.jpeg。改完跑 npm run content:notion → content/light-feedback.yaml。",
         },
       },
     ],
@@ -191,7 +191,7 @@ if (!dbId) {
   console.log("使用表：", DB_TITLE, dbId);
 }
 
-const yamlPath = path.join(root, "content", "light-reviews.yaml");
+const yamlPath = path.join(root, "content", "light-feedback.yaml");
 const doc = parseYaml(fs.readFileSync(yamlPath, "utf8")) ?? {};
 const srcLang = doc.src === "en" ? "en" : "zh";
 const items = Array.isArray(doc.items) ? doc.items : [];
@@ -308,7 +308,7 @@ const b = (text) => ({
 
 const mapChildren = [
   p(
-    "轻体验三张表：①「轻体验栏目」= 首页六张品类卡；②「轻体验清单」= 可售 SKU；③「轻体验评价」= 详情右侧客人评价。",
+    "轻体验三张表：①「轻体验栏目」= 首页六张品类卡；②「轻体验清单」= 可售 SKU；③「轻体验评价」= 详情右侧真实反馈。",
   ),
   h("一、轻体验栏目 → content/experiences.yaml"),
   b("一行一个栏目；id 只能是 hike / photo / village / foodfilm / craft / wellness"),
@@ -321,12 +321,13 @@ const mapChildren = [
   b("status：在售 / 季节性 / 暂缓（非「在售」同步后网站不展示）"),
   b("images：一行一条，public/ 相对路径，如 light/hike/climb-1.jpeg"),
   b("价格列见原说明；note 不同步到网站"),
-  h("三、轻体验评价 → content/light-reviews.yaml"),
-  b("一行一条评价；按 category 出现在对应栏目详情右侧"),
+  h("三、轻体验真实反馈 → content/light-feedback.yaml"),
+  b("一行一条反馈；按 category 出现在对应栏目详情右侧"),
   b("id：稳定键（如 hp-seed-box），不要随意改"),
   b("category：hike / photo / village / foodfilm / craft / wellness"),
-  b("flag / name / country / rating / date：头像区展示"),
-  b("body_zh / body_en：正文，各不超过约 999 字；src 指原文语言"),
+  b("kind：photo = 照片 + 一句话描述；note = 客人留言（可附照片）"),
+  b("flag / name / country / rating / date：客人留言的头像区；photo 不展示头像区"),
+  b("body_zh / body_en：photo 只写一句话，note 写留言；各不超过约 999 字；src 指原文语言"),
   b("photos：一行一条，写 light/reviews/文件名.jpeg（本地 public + COS 同键；最多 4 张）"),
   b("与精品路线「客人评价」表无关；路线评价仍用 reviews/… 路径"),
   h("四、改完怎么生效"),
@@ -376,6 +377,6 @@ if (mapPageId) {
 console.log(`
 完成。
 - Notion 表：${DB_TITLE}
-- YAML：content/light-reviews.yaml
+- YAML：content/light-feedback.yaml
 - 图：public/light/reviews/ ↔ COS light/reviews/
 `);

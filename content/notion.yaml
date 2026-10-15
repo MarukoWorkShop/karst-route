@@ -27,7 +27,7 @@ databases:
   lightExperiences: 3d7d5dfd82c481a28137f44e66039154
   # 独立整页表「轻体验清单」（与栏目并列，侧栏各一张）
   lightSkus: a3903bc864264f1392631b1a536b1851
-  # 轻体验详情右侧客人评价
+  # 轻体验详情右侧真实反馈（content/light-feedback.yaml）
   lightReviews: 3e2d5dfd82c481edb155e6ff1011c245
   # 询单发送失败时的兜底联系方式（一行一个通道）
   concierge: 3f7d5dfd82c481f5a006d19b614f56b7

@@ -4,9 +4,9 @@ import { asset } from "@/lib/asset";
 import { strList, strOf, txOrEmpty } from "@/content/helpers";
 
 const MAX_BODY = 999;
-const MAX_PHOTOS = 4;
+const MAX_PHOTOS = 5;
 
-const files = import.meta.glob("../../content/light-reviews.yaml", {
+const files = import.meta.glob("../../content/light-feedback.yaml", {
   eager: true,
   query: "?raw",
   import: "default",
@@ -14,9 +14,13 @@ const files = import.meta.glob("../../content/light-reviews.yaml", {
 
 const CATS = new Set<LightId>(["hike", "photo", "village", "foodfilm", "craft", "wellness"]);
 
+/** photo：照片 + 一句话；note：客人留言（可附照片）。 */
+export type LightFeedbackKind = "photo" | "note";
+
 export type LightReview = {
   id: string;
   category: LightId;
+  kind: LightFeedbackKind;
   flag: string;
   name: string;
   country: string;
@@ -47,9 +51,11 @@ function load(): LightReview[] {
       const category = strOf(it.category) as LightId;
       const body = txOrEmpty(it.body, src);
       if (!id || !CATS.has(category) || !body) continue;
+      const kind: LightFeedbackKind = strOf(it.kind) === "photo" ? "photo" : "note";
       out.push({
         id,
         category,
+        kind,
         flag: strOf(it.flag, "✦"),
         name: strOf(it.name, id),
         country: strOf(it.country),
@@ -58,12 +64,17 @@ function load(): LightReview[] {
         body: { ...body, zh: clip(body.zh), en: clip(body.en) },
         photos: strList(it.photos, [])
           .slice(0, MAX_PHOTOS)
-          .map((p) => asset(`/${p.replace(/^\//, "")}`)),
+          .map((p) => {
+            const wide = p.endsWith("#wide");
+            const clean = (wide ? p.slice(0, -"#wide".length) : p).replace(/^\//, "");
+            const url = asset(`/${clean}`);
+            return wide ? `${url}#wide` : url;
+          }),
       });
     }
     return out;
   } catch (err) {
-    console.warn("[content] content/light-reviews.yaml 解析失败", err);
+    console.warn("[content] content/light-feedback.yaml 解析失败", err);
     return [];
   }
 }

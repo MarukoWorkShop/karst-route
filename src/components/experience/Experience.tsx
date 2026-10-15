@@ -214,7 +214,7 @@ function LightModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className={`scrollbar-none relative z-[1] flex h-dvh w-full max-w-full flex-col overflow-x-hidden overflow-y-auto overscroll-contain bg-surface p-4 pt-[calc(env(safe-area-inset-top)+3.5rem)] shadow-none ring-0 md:my-auto md:h-auto md:max-h-none md:w-[min(92vw,960px)] md:overflow-x-hidden md:overflow-y-visible md:rounded-xl md:p-6 md:pt-6 md:shadow-[0_24px_64px_rgba(16,28,22,0.22)] md:ring-1 md:ring-line ${
+        className={`scrollbar-none relative z-[1] flex h-dvh w-full max-w-full flex-col overflow-x-hidden overflow-y-auto overscroll-contain bg-surface p-4 pt-[calc(env(safe-area-inset-top)+3.5rem)] shadow-none ring-0 md:my-auto md:h-auto md:max-h-none md:w-[min(92vw,960px)] md:overflow-visible md:overscroll-auto md:rounded-xl md:p-6 md:pt-6 md:shadow-[0_24px_64px_rgba(16,28,22,0.22)] md:ring-1 md:ring-line ${
           item ? "md:grid md:grid-cols-[1.15fr_0.85fr] md:items-start md:gap-x-6" : ""
         }`}
       >
@@ -379,7 +379,7 @@ function ItemBody({
           {lead ? <p className="type-body mt-4 text-ink">{t(lead)}</p> : null}
         </div>
 
-        <div className="order-3 min-w-0 pb-[max(1rem,env(safe-area-inset-bottom))] md:pb-0">
+        <div className="order-3 min-w-0">
           <LightReviews category={item.id} />
         </div>
       </div>
@@ -431,6 +431,12 @@ function ItemBody({
           </SkuGroup>
         ) : null}
       </div>
+
+      <p className="order-4 col-span-full mt-8 px-3 pb-[max(1rem,env(safe-area-inset-bottom))] text-center text-[10px] leading-[1.55] text-ink-soft/75 md:col-span-2 md:row-start-2 md:mt-6 md:pb-0">
+        {copy.light.photoCredit.en}
+        <br />
+        {copy.light.photoCredit.zh}
+      </p>
     </>
   );
 }
@@ -493,9 +499,9 @@ function SkuCard({
 
   return (
     <li className="border-t border-line py-5 first:border-t-0 first:pt-3 md:py-3.5">
-      <div className="flex min-w-0 flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-        <h4 className="type-h3 min-w-0 flex-1 text-ink">{t(route.title)}</h4>
-        <div className="relative flex max-w-full items-center gap-0.5 sm:shrink-0">
+      <div className="flex min-w-0 flex-col items-start gap-1">
+        <h4 className="type-h3 w-full text-ink">{t(route.title)}</h4>
+        <div className="relative flex w-full items-center justify-end gap-0.5">
           {tip ? (
             <span
               role="status"
@@ -505,7 +511,7 @@ function SkuCard({
             </span>
           ) : null}
           {priceParts ? (
-            <p className="type-price inline-flex flex-wrap items-center text-ink">
+            <p className="inline-flex flex-wrap items-center justify-end text-[13px] font-normal leading-snug text-ink tabular-nums">
               {priceParts.bits.map((bit, i) =>
                 bit.type === "pax" ? (
                   <span

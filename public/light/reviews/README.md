@@ -1,4 +1,4 @@
-# 轻体验客人评价配图
+# 轻体验真实反馈配图
 
 路径约定（本地 `public/` 与腾讯云 COS **同一对象键**）：
 
@@ -10,7 +10,7 @@ light/reviews/hp-2.jpeg
 - 本地：本目录
 - COS：`youxian-travel-1412422924` → `light/reviews/…`
 - Notion「轻体验评价」表 `photos` 列：一行一条，写上面这种相对路径（不要写完整 URL）
-- YAML：`content/light-reviews.yaml`
+- YAML：`content/light-feedback.yaml`
 
 上传：
 

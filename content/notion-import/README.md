@@ -330,7 +330,7 @@ Notion **两张独立表**（同一内容页下各一张，侧栏都能看到）
 |---|---|---|
 | **轻体验栏目** | 一行一个品类大卡：介绍、封面、时长/成团/季节 | `content/experiences.yaml` |
 | **轻体验清单** | 一行一个可售 SKU | `content/light-skus.yaml` |
-| **轻体验评价** | 一行一条详情右侧客人评价 | `content/light-reviews.yaml` |
+| **轻体验评价** | 一行一条详情右侧真实反馈 | `content/light-feedback.yaml` |
 | **轻体验 · YAML 映射说明** | 三张表的列 ↔ YAML ↔ 网页；改前先看 | — |
 
 栏目顺序固定为 `hike → photo → village → foodfilm → craft → wellness`，栏目 `id` 不要新增或改名。
@@ -404,7 +404,7 @@ node scripts/notion-create-light-skus.mjs   # 建表或更新行
 
 | 仓库文件 | Notion 表 |
 |---|---|
-| `content/light-reviews.yaml` | **轻体验评价**（与栏目/清单并列） |
+| `content/light-feedback.yaml` | **轻体验真实反馈**（与栏目/清单并列） |
 
 | 列 | 说明 |
 |---|---|

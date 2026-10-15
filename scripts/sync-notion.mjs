@@ -1541,9 +1541,9 @@ async function main() {
     }
   }
 
-  // --- 轻体验评价 → content/light-reviews.yaml ---
+  // --- 轻体验真实反馈 → content/light-feedback.yaml ---
   if (dbs.lightReviews) {
-    const rel = "content/light-reviews.yaml";
+    const rel = "content/light-feedback.yaml";
     const pages = await queryAll(token, dbs.lightReviews, sources.lightReviews);
     if (pages.length && takeNotion(pages, rel)) {
       const prev = existingYaml(rel);
@@ -1565,9 +1565,17 @@ async function main() {
         );
         if (!body) continue;
         const photos = splitLines(text(page, "photos"));
+        const kindRaw = text(page, "kind").trim();
+        const kind =
+          kindRaw === "photo" || kindRaw === "note"
+            ? kindRaw
+            : prevItem.kind === "photo" || prevItem.kind === "note"
+              ? prevItem.kind
+              : "note";
         items.push({
           id,
           category,
+          kind,
           flag: text(page, "flag") || prevItem.flag || "✦",
           name: text(page, "name") || prevItem.name || id,
           country: text(page, "country") || prevItem.country || "",
@@ -1580,12 +1588,15 @@ async function main() {
       if (items.length) {
         writeYaml(
           rel,
-          `# 轻体验客人评价（详情卡右侧评论区）
+          `# 轻体验真实反馈（详情卡右侧）
 # 修改方式二选一：
 #   1. Notion「轻体验评价」表 → npm run content:notion 同步回本文件
 #   2. 直接改本文件
 # category 只能是 hike / photo / village / foodfilm / craft / wellness
-# body 中英各不超过 999 字；photos 最多 4 张，写 light/reviews/…（与 COS 同键）
+# kind 二选一：
+#   photo  照片 + 一句话描述。photos 1–5 张；body 只写那一句话
+#   note   客人留言。body 写留言；photos 可空，有图也可以附上
+# body 中英各不超过 999 字；photos 写 light/reviews/…（与 COS 同键）
 # 原文语言见 src；译文空着时上线前再补
 `,
           { src: srcLang, items },
